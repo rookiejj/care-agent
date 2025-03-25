@@ -11,7 +11,7 @@ import {
   Navigate,
   Link,
 } from "react-router-dom";
-import { Home, Heart, Search, MessageCircle, User } from "lucide-react";
+import { Home, Heart, Search, MessageCircle, User, Tags } from "lucide-react";
 import {
   TrendingUp,
   Star,
@@ -33,8 +33,15 @@ import {
 } from "lucide-react";
 
 import "./App.css";
+
 import NotificationPage from "./NotificationPage";
 import NotificationIcon from "./NotificationIcon";
+import MainPage from "./MainPage";
+import FavoritesPage from "./FavoritesPage";
+import SearchPage from "./SearchPage";
+import CommunityPage from "./CommunityPage";
+import MyPage from "./MyPage";
+import CategoriesPage from "./CategoriesPage";
 
 const getSuperhumanIcon = () => {
   return `/images/${"super_human_icon.png"}`;
@@ -48,13 +55,28 @@ const getMapImage = () => {
   return `/images/${"map.png"}`;
 };
 
-const PageHeader = ({
+export const getHospitalImage = (type, id = 1) => {
+  // 타입과 ID에 따라 적절한 이미지 경로를 반환합니다
+  const imageMap = {
+    all: ["hospital1.jpg", "hospital2.jpg", "hospital3.jpg"],
+  };
+
+  // 배열 범위를 벗어나지 않도록 인덱스 계산
+  const index = (id - 1) % (imageMap[type]?.length || 1);
+  const imageName = imageMap[type]?.[index] || "hospital1.jpg";
+
+  return `/images/hospitals/${imageName}`;
+};
+
+export const PageHeader = ({
+  showMainIcon = false,
   title,
   onBack,
   backButtonVisible = false,
   rightComponent,
   showLocationButton,
   notificationCount = 0,
+  showNotification = false,
   currentLocation,
 }) => {
   const navigate = useNavigate();
@@ -77,53 +99,46 @@ const PageHeader = ({
         zIndex: "100",
       }}
     >
-      <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+      <div style={{ display: "flex", alignItems: "center" }}>
         {backButtonVisible && (
           <button
             onClick={onBack}
             className="back-button"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              padding: 0,
-              border: "none",
-              borderRadius: "0.5rem",
-              backgroundColor: "#f3f4f6",
-              color: "#4b5563",
-              cursor: "pointer",
-              transition: "all 0.2s",
-            }}
             onMouseOver={(e) =>
               (e.currentTarget.style.backgroundColor = "#e5e7eb")
             }
             onMouseOut={(e) =>
-              (e.currentTarget.style.backgroundColor = "#f3f4f6")
+              (e.currentTarget.style.backgroundColor = "transparent")
             }
           >
-            <img
-              src={getSuperhumanIcon()}
-              alt={name}
-              style={{
-                width: "2.5rem",
-                height: "2.5rem",
-                objectFit: "cover",
-                borderRadius: "0.5rem",
-              }}
-            />
+            {showMainIcon ? (
+              <img
+                src={getSuperhumanIcon()}
+                alt={name}
+                style={{
+                  width: "2.5rem",
+                  height: "2.5rem",
+                  objectFit: "cover",
+                  borderRadius: "0.5rem",
+                }}
+              />
+            ) : (
+              <ArrowLeft size={20} />
+            )}
           </button>
         )}
         <h1
           style={{
             fontSize: "1.25rem",
             fontWeight: "bold",
+            marginLeft: "0.5rem",
           }}
         >
           {title}
         </h1>
       </div>
 
-      {notificationCount !== undefined ? (
+      {showNotification && notificationCount !== undefined ? (
         <div style={{ display: "flex", alignItems: "center" }}>
           <NotificationIcon
             count={notificationCount}
@@ -187,7 +202,9 @@ const BottomNavigation = ({ currentPage }) => {
         <Link
           to="/favorites"
           className={`nav-button ${
-            currentPage === "gyms" ? "nav-button-active" : "nav-button-inactive"
+            currentPage === "favorites"
+              ? "nav-button-active"
+              : "nav-button-inactive"
           }`}
         >
           <Heart size={20} />
@@ -196,7 +213,7 @@ const BottomNavigation = ({ currentPage }) => {
         <Link
           to="/search"
           className={`nav-button ${
-            currentPage === "trainers"
+            currentPage === "search"
               ? "nav-button-active"
               : "nav-button-inactive"
           }`}
@@ -204,6 +221,17 @@ const BottomNavigation = ({ currentPage }) => {
           <Search size={20} />
           <span>검색</span>
         </Link>
+        {/* <Link
+          to="/category"
+          className={`nav-button ${
+            currentPage === "category"
+              ? "nav-button-active"
+              : "nav-button-inactive"
+          }`}
+        >
+          <Tags size={20} />
+          <span>카테고리</span>
+        </Link> */}
         <Link
           to="/community"
           className={`nav-button ${
@@ -227,38 +255,6 @@ const BottomNavigation = ({ currentPage }) => {
           <span>마이페이지</span>
         </Link>
       </div>
-    </div>
-  );
-};
-
-// 2. Main Pages
-const MainPage = ({ currentLocation, notificationCount }) => {
-  const { t } = useTranslation();
-  const { communityData } = useData();
-  const navigate = useNavigate();
-
-  const handleExternalBack = () => {
-    window.location.href = "https://mz-healthcare.vercel.app/";
-  };
-
-  return (
-    <div className="container">
-      <PageHeader
-        title="몬짐 케어 (진료/시술)"
-        showLocationButton={true}
-        currentLocation={currentLocation}
-        backButtonVisible={true}
-        notificationCount={notificationCount}
-        onBack={handleExternalBack}
-      />
-      <div
-        style={{
-          position: "relative",
-          flex: 1,
-          overflowY: "hidden",
-          marginTop: "-3rem",
-        }}
-      ></div>
     </div>
   );
 };
@@ -299,8 +295,8 @@ const AppContent = ({
 
   const showBottomNav = [
     "main",
-    "gyms",
-    "trainers",
+    "favorites",
+    "search",
     "community",
     "mypage",
   ].includes(currentPage);
@@ -318,6 +314,46 @@ const AppContent = ({
           }
         />
         <Route path="/main" element={<Navigate to="/" replace />} />
+        <Route
+          path="/favorites"
+          element={
+            <FavoritesPage
+              currentLocation={selectedLocation}
+              notificationCount={notificationCount}
+            />
+          }
+        />
+        <Route
+          path="/search"
+          element={
+            <SearchPage
+              currentLocation={selectedLocation}
+              notificationCount={notificationCount}
+            />
+          }
+        />
+        <Route
+          path="/category"
+          element={<CategoriesPage currentLocation={selectedLocation} />}
+        />
+        <Route
+          path="/community"
+          element={
+            <CommunityPage
+              currentLocation={selectedLocation}
+              notificationCount={notificationCount}
+            />
+          }
+        />
+        <Route
+          path="/mypage"
+          element={
+            <MyPage
+              currentLocation={selectedLocation}
+              notificationCount={notificationCount}
+            />
+          }
+        />
         {/* <Route
           path="/location"
           element={
@@ -327,15 +363,7 @@ const AppContent = ({
             />
           }
         />
-        <Route
-          path="/gyms"
-          element={
-            <GymListPage
-              currentLocation={selectedLocation}
-              notificationCount={notificationCount}
-            />
-          }
-        />
+        
         <Route path="/gymDetail/:id" element={<GymDetailPage />} />
         <Route
           path="/trainers"

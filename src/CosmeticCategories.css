@@ -1,0 +1,75 @@
+/* CosmeticCategories.css */
+
+.cosmetic-categories-container {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.cosmetic-categories {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  width: 100%;
+  padding: 3px 0;
+}
+
+.cosmetic-category-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.cosmetic-category-item:hover {
+  transform: translateY(-3px);
+}
+
+.cosmetic-category-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  background-color: #fdf4f7;
+  border-radius: 50%;
+  margin-bottom: 6px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+}
+
+.cosmetic-category-name {
+  font-size: 12px;
+  color: #333;
+  text-align: center;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* 미디어 쿼리를 사용하여 모든 해상도에서 항상 5개가 나타나도록 함 */
+@media (max-width: 480px) {
+  .cosmetic-categories {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .cosmetic-category-icon-wrapper {
+    width: 48px;
+    height: 48px;
+  }
+
+  .cosmetic-category-name {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 320px) {
+  .cosmetic-category-icon-wrapper {
+    width: 44px;
+    height: 44px;
+  }
+
+  .cosmetic-categories {
+    gap: 4px;
+  }
+}

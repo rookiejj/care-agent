@@ -270,7 +270,7 @@ export default {
         },
       },
       fees: {
-        basicConsultation: "Үндсэн үзлэгийн хөлс", // 공식 의료 수가 용어
+        basicConsultation: "Үндсэн үзлэгийн хөлс", // 공식 진료 수가 용어
         note: "* Нэмэлт эмчилгээний төлбөр тусад тооцогдоно",
       },
       feeGuide: {

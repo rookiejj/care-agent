@@ -68,7 +68,7 @@ export default {
     },
     examination: {
       title: "시술/성형",
-      description: "전문의와 상담하는 맞춤형 뷰티 케어",
+      description: "전문의와 상담하는 맞춤형 시술 케어",
     },
     stats: {
       facilities: "제휴시설",
@@ -110,7 +110,7 @@ export default {
     medical: {
       title: "온라인 진료",
       stats: {
-        users: "방문 환자", // Changed from "이용 회원"
+        users: "방문 고객", // Changed from "이용 회원"
         facilities: "제휴 시설",
         rating: "평균 평점",
       },
@@ -131,7 +131,7 @@ export default {
     plastic: {
       title: "시술/성형",
       stats: {
-        users: "방문 환자", // Changed from "이용 회원"
+        users: "방문 고객", // Changed from "이용 회원"
         affiliatedHospital: "제휴 병원",
         rating: "평균 평점",
       },
@@ -198,7 +198,7 @@ export default {
   },
   hospital: {
     medical: {
-      title: "병원 목록", // Changed from "의료기관 목록"
+      title: "병원 목록", // Changed from "진료기관 목록"
       types: {
         general: "종합병원",
         internal: "내과전문병원",
@@ -272,7 +272,7 @@ export default {
         insurance: "건강보험 적용",
         nonInsurance: "비급여 항목",
         visitFee: "내원비",
-        note: "* 환자 상태에 따라 진료비가 달라질 수 있습니다",
+        note: "* 고객 상태에 따라 진료비가 달라질 수 있습니다",
       },
       examination: {
         basic: "기본 검진",
@@ -350,13 +350,13 @@ export default {
         author1: "Reviewer1",
         author2: "Reviewer2",
         reviewContent1:
-          "의료진이 친절하고 시설이 깨끗해요. 진료도 꼼꼼하게 봐주셔서 좋았습니다.",
+          "진료진이 친절하고 시설이 깨끗해요. 진료도 꼼꼼하게 봐주셔서 좋았습니다.",
         reviewContent2:
           "대기 시간이 조금 있었지만 전반적으로 만족스러웠어요. 특히 의사선생님의 설명이 자세했습니다.",
       },
     },
     plastic: {
-      title: "병원 목록", // Changed from "의료기관 목록"
+      title: "병원 목록", // Changed from "진료기관 목록"
       types: {
         general: "종합병원",
         plastic: "성형외과",
@@ -513,11 +513,11 @@ export default {
         // 얼굴성형
         facial: {
           location1: "디에이성형외과 얼굴센터",
-          location2: "더뷰티성형외과 안면윤곽센터",
+          location2: "더시술성형외과 안면윤곽센터",
           address1: "강남구 압구정동",
           address2: "강남구 신사동",
           name1: "디에이성형외과",
-          name2: "더뷰티성형외과",
+          name2: "더시술성형외과",
         },
         // 눈성형
         eye: {
@@ -563,7 +563,7 @@ export default {
         author1: "Reviewer1",
         author2: "Reviewer2",
         reviewContent1:
-          "의료진이 친절하고 시설이 깨끗해요. 진료도 꼼꼼하게 봐주셔서 좋았습니다.",
+          "진료진이 친절하고 시설이 깨끗해요. 진료도 꼼꼼하게 봐주셔서 좋았습니다.",
         reviewContent2:
           "대기 시간이 조금 있었지만 전반적으로 만족스러웠어요. 특히 의사선생님의 설명이 자세했습니다.",
       },
@@ -876,8 +876,8 @@ export default {
       },
       guidelines: {
         title: "게시글 작성 시 유의사항",
-        point1: "의료 상담은 참고용으로만 활용해주세요.",
-        point2: "정확한 진단은 반드시 의료진과 상담하시기 바랍니다.",
+        point1: "진료 상담은 참고용으로만 활용해주세요.",
+        point2: "정확한 진단은 반드시 진료진과 상담하시기 바랍니다.",
         point3: "개인정보(연락처 등)는 공개하지 말아주세요.",
         point4: "비방, 홍보성 게시글은 관리자에 의해 삭제될 수 있습니다.",
       },
@@ -923,8 +923,8 @@ export default {
       },
       guidelines: {
         title: "게시글 작성 시 유의사항",
-        point1: "의료 상담은 참고용으로만 활용해주세요.",
-        point2: "정확한 진단은 반드시 의료진과 상담하시기 바랍니다.",
+        point1: "진료 상담은 참고용으로만 활용해주세요.",
+        point2: "정확한 진단은 반드시 진료진과 상담하시기 바랍니다.",
         point3: "개인정보(연락처 등)는 공개하지 말아주세요.",
         point4: "비방, 홍보성 게시글은 관리자에 의해 삭제될 수 있습니다.",
       },
@@ -1093,7 +1093,7 @@ export default {
         paymentManagement: "결제 관리",
         paymentDetails: "결제 내역",
         medicalCertificates: "진료비 영수증",
-        medicalReports: "의료비 정산서",
+        medicalReports: "진료비 정산서",
 
         settings: "설정",
         alarmSettings: "알림 설정",

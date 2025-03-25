@@ -1,0 +1,204 @@
+/* 카테고리 필터 컨테이너 */
+.category-filter-container {
+  display: flex;
+  gap: 12px;
+  margin: 0 0 1rem 0;
+  padding: 0 4px;
+  overflow-x: auto;
+}
+
+.filter-button {
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: #f0f0f0;
+  color: #666;
+  white-space: nowrap;
+}
+
+.filter-button:hover {
+  background-color: #e5e5e5;
+}
+
+.filter-button.active {
+  background-color: #3b82f6;
+  color: white;
+  font-weight: 600;
+}
+
+/* 활성화된 의료 버튼 */
+.filter-button.medical.active {
+  background-color: #38bdf8;
+}
+
+/* 활성화된 시술 버튼 */
+.filter-button.beauty.active {
+  background-color: #e879f9;
+}
+
+/* 정렬 옵션 스크롤 */
+.sort-options-container {
+  display: flex;
+  overflow-x: auto;
+  gap: 8px;
+  padding: 8px 4px;
+  margin-bottom: 8px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.sort-options-container::-webkit-scrollbar {
+  display: none;
+}
+
+.sort-option-button {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid #e5e7eb;
+  font-size: 14px;
+  white-space: nowrap;
+  background-color: white;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sort-option-button.active {
+  background-color: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+}
+
+/* 커뮤니티 게시글 스타일 */
+.community-post-card {
+  margin-bottom: 12px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s ease;
+}
+
+.community-post-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.community-post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px 0;
+}
+
+.community-post-category {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.community-post-date {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.community-post-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  padding: 0 12px;
+}
+
+.community-post-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 12px 8px;
+}
+
+.community-post-stats {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #6b7280;
+}
+
+.community-post-stat {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.community-post-hospital {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.community-post-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding: 0 12px 8px;
+}
+
+.community-post-tag {
+  background-color: #f3f4f6;
+  color: #6b7280;
+  padding: 4px 8px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+/* 빈 상태 스타일 */
+.community-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  text-align: center;
+  color: #6b7280;
+}
+
+.community-empty-state-icon {
+  color: #e5e7eb;
+  margin-bottom: 1rem;
+}
+
+.community-empty-state-message {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.community-empty-state-submessage {
+  font-size: 0.85rem;
+  color: #9ca3af;
+}
+
+/* 글쓰기 버튼 스타일 */
+.community-write-button {
+  background: none;
+  border: none;
+  color: #3b82f6;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.community-write-button:hover {
+  color: #2563eb;
+}

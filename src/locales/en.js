@@ -264,7 +264,7 @@ export default {
         },
       },
       fees: {
-        basicConsultation: "Basic Consultation Fee", // 공식 의료 용어
+        basicConsultation: "Basic Consultation Fee", // 공식 진료 용어
         note: "* Additional fees may apply for specific treatments",
       },
       feeGuide: {

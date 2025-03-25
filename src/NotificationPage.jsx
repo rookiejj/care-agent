@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Bell } from "lucide-react";
+import {
+  Clock,
+  CheckCircle,
+  CreditCard,
+  MessageCircle,
+  Gift,
+} from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 const NotificationPage = () => {
@@ -22,57 +29,56 @@ const NotificationPage = () => {
     {
       id: 1,
       type: "system",
-      icon: "💪",
+      icon: <Clock size={20} color="#3b82f6" />,
       iconBg: "#dbeafe",
-      title: "회원권 만료 안내",
+      title: "진료 예약 만료 안내",
       content:
-        "회원님의 3개월 헬스장 이용권이 3일 후 만료됩니다. 연장을 원하시면 결제 페이지를 방문해주세요.",
+        "고객님의 정기 검진 예약이 3일 후 만료됩니다. 재예약을 원하시면 예약 페이지를 방문해주세요.",
       time: "방금 전",
       read: false,
     },
     {
       id: 2,
       type: "booking",
-      icon: "✅",
+      icon: <CheckCircle size={20} color="#10b981" />,
       iconBg: "#dcfce7",
-      title: "PT 예약 확정",
-      content: "김트레이너와의 PT 세션이 내일 오후 2시로 확정되었습니다.",
+      title: "진료 예약 확정",
+      content: "김의사 선생님과의 상담이 내일 오후 2시로 확정되었습니다.",
       time: "1시간 전",
       read: false,
     },
     {
       id: 3,
       type: "payment",
-      icon: "💰",
+      icon: <CreditCard size={20} color="#eab308" />,
       iconBg: "#fef9c3",
       title: "결제 완료",
-      content: "필라테스 6개월 이용권 결제가 성공적으로 완료되었습니다.",
+      content: "물리치료 10회 패키지 결제가 성공적으로 완료되었습니다.",
       time: "어제",
       read: true,
     },
     {
       id: 4,
       type: "community",
-      icon: "💬",
+      icon: <MessageCircle size={20} color="#f97316" />,
       iconBg: "#ffedd5",
-      title: "새 댓글 알림",
+      title: "새 후기 알림",
       content:
-        "회원님의 게시글에 새로운 댓글이 달렸습니다: '운동 루틴 정말 도움이 됐어요!'",
+        "고객님의 치료 후기에 새로운 댓글이 달렸습니다: '치료 경험 공유 감사합니다!'",
       time: "2일 전",
       read: true,
     },
     {
       id: 5,
       type: "system",
-      icon: "🎁",
+      icon: <Gift size={20} color="#3b82f6" />,
       iconBg: "#dbeafe",
       title: "이벤트 알림",
       content:
-        "신규 회원 이벤트: 이번 달 신규 가입자 대상 PT 1회 무료 체험 이벤트를 진행합니다.",
+        "신규 고객 이벤트: 이번 달 첫 방문 고객 대상 건강 검진 20% 할인 이벤트를 진행합니다.",
       time: "3일 전",
       read: true,
     },
-    // 추가 데이터들
   ]);
 
   // 알림을 읽음 처리하는 함수
@@ -257,9 +263,7 @@ const NotificationPage = () => {
                       flexShrink: 0,
                     }}
                   >
-                    <span style={{ fontSize: "1.25rem" }}>
-                      {notification.icon}
-                    </span>
+                    {notification.icon}
                   </div>
                   <div style={{ flex: 1 }}>
                     <div

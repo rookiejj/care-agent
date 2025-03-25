@@ -65,12 +65,20 @@ body {
   }
 }
 
-.card {
-  padding: 2em;
-}
-
 .read-the-docs {
   color: #888;
+}
+
+p {
+  margin: 0.5rem 0;
+}
+
+.text-sm {
+  font-size: 14px;
+}
+
+.text-xs {
+  font-size: 12px;
 }
 
 .container {
@@ -79,6 +87,7 @@ body {
   margin: 0 auto;
   height: 100dvh;
   display: flex;
+  position: "relative";
   flex-direction: column;
   background-color: white;
   position: fixed;
@@ -89,6 +98,10 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   z-index: 1;
+}
+
+.container .content {
+  margin: 0rem 0.5rem;
 }
 
 /* Remove outline and border from all buttons */
@@ -175,6 +188,21 @@ button:active {
   padding: 0.5rem;
 }
 
+.section-container {
+  margin-bottom: 1rem;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 0.5rem;
+}
+
+.section-title {
+  font-weight: bold;
+}
+
 .detail-page-header {
   padding: 1rem;
   display: flex;
@@ -187,11 +215,27 @@ button:active {
 
 .back-button {
   background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
   border: none;
   cursor: pointer;
   font-size: 2rem;
   color: #333;
   padding: 0 10px;
+  overflow: hidden;
+}
+
+.card {
+  padding: 1em;
+  background-color: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 강화 */
+  overflow: hidden;
+  color: #333;
+  border: 1px solid #f0f0f0; /* 테두리 추가 */
 }
 
 /* 모바일 최적화 */

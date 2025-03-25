@@ -1,0 +1,45 @@
+.category-filter-container {
+  display: flex;
+  gap: 12px;
+  margin: 16px 0;
+  padding: 0 4px;
+}
+
+.filter-button {
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: #f0f0f0;
+  color: #666;
+}
+
+/* 비활성 상태 호버 효과 */
+.filter-button:not(.active):hover {
+  background-color: #e5e5e5;
+}
+
+/* 비활성화된 버튼 스타일 (둘 다 끌 수 없을 때 한 쪽만 활성화된 상태) */
+.filter-button.disabled {
+  /* opacity: 0.7; */
+  cursor: not-allowed;
+}
+
+/* 활성화된 의료 버튼 */
+.filter-button.medical.active {
+  background-color: #38bdf8;
+  color: white;
+  box-shadow: 0 2px 4px rgba(56, 189, 248, 0.3);
+  font-weight: 600;
+}
+
+/* 활성화된 시술 버튼 */
+.filter-button.beauty.active {
+  background-color: #e879f9;
+  color: white;
+  box-shadow: 0 2px 4px rgba(232, 121, 249, 0.3);
+  font-weight: 600;
+}

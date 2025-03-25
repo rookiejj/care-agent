@@ -1,0 +1,219 @@
+.favorites-tabs {
+  display: flex;
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 0.5rem;
+}
+
+.favorites-tab {
+  /* padding: 0.75rem 1.25rem; */
+  font-size: 1rem;
+  font-weight: 500;
+  color: #6b7280;
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.favorites-tab.active {
+  color: #3b82f6;
+  font-weight: 600;
+}
+
+.favorites-tab.active::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 25%;
+  right: 25%;
+  height: 2px;
+  background-color: #3b82f6;
+}
+
+.favorites-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  text-align: center;
+  color: #6b7280;
+}
+
+.favorites-item {
+  background-color: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+  overflow: hidden;
+  border: 1px solid #f0f0f0;
+}
+
+.favorites-item-header {
+  display: flex;
+  /* padding: 0.75rem; */
+  align-items: center;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.favorites-item-image {
+  width: 5rem;
+  height: 5rem;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  /* margin-right: 0.75rem; */
+}
+
+.favorites-item-info {
+  flex: 1;
+  margin-left: 1rem;
+}
+
+.favorites-item-title {
+  font-weight: 600;
+  margin: 0;
+  font-size: 0.95rem;
+  color: #1f2937;
+}
+
+.favorites-item-subtitle {
+  color: #6b7280;
+  font-size: 0.75rem;
+  margin: 0.25rem 0 0 0;
+}
+
+.favorites-item-rating {
+  display: flex;
+  align-items: center;
+  margin-top: 0.25rem;
+}
+
+.favorites-item-rating-stars {
+  color: #fbbf24;
+  margin-right: 0.25rem;
+}
+
+.favorites-item-rating-value {
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.favorites-item-rating-count {
+  color: #9ca3af;
+  font-size: 0.75rem;
+  margin-left: 0.25rem;
+}
+
+.favorites-item-body {
+  padding: 0.75rem 0;
+}
+
+.favorites-item-description {
+  margin: 0 0 0.75rem 0;
+  font-size: 0.875rem;
+  color: #4b5563;
+  line-height: 1.4;
+}
+
+.favorites-item-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.tag {
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+.tag-medical {
+  background-color: #e0f2fe;
+  color: #0369a1;
+}
+
+.tag-cosmetic {
+  background-color: #fae8ff;
+  color: #a21caf;
+}
+
+.tag-event {
+  background-color: #fff7ed;
+  color: #c2410c;
+}
+
+.favorites-item-footer {
+  display: flex;
+  padding: 0.75rem 0;
+  border-top: 1px solid #f3f4f6;
+  justify-content: space-between;
+}
+
+.favorites-item-price {
+  font-weight: 600;
+  color: #3b82f6;
+}
+
+.favorites-item-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.favorites-action-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  background-color: #f3f4f6;
+  color: #4b5563;
+  cursor: pointer;
+  padding: 0.5rem; /* 패딩 추가 */
+}
+
+.favorites-action-button.primary {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.favorites-action-button.danger {
+  background-color: #fee2e2;
+  color: #ef4444;
+}
+
+/* 필터 스타일 */
+.favorites-filters {
+  display: flex;
+  padding: 0.5rem 0;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.favorites-filters::-webkit-scrollbar {
+  display: none;
+}
+
+.filter-chip {
+  padding: 0.4rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 1px solid #e5e7eb;
+  background-color: white;
+  color: #6b7280;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.filter-chip.active {
+  background-color: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+}
