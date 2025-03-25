@@ -87,6 +87,27 @@ const FavoritesPage = ({ currentLocation, notificationCount }) => {
       distance: "0.8km",
       isEvent: false,
     },
+    {
+      id: 5,
+      type: "medical",
+      title: "굿모닝 치과",
+      image: getHospitalImage("all", 5),
+      subtitle: "임플란트 전문",
+      rating: 4.5,
+      reviewCount: 178,
+      description:
+        "첨단 디지털 장비를 활용한 무통 임플란트. 3월 한정 스케일링 할인.",
+      tags: ["치과", "임플란트", "스케일링"],
+      price: "상담 무료",
+      location: "서울시 송파구",
+      distance: "4.2km",
+      isEvent: true,
+      eventPeriod: "3.01 - 3.31",
+      eventContent: "스케일링 + 검진 패키지",
+      originalPrice: "80,000원",
+      discountPrice: "49,000원",
+      discountRate: "38%",
+    },
   ];
 
   // 탭에 따른 필터링
