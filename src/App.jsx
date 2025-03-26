@@ -97,6 +97,8 @@ export const PageHeader = ({
         alignItems: "center",
         justifyContent: "space-between",
         zIndex: "100",
+        height: "1.5rem",
+        marginTop: "0.5rem",
       }}
     >
       <div style={{ display: "flex", alignItems: "center" }}>
