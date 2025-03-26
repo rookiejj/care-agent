@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useData } from "./DataContext";
+
 import "./SearchPage.css";
 import { PageHeader } from "./App";
 import SearchBar from "./SearchBar";
@@ -6,6 +8,8 @@ import CategoryFilterButtons from "./CategoryFilterButtons";
 
 const SearchPage = ({ currentLocation, notificationCount }) => {
   const [filters, setFilters] = useState({ medical: true, cosmetic: true });
+
+  const { favoritesData } = useData();
 
   const handleFilterChange = (newFilters) => {
     setFilters(newFilters);
