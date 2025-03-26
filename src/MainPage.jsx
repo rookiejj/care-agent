@@ -14,7 +14,7 @@ const MainPage = ({ currentLocation, notificationCount }) => {
     <div className="container">
       <PageHeader
         showMainIcon={true}
-        title="몬짐 케어 (진료/시술)"
+        title="슈퍼휴먼"
         showLocationButton={true}
         currentLocation={currentLocation}
         backButtonVisible={true}
