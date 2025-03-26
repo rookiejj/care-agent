@@ -92,11 +92,11 @@ const EventCard = ({ item }) => (
         </span>
 
         {/* 태그 - 병원 카드와 동일한 스타일 */}
-        <div className="favorites-item-tags">
-          <span className={`tag tag-${item.type}`}>
+        <div className="event-card-item-tags">
+          <span className={`event-tag event-tag-${item.type}`}>
             {item.type === "medical" ? "진료" : "시술"}
           </span>
-          <span className="tag tag-event">이벤트</span>
+          <span className="event-tag event-tag-event">이벤트</span>
         </div>
       </div>
 
