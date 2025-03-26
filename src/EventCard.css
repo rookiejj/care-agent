@@ -1,0 +1,52 @@
+.favorites-item-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  /* margin-bottom: 0.75rem; */
+}
+
+.tag {
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+.tag-medical {
+  background-color: #e0f2fe;
+  color: #0369a1;
+}
+
+.tag-cosmetic {
+  background-color: #fae8ff;
+  color: #a21caf;
+}
+
+.tag-event {
+  background-color: #fff7ed;
+  color: #c2410c;
+}
+
+.favorites-action-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  background-color: #f3f4f6;
+  color: #4b5563;
+  cursor: pointer;
+  padding: 0.5rem; /* 패딩 추가 */
+}
+
+.favorites-action-button.primary {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.favorites-action-button.danger {
+  background-color: #fee2e2;
+  color: #ef4444;
+}

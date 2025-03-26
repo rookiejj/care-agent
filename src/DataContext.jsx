@@ -1,11 +1,13 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { getHospitalImage } from "./App";
 
 const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {
   const { t, i18n } = useTranslation();
   const [data, setData] = useState({
+    favoritesData: [],
     facilityInfo: {},
     gymReviews: [],
     gymData: {},
@@ -17,6 +19,102 @@ export const DataProvider = ({ children }) => {
 
   useEffect(() => {
     setData({
+      favoritesData: [
+        {
+          id: 1,
+          type: "medical",
+          title: "서울 연세 내과",
+          image: getHospitalImage("all", 1),
+          subtitle: "심장내과 전문 병원",
+          rating: 4.8,
+          reviewCount: 124,
+          description:
+            "내과 종합검진 20% 할인 이벤트 진행 중. 건강보험 검진 가능.",
+          tags: ["내과", "검진", "할인 이벤트"],
+          price: "검진 비용 문의",
+          location: "서울시 강남구",
+          distance: "2.3km",
+          isEvent: true,
+          eventPeriod: "3.25 - 4.30",
+          eventContent: "종합검진 패키지 특별 할인",
+          originalPrice: "150,000원",
+          discountPrice: "120,000원",
+          discountRate: "20%",
+        },
+
+        {
+          id: 2,
+          type: "medical",
+          title: "김연아 정형외과",
+          image: getHospitalImage("all", 3),
+          subtitle: "관절 전문",
+          rating: 4.9,
+          reviewCount: 213,
+          description: "관절 통증이나 스포츠 손상에 특화된 클리닉. 예약 필수.",
+          tags: ["정형외과", "관절", "스포츠"],
+          price: "진료비 5,000원~",
+          location: "서울시 서초구",
+          distance: "3.7km",
+          isEvent: false,
+        },
+        {
+          id: 3,
+          type: "cosmetic",
+          title: "뷰티 클리닉 센터",
+          image: getHospitalImage("all", 2),
+          subtitle: "피부 관리 전문",
+          rating: 4.6,
+          reviewCount: 86,
+          description:
+            "개인 맞춤형 피부 관리 프로그램. 첫 방문 고객 상담료 무료.",
+          tags: ["피부 관리", "레이저", "할인 이벤트"],
+          price: "시술 60,000원~",
+          location: "서울시 마포구",
+          distance: "1.5km",
+          isEvent: true,
+          eventPeriod: "3.15 - 4.15",
+          eventContent: "첫 방문 고객 상담료 무료",
+          originalPrice: "60,000원",
+          discountPrice: "무료 (상담)",
+          discountRate: "100%",
+        },
+        {
+          id: 4,
+          type: "cosmetic",
+          title: "라인 성형외과",
+          image: getHospitalImage("all", 4),
+          subtitle: "안면윤곽 전문",
+          rating: 4.7,
+          reviewCount: 156,
+          description: "개인별 맞춤 안면윤곽 디자인. 상담 예약 후 방문 필수.",
+          tags: ["성형외과", "안면윤곽"],
+          price: "상담 무료",
+          location: "서울시 강남구",
+          distance: "0.8km",
+          isEvent: false,
+        },
+        {
+          id: 5,
+          type: "medical",
+          title: "굿모닝 치과",
+          image: getHospitalImage("all", 5),
+          subtitle: "임플란트 전문",
+          rating: 4.5,
+          reviewCount: 178,
+          description:
+            "첨단 디지털 장비를 활용한 무통 임플란트. 3월 한정 스케일링 할인.",
+          tags: ["치과", "임플란트", "스케일링"],
+          price: "상담 무료",
+          location: "서울시 송파구",
+          distance: "4.2km",
+          isEvent: true,
+          eventPeriod: "3.01 - 3.31",
+          eventContent: "스케일링 + 검진 패키지",
+          originalPrice: "80,000원",
+          discountPrice: "49,000원",
+          discountRate: "38%",
+        },
+      ],
       facilityInfo: {
         gym: {
           name: t("facility.examples.location1"),
