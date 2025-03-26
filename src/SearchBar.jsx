@@ -10,6 +10,7 @@ const SearchBar = ({
   inputStyle = {},
   iconStyle = {},
   goSearch = false,
+  shouldAutoFocus = true,
 }) => {
   const [inputText, setInputText] = useState(initialValue);
   const [isFocused, setIsFocused] = useState(false);
@@ -21,7 +22,7 @@ const SearchBar = ({
   useEffect(() => {
     // 약간의 지연 후 포커스
     const timer = setTimeout(() => {
-      if (inputRef.current) {
+      if (shouldAutoFocus && inputRef.current) {
         inputRef.current.focus();
         // 모바일에서 키보드를 강제로 표시하기 위한 추가 조치
         // inputRef.current.click(); // 일부 모바일 브라우저에서 도움이 될 수 있음
