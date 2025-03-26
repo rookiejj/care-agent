@@ -11,7 +11,7 @@
   gap: 0.5rem;
   margin-bottom: 0.5rem;
   border-radius: 20px;
-  /* border: 1px solid #e5e7eb; */
+  border: none;
   font-size: 14px;
   white-space: nowrap;
   background-color: #f0f0f0;
@@ -21,13 +21,14 @@
 }
 
 .filter-button:hover {
-  /* background-color: #e5e5e5; */
+  background-color: #e5e5e5;
 }
 
 .filter-button.active {
   background-color: #3b82f6;
   color: white;
   font-weight: 600;
+  border: none;
 }
 
 /* 비활성 상태 호버 효과 */
@@ -45,14 +46,16 @@
 .filter-button.medical.active {
   background-color: #38bdf8;
   color: white;
-  /* box-shadow: 0 2px 4px rgba(56, 189, 248, 0.3); */
+  box-shadow: 0 2px 4px rgba(56, 189, 248, 0.3);
   font-weight: 600;
+  border: none;
 }
 
 /* 활성화된 시술 버튼 */
 .filter-button.cosmetic.active {
   background-color: #e879f9;
   color: white;
-  /* box-shadow: 0 2px 4px rgba(232, 121, 249, 0.3); */
+  box-shadow: 0 2px 4px rgba(232, 121, 249, 0.3);
   font-weight: 600;
+  border: none;
 }
