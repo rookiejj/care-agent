@@ -382,7 +382,7 @@ const FavoritesPage = ({ currentLocation, notificationCount }) => {
         notificationCount={notificationCount}
         showNotification={true}
       />
-      <div className="content" style={{ marginBottom: "3rem" }}>
+      <div className="content">
         {/* 탭 네비게이션 */}
         <div className="favorites-tabs">
           <button

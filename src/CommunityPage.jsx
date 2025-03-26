@@ -115,7 +115,7 @@ const CommunityPage = ({ currentLocation, notificationCount }) => {
         }
       />
 
-      <div className="content" style={{ marginBottom: "3.5rem" }}>
+      <div className="content">
         {/* 카테고리 필터 버튼 */}
         <CategoryFilterButtons
           onFilterChange={(newFilters) => setFilters(newFilters)}
