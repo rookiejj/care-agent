@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-
+import { useNavigate } from "react-router-dom";
 import { X, Search } from "lucide-react";
 
 const SearchBar = ({
@@ -9,9 +9,27 @@ const SearchBar = ({
   style = {},
   inputStyle = {},
   iconStyle = {},
+  goSearch = false,
 }) => {
   const [inputText, setInputText] = useState(initialValue);
   const [isFocused, setIsFocused] = useState(false);
+  const inputRef = useRef(null);
+
+  const navigate = useNavigate();
+
+  // 컴포넌트가 마운트될 때 자동으로 포커스 설정
+  useEffect(() => {
+    // 약간의 지연 후 포커스
+    const timer = setTimeout(() => {
+      if (inputRef.current) {
+        inputRef.current.focus();
+        // 모바일에서 키보드를 강제로 표시하기 위한 추가 조치
+        // inputRef.current.click(); // 일부 모바일 브라우저에서 도움이 될 수 있음
+      }
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []); // 빈 의존성 배열로 컴포넌트 마운트 시 한 번만 실행
 
   // Simple direct state update
   const handleChange = (e) => {
@@ -68,11 +86,12 @@ const SearchBar = ({
             ...iconStyle,
           }}
         >
-          <Search size={18} strokeWidth={2} />
+          {/* <Search size={18} strokeWidth={2} /> */}
         </div>
 
         {/* Input Field */}
         <input
+          ref={inputRef}
           type="text"
           value={inputText}
           onChange={handleChange}
@@ -90,6 +109,12 @@ const SearchBar = ({
             color: "#1f2937",
             fontWeight: "500",
             ...inputStyle,
+          }}
+          onClick={(e) => {
+            if (goSearch) {
+              navigate("/search");
+              console.log("click");
+            }
           }}
         />
 

@@ -24,7 +24,7 @@ const MainPage = ({ currentLocation, notificationCount }) => {
       />
       <div className="content">
         <StatusWidget />
-        <SearchBar style={{ margin: "2rem 0" }} />
+        <SearchBar style={{ margin: "2rem 0 0.5rem" }} goSearch={true} />
 
         <div className="section-container">
           <div className="section-header">
@@ -40,6 +40,7 @@ const MainPage = ({ currentLocation, notificationCount }) => {
             />
           </div>
           <CosmeticCategories />
+          <div style={{ height: "30rem" }}></div>
         </div>
       </div>
     </div>
