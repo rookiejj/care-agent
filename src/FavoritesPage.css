@@ -188,10 +188,9 @@
 /* 필터 스타일 */
 .favorites-filters {
   display: flex;
-  padding: 0.5rem 0;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
   overflow-x: auto;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
 }
@@ -201,15 +200,18 @@
 }
 
 .filter-chip {
-  padding: 0.4rem 0.75rem;
-  border-radius: 9999px;
-  font-size: 0.75rem;
-  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-radius: 20px;
   border: 1px solid #e5e7eb;
+  font-size: 14px;
+  white-space: nowrap;
   background-color: white;
   color: #6b7280;
   cursor: pointer;
-  white-space: nowrap;
+  transition: all 0.2s ease;
 }
 
 .filter-chip.active {

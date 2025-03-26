@@ -1,20 +1,33 @@
 .category-filter-container {
   display: flex;
-  gap: 12px;
-  margin: 16px 0;
-  padding: 0 4px;
+  overflow-x: auto;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .filter-button {
-  padding: 8px 20px;
-  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-radius: 20px;
+  border: 1px solid #e5e7eb;
   font-size: 14px;
-  font-weight: 500;
-  border: none;
+  white-space: nowrap;
+  background-color: #f0f0f0;
+  color: #6b7280;
   cursor: pointer;
   transition: all 0.2s ease;
-  background-color: #f0f0f0;
-  color: #666;
+}
+
+.filter-button:hover {
+  background-color: #e5e5e5;
+}
+
+.filter-button.active {
+  background-color: #3b82f6;
+  color: white;
+  font-weight: 600;
 }
 
 /* 비활성 상태 호버 효과 */
@@ -37,7 +50,7 @@
 }
 
 /* 활성화된 시술 버튼 */
-.filter-button.beauty.active {
+.filter-button.cosmetic.active {
   background-color: #e879f9;
   color: white;
   box-shadow: 0 2px 4px rgba(232, 121, 249, 0.3);

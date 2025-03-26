@@ -57,6 +57,6 @@
   background-color: #0ea5e9;
 }
 
-.mode-toggle-item.beauty.active::after {
+.mode-toggle-item.cosmetic.active::after {
   background-color: #d946ef;
 }

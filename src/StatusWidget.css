@@ -29,7 +29,7 @@
 
 /* 태그 스타일 */
 .tag-medical,
-.tag-beauty {
+.tag-cosmetic {
   display: inline-block;
   padding: 2px 6px;
   border-radius: 4px;
@@ -43,7 +43,7 @@
   color: #0369a1;
 }
 
-.tag-beauty {
+.tag-cosmetic {
   background-color: #fae8ff;
   color: #a21caf;
 }
@@ -72,6 +72,6 @@
   background: linear-gradient(to right, #0ea5e9, #38bdf8);
 }
 
-.beauty-gradient {
+.cosmetic-gradient {
   background: linear-gradient(to right, #d946ef, #f0abfc);
 }

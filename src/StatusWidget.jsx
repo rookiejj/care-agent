@@ -6,7 +6,7 @@ import "./StatusWidget.css";
 // 진행 바 컴포넌트 - 진료/시술에 따라 다른 색상 사용
 const ProgressBar = ({ progress, type }) => {
   const gradientClass =
-    type === "medical" ? "medical-gradient" : "beauty-gradient";
+    type === "medical" ? "medical-gradient" : "cosmetic-gradient";
 
   return (
     <div className="progress-bar-new">
@@ -47,7 +47,7 @@ const StatusWidget = () => {
       title: "피부 관리 프로그램",
       date: "내일 오후 2시 피부과",
       progress: 65,
-      type: "beauty",
+      type: "cosmetic",
     },
     {
       id: 2,

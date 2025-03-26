@@ -68,7 +68,7 @@ const SearchBar = ({
           backgroundColor: isFocused ? "#ffffff" : "#f3f4f6",
           padding: "0 12px",
           borderRadius: "100px",
-          border: isFocused ? "2px solid #3b82f6" : "1px solid #e5e7eb",
+          border: isFocused ? "1px solid #3b82f6" : "1px solid #e5e7eb",
           boxShadow: isFocused
             ? "0 4px 6px -1px rgba(59, 130, 246, 0.1), 0 2px 4px -1px rgba(59, 130, 246, 0.06)"
             : "none",

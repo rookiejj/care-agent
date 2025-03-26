@@ -5,7 +5,7 @@ import SearchBar from "./SearchBar";
 import CategoryFilterButtons from "./CategoryFilterButtons";
 
 const SearchPage = ({ currentLocation, notificationCount }) => {
-  const [filters, setFilters] = useState({ medical: true, beauty: true });
+  const [filters, setFilters] = useState({ medical: true, cosmetic: true });
 
   const handleFilterChange = (newFilters) => {
     setFilters(newFilters);

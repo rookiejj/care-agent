@@ -958,7 +958,7 @@ export default {
         procedure_consultation: "Мэс заслын зөвлөгөө",
         clinic_review: "Гоо сайхны эмнэлгийн сэтгэгдэл",
         aftercare_consultation: "Мэс засал дараах арчилгаа",
-        beauty_information: "Гоо сайхны мэдээлэл",
+        cosmetic_information: "Гоо сайхны мэдээлэл",
         other_inquiries: "Бусад асуултууд",
       },
       guidelines: {

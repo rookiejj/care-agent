@@ -918,7 +918,7 @@ export default {
         procedure_consultation: "시술 상담",
         clinic_review: "성형외과 후기",
         aftercare_consultation: "수술 후 관리 상담",
-        beauty_information: "미용 정보",
+        cosmetic_information: "미용 정보",
         other_inquiries: "기타 문의",
       },
       guidelines: {

@@ -946,7 +946,7 @@ export default {
         procedure_consultation: "Procedure Consultation",
         clinic_review: "Plastic Surgery Clinic Reviews",
         aftercare_consultation: "Post-Surgery Care",
-        beauty_information: "Beauty Information",
+        cosmetic_information: "cosmetic Information",
         other_inquiries: "Other Inquiries",
       },
       guidelines: {

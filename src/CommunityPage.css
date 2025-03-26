@@ -1,52 +1,9 @@
-/* 카테고리 필터 컨테이너 */
-.category-filter-container {
-  display: flex;
-  gap: 12px;
-  margin: 0 0 1rem 0;
-  padding: 0 4px;
-  overflow-x: auto;
-}
-
-.filter-button {
-  padding: 8px 20px;
-  border-radius: 50px;
-  font-size: 14px;
-  font-weight: 500;
-  border: none;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  background-color: #f0f0f0;
-  color: #666;
-  white-space: nowrap;
-}
-
-.filter-button:hover {
-  background-color: #e5e5e5;
-}
-
-.filter-button.active {
-  background-color: #3b82f6;
-  color: white;
-  font-weight: 600;
-}
-
-/* 활성화된 의료 버튼 */
-.filter-button.medical.active {
-  background-color: #38bdf8;
-}
-
-/* 활성화된 시술 버튼 */
-.filter-button.beauty.active {
-  background-color: #e879f9;
-}
-
 /* 정렬 옵션 스크롤 */
 .sort-options-container {
   display: flex;
   overflow-x: auto;
-  gap: 8px;
-  padding: 8px 4px;
-  margin-bottom: 8px;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
 }
@@ -58,8 +15,8 @@
 .sort-option-button {
   display: flex;
   align-items: center;
-  gap: 4px;
-  padding: 6px 12px;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
   border-radius: 20px;
   border: 1px solid #e5e7eb;
   font-size: 14px;
