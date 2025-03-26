@@ -47,7 +47,7 @@ const getSuperhumanIcon = () => {
   return `/images/${"super_human_icon.png"}`;
 };
 
-const getProfileImage = () => {
+export const getProfileImage = () => {
   return `/images/${"profile.png"}`;
 };
 

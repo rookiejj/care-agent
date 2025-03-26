@@ -1,150 +1,46 @@
-.mypage-content {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 0.5rem;
-}
-
-/* 프로필 섹션 */
-.profile-section {
-  margin-bottom: 1rem;
-}
-
-.profile-card {
-  background-color: white;
-  border-radius: 0.75rem;
-  padding: 1.5rem 1rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  border: 1px solid #f0f0f0;
-}
-
-.profile-info {
-  display: flex;
-  align-items: center;
-}
-
-.profile-avatar {
-  width: 4rem;
-  height: 4rem;
-  border-radius: 50%;
-  overflow: hidden;
-  margin-right: 1rem;
-  background-color: #f3f4f6;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.avatar-image {
+.mypage-card-button {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.profile-details {
-  flex: 1;
-}
-
-.profile-name-container {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.profile-name {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin: 0;
-  color: #1f2937;
-}
-
-.profile-level {
-  font-size: 0.875rem;
-  color: #6b7280;
-  margin-top: 0.25rem;
-}
-
-/* 포인트 섹션 */
-.points-section {
-  background-color: white;
-  border-radius: 0.75rem;
-  overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  border: 1px solid #f0f0f0;
-  margin-bottom: 1rem;
-}
-
-.points-value {
-  font-weight: 600;
-  font-size: 1.125rem;
-  color: #333;
-}
-
-/* 메뉴 그룹 */
-.menu-group {
-  background-color: white;
-  border-radius: 0.75rem;
-  overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  border: 1px solid #f0f0f0;
-  margin-bottom: 1rem;
-}
-
-.menu-item {
+  padding: 1rem;
+  text-align: left;
+  border: none;
+  cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: transparent;
+  color: #333;
+}
+
+.mypage-card-button:first-child {
+  border-top-left-radius: 0.75rem;
+  border-top-right-radius: 0.75rem;
+}
+
+.mypage-card-button:last-child {
+  border-bottom-left-radius: 0.75rem;
+  border-bottom-right-radius: 0.75rem;
+}
+
+.mypage-card-button-text {
+  font-weight: 500;
+}
+
+.mypage-card-button-icon {
+  color: #9ca3af;
+}
+
+.profile-section {
+  background-color: white;
+  color: #333;
   padding: 1rem;
-  border-bottom: 1px solid #f3f4f6;
-  cursor: pointer;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.15); /* 하나로 단순화 */
+  border: 1px solid #e5e7eb; /* 추가: 실제 테두리 */
 }
 
-.menu-item:last-child {
-  border-bottom: none;
-}
-
-.menu-item-left {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.menu-item span {
-  font-size: 0.9375rem;
-  color: #1f2937;
-}
-
-/* 알림 표시 */
-.notification-dot {
-  width: 0.5rem;
-  height: 0.5rem;
-  background-color: #ef4444;
+.profile-avatar {
+  width: 5rem;
+  height: 5rem;
+  background-color: #e5e7eb;
   border-radius: 50%;
-  margin-right: 0.5rem;
-}
-
-/* 푸터 섹션 */
-.footer-section {
-  padding: 0 0.5rem;
-  margin-bottom: 3rem;
-}
-
-.footer-title {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #6b7280;
-  margin-bottom: 0.5rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-.footer-item {
-  padding: 0.75rem 0;
-  font-size: 0.9375rem;
-  color: #4b5563;
-  cursor: pointer;
-}
-
-.footer-item:hover {
-  color: #3b82f6;
 }

@@ -1,6 +1,7 @@
 import React from "react";
-import { PageHeader } from "./App";
+import { PageHeader, getProfileImage } from "./App";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import {
   ChevronRight,
   Award,
@@ -14,20 +15,9 @@ import {
 } from "lucide-react";
 import "./MyPage.css";
 
-const MenuItem = ({ icon, text, onClick, rightComponent }) => {
-  return (
-    <div className="menu-item" onClick={onClick}>
-      <div className="menu-item-left">
-        {icon}
-        <span>{text}</span>
-      </div>
-      {rightComponent || <ChevronRight size={18} color="#9ca3af" />}
-    </div>
-  );
-};
-
 const MyPage = ({ currentLocation, notificationCount }) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleMenuClick = (path) => {
     navigate(path);
@@ -35,95 +25,182 @@ const MyPage = ({ currentLocation, notificationCount }) => {
 
   return (
     <div className="container">
-      <PageHeader
-        title="마이페이지"
-        backButtonVisible={false}
-        showNotification={true}
-        notificationCount={notificationCount}
-      />
-      <div className="content mypage-content">
-        {/* 사용자 프로필 섹션 */}
-        <div className="profile-section">
-          <div className="profile-card">
-            <div className="profile-info">
-              <div className="profile-avatar">
-                <img
-                  src="/images/profile.png"
-                  alt="Profile"
-                  className="avatar-image"
-                />
-              </div>
-              <div className="profile-details">
-                <div className="profile-name-container">
-                  <h3 className="profile-name">초코로이</h3>
-                  <ChevronRight size={18} color="#9ca3af" />
-                </div>
-                <div className="profile-level">Lv.1</div>
-              </div>
+      <PageHeader title={t("mypage.medical.title")} />
+      <div className="content">
+        {/* Profile Section */}
+        <div
+          className="card profile-section"
+          style={{ marginBottom: "1.5rem" }}
+        >
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginBottom: "1rem",
+            }}
+          >
+            <img
+              src={getProfileImage()}
+              alt={name}
+              className="profile-avatar"
+              style={{
+                objectFit: "cover", // 이미지가 원형에 맞게 조정
+              }}
+            />
+            <div style={{ marginLeft: "1rem" }}>
+              <h2 style={{ fontWeight: "bold", fontSize: "1.125rem" }}>
+                Doctor King
+              </h2>
+              <p style={{ color: "#6b7280" }}>user@example.com</p>
             </div>
           </div>
+          <button className="secondary-button">
+            {t("mypage.medical.profile.edit")}
+          </button>{" "}
         </div>
 
-        {/* 포인트 정보 */}
-        <div className="points-section">
-          <MenuItem
-            icon={<Award size={20} color="#6b7280" />}
-            text="내 포인트"
-            rightComponent={<span className="points-value">200 P</span>}
-            // onClick={() => handleMenuClick("/points")}
-          />
+        {/* Medical Records Section */}
+        <div
+          className="card profile-section"
+          style={{ marginBottom: "1.5rem" }}
+        >
+          <h3
+            style={{
+              fontSize: "1rem",
+              fontWeight: "bold",
+              marginBottom: "0.75rem",
+            }}
+          >
+            {t("mypage.medical.menu.treatmentManagement")}
+          </h3>
+          <button className="mypage-card-button">
+            <span className="mypage-card-button-text">
+              {t("mypage.medical.menu.appointmentHistory")}
+            </span>
+            <span className="mypage-card-button-icon">→</span>
+          </button>
+          <button className="mypage-card-button">
+            <span className="mypage-card-button-text">
+              {t("mypage.medical.menu.medicalRecords")}
+            </span>
+            <span className="mypage-card-button-icon">→</span>
+          </button>
+          <button className="mypage-card-button">
+            <span className="mypage-card-button-text">
+              {t("mypage.medical.menu.prescriptionManagement")}
+            </span>
+            <span className="mypage-card-button-icon">→</span>
+          </button>
+          <button className="mypage-card-button">
+            <span className="mypage-card-button-text">
+              {t("mypage.medical.menu.healthCheckupResults")}
+            </span>
+            <span className="mypage-card-button-icon">→</span>
+          </button>
         </div>
 
-        {/* 메뉴 그룹 1 */}
-        <div className="menu-group">
-          <MenuItem
-            icon={<MapPin size={20} color="#6b7280" />}
-            text="활동ㆍ지정내역"
-            // onClick={() => handleMenuClick("/activities")}
-          />
-          <MenuItem
-            icon={<Calendar size={20} color="#6b7280" />}
-            text="내 예약ㆍ결제 내역"
-            // onClick={() => handleMenuClick("/bookings")}
-          />
+        {/* Payment Section */}
+        <div
+          className="card profile-section"
+          style={{ marginBottom: "1.5rem" }}
+        >
+          <h3
+            style={{
+              fontSize: "1rem",
+              fontWeight: "bold",
+              marginBottom: "0.75rem",
+            }}
+          >
+            {t("mypage.medical.menu.paymentManagement")}
+          </h3>
+          <button className="mypage-card-button">
+            <span className="mypage-card-button-text">
+              {t("mypage.medical.menu.paymentDetails")}
+            </span>
+            <span className="mypage-card-button-icon">→</span>
+          </button>
+          <button className="mypage-card-button">
+            <span className="mypage-card-button-text">
+              {t("mypage.medical.menu.medicalCertificates")}
+            </span>
+            <span className="mypage-card-button-icon">→</span>
+          </button>
+          <button className="mypage-card-button">
+            <span className="mypage-card-button-text">
+              {t("mypage.medical.menu.medicalReports")}
+            </span>
+            <span className="mypage-card-button-icon">→</span>
+          </button>
         </div>
 
-        {/* 메뉴 그룹 2 */}
-        <div className="menu-group">
-          <MenuItem
-            icon={<Heart size={20} color="#6b7280" />}
-            text="찜 목록"
-            onClick={() => handleMenuClick("/favorites")}
-          />
-          <MenuItem
-            icon={<Gift size={20} color="#6b7280" />}
-            text="혜택"
-            rightComponent={<div className="notification-dot"></div>}
-            // onClick={() => handleMenuClick("/benefits")}
-          />
+        {/* Settings Section */}
+        <div
+          className="card profile-section"
+          style={{ marginBottom: "1.5rem" }}
+        >
+          <h3
+            style={{
+              fontSize: "1rem",
+              fontWeight: "bold",
+              marginBottom: "0.75rem",
+            }}
+          >
+            {t("mypage.medical.menu.settings")}
+          </h3>
+          <button className="mypage-card-button">
+            <span className="mypage-card-button-text">
+              {t("mypage.medical.menu.alarmSettings")}
+            </span>
+            <span className="mypage-card-button-icon">→</span>
+          </button>
+          <button className="mypage-card-button">
+            <span className="mypage-card-button-text">
+              {t("mypage.medical.menu.personalInfoSettings")}
+            </span>
+            <span className="mypage-card-button-icon">→</span>
+          </button>
+          <button className="mypage-card-button">
+            <span className="mypage-card-button-text">
+              {t("mypage.medical.menu.termsOfUse")}
+            </span>
+            <span className="mypage-card-button-icon">→</span>
+          </button>
+          <button className="mypage-card-button">
+            <span className="mypage-card-button-text">
+              {t("mypage.medical.menu.privacyPolicy")}
+            </span>
+            <span className="mypage-card-button-icon">→</span>
+          </button>
+          <button className="mypage-card-button">
+            <span className="mypage-card-button-text">
+              {t("mypage.medical.menu.frequentlyAskedQuestions")}
+            </span>
+            <span className="mypage-card-button-icon">→</span>
+          </button>
+          <button className="mypage-card-button">
+            <span className="mypage-card-button-text">
+              {t("mypage.medical.menu.customerService")}
+            </span>
+            <span className="mypage-card-button-icon">→</span>
+          </button>
         </div>
 
-        {/* 메뉴 그룹 3 */}
-        <div className="menu-group">
-          <MenuItem
-            icon={<Edit size={20} color="#6b7280" />}
-            text="후기"
-            // onClick={() => handleMenuClick("/reviews")}
-          />
-          <MenuItem
-            icon={<Bell size={20} color="#6b7280" />}
-            text="알림"
-            onClick={() => handleMenuClick("/notifications")}
-          />
-        </div>
-
-        {/* Footer */}
-        <div className="footer-section">
-          <h4 className="footer-title">활동</h4>
-          <div className="footer-item">
-            <span>시술 전후 사진</span>
-          </div>
-        </div>
+        {/* Logout Button */}
+        <button
+          style={{
+            width: "100%",
+            padding: "1rem",
+            textAlign: "left",
+            color: "#ef4444",
+            backgroundColor: "white",
+            borderRadius: "0.75rem",
+            border: "none",
+            cursor: "pointer",
+            marginBottom: "5rem", // Add bottom margin to ensure visibility
+          }}
+        >
+          {t("mypage.medical.logout")}
+        </button>
       </div>
     </div>
   );

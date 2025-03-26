@@ -238,6 +238,16 @@ button:active {
   border: 1px solid #f0f0f0; /* 테두리 추가 */
 }
 
+.secondary-button {
+  width: 100%;
+  padding: 0.5rem;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
 /* 모바일 최적화 */
 @media (max-width: 480px) {
   .service-card {
