@@ -39,7 +39,7 @@ const HospitalCard = ({ item }) => (
           </span>
         ))}
       </div>
-      <div
+      {/* <div
         style={{
           display: "flex",
           justifyContent: "space-between",
@@ -50,9 +50,20 @@ const HospitalCard = ({ item }) => (
       >
         <span>{item.location}</span>
         <span>{item.distance}</span>
-      </div>
+      </div> */}
     </div>
+
     <div className="hospital-card-item-footer">
+      <div className="hospital-card-item-price">{item.price}</div>
+      <button className="hospital-card-action-button" aria-label="찜 삭제">
+        <Heart
+          size={18}
+          className={`hospital-card-action-button-${"active"}`}
+        />
+      </button>
+    </div>
+
+    {/* <div className="hospital-card-item-footer">
       <div className="hospital-card-item-price">{item.price}</div>
       <div className="hospital-card-item-actions">
         <button className="hospital-card-action-button" aria-label="예약">
@@ -68,7 +79,7 @@ const HospitalCard = ({ item }) => (
           <X size={18} />
         </button>
       </div>
-    </div>
+    </div> */}
   </div>
 );
 
