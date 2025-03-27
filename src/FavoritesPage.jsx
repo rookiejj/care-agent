@@ -52,56 +52,59 @@ const FavoritesPage = ({ currentLocation, notificationCount }) => {
 
   return (
     <div className="container">
-      <PageHeader
-        title="찜 목록"
-        showLocationButton={true}
-        currentLocation={currentLocation}
-        backButtonVisible={false}
-        notificationCount={notificationCount}
-        showNotification={true}
-      />
-      <div className="content">
-        {/* 탭 네비게이션 */}
-        <div className="favorites-tabs">
-          <button
-            className={`favorites-tab ${activeTab === "all" ? "active" : ""}`}
-            onClick={() => setActiveTab("all")}
-          >
-            전체
-          </button>
-          <button
-            className={`favorites-tab ${
-              activeTab === "medical" ? "active" : ""
-            }`}
-            onClick={() => setActiveTab("medical")}
-          >
-            진료
-          </button>
-          <button
-            className={`favorites-tab ${
-              activeTab === "cosmetic" ? "active" : ""
-            }`}
-            onClick={() => setActiveTab("cosmetic")}
-          >
-            시술
-          </button>
-        </div>
-
-        {/* 필터 옵션 */}
-        <div className="favorites-filters">
-          {filterOptions.map((filter) => (
+      <div className="fixed-header">
+        <PageHeader
+          title="찜 목록"
+          showLocationButton={true}
+          currentLocation={currentLocation}
+          backButtonVisible={false}
+          notificationCount={notificationCount}
+          showNotification={true}
+        />
+        <div className="header-function">
+          {/* 탭 네비게이션 */}
+          <div className="favorites-tabs">
             <button
-              key={filter.id}
-              className={`filter-chip ${
-                activeFilter === filter.id ? "active" : ""
-              }`}
-              onClick={() => setActiveFilter(filter.id)}
+              className={`favorites-tab ${activeTab === "all" ? "active" : ""}`}
+              onClick={() => setActiveTab("all")}
             >
-              {filter.label}
+              전체
             </button>
-          ))}
-        </div>
+            <button
+              className={`favorites-tab ${
+                activeTab === "medical" ? "active" : ""
+              }`}
+              onClick={() => setActiveTab("medical")}
+            >
+              진료
+            </button>
+            <button
+              className={`favorites-tab ${
+                activeTab === "cosmetic" ? "active" : ""
+              }`}
+              onClick={() => setActiveTab("cosmetic")}
+            >
+              시술
+            </button>
+          </div>
 
+          {/* 필터 옵션 */}
+          <div className="favorites-filters">
+            {filterOptions.map((filter) => (
+              <button
+                key={filter.id}
+                className={`filter-chip ${
+                  activeFilter === filter.id ? "active" : ""
+                }`}
+                onClick={() => setActiveFilter(filter.id)}
+              >
+                {filter.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+      <div className="content">
         {/* 찜 목록 아이템 */}
         {filteredItems.length === 0 ? (
           <div className="favorites-empty">
