@@ -20,11 +20,14 @@ const EventCard = ({ item }) => (
           <span className="event-card-item-price-discount">
             {item.discountPrice}
           </span>
-          <span className="event-card-item-price-discount-rate">
+          {/* <span className="event-card-item-price-discount-rate">
             {item.discountRate} 할인
-          </span>
+          </span> */}
         </div>
-        <div className="event-card-item-tags-container">
+        <span className="event-card-item-price-discount-rate">
+          {item.discountRate} 할인
+        </span>
+        {/* <div className="event-card-item-tags-container">
           <span className="event-tag event-tag-date">
             <Clock size={12} style={{ marginRight: "4px" }} />
             {item.eventPeriod}
@@ -33,11 +36,11 @@ const EventCard = ({ item }) => (
             {item.type === "medical" ? "진료" : "시술"}
           </span>
           <span className="event-tag event-tag-event">이벤트</span>
-        </div>
+        </div> */}
       </div>
     </div>
 
-    {/* <div className="event-card-item-tags">
+    <div className="event-card-item-tags-container">
       <span className="event-tag event-tag-date">
         <Clock size={12} style={{ marginRight: "4px" }} />
         {item.eventPeriod}
@@ -46,7 +49,7 @@ const EventCard = ({ item }) => (
         {item.type === "medical" ? "진료" : "시술"}
       </span>
       <span className="event-tag event-tag-event">이벤트</span>
-    </div> */}
+    </div>
 
     <div
       style={{
@@ -54,7 +57,7 @@ const EventCard = ({ item }) => (
         justifyContent: "space-between",
         fontSize: "0.75rem",
         color: "#6b7280",
-        margin: "12px 0",
+        marginBottom: "12px",
         borderBottom: "1px solid #f3f4f6",
         paddingBottom: "12px",
       }}

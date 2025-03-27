@@ -27,7 +27,7 @@
 .event-card-item-price-container {
   display: flex;
   align-items: center;
-  padding: 0.5rem 0 0.75rem;
+  padding: 0.25rem 0;
 }
 
 .event-card-item-price-original {
@@ -49,13 +49,13 @@
 }
 
 .event-card-item-price-discount-rate {
-  display: flex;
+  /* display: flex; */
   align-items: center;
   background-color: #fee2e2;
   color: #ef4444;
   font-size: 0.75rem;
   font-weight: bold;
-  padding: 2px 8px;
+  padding: 4px 8px;
   border-radius: 4px;
 }
 
@@ -63,6 +63,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.2rem;
+  margin: 1rem 0 0.5rem;
 }
 
 .event-tag {
