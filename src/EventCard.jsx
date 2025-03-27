@@ -13,7 +13,7 @@ const EventCard = ({ item }) => (
       />
       <div className="event-card-item-info">
         <h3 className="event-card-item-title">{item.eventContent}</h3>
-        <div className="event-card-item-price-body">
+        <div className="event-card-item-price-container">
           <span className="event-card-item-price-original">
             {item.originalPrice}
           </span>
@@ -24,21 +24,7 @@ const EventCard = ({ item }) => (
             {item.discountRate} 할인
           </span>
         </div>
-      </div>
-    </div>
-
-    {/* 이벤트 내용 */}
-    <div>
-      {/* 이벤트 기간 */}
-      <div
-        style={{
-          display: "flex",
-          gap: "8px", // 두 요소 사이의 간격
-          marginBottom: "12px",
-        }}
-      >
-        {/* 태그 - 병원 카드와 동일한 스타일 */}
-        <div className="event-card-item-tags">
+        <div className="event-card-item-tags-container">
           <span className="event-tag event-tag-date">
             <Clock size={12} style={{ marginRight: "4px" }} />
             {item.eventPeriod}
@@ -49,54 +35,63 @@ const EventCard = ({ item }) => (
           <span className="event-tag event-tag-event">이벤트</span>
         </div>
       </div>
+    </div>
 
-      {/* 병원 이름과 위치 - 덜 중요하게 */}
-      <div
+    {/* <div className="event-card-item-tags">
+      <span className="event-tag event-tag-date">
+        <Clock size={12} style={{ marginRight: "4px" }} />
+        {item.eventPeriod}
+      </span>
+      <span className={`event-tag event-tag-${item.type}`}>
+        {item.type === "medical" ? "진료" : "시술"}
+      </span>
+      <span className="event-tag event-tag-event">이벤트</span>
+    </div> */}
+
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        fontSize: "0.75rem",
+        color: "#6b7280",
+        margin: "12px 0",
+        borderBottom: "1px solid #f3f4f6",
+        paddingBottom: "12px",
+      }}
+    >
+      <span style={{ fontWeight: "500" }}>{item.title}</span>
+      <span style={{ display: "flex", alignItems: "center" }}>
+        <MapPin size={10} style={{ marginRight: "4px" }} /> {item.location}
+      </span>
+    </div>
+
+    <div
+      style={{
+        display: "flex",
+        gap: "8px",
+        paddingTop: "4px",
+      }}
+    >
+      <button
         style={{
+          flex: 1,
+          backgroundColor: "#3b82f6",
+          color: "white",
+          padding: "8px 0",
+          borderRadius: "8px",
+          fontSize: "0.875rem",
+          fontWeight: "500",
           display: "flex",
-          justifyContent: "space-between",
-          fontSize: "0.75rem",
-          color: "#6b7280",
-          marginBottom: "12px",
-          borderBottom: "1px solid #f3f4f6",
-          paddingBottom: "12px",
+          alignItems: "center",
+          justifyContent: "center",
+          border: "none",
         }}
       >
-        <span style={{ fontWeight: "500" }}>{item.title}</span>
-        <span style={{ display: "flex", alignItems: "center" }}>
-          <MapPin size={10} style={{ marginRight: "4px" }} /> {item.location}
-        </span>
-      </div>
-
-      {/* 버튼 영역 */}
-      <div
-        style={{
-          display: "flex",
-          gap: "8px",
-          paddingTop: "4px",
-        }}
-      >
-        <button
-          style={{
-            flex: 1,
-            backgroundColor: "#3b82f6",
-            color: "white",
-            padding: "8px 0",
-            borderRadius: "8px",
-            fontSize: "0.875rem",
-            fontWeight: "500",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            border: "none",
-          }}
-        >
-          <Calendar size={16} style={{ marginRight: "4px" }} /> 예약하기
-        </button>
-        <button className="favorites-action-button danger" aria-label="찜 삭제">
-          <X size={18} />
-        </button>
-      </div>
+        <Calendar size={16} style={{ marginRight: "4px" }} /> 예약하기
+      </button>
+      <button className="favorites-action-button danger" aria-label="찜 삭제">
+        <X size={18} />
+      </button>
     </div>
   </div>
 );
