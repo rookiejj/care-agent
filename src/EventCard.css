@@ -1,8 +1,69 @@
+.event-card-item-header {
+  display: flex;
+  /* padding: 0.75rem; */
+  align-items: center;
+  /* border-bottom: 1px solid #f3f4f6; */
+}
+.event-card-item-image {
+  width: 5rem;
+  height: 5rem;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  /* margin-right: 0.75rem; */
+}
+
+.event-card-item-info {
+  flex: 1;
+  margin-left: 1rem;
+}
+
+.event-card-item-title {
+  font-weight: bold;
+  margin: 0;
+  font-size: 1.2rem;
+  color: #1f2937;
+}
+
+.event-card-item-price-body {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 0;
+}
+
+.event-card-item-price-original {
+  display: flex;
+  align-items: center;
+  color: #9ca3af;
+  font-size: 0.875rem;
+  text-decoration: line-through;
+  margin-right: 0.5rem;
+}
+
+.event-card-item-price-discount {
+  display: flex;
+  align-items: center;
+  color: #ef4444;
+  font-weight: bold;
+  font-size: 1.125rem;
+  margin-right: 0.5rem;
+}
+
+.event-card-item-price-discount-rate {
+  display: flex;
+  align-items: center;
+  background-color: #fee2e2;
+  color: #ef4444;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
 .event-card-item-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 0.2rem;
-  /* margin-bottom: 0.75rem; */
+  margin-top: 0.75rem;
 }
 
 .event-tag {
@@ -11,6 +72,13 @@
   font-size: 0.7rem;
   font-weight: 500;
   margin-right: 0.3rem;
+}
+
+.event-tag-date {
+  display: inline-flex;
+  align-items: center;
+  background-color: #dbeafe;
+  color: #1d4ed8;
 }
 
 .event-tag-medical {
