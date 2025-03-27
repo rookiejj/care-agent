@@ -29,7 +29,7 @@ export const DataProvider = ({ children }) => {
           rating: 4.8,
           reviewCount: 124,
           description:
-            "내과 종합검진 20% 할인 이벤트 진행 중. 건강보험 검진 가능.",
+            "혈액검사, CT, 초음파, 암 표지자 검사까지 한번에! 건강한 삶을 위한 첫걸음, 지금 예약하세요.",
           tags: ["내과", "검진", "할인 이벤트"],
           price: "검진 비용 문의",
           location: "서울시 강남구",

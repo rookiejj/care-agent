@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { PageHeader, getHospitalImage } from "./App";
-import { Clock, Calendar, X, MapPin } from "lucide-react";
+import { Clock, Calendar, Heart, MapPin } from "lucide-react";
 import "./EventCard.css";
 
 const EventCard = ({ item }) => (
@@ -59,10 +59,10 @@ const EventCard = ({ item }) => (
         color: "#6b7280",
         marginBottom: "12px",
         borderBottom: "1px solid #f3f4f6",
-        paddingBottom: "12px",
+        paddingBottom: "8px",
       }}
     >
-      <span style={{ fontWeight: "500" }}>{item.title}</span>
+      <span>{item.title}</span>
       <span style={{ display: "flex", alignItems: "center" }}>
         <MapPin size={10} style={{ marginRight: "4px" }} /> {item.location}
       </span>
@@ -75,25 +75,9 @@ const EventCard = ({ item }) => (
         paddingTop: "4px",
       }}
     >
-      <button
-        style={{
-          flex: 1,
-          backgroundColor: "#3b82f6",
-          color: "white",
-          padding: "8px 0",
-          borderRadius: "8px",
-          fontSize: "0.875rem",
-          fontWeight: "500",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          border: "none",
-        }}
-      >
-        <Calendar size={16} style={{ marginRight: "4px" }} /> 예약하기
-      </button>
-      <button className="favorites-action-button danger" aria-label="찜 삭제">
-        <X size={18} />
+      <span style={{ flex: 1, fontSize: "0.8rem" }}>{item.description}</span>
+      <button className="favorites-action-button" aria-label="찜 삭제">
+        <Heart size={18} className={`favorites-action-button-${"active"}`} />
       </button>
     </div>
   </div>

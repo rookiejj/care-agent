@@ -1,15 +1,12 @@
 .event-card-item-header {
   display: flex;
-  /* padding: 0.75rem; */
-  align-items: center;
-  /* border-bottom: 1px solid #f3f4f6; */
+  align-items: flex-start;
 }
 .event-card-item-image {
   width: 6rem;
   height: 6rem;
   object-fit: cover;
   border-radius: 0.5rem;
-  /* margin-right: 0.75rem; */
 }
 
 .event-card-item-info {
@@ -26,7 +23,7 @@
 
 .event-card-item-price-container {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   padding: 0.25rem 0;
 }
 
@@ -49,7 +46,6 @@
 }
 
 .event-card-item-price-discount-rate {
-  /* display: flex; */
   align-items: center;
   background-color: #fee2e2;
   color: #ef4444;
@@ -107,7 +103,7 @@
   background-color: #f3f4f6;
   color: #4b5563;
   cursor: pointer;
-  padding: 0.5rem; /* 패딩 추가 */
+  padding: 0.5rem;
 }
 
 .favorites-action-button.primary {
@@ -118,4 +114,9 @@
 .favorites-action-button.danger {
   background-color: #fee2e2;
   color: #ef4444;
+}
+
+.favorites-action-button-active {
+  color: #ef4444;
+  fill: #ef4444;
 }
