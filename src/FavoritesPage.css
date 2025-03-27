@@ -1,43 +1,11 @@
-.favorites-page-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 20;
-  background-color: white;
-  transition: transform 0.2s ease;
-  will-change: transform;
-}
-
-.favorites-content {
-  position: relative;
-  margin-top: 0; /* 헤더 마진 제거 */
-  padding-top: 0; /* 패딩도 제거 */
-  height: calc(100vh - 3.5rem); /* 하단 네비게이션 높이만 제외 */
-  overflow-y: auto;
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
-}
-
-.favorites-tabs-container {
-  position: absolute; /* 시작은 absolute */
-  top: 0; /* 초기값은 JavaScript에서 설정 */
-  left: 0;
-  right: 0;
-  background-color: white;
-  z-index: 15;
-  transition: transform 0.3s ease;
-  will-change: transform;
-}
-
 .favorites-tabs {
   display: flex;
   border-bottom: 1px solid #e5e7eb;
-  margin: 0.5rem 0;
+  margin-bottom: 1rem;
 }
 
 .favorites-tab {
-  padding: 0.5rem 1.5rem;
+  /* padding: 0.75rem 1.25rem; */
   font-size: 1rem;
   font-weight: 500;
   color: #6b7280;
@@ -77,7 +45,7 @@
   display: flex;
   overflow-x: auto;
   gap: 0.5rem;
-  padding: 0.5rem 1rem;
+  margin-bottom: 0.5rem;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
 }
@@ -90,7 +58,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.5rem 1rem;
+  margin-bottom: 0.5rem;
   border-radius: 20px;
   border: 1px solid #e5e7eb;
   font-size: 14px;
@@ -105,10 +73,4 @@
   background-color: #3b82f6;
   color: white;
   border-color: #3b82f6;
-}
-
-/* 리스트 스타일 */
-.favorites-list {
-  padding: 0 0.5rem;
-  margin: 11rem 0 5rem; /* 헤더 + 탭/필터 영역 높이만큼 여백 */
 }
