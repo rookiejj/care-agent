@@ -9,9 +9,9 @@ const ProgressBar = ({ progress, type }) => {
     type === "medical" ? "medical-gradient" : "cosmetic-gradient";
 
   return (
-    <div className="progress-bar-new">
+    <div className="progress-bar">
       <div
-        className={`progress-fill-new ${gradientClass}`}
+        className={`progress-fill ${gradientClass}`}
         style={{ width: `${progress}%` }}
       >
         &nbsp;
