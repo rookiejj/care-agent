@@ -101,47 +101,42 @@ const CommunityPage = ({ currentLocation, notificationCount }) => {
 
   return (
     <div className="container">
-      <div className="fixed-header">
-        <PageHeader
-          title="커뮤니티"
-          showLocationButton={true}
-          currentLocation={currentLocation}
-          backButtonVisible={false}
-          notificationCount={notificationCount}
-          showNotification={true}
-          rightComponent={
-            <button
-              onClick={handleCreatePost}
-              className="community-write-button"
-            >
-              <Edit size={18} /> 글쓰기
-            </button>
-          }
-        />
-        <div className="header-function">
-          {/* 카테고리 필터 버튼 */}
-          <CategoryFilterButtons
-            onFilterChange={(newFilters) => setFilters(newFilters)}
-          />
+      <PageHeader
+        title="커뮤니티"
+        showLocationButton={true}
+        currentLocation={currentLocation}
+        backButtonVisible={false}
+        notificationCount={notificationCount}
+        showNotification={true}
+        rightComponent={
+          <button onClick={handleCreatePost} className="community-write-button">
+            <Edit size={18} /> 글쓰기
+          </button>
+        }
+      />
 
-          {/* 정렬 옵션 */}
-          <div className="sort-options-container">
-            {sortOptions.map((option) => (
-              <button
-                key={option.id}
-                onClick={() => setActiveSortOption(option.id)}
-                className={`sort-option-button ${
-                  activeSortOption === option.id ? "active" : ""
-                }`}
-              >
-                {option.icon}
-                {option.label}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
       <div className="content">
+        {/* 카테고리 필터 버튼 */}
+        <CategoryFilterButtons
+          onFilterChange={(newFilters) => setFilters(newFilters)}
+        />
+
+        {/* 정렬 옵션 */}
+        <div className="sort-options-container">
+          {sortOptions.map((option) => (
+            <button
+              key={option.id}
+              onClick={() => setActiveSortOption(option.id)}
+              className={`sort-option-button ${
+                activeSortOption === option.id ? "active" : ""
+              }`}
+            >
+              {option.icon}
+              {option.label}
+            </button>
+          ))}
+        </div>
+
         {/* 커뮤니티 게시글 목록 */}
         {filteredPosts.length === 0 ? (
           <div className="community-empty-state">

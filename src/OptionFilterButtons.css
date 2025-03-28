@@ -1,0 +1,42 @@
+.option-filter-container {
+  display: flex;
+  overflow-x: auto;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  -webkit-overflow-scrolling: touch;
+}
+
+.option-filter-container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
+.option-filter-button {
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  border: 1px solid #e5e7eb;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  background-color: white;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.option-filter-button:hover {
+  background-color: #f3f4f6;
+}
+
+.option-filter-button.active {
+  background-color: #3b82f6;
+  color: white;
+  font-weight: 600;
+  border-color: #3b82f6;
+}
+
+/* 옵션별 특별 스타일 설정 (필요한 경우) */
+.option-filter-button.event.active {
+  background-color: #8b5cf6;
+  border-color: #8b5cf6;
+}

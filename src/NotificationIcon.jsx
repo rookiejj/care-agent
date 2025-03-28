@@ -77,7 +77,6 @@ const NotificationIcon = ({ count = 0, onClick }) => {
             height: "6px",
             backgroundColor: "#ef4444",
             borderRadius: "50%",
-            border: "2px solid #dbeafe",
           }}
         />
       )}

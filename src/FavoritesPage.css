@@ -1,7 +1,7 @@
 .favorites-tabs {
   display: flex;
   border-bottom: 1px solid #e5e7eb;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .favorites-tab {
@@ -45,7 +45,6 @@
   display: flex;
   overflow-x: auto;
   gap: 0.5rem;
-  margin-bottom: 0.5rem;
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
 }
