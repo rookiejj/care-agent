@@ -68,6 +68,32 @@ export const getHospitalImage = (type, id = 1) => {
   return `/images/hospitals/${imageName}`;
 };
 
+export const getCosmeticAdImage = (type, id = 1) => {
+  // 타입과 ID에 따라 적절한 이미지 경로를 반환합니다
+  const imageMap = {
+    all: ["advertise1.jpg"],
+  };
+
+  // 배열 범위를 벗어나지 않도록 인덱스 계산
+  const index = (id - 1) % (imageMap[type]?.length || 1);
+  const imageName = imageMap[type]?.[index] || "advertise1.jpg";
+
+  return `/images/cosmetic_ads/${imageName}`;
+};
+
+export const getMedicalAdImage = (type, id = 1) => {
+  // 타입과 ID에 따라 적절한 이미지 경로를 반환합니다
+  const imageMap = {
+    all: ["advertise1.jpg"],
+  };
+
+  // 배열 범위를 벗어나지 않도록 인덱스 계산
+  const index = (id - 1) % (imageMap[type]?.length || 1);
+  const imageName = imageMap[type]?.[index] || "advertise1.jpg";
+
+  return `/images/medical_ads/${imageName}`;
+};
+
 export const PageHeader = ({
   showMainIcon = false,
   title,

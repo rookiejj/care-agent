@@ -9,41 +9,39 @@
 
 .hospital-card-item-header {
   display: flex;
-  /* padding: 0.75rem; */
-  align-items: center;
-  border-bottom: 1px solid #f3f4f6;
+  align-items: flex-start;
 }
 
 .hospital-card-item-image {
-  width: 5rem;
-  height: 5rem;
+  width: 3.5rem;
+  height: 3.5rem;
   object-fit: cover;
   border-radius: 0.5rem;
-  /* margin-right: 0.75rem; */
+  margin-left: 1rem;
 }
 
 .hospital-card-item-info {
   flex: 1;
-  margin-left: 1rem;
 }
 
 .hospital-card-item-title {
-  font-weight: 600;
+  font-weight: bold;
   margin: 0;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   color: #1f2937;
 }
 
 .hospital-card-item-subtitle {
+  font-weight: 600;
   color: #6b7280;
   font-size: 0.75rem;
   margin: 0.25rem 0 0 0;
 }
 
-.hospital-card-item-rating {
+.hospital-card-item-rating-container {
   display: flex;
   align-items: center;
-  margin-top: 0.25rem;
+  margin: 0.25rem 0;
 }
 
 .hospital-card-item-rating-stars {
@@ -63,20 +61,20 @@
 }
 
 .hospital-card-item-body {
-  padding: 0.75rem 0;
+  /* padding: 0.75rem 0; */
 }
 
 .hospital-card-item-description {
-  margin: 0 0 0.75rem 0;
-  font-size: 0.875rem;
-  color: #4b5563;
-  line-height: 1.4;
+  display: block;
+  font-size: 0.6rem;
 }
 
-.hospital-card-item-tags {
+.hospital-card-item-tags-container {
   display: flex;
+  flex: 1;
   flex-wrap: wrap;
   gap: 0.2rem;
+  height: 1.5rem;
 }
 
 .hospital-tag {
@@ -85,19 +83,27 @@
   font-size: 0.7rem;
   font-weight: 500;
   margin-right: 0.3rem;
+  background-color: #f3f4f6;
+  color: #6b7280;
 }
 
 .hospital-tag-medical {
+  display: inline-flex;
+  align-items: center;
   background-color: #e0f2fe;
   color: #0369a1;
 }
 
 .hospital-tag-cosmetic {
+  display: inline-flex;
+  align-items: center;
   background-color: #fae8ff;
   color: #a21caf;
 }
 
 .hospital-tag-event {
+  display: inline-flex;
+  align-items: center;
   background-color: #fff7ed;
   color: #c2410c;
 }
@@ -131,14 +137,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
   border-radius: 0.5rem;
   border: none;
-  background-color: #f3f4f6;
+  background-color: transparent;
   color: #4b5563;
   cursor: pointer;
-  padding: 0.5rem; /* 패딩 추가 */
+  padding: 0.1rem;
 }
 
 .hospital-card-action-button.primary {

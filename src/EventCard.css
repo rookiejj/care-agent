@@ -7,11 +7,11 @@
   height: 5rem;
   object-fit: cover;
   border-radius: 0.5rem;
+  margin-right: 1rem;
 }
 
 .event-card-item-info {
   flex: 1;
-  margin-left: 1rem;
 }
 
 .event-card-item-title {
@@ -65,15 +65,17 @@
   flex: 1;
   flex-wrap: wrap;
   gap: 0.2rem;
-  margin: 0.5rem 0;
+  height: 1.5rem;
 }
 
 .event-tag {
-  padding: 0.25rem 0.5rem;
+  padding: 0 0.5rem;
   border-radius: 9999px;
   font-size: 0.7rem;
   font-weight: 500;
   margin-right: 0.3rem;
+  background-color: #f3f4f6;
+  color: #6b7280;
 }
 
 .event-tag-date {
@@ -84,16 +86,22 @@
 }
 
 .event-tag-medical {
+  display: inline-flex;
+  align-items: center;
   background-color: #e0f2fe;
   color: #0369a1;
 }
 
 .event-tag-cosmetic {
+  display: inline-flex;
+  align-items: center;
   background-color: #fae8ff;
   color: #a21caf;
 }
 
 .event-tag-event {
+  display: inline-flex;
+  align-items: center;
   background-color: #fff7ed;
   color: #c2410c;
 }
@@ -109,15 +117,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
   border-radius: 0.5rem;
   border: none;
-  /* background-color: #f3f4f6; */
   background-color: transparent;
   color: #4b5563;
   cursor: pointer;
-  padding: 0.5rem;
+  padding: 0.1rem;
 }
 
 .event-card-action-button.primary {
