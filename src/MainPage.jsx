@@ -35,7 +35,7 @@ const MainPage = ({ currentLocation, notificationCount }) => {
             <h3 className="section-title">자주 찾는</h3>
           </div>
           <MedicalCategories />
-          <div style={{ padding: "1.5rem 0.5rem" }}>
+          <div style={{ padding: "0.5rem 0.5rem" }}>
             <div
               style={{
                 width: "100%",
