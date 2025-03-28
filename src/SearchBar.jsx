@@ -60,7 +60,7 @@ const SearchBar = ({
   };
 
   return (
-    <div style={{ flex: "1", ...style }}>
+    <div style={{ flex: "1", marginBottom: "1rem", ...style }}>
       <div
         style={{
           display: "flex",

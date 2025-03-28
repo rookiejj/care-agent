@@ -64,11 +64,7 @@ const SearchPage = ({ currentLocation, notificationCount }) => {
           showNotification={true}
         />
         <div className="header-function">
-          <SearchBar
-            onSearch={handleSearch}
-            initialValue={searchTerm}
-            style={{ marginBottom: "1rem" }}
-          />
+          <SearchBar onSearch={handleSearch} initialValue={searchTerm} />
 
           {/* Category Filter Buttons - keeping original bubble style */}
           <CategoryFilterButtons onFilterChange={handleFilterChange} />
