@@ -1,4 +1,4 @@
-import { useNavigate, useLocation, Navigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import { Heart, Baby, Bone, Brain, GripHorizontal } from "lucide-react";
 import "./MedicalCategories.css";
@@ -33,9 +33,9 @@ const MedicalCategories = ({ currentLocation }) => {
       name: "진료 더보기",
       icon: <GripHorizontal size={24} strokeWidth={1.5} color="#555555" />,
       onClick: () =>
-        navigate("/category/", {
+        navigate("/categories", {
           state: {
-            type: "medical",
+            serviceType: "medical",
             currentLocation: currentLocation,
           },
         }),

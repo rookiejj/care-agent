@@ -1,4 +1,4 @@
-import { useNavigate, useLocation, Navigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import { Scissors, Eye, Smile, Sparkles, GripHorizontal } from "lucide-react";
 import "./CosmeticCategories.css";
@@ -33,9 +33,9 @@ const CosmeticCategories = ({ currentLocation }) => {
       name: "시술 더보기",
       icon: <GripHorizontal size={24} strokeWidth={1.5} color="#555555" />,
       onClick: () =>
-        navigate("/category/", {
+        navigate("/categories", {
           state: {
-            type: "cosmetic",
+            serviceType: "cosmetic",
             currentLocation: currentLocation,
           },
         }),

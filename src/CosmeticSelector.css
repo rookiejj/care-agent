@@ -1,0 +1,48 @@
+.cosmetic-selector-main-category {
+  margin-bottom: 0.5rem;
+}
+
+.cosmetic-selector-sub-category {
+  margin-bottom: 0.5rem;
+}
+
+.cosmetic-selector-no-selection {
+  color: #6b7280;
+}
+
+.cosmetic-selector-result {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #fdf2f8; /* 핑크 배경 */
+  border-radius: 0.5rem;
+}
+
+.cosmetic-selector-result-title {
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: #be185d; /* 진한 핑크 */
+}
+
+.cosmetic-selector-result-item {
+  margin-top: 0.5rem;
+}
+
+.cosmetic-selector-result-label {
+  font-weight: 500;
+}
+
+.cosmetic-selector-start-button {
+  margin-top: 1rem;
+  background-color: #db2777; /* 핑크 버튼 */
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.cosmetic-selector-start-button:hover {
+  background-color: #be185d; /* 호버 시 더 진한 핑크 */
+}

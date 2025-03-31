@@ -361,7 +361,7 @@ const AppContent = ({
           }
         />
         <Route
-          path="/category"
+          path="/categories"
           element={<CategoriesPage currentLocation={selectedLocation} />}
         />
         <Route

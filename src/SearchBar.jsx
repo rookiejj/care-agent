@@ -15,6 +15,7 @@ const SearchBar = ({
   const [inputText, setInputText] = useState(initialValue);
   const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef(null);
+  const previousInputText = useRef(inputText);
 
   const navigate = useNavigate();
 
@@ -32,6 +33,12 @@ const SearchBar = ({
     return () => clearTimeout(timer);
   }, []); // 빈 의존성 배열로 컴포넌트 마운트 시 한 번만 실행
 
+  // initialValue가 변경되면 input 값도 업데이트
+  useEffect(() => {
+    setInputText(initialValue);
+    previousInputText.current = initialValue;
+  }, [initialValue]);
+
   // Simple direct state update
   const handleChange = (e) => {
     setInputText(e.target.value);
@@ -39,15 +46,16 @@ const SearchBar = ({
 
   // Handle search button click
   const handleSearchClick = () => {
-    if (inputText.trim() && onSearch) {
-      onSearch(inputText);
+    if (onSearch) {
+      onSearch(inputText); // 항상 검색 함수 호출, 빈 값이어도 호출
     }
+    previousInputText.current = inputText;
   };
 
   // Handle Enter key
   const handleKeyDown = (e) => {
-    if (e.key === "Enter" && inputText.trim()) {
-      handleSearchClick();
+    if (e.key === "Enter") {
+      handleSearchClick(); // 항상 검색 함수 호출
     }
   };
 
@@ -56,6 +64,16 @@ const SearchBar = ({
     setInputText("");
     if (onSearch) {
       onSearch(""); // 빈 문자열로 검색 함수 호출하여 초기 상태로 돌아가게 함
+    }
+    previousInputText.current = "";
+  };
+
+  // 포커스를 잃을 때 텍스트가 변경되었다면 검색 실행
+  const handleBlur = () => {
+    setIsFocused(false);
+    if (previousInputText.current !== inputText && onSearch) {
+      onSearch(inputText);
+      previousInputText.current = inputText;
     }
   };
 
@@ -98,7 +116,7 @@ const SearchBar = ({
           onChange={handleChange}
           onKeyDown={handleKeyDown}
           onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
+          onBlur={handleBlur}
           placeholder={placeholder || "증상이나 서비스를 검색하세요"}
           style={{
             border: "none",
@@ -151,7 +169,6 @@ const SearchBar = ({
         {/* Search Button */}
         <button
           onClick={handleSearchClick}
-          disabled={!inputText.trim()}
           style={{
             display: "flex",
             alignItems: "center",

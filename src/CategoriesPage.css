@@ -1,0 +1,9 @@
+.container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.content {
+  margin-top: 16px;
+}
