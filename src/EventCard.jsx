@@ -4,7 +4,6 @@ import { Clock, Calendar, Heart, MapPin } from "lucide-react";
 import "./EventCard.css";
 
 const EventCard = ({ item }) => {
-  console.log(item.image);
   return (
     <div className="card" style={{ marginBottom: "1rem" }}>
       <div className="event-card-item-header">

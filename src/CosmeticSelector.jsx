@@ -101,11 +101,6 @@ const CosmeticSelector = () => {
   // 하위 카테고리 변경 처리
   const handleSubCategoryChange = (categoryId) => {
     setSelectedSubCategory(categoryId);
-    // 실제 앱에서는 여기서 선택된 카테고리 정보를 활용하여 추가 작업 수행
-    console.log("선택된 시술/성형:", {
-      mainCategory: selectedMainCategory,
-      subCategory: categoryId,
-    });
   };
 
   // 선택된 메인 카테고리 정보 가져오기
@@ -154,7 +149,7 @@ const CosmeticSelector = () => {
       {/* 선택된 시술/성형 표시 */}
       {selectedSubCategory && (
         <div className="cosmetic-selector-result">
-          <h3 className="cosmetic-selector-result-title">선택하신 시술/성형</h3>
+          <h3 className="cosmetic-selector-result-title">선택하신 시술</h3>
           <p className="cosmetic-selector-result-item">
             <span className="cosmetic-selector-result-label">분야: </span>
             {selectedMainCategoryInfo?.label || ""}

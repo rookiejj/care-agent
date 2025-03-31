@@ -97,11 +97,6 @@ const SymptomSelector = () => {
   // 하위 카테고리 변경 처리
   const handleSubCategoryChange = (categoryId) => {
     setSelectedSubCategory(categoryId);
-    // 실제 앱에서는 여기서 선택된 카테고리 정보를 활용하여 추가 작업 수행
-    console.log("선택된 증상:", {
-      mainCategory: selectedMainCategory,
-      subCategory: categoryId,
-    });
   };
 
   // 선택된 메인 카테고리 정보 가져오기

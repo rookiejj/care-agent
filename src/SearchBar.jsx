@@ -132,7 +132,6 @@ const SearchBar = ({
           onClick={(e) => {
             if (goSearch) {
               navigate("/search");
-              console.log("click");
             }
           }}
         />
