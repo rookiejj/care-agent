@@ -15,8 +15,44 @@ const SearchPage = ({ currentLocation, notificationCount }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredItems, setFilteredItems] = useState([]);
   const [filters, setFilters] = useState({ medical: true, cosmetic: true });
+  const [showKeyboardHint, setShowKeyboardHint] = useState(false);
 
   const { favoritesData } = useData();
+
+  // 페이지 로드 시 실행
+  useEffect(() => {
+    // 메인 페이지에서 검색창 클릭으로 이동했는지 확인
+    const redirectFlag = localStorage.getItem("searchRedirectFlag");
+
+    if (redirectFlag === "true") {
+      // 플래그 재설정
+      localStorage.removeItem("searchRedirectFlag");
+
+      // iOS 기기 확인
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+
+      // 타이머 설정 - 페이지 전환 애니메이션 완료 후 실행
+      setTimeout(() => {
+        // SearchBar 내부 input 엘리먼트를 직접 가져옴
+        const searchInput = document.querySelector(".header-function input");
+
+        if (searchInput) {
+          // 포커스 시도
+          searchInput.focus();
+
+          // iOS에서는 키보드 표시 힌트 활성화 (사용자가 한 번 탭하도록 유도)
+          if (isIOS) {
+            setShowKeyboardHint(true);
+
+            // 5초 후 힌트 숨김
+            setTimeout(() => {
+              setShowKeyboardHint(false);
+            }, 5000);
+          }
+        }
+      }, 600);
+    }
+  }, []);
 
   // Filter items when search term or filters change
   useEffect(() => {
@@ -74,11 +110,32 @@ const SearchPage = ({ currentLocation, notificationCount }) => {
             onSearch={handleSearch}
             initialValue={searchTerm}
             shouldAutoFocus={true}
-            forceKeyboard={true}
           />
 
           {/* Category Filter Buttons - keeping original bubble style */}
           <CategoryFilterButtons onFilterChange={handleFilterChange} />
+
+          {/* iOS에서 키보드 표시 힌트 (선택적) */}
+          {showKeyboardHint && (
+            <div
+              style={{
+                position: "absolute",
+                top: "100%",
+                left: "50%",
+                transform: "translateX(-50%)",
+                backgroundColor: "rgba(0,0,0,0.7)",
+                color: "white",
+                padding: "8px 12px",
+                borderRadius: "8px",
+                fontSize: "13px",
+                marginTop: "10px",
+                zIndex: 100,
+                animation: "pulse 1.5s infinite",
+              }}
+            >
+              검색창을 탭하여 키보드 열기
+            </div>
+          )}
         </div>
       </div>
       <div className="content">
@@ -125,6 +182,17 @@ const SearchPage = ({ currentLocation, notificationCount }) => {
           )
         )}
       </div>
+
+      {/* iOS에서 키보드 열기를 위한 CSS 애니메이션 */}
+      <style>
+        {`
+          @keyframes pulse {
+            0% { opacity: 0.8; }
+            50% { opacity: 1; }
+            100% { opacity: 0.8; }
+          }
+        `}
+      </style>
     </div>
   );
 };

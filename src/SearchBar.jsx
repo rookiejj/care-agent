@@ -11,7 +11,7 @@ const SearchBar = ({
   iconStyle = {},
   goSearch = false,
   shouldAutoFocus = true,
-  forceKeyboard = false, // 키보드 강제 표시 여부
+  provideInputRef = null, // 새 prop: 부모 컴포넌트에 ref 전달
 }) => {
   const [inputText, setInputText] = useState(initialValue);
   const [isFocused, setIsFocused] = useState(false);
@@ -20,64 +20,38 @@ const SearchBar = ({
 
   const navigate = useNavigate();
 
-  // 사파리 및 iOS 감지
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+  // 부모 컴포넌트에 ref 전달
+  useEffect(() => {
+    if (provideInputRef && inputRef.current) {
+      provideInputRef(inputRef.current);
+    }
+  }, [provideInputRef]);
 
-  // 키보드를 표시하기 위한 함수
-  const showKeyboard = () => {
-    if (!inputRef.current) return;
+  // 컴포넌트가 마운트될 때 자동으로 포커스 설정 시도
+  useEffect(() => {
+    // iOS와 Safari 감지
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
-    // 표준 방식으로 포커스
-    inputRef.current.focus();
-
-    if (isIOS) {
-      // iOS에서 키보드를 강제로 표시하기 위한 방법
-      // 1. blur 후 다시 focus
-      inputRef.current.blur();
-
-      setTimeout(() => {
+    if (shouldAutoFocus && inputRef.current) {
+      const timer = setTimeout(() => {
+        // 포커스 시도
         inputRef.current.focus();
 
-        // 2. 터치 이벤트 시뮬레이션 (iOS에서 가장 효과적)
-        setTimeout(() => {
-          try {
-            const touchEvent = new TouchEvent("touchstart", {
-              bubbles: true,
-              cancelable: true,
-              view: window,
-            });
-            inputRef.current.dispatchEvent(touchEvent);
-          } catch (e) {
-            // TouchEvent 생성자가 지원되지 않을 경우 MouseEvent로 대체
-            const clickEvent = new MouseEvent("mousedown", {
-              bubbles: true,
-              cancelable: true,
-              view: window,
-            });
-            inputRef.current.dispatchEvent(clickEvent);
-          }
+        // iOS Safari에서는 추가 시도 없음 - 페이지 이동 시 자동 키보드 표시는
+        // 사용자 상호작용 없이는 iOS에서 거의 불가능하므로
+        // 대신 시각적 힌트를 제공하는 것이 좋음
+      }, 300);
 
-          // 3. 입력 영역 클릭 (마지막 시도)
-          setTimeout(() => {
-            inputRef.current.click();
-          }, 50);
-        }, 50);
-      }, 50);
-    } else {
-      // 비 iOS 환경에서 클릭 시뮬레이션
-      inputRef.current.click();
-    }
-  };
-
-  // 컴포넌트가 마운트될 때 자동으로 포커스 설정
-  useEffect(() => {
-    if (shouldAutoFocus || forceKeyboard) {
-      // 더 긴 지연 시간 설정 (페이지 전환 완료 기다림)
-      const timer = setTimeout(showKeyboard, 600);
       return () => clearTimeout(timer);
     }
-  }, [shouldAutoFocus, forceKeyboard]); // 의존성 업데이트
+  }, [shouldAutoFocus]);
+
+  // initialValue가 변경되면 input 값도 업데이트
+  useEffect(() => {
+    setInputText(initialValue);
+    previousInputText.current = initialValue;
+  }, [initialValue]);
 
   // Simple direct state update
   const handleChange = (e) => {
@@ -87,7 +61,7 @@ const SearchBar = ({
   // Handle search button click
   const handleSearchClick = () => {
     if (onSearch) {
-      onSearch(inputText); // 항상 검색 함수 호출, 빈 값이어도 호출
+      onSearch(inputText);
     }
     previousInputText.current = inputText;
   };
@@ -95,7 +69,7 @@ const SearchBar = ({
   // Handle Enter key
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      handleSearchClick(); // 항상 검색 함수 호출
+      handleSearchClick();
     }
   };
 
@@ -103,9 +77,14 @@ const SearchBar = ({
   const handleClear = () => {
     setInputText("");
     if (onSearch) {
-      onSearch(""); // 빈 문자열로 검색 함수 호출하여 초기 상태로 돌아가게 함
+      onSearch("");
     }
     previousInputText.current = "";
+
+    // 입력을 지운 후 다시 포커스
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
   };
 
   // 포커스를 잃을 때 텍스트가 변경되었다면 검색 실행
@@ -114,6 +93,13 @@ const SearchBar = ({
     if (previousInputText.current !== inputText && onSearch) {
       onSearch(inputText);
       previousInputText.current = inputText;
+    }
+  };
+
+  // 검색창 클릭 시 동작
+  const handleInputClick = () => {
+    if (goSearch) {
+      navigate("/search");
     }
   };
 
@@ -145,7 +131,7 @@ const SearchBar = ({
             ...iconStyle,
           }}
         >
-          {/* <Search size={18} strokeWidth={2} /> */}
+          <Search size={18} strokeWidth={2} />
         </div>
 
         {/* Input Field */}
@@ -157,6 +143,7 @@ const SearchBar = ({
           onKeyDown={handleKeyDown}
           onFocus={() => setIsFocused(true)}
           onBlur={handleBlur}
+          onClick={handleInputClick}
           placeholder={placeholder || "증상이나 서비스를 검색하세요"}
           style={{
             border: "none",
@@ -168,11 +155,6 @@ const SearchBar = ({
             color: "#1f2937",
             fontWeight: "500",
             ...inputStyle,
-          }}
-          onClick={(e) => {
-            if (goSearch) {
-              navigate("/search");
-            }
           }}
         />
 
