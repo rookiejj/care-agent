@@ -73,7 +73,7 @@ const SearchPage = ({ currentLocation, notificationCount }) => {
           <SearchBar
             onSearch={handleSearch}
             initialValue={searchTerm}
-            shouldAutoFocus={false}
+            shouldAutoFocus={true}
           />
 
           {/* Category Filter Buttons - keeping original bubble style */}
