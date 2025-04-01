@@ -21,17 +21,26 @@ const SearchBar = ({
 
   // 컴포넌트가 마운트될 때 자동으로 포커스 설정
   useEffect(() => {
-    // 약간의 지연 후 포커스
+    // 약간의 지연 후 포커스 (이동 애니메이션이 완료될 때까지 기다림)
     const timer = setTimeout(() => {
       if (shouldAutoFocus && inputRef.current) {
         inputRef.current.focus();
+
         // 모바일에서 키보드를 강제로 표시하기 위한 추가 조치
-        // inputRef.current.click(); // 일부 모바일 브라우저에서 도움이 될 수 있음
+        inputRef.current.click(); // 클릭 이벤트 발생
+
+        // iOS Safari에서 키보드를 표시하기 위한 추가 조치
+        if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
+          inputRef.current.blur();
+          setTimeout(() => {
+            inputRef.current.focus();
+          }, 50);
+        }
       }
-    }, 100);
+    }, 300); // 시간을 300ms로 증가하여 페이지 전환 후 포커스되도록 함
 
     return () => clearTimeout(timer);
-  }, []); // 빈 의존성 배열로 컴포넌트 마운트 시 한 번만 실행
+  }, [shouldAutoFocus]); // shouldAutoFocus가 변경될 때마다 실행되도록 수정
 
   // initialValue가 변경되면 input 값도 업데이트
   useEffect(() => {
