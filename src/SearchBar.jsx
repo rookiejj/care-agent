@@ -11,6 +11,7 @@ const SearchBar = ({
   iconStyle = {},
   goSearch = false,
   shouldAutoFocus = true,
+  forceKeyboard = false, // 키보드 강제 표시 여부
 }) => {
   const [inputText, setInputText] = useState(initialValue);
   const [isFocused, setIsFocused] = useState(false);
@@ -19,34 +20,64 @@ const SearchBar = ({
 
   const navigate = useNavigate();
 
-  // 컴포넌트가 마운트될 때 자동으로 포커스 설정
-  useEffect(() => {
-    // 약간의 지연 후 포커스 (이동 애니메이션이 완료될 때까지 기다림)
-    const timer = setTimeout(() => {
-      if (shouldAutoFocus && inputRef.current) {
+  // 사파리 및 iOS 감지
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
+  // 키보드를 표시하기 위한 함수
+  const showKeyboard = () => {
+    if (!inputRef.current) return;
+
+    // 표준 방식으로 포커스
+    inputRef.current.focus();
+
+    if (isIOS) {
+      // iOS에서 키보드를 강제로 표시하기 위한 방법
+      // 1. blur 후 다시 focus
+      inputRef.current.blur();
+
+      setTimeout(() => {
         inputRef.current.focus();
 
-        // 모바일에서 키보드를 강제로 표시하기 위한 추가 조치
-        inputRef.current.click(); // 클릭 이벤트 발생
+        // 2. 터치 이벤트 시뮬레이션 (iOS에서 가장 효과적)
+        setTimeout(() => {
+          try {
+            const touchEvent = new TouchEvent("touchstart", {
+              bubbles: true,
+              cancelable: true,
+              view: window,
+            });
+            inputRef.current.dispatchEvent(touchEvent);
+          } catch (e) {
+            // TouchEvent 생성자가 지원되지 않을 경우 MouseEvent로 대체
+            const clickEvent = new MouseEvent("mousedown", {
+              bubbles: true,
+              cancelable: true,
+              view: window,
+            });
+            inputRef.current.dispatchEvent(clickEvent);
+          }
 
-        // iOS Safari에서 키보드를 표시하기 위한 추가 조치
-        if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
-          inputRef.current.blur();
+          // 3. 입력 영역 클릭 (마지막 시도)
           setTimeout(() => {
-            inputRef.current.focus();
+            inputRef.current.click();
           }, 50);
-        }
-      }
-    }, 300); // 시간을 300ms로 증가하여 페이지 전환 후 포커스되도록 함
+        }, 50);
+      }, 50);
+    } else {
+      // 비 iOS 환경에서 클릭 시뮬레이션
+      inputRef.current.click();
+    }
+  };
 
-    return () => clearTimeout(timer);
-  }, [shouldAutoFocus]); // shouldAutoFocus가 변경될 때마다 실행되도록 수정
-
-  // initialValue가 변경되면 input 값도 업데이트
+  // 컴포넌트가 마운트될 때 자동으로 포커스 설정
   useEffect(() => {
-    setInputText(initialValue);
-    previousInputText.current = initialValue;
-  }, [initialValue]);
+    if (shouldAutoFocus || forceKeyboard) {
+      // 더 긴 지연 시간 설정 (페이지 전환 완료 기다림)
+      const timer = setTimeout(showKeyboard, 600);
+      return () => clearTimeout(timer);
+    }
+  }, [shouldAutoFocus, forceKeyboard]); // 의존성 업데이트
 
   // Simple direct state update
   const handleChange = (e) => {

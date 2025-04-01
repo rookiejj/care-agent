@@ -74,6 +74,7 @@ const SearchPage = ({ currentLocation, notificationCount }) => {
             onSearch={handleSearch}
             initialValue={searchTerm}
             shouldAutoFocus={true}
+            forceKeyboard={true}
           />
 
           {/* Category Filter Buttons - keeping original bubble style */}
