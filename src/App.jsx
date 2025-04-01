@@ -132,9 +132,9 @@ export const PageHeader = ({
           <button
             onClick={onBack}
             className="back-button"
-            onMouseOver={(e) =>
-              (e.currentTarget.style.backgroundColor = "#e5e7eb")
-            }
+            // onMouseOver={(e) =>
+            //   (e.currentTarget.style.backgroundColor = "#e5e7eb")
+            // }
             onMouseOut={(e) =>
               (e.currentTarget.style.backgroundColor = "transparent")
             }
@@ -159,7 +159,6 @@ export const PageHeader = ({
           style={{
             fontSize: "1.25rem",
             fontWeight: "bold",
-            marginLeft: "0.5rem",
           }}
         >
           {title}
