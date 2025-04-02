@@ -27,25 +27,44 @@ const SearchBar = ({
     previousInputText.current = initialValue;
   }, [initialValue]);
 
-  // 페이지 로드/마운트 시 키보드 포커싱 - 단 한 번만 실행되도록 수정
   useEffect(() => {
-    // 이미 포커스를 시도했는지 확인
-    if (focusAttempted.current) return;
+    // Skip focus if we're in search mode (main page) and not forcing keyboard
+    if (goSearch && !forceKeyboard) return;
 
-    // goSearch가 true면 메인 페이지에 있다는 의미이므로 포커싱하지 않음
-    // 검색 페이지(goSearch=false)에서만 자동 포커싱 적용
-    if ((shouldAutoFocus || forceKeyboard) && !goSearch) {
-      // 단일 타이머만 사용
-      const timer = setTimeout(() => {
-        if (inputRef.current) {
-          inputRef.current.focus();
-          // 포커스 시도 표시
-          focusAttempted.current = true;
+    // Mark that we've attempted to focus
+    focusAttempted.current = true;
+
+    // Use multiple timers with different delays for better iOS compatibility
+    const timers = [];
+
+    const attemptFocus = () => {
+      if (inputRef.current) {
+        inputRef.current.focus();
+
+        // For iOS, create and dispatch a fake touch event to help show keyboard
+        try {
+          const touchEvent = new TouchEvent("touchstart", {
+            bubbles: true,
+            cancelable: true,
+            view: window,
+          });
+          inputRef.current.dispatchEvent(touchEvent);
+          inputRef.current.click();
+        } catch (e) {
+          // Fallback for browsers that don't support TouchEvent constructor
+          inputRef.current.click();
         }
-      }, 300);
+      }
+    };
 
-      return () => clearTimeout(timer);
-    }
+    // Multiple attempts with increasing delays
+    timers.push(setTimeout(attemptFocus, 50));
+    timers.push(setTimeout(attemptFocus, 200));
+    timers.push(setTimeout(attemptFocus, 500));
+
+    return () => {
+      timers.forEach((timer) => clearTimeout(timer));
+    };
   }, [shouldAutoFocus, forceKeyboard, goSearch]);
 
   const handleChange = (e) => {
