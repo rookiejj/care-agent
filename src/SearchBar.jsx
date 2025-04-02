@@ -11,169 +11,70 @@ const SearchBar = ({
   iconStyle = {},
   goSearch = false,
   shouldAutoFocus = true,
-  forceKeyboard = false,
 }) => {
   const [inputText, setInputText] = useState(initialValue);
   const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef(null);
   const previousInputText = useRef(inputText);
-  const focusAttempts = useRef(0);
-  const maxFocusAttempts = 3;
 
   const navigate = useNavigate();
 
-  // initialValue가 변경될 때 inputText 상태 업데이트
+  // 컴포넌트가 마운트될 때 자동으로 포커스 설정
+  useEffect(() => {
+    // 약간의 지연 후 포커스
+    const timer = setTimeout(() => {
+      if (shouldAutoFocus && inputRef.current) {
+        inputRef.current.focus();
+        // 모바일에서 키보드를 강제로 표시하기 위한 추가 조치
+        // inputRef.current.click(); // 일부 모바일 브라우저에서 도움이 될 수 있음
+      }
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []); // 빈 의존성 배열로 컴포넌트 마운트 시 한 번만 실행
+
+  // initialValue가 변경되면 input 값도 업데이트
   useEffect(() => {
     setInputText(initialValue);
     previousInputText.current = initialValue;
   }, [initialValue]);
 
-  // iOS Safari 감지
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-  const isIOSSafari = isIOS && isSafari;
-
-  // 키보드를 표시하기 위한 강화된 함수
-  const showKeyboard = () => {
-    if (!inputRef.current) return;
-
-    if (isIOSSafari) {
-      // iOS Safari에서의 키보드 강제 표시 기법
-      // 1. 먼저 기존 포커스 제거
-      document.activeElement && document.activeElement.blur();
-
-      // 2. 약간의 지연 후 포커스 시도
-      setTimeout(() => {
-        // null 체크 추가
-        if (!inputRef.current) return;
-
-        // 2.1 직접 포커스 호출
-        inputRef.current.focus();
-
-        // 2.2 readOnly 속성을 토글하여 iOS가 포커스를 인식하도록 함
-        inputRef.current.readOnly = true;
-
-        setTimeout(() => {
-          // null 체크 추가
-          if (!inputRef.current) return;
-
-          inputRef.current.readOnly = false;
-          inputRef.current.focus();
-
-          // 2.3 커서를 텍스트 끝으로 이동시켜 iOS 키보드를 트리거
-          if (inputText) {
-            const length = inputText.length;
-            inputRef.current.setSelectionRange(length, length);
-          }
-
-          // 2.4 클릭 시뮬레이션
-          inputRef.current.click();
-
-          // 포커스가 성공했는지 확인
-          setTimeout(() => {
-            if (!inputRef.current) return;
-
-            if (
-              document.activeElement !== inputRef.current &&
-              focusAttempts.current < maxFocusAttempts
-            ) {
-              focusAttempts.current++;
-              showKeyboard(); // 재귀적 재시도
-            }
-          }, 300);
-        }, 50);
-      }, 100);
-    } else {
-      // 비 iOS 환경에서는 간단히 포커스
-      inputRef.current.focus();
-    }
-  };
-
-  // 컴포넌트 마운트 시 자동 포커스 및 키보드 표시
-  useEffect(() => {
-    let initialTimer;
-
-    if (shouldAutoFocus || forceKeyboard) {
-      // 초기 포커스 시도 - 컴포넌트가 완전히 마운트된 후에 실행
-      initialTimer = setTimeout(() => {
-        if (inputRef.current) {
-          showKeyboard();
-        }
-      }, 500); // 타이머 시간 증가
-    }
-
-    return () => {
-      if (initialTimer) {
-        clearTimeout(initialTimer);
-      }
-      focusAttempts.current = 0; // 초기화
-    };
-  }, [shouldAutoFocus, forceKeyboard]);
-
-  // 포커스 상태 변경 감지
-  useEffect(() => {
-    const checkFocus = () => {
-      if (document.activeElement === inputRef.current) {
-        setIsFocused(true);
-      }
-    };
-
-    // 터치 이벤트 후 포커스 상태 확인
-    document.addEventListener("touchend", checkFocus);
-
-    return () => {
-      document.removeEventListener("touchend", checkFocus);
-    };
-  }, []);
-
+  // Simple direct state update
   const handleChange = (e) => {
-    const newValue = e.target.value;
-    setInputText(newValue);
-
-    if (newValue === "" && onSearch) {
-      onSearch("");
-      previousInputText.current = "";
-    }
+    setInputText(e.target.value);
   };
 
+  // Handle search button click
   const handleSearchClick = () => {
     if (onSearch) {
-      onSearch(inputText);
+      onSearch(inputText); // 항상 검색 함수 호출, 빈 값이어도 호출
     }
     previousInputText.current = inputText;
   };
 
+  // Handle Enter key
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      handleSearchClick();
+      handleSearchClick(); // 항상 검색 함수 호출
     }
   };
 
+  // Clear input and reset search results
   const handleClear = () => {
     setInputText("");
     if (onSearch) {
-      onSearch("");
+      onSearch(""); // 빈 문자열로 검색 함수 호출하여 초기 상태로 돌아가게 함
     }
     previousInputText.current = "";
-
-    // 텍스트 지운 후 포커스 유지 및 키보드 표시
-    setTimeout(() => {
-      if (inputRef.current) {
-        showKeyboard();
-      }
-    }, 50);
   };
 
+  // 포커스를 잃을 때 텍스트가 변경되었다면 검색 실행
   const handleBlur = () => {
     setIsFocused(false);
     if (previousInputText.current !== inputText && onSearch) {
       onSearch(inputText);
       previousInputText.current = inputText;
     }
-  };
-
-  const handleFocus = () => {
-    setIsFocused(true);
   };
 
   return (
@@ -192,6 +93,7 @@ const SearchBar = ({
           transition: "all 0.2s ease",
         }}
       >
+        {/* Search Icon */}
         <div
           style={{
             display: "flex",
@@ -206,36 +108,36 @@ const SearchBar = ({
           {/* <Search size={18} strokeWidth={2} /> */}
         </div>
 
-        {/* focusable div wrapper - iOS Safari에서 큰 타겟 영역 제공 */}
-        <div style={{ width: "100%", cursor: "text" }} onClick={showKeyboard}>
-          <input
-            ref={inputRef}
-            type="text"
-            value={inputText}
-            onChange={handleChange}
-            onKeyDown={handleKeyDown}
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            placeholder={placeholder || "증상이나 서비스를 검색하세요"}
-            style={{
-              border: "none",
-              backgroundColor: "transparent",
-              outline: "none",
-              width: "100%",
-              padding: "10px 8px",
-              fontSize: "14px",
-              color: "#1f2937",
-              fontWeight: "500",
-              ...inputStyle,
-            }}
-            onClick={(e) => {
-              if (goSearch) {
-                navigate("/search");
-              }
-            }}
-          />
-        </div>
+        {/* Input Field */}
+        <input
+          ref={inputRef}
+          type="text"
+          value={inputText}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+          onFocus={() => setIsFocused(true)}
+          onBlur={handleBlur}
+          placeholder={placeholder || "증상이나 서비스를 검색하세요"}
+          style={{
+            border: "none",
+            backgroundColor: "transparent",
+            outline: "none",
+            width: "100%",
+            padding: "10px 8px",
+            fontSize: "14px",
+            color: "#1f2937",
+            fontWeight: "500",
+            ...inputStyle,
+          }}
+          onClick={(e) => {
+            if (goSearch) {
+              navigate("/search");
+              console.log("click");
+            }
+          }}
+        />
 
+        {/* Clear Button - Only show when there's text */}
         {inputText && (
           <button
             onClick={handleClear}
@@ -264,6 +166,7 @@ const SearchBar = ({
           </button>
         )}
 
+        {/* Search Button */}
         <button
           onClick={handleSearchClick}
           style={{
