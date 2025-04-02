@@ -17,7 +17,7 @@ const SearchBar = ({
   const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef(null);
   const previousInputText = useRef(inputText);
-  const dummyInputRef = useRef(null); // iOS Safari를 위한 더미 input
+  const focusAttempted = useRef(false);
 
   const navigate = useNavigate();
 
@@ -27,23 +27,23 @@ const SearchBar = ({
     previousInputText.current = initialValue;
   }, [initialValue]);
 
-  // iOS Safari에서 키보드 표시를 위한 핵심 트릭
-  const focusInput = () => {
-    // 작은 지연 후 실행
-    setTimeout(() => {
-      if (inputRef.current) {
-        inputRef.current.focus();
-      }
-    }, 100);
-  };
-
-  // 페이지 로드/마운트 시 키보드 포커싱
+  // 페이지 로드/마운트 시 키보드 포커싱 - 단 한 번만 실행되도록 수정
   useEffect(() => {
+    // 이미 포커스를 시도했는지 확인
+    if (focusAttempted.current) return;
+
     // goSearch가 true면 메인 페이지에 있다는 의미이므로 포커싱하지 않음
     // 검색 페이지(goSearch=false)에서만 자동 포커싱 적용
     if ((shouldAutoFocus || forceKeyboard) && !goSearch) {
-      // DOM이 완전히 렌더링된 후 실행되도록 타이밍 조정
-      const timer = setTimeout(focusInput, 300);
+      // 단일 타이머만 사용
+      const timer = setTimeout(() => {
+        if (inputRef.current) {
+          inputRef.current.focus();
+          // 포커스 시도 표시
+          focusAttempted.current = true;
+        }
+      }, 300);
+
       return () => clearTimeout(timer);
     }
   }, [shouldAutoFocus, forceKeyboard, goSearch]);
@@ -78,12 +78,10 @@ const SearchBar = ({
     }
     previousInputText.current = "";
 
-    // 텍스트 지운 후 포커스 유지
-    setTimeout(() => {
-      if (inputRef.current) {
-        inputRef.current.focus();
-      }
-    }, 10);
+    // 텍스트 지운 후 포커스 유지 - 단일 타이머만 사용
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
   };
 
   const handleBlur = () => {
@@ -112,20 +110,6 @@ const SearchBar = ({
 
   return (
     <div style={{ flex: "1", marginBottom: "1rem", ...style }}>
-      {/* iOS Safari를 위한 숨겨진 더미 input - 키보드 활성화용 */}
-      <input
-        ref={dummyInputRef}
-        type="text"
-        style={{
-          position: "absolute",
-          opacity: 0,
-          height: 0,
-          width: 0,
-          pointerEvents: "none",
-        }}
-        tabIndex={-1}
-      />
-
       <div
         style={{
           display: "flex",
@@ -161,7 +145,7 @@ const SearchBar = ({
             fontWeight: "500",
             ...inputStyle,
           }}
-          autoFocus={!goSearch}
+          autoFocus={!goSearch && shouldAutoFocus}
         />
 
         {inputText && (
