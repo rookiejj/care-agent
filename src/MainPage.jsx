@@ -44,7 +44,6 @@ const MainPage = ({ currentLocation, notificationCount }) => {
             />
           </div>
           <CosmeticCategories />
-          <div style={{ height: "30rem" }}></div>
         </div>
       </div>
     </div>
