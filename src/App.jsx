@@ -265,28 +265,17 @@ const BottomNavigation = ({ currentPage }) => {
           <Heart size={20} />
           <span>찜 목록</span>
         </Link>
-        <button
-          onClick={handleSearchClick}
+        <Link
+          to="/search"
           className={`nav-button ${
             currentPage === "search"
               ? "nav-button-active"
               : "nav-button-inactive"
           }`}
-          style={{
-            background: "none",
-            border: "none",
-            outline: "none",
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "20%",
-            padding: 0,
-          }}
         >
           <Search size={20} />
           <span>검색</span>
-        </button>
+        </Link>
         {/* <Link
           to="/category"
           className={`nav-button ${
