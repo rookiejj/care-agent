@@ -214,6 +214,34 @@ const BottomNavigation = ({ currentPage }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
+  // New handler for search navigation
+  const handleSearchClick = (e) => {
+    e.preventDefault();
+    navigate("/search");
+
+    // Add a small delay before trying to focus the search input
+    setTimeout(() => {
+      const searchInput = document.querySelector('input[type="text"]');
+      if (searchInput) {
+        searchInput.focus();
+
+        // Create a touch event for iOS
+        try {
+          const touchEvent = new TouchEvent("touchstart", {
+            bubbles: true,
+            cancelable: true,
+            view: window,
+          });
+          searchInput.dispatchEvent(touchEvent);
+          searchInput.click();
+        } catch (e) {
+          // Fallback
+          searchInput.click();
+        }
+      }
+    }, 100);
+  };
+
   return (
     <div className="bottom-navigation">
       <div className="bottom-navigation-inner">
@@ -237,17 +265,28 @@ const BottomNavigation = ({ currentPage }) => {
           <Heart size={20} />
           <span>찜 목록</span>
         </Link>
-        <Link
-          to="/search"
+        <button
+          onClick={handleSearchClick}
           className={`nav-button ${
             currentPage === "search"
               ? "nav-button-active"
               : "nav-button-inactive"
           }`}
+          style={{
+            background: "none",
+            border: "none",
+            outline: "none",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "20%",
+            padding: 0,
+          }}
         >
           <Search size={20} />
           <span>검색</span>
-        </Link>
+        </button>
         {/* <Link
           to="/category"
           className={`nav-button ${
