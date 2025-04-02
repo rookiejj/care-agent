@@ -164,7 +164,7 @@ const SearchBar = ({
             fontWeight: "500",
             ...inputStyle,
           }}
-          autoFocus={!goSearch && shouldAutoFocus}
+          autoFocus={true}
         />
 
         {inputText && (
