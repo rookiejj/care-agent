@@ -22,32 +22,42 @@ const SearchPage = ({ currentLocation, notificationCount }) => {
 
   // 페이지 로드 시 검색창에 포커스 주기 위한 효과
   useEffect(() => {
-    // iOS 키보드를 표시하기 위한 간단한 방법
+    // Enhanced focus strategy for iOS
     const focusSearchInput = () => {
       const inputElement = document.querySelector('input[type="text"]');
       if (inputElement) {
-        // 포커스 시도
+        // Focus attempt
         inputElement.focus();
 
-        // iOS에서 키보드 표시를 위한 추가 도움
+        // Additional attempts for iOS
         setTimeout(() => {
           if (inputElement) {
+            // Create a touch event to simulate user interaction
+            const touchEvent = new TouchEvent("touchstart", {
+              bubbles: true,
+              cancelable: true,
+              view: window,
+            });
+
+            inputElement.dispatchEvent(touchEvent);
             inputElement.focus();
             inputElement.click();
           }
-        }, 300);
+        }, 100);
       }
     };
 
-    // 여러 번의 시도로 신뢰성 향상
-    const timer1 = setTimeout(focusSearchInput, 100);
-    const timer2 = setTimeout(focusSearchInput, 500);
-    const timer3 = setTimeout(focusSearchInput, 1000);
+    // Multiple attempts with increasing delays
+    const timers = [
+      setTimeout(focusSearchInput, 50),
+      setTimeout(focusSearchInput, 150),
+      setTimeout(focusSearchInput, 300),
+      setTimeout(focusSearchInput, 600),
+      setTimeout(focusSearchInput, 1000),
+    ];
 
     return () => {
-      clearTimeout(timer1);
-      clearTimeout(timer2);
-      clearTimeout(timer3);
+      timers.forEach((timer) => clearTimeout(timer));
     };
   }, []);
 
