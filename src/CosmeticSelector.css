@@ -3,13 +3,14 @@
 }
 
 .cosmetic-selector-sub-category {
-  margin-bottom: 0.5rem;
+  /* margin-bottom: 0.5rem; */
 }
 
 .cosmetic-selector-no-selection {
   color: #6b7280;
 }
 
+/* Result component styles - moved to separate component */
 .cosmetic-selector-result {
   margin-top: 1rem;
   padding: 1rem;
@@ -45,4 +46,17 @@
 
 .cosmetic-selector-start-button:hover {
   background-color: #be185d; /* 호버 시 더 진한 핑크 */
+}
+
+/* 스크롤 될 수 있는 요소에 대한 스타일 */
+.horizontal-scrollable {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.horizontal-scrollable::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }

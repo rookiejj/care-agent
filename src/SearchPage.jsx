@@ -8,6 +8,7 @@ import SearchBar from "./SearchBar";
 import CategoryFilterButtons from "./CategoryFilterButtons";
 import MedicalCategories from "./MedicalCategories";
 import CosmeticCategories from "./CosmeticCategories";
+import RecentSearches from "./RecentSearches";
 
 import "./SearchPage.css";
 
@@ -15,8 +16,27 @@ const SearchPage = ({ currentLocation, notificationCount }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredItems, setFilteredItems] = useState([]);
   const [filters, setFilters] = useState({ medical: true, cosmetic: true });
+  const [recentSearches, setRecentSearches] = useState([]);
 
   const { favoritesData } = useData();
+
+  // Load recent searches from localStorage on component mount
+  useEffect(() => {
+    const savedSearches = localStorage.getItem("recentSearches");
+    if (savedSearches) {
+      try {
+        setRecentSearches(JSON.parse(savedSearches));
+      } catch (e) {
+        console.error("Error parsing recent searches:", e);
+        setRecentSearches([]);
+      }
+    }
+  }, []);
+
+  // Save recent searches to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("recentSearches", JSON.stringify(recentSearches));
+  }, [recentSearches]);
 
   // Filter items when search term or filters change
   useEffect(() => {
@@ -48,9 +68,44 @@ const SearchPage = ({ currentLocation, notificationCount }) => {
     setFilteredItems(filtered);
   }, [searchTerm, filters, favoritesData]);
 
-  // Handle search action
+  // Handle search action and add to recent searches
   const handleSearch = (term) => {
+    if (term.trim() !== "") {
+      // Add to recent searches if it's not empty
+      addToRecentSearches(term);
+    }
     setSearchTerm(term);
+  };
+
+  // Add a search term to recent searches
+  const addToRecentSearches = (term) => {
+    const trimmedTerm = term.trim();
+    if (trimmedTerm === "") return;
+
+    // Remove if it already exists to avoid duplicates
+    const updatedSearches = recentSearches.filter(
+      (search) => search.toLowerCase() !== trimmedTerm.toLowerCase()
+    );
+
+    // Add to the beginning of the array and limit to 10 items
+    setRecentSearches([trimmedTerm, ...updatedSearches].slice(0, 10));
+  };
+
+  // Handle recent search term click
+  const handleRecentSearchClick = (term) => {
+    setSearchTerm(term);
+    addToRecentSearches(term); // Move to top of list
+  };
+
+  // Remove a single search term
+  const handleClearOne = (term) => {
+    setRecentSearches(recentSearches.filter((search) => search !== term));
+  };
+
+  // Clear all recent searches
+  const handleClearAll = () => {
+    setRecentSearches([]);
+    localStorage.removeItem("recentSearches");
   };
 
   // Handle filter changes
@@ -80,35 +135,60 @@ const SearchPage = ({ currentLocation, notificationCount }) => {
         {/* Search results */}
         {filteredItems.length === 0 ? (
           searchTerm.trim() === "" ? (
-            <div className="section-container">
-              <div className="section-header">
-                <h3 className="section-title">자주 찾는</h3>
-              </div>
-              <MedicalCategories />
-              <div style={{ padding: "0.5rem 0.5rem" }}>
-                <div
-                  style={{
-                    width: "100%",
-                    borderBottom: "1px solid #eee",
-                  }}
+            <>
+              {/* Recent Searches */}
+              {recentSearches.length > 0 && (
+                <RecentSearches
+                  searches={recentSearches}
+                  onSearchClick={handleRecentSearchClick}
+                  onClearOne={handleClearOne}
+                  onClearAll={handleClearAll}
                 />
+              )}
+
+              <div className="section-container">
+                <div className="section-header">
+                  <h3 className="section-title">자주 찾는</h3>
+                </div>
+                <MedicalCategories />
+                <div style={{ padding: "0.5rem 0.5rem" }}>
+                  <div
+                    style={{
+                      width: "100%",
+                      borderBottom: "1px solid #eee",
+                    }}
+                  />
+                </div>
+                <CosmeticCategories />
               </div>
-              <CosmeticCategories />
-            </div>
+            </>
           ) : (
-            <div className="search-empty">
-              {/* <Search size={40} color="#e5e7eb" strokeWidth={1.5} /> */}
-              <p style={{ marginTop: "1rem" }}>검색 결과가 없습니다</p>
-              <p
-                style={{
-                  fontSize: "0.85rem",
-                  color: "#9ca3af",
-                  marginTop: "0.5rem",
-                }}
-              >
-                다른 검색어를 입력하거나 필터를 변경해보세요
-              </p>
-            </div>
+            <>
+              <div className="search-empty">
+                {/* <Search size={40} color="#e5e7eb" strokeWidth={1.5} /> */}
+                <p style={{ marginTop: "1rem" }}>검색 결과가 없습니다</p>
+                <p
+                  style={{
+                    fontSize: "0.85rem",
+                    color: "#9ca3af",
+                    marginTop: "0.5rem",
+                    marginBottom: "1.5rem",
+                  }}
+                >
+                  다른 검색어를 입력하거나 필터를 변경해보세요
+                </p>
+              </div>
+
+              {/* 검색 결과가 없을 때도 최근 검색어 표시 */}
+              {recentSearches.length > 0 && (
+                <RecentSearches
+                  searches={recentSearches}
+                  onSearchClick={handleRecentSearchClick}
+                  onClearOne={handleClearOne}
+                  onClearAll={handleClearAll}
+                />
+              )}
+            </>
           )
         ) : (
           filteredItems.map((item) =>

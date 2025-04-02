@@ -1,22 +1,17 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import SubCategoryFilterButtons from "./SubCategoryFilterButtons";
 import { mainCategories, subCategories } from "./medicalCategoryData";
 import "./SymptomSelector.css";
 
-// 비대면 진료 증상 선택 컴포넌트
-const SymptomSelector = () => {
-  // 선택된 메인 카테고리 관리
-  const [selectedMainCategory, setSelectedMainCategory] = useState(
-    mainCategories[0]?.id || ""
-  );
-
+// 리팩토링된 비대면 진료 증상 선택 컴포넌트 - 필터링 결과를 직접 포함하지 않음
+const SymptomSelector = ({
+  selectedMainCategory,
+  selectedSubCategory,
+  onMainCategoryChange,
+  onSubCategoryChange,
+}) => {
   // 현재 선택된 메인 카테고리에 해당하는 하위 카테고리 목록
   const currentSubCategories = subCategories[selectedMainCategory] || [];
-
-  // 선택된 하위 카테고리 관리 (초기값으로 첫 번째 하위 카테고리 설정)
-  const [selectedSubCategory, setSelectedSubCategory] = useState(
-    currentSubCategories[0]?.id || ""
-  );
 
   // 서브 카테고리 컨테이너에 대한 ref 생성
   const subCategoryContainerRef = useRef(null);
@@ -50,18 +45,19 @@ const SymptomSelector = () => {
 
   // 메인 카테고리 변경 처리
   const handleMainCategoryChange = (categoryId) => {
-    setSelectedMainCategory(categoryId);
-
-    // 메인 카테고리가 변경되면 해당 카테고리의 첫 번째 하위 카테고리로 자동 선택
+    // 메인 카테고리가 변경되면 해당 카테고리의 첫 번째 하위 카테고리 선택
     const newSubCategories = subCategories[categoryId] || [];
     const firstSubCategory = newSubCategories[0]?.id || "";
-    setSelectedSubCategory(firstSubCategory);
+
+    // 부모 컴포넌트에 상태 변경 알림
+    onMainCategoryChange(categoryId);
+    onSubCategoryChange(firstSubCategory);
 
     // DOM 업데이트 후 스크롤 위치 부드럽게 초기화
     setTimeout(() => {
       // 실제 스크롤이 발생하는 요소 선택 시도
       const directScrollElement = document.querySelector(
-        "#sub-cosmetic .scrollable-container"
+        "#sub-symptoms .scrollable-container"
       );
 
       if (directScrollElement) {
@@ -96,25 +92,11 @@ const SymptomSelector = () => {
 
   // 하위 카테고리 변경 처리
   const handleSubCategoryChange = (categoryId) => {
-    setSelectedSubCategory(categoryId);
+    onSubCategoryChange(categoryId);
   };
 
-  // 선택된 메인 카테고리 정보 가져오기
-  const selectedMainCategoryInfo = mainCategories.find(
-    (c) => c.id === selectedMainCategory
-  );
-
-  // 선택된 하위 카테고리 정보 가져오기
-  const selectedSubCategoryInfo = currentSubCategories.find(
-    (c) => c.id === selectedSubCategory
-  );
-
   return (
-    <div className="section-container">
-      {/* <div className="section-header">
-        <h3 className="section-title">어디가 불편하신가요?</h3>
-      </div> */}
-
+    <div className="category-fixed-container">
       {/* 메인 카테고리 선택 (큰 증상 영역) */}
       <div className="symptom-selector-main-category">
         <SubCategoryFilterButtons
@@ -145,24 +127,6 @@ const SymptomSelector = () => {
           </p>
         )}
       </div>
-
-      {/* 선택된 증상 표시 */}
-      {selectedSubCategory && (
-        <div className="symptom-selector-result">
-          <h3 className="symptom-selector-result-title">선택하신 증상</h3>
-          <p className="symptom-selector-result-item">
-            <span className="symptom-selector-result-label">영역: </span>
-            {selectedMainCategoryInfo?.label || ""}
-          </p>
-          <p className="symptom-selector-result-item">
-            <span className="symptom-selector-result-label">세부 증상: </span>
-            {selectedSubCategoryInfo?.label || ""}
-          </p>
-          <button className="symptom-selector-start-button">
-            이 증상으로 진료 시작하기
-          </button>
-        </div>
-      )}
     </div>
   );
 };

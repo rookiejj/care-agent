@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import SubCategoryFilterButtons from "./SubCategoryFilterButtons";
 import {
   mainCosmeticCategories,
@@ -6,21 +6,16 @@ import {
 } from "./cosmeticCategoryData";
 import "./CosmeticSelector.css";
 
-// 시술/성형 선택 컴포넌트
-const CosmeticSelector = () => {
-  // 선택된 메인 카테고리 관리
-  const [selectedMainCategory, setSelectedMainCategory] = useState(
-    mainCosmeticCategories[0]?.id || ""
-  );
-
+// 리팩토링된 시술/성형 선택 컴포넌트 - 필터링 결과를 직접 포함하지 않음
+const CosmeticSelector = ({
+  selectedMainCategory,
+  selectedSubCategory,
+  onMainCategoryChange,
+  onSubCategoryChange,
+}) => {
   // 현재 선택된 메인 카테고리에 해당하는 하위 카테고리 목록
   const currentSubCategories =
     subCosmeticCategories[selectedMainCategory] || [];
-
-  // 선택된 하위 카테고리 관리 (초기값으로 첫 번째 하위 카테고리 설정)
-  const [selectedSubCategory, setSelectedSubCategory] = useState(
-    currentSubCategories[0]?.id || ""
-  );
 
   // 서브 카테고리 컨테이너에 대한 ref 생성
   const subCategoryContainerRef = useRef(null);
@@ -54,12 +49,13 @@ const CosmeticSelector = () => {
 
   // 메인 카테고리 변경 처리
   const handleMainCategoryChange = (categoryId) => {
-    setSelectedMainCategory(categoryId);
-
-    // 메인 카테고리가 변경되면 해당 카테고리의 첫 번째 하위 카테고리로 자동 선택
+    // 메인 카테고리가 변경되면 해당 카테고리의 첫 번째 하위 카테고리 선택
     const newSubCategories = subCosmeticCategories[categoryId] || [];
     const firstSubCategory = newSubCategories[0]?.id || "";
-    setSelectedSubCategory(firstSubCategory);
+
+    // 부모 컴포넌트에 상태 변경 알림
+    onMainCategoryChange(categoryId);
+    onSubCategoryChange(firstSubCategory);
 
     // DOM 업데이트 후 스크롤 위치 부드럽게 초기화
     setTimeout(() => {
@@ -100,21 +96,11 @@ const CosmeticSelector = () => {
 
   // 하위 카테고리 변경 처리
   const handleSubCategoryChange = (categoryId) => {
-    setSelectedSubCategory(categoryId);
+    onSubCategoryChange(categoryId);
   };
 
-  // 선택된 메인 카테고리 정보 가져오기
-  const selectedMainCategoryInfo = mainCosmeticCategories.find(
-    (c) => c.id === selectedMainCategory
-  );
-
-  // 선택된 하위 카테고리 정보 가져오기
-  const selectedSubCategoryInfo = currentSubCategories.find(
-    (c) => c.id === selectedSubCategory
-  );
-
   return (
-    <div className="section-container">
+    <div className="category-fixed-container">
       {/* 메인 카테고리 선택 (분야) */}
       <div className="cosmetic-selector-main-category">
         <SubCategoryFilterButtons
@@ -145,24 +131,6 @@ const CosmeticSelector = () => {
           </p>
         )}
       </div>
-
-      {/* 선택된 시술/성형 표시 */}
-      {selectedSubCategory && (
-        <div className="cosmetic-selector-result">
-          <h3 className="cosmetic-selector-result-title">선택하신 시술</h3>
-          <p className="cosmetic-selector-result-item">
-            <span className="cosmetic-selector-result-label">분야: </span>
-            {selectedMainCategoryInfo?.label || ""}
-          </p>
-          <p className="cosmetic-selector-result-item">
-            <span className="cosmetic-selector-result-label">세부 시술: </span>
-            {selectedSubCategoryInfo?.label || ""}
-          </p>
-          <button className="cosmetic-selector-start-button">
-            이 시술로 상담 시작하기
-          </button>
-        </div>
-      )}
     </div>
   );
 };
