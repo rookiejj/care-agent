@@ -141,20 +141,6 @@ const SearchBar = ({
         }}
         onClick={handleSearchAreaClick}
       >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "8px 4px 8px 0",
-            color: isFocused ? "#3b82f6" : "#9ca3af",
-            transition: "color 0.2s ease",
-            ...iconStyle,
-          }}
-        >
-          <Search size={18} strokeWidth={2} />
-        </div>
-
         <input
           ref={inputRef}
           type="text"
