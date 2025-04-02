@@ -13,6 +13,23 @@ const SearchBar = ({
   shouldAutoFocus = true,
   forceKeyboard = false,
 }) => {
+  // react-router-dom의 useLocation 훅을 사용하여 현재 페이지 경로 감지
+  const location = useNavigate();
+  const { pathname } = window.location;
+  const isSearchPage = pathname.includes("/search");
+
+  // 컴포넌트 마운트 시점에 한 번 더 확인 (하단 탭 네비게이션 대응)
+  const [shouldFocus, setShouldFocus] = useState(false);
+
+  useEffect(() => {
+    // 현재 경로가 /search인지 다시 확인 (하단 탭 이동 후에도 작동)
+    const checkIfSearchPage = () => {
+      const currentPath = window.location.pathname;
+      return currentPath.includes("/search");
+    };
+
+    setShouldFocus(checkIfSearchPage());
+  }, []);
   const [inputText, setInputText] = useState(initialValue);
   const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef(null);
@@ -39,14 +56,23 @@ const SearchBar = ({
 
   // 페이지 로드/마운트 시 키보드 포커싱
   useEffect(() => {
-    // goSearch가 true면 메인 페이지에 있다는 의미이므로 포커싱하지 않음
-    // 검색 페이지(goSearch=false)에서만 자동 포커싱 적용
-    if ((shouldAutoFocus || forceKeyboard) && !goSearch) {
+    // 검색 페이지에서만 자동 포커싱 적용 (여러 조건 통합)
+    if (
+      (shouldAutoFocus || forceKeyboard) &&
+      (isSearchPage || !goSearch || shouldFocus)
+    ) {
       // DOM이 완전히 렌더링된 후 실행되도록 타이밍 조정
-      const timer = setTimeout(focusInput, 300);
-      return () => clearTimeout(timer);
+      const timer = setTimeout(focusInput, 400); // 시간 약간 증가
+
+      // 하단 탭으로 진입한 경우를 위한 두 번째 시도
+      const secondAttemptTimer = setTimeout(focusInput, 800);
+
+      return () => {
+        clearTimeout(timer);
+        clearTimeout(secondAttemptTimer);
+      };
     }
-  }, [shouldAutoFocus, forceKeyboard, goSearch]);
+  }, [shouldAutoFocus, forceKeyboard, goSearch, isSearchPage, shouldFocus]);
 
   const handleChange = (e) => {
     const newValue = e.target.value;
@@ -141,6 +167,20 @@ const SearchBar = ({
         }}
         onClick={handleSearchAreaClick}
       >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "8px 4px 8px 0",
+            color: isFocused ? "#3b82f6" : "#9ca3af",
+            transition: "color 0.2s ease",
+            ...iconStyle,
+          }}
+        >
+          <Search size={18} strokeWidth={2} />
+        </div>
+
         <input
           ref={inputRef}
           type="text"
@@ -161,7 +201,7 @@ const SearchBar = ({
             fontWeight: "500",
             ...inputStyle,
           }}
-          autoFocus={!goSearch}
+          autoFocus={isSearchPage || !goSearch || shouldFocus}
         />
 
         {inputText && (
