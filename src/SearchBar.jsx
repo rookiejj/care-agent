@@ -30,7 +30,7 @@ const SearchBar = ({
   // 페이지 로드/마운트 시 키보드 포커싱 - 단 한 번만 실행되도록 수정
   useEffect(() => {
     // 이미 포커스를 시도했는지 확인
-    if (focusAttempted.current) return;
+    // if (focusAttempted.current) return;
 
     // goSearch가 true면 메인 페이지에 있다는 의미이므로 포커싱하지 않음
     // 검색 페이지(goSearch=false)에서만 자동 포커싱 적용
@@ -40,7 +40,7 @@ const SearchBar = ({
         if (inputRef.current) {
           inputRef.current.focus();
           // 포커스 시도 표시
-          focusAttempted.current = true;
+          // focusAttempted.current = true;
         }
       }, 300);
 
