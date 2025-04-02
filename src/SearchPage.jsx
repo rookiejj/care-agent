@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useData } from "./DataContext";
 import { PageHeader } from "./App";
 import { Search } from "lucide-react";
