@@ -43,6 +43,9 @@ export const DataProvider = ({ children }) => {
           // 추가된 카테고리 정보
           mainCategory: "chest", // 가슴/심장 문제
           subCategory: "chest-pain", // 가슴이 아파요
+          // 추가된 전문 과목 정보
+          specialty: "cardiology", // 심장내과
+          facilityType: "clinic", // 의원
         },
         {
           id: 2,
@@ -61,6 +64,9 @@ export const DataProvider = ({ children }) => {
           // 추가된 카테고리 정보
           mainCategory: "joint", // 관절/근육 통증
           subCategory: "joint-knee", // 무릎이 아파요
+          // 추가된 전문 과목 정보
+          specialty: "orthopedics", // 정형외과
+          facilityType: "clinic", // 의원
         },
         {
           id: 3,
@@ -82,9 +88,11 @@ export const DataProvider = ({ children }) => {
           originalPrice: "60,000원",
           discountPrice: "무료 (상담)",
           discountRate: "100%",
-          // 추가된 카테고리 정보
-          mainCategory: "skin", // 피부 관리
-          subCategory: "skin-basic", // 기본 피부 관리
+          mainCategory: "skin",
+          subCategory: "skin-basic",
+          // 새로 추가된 정보
+          specialty: "dermatology",
+          facilityType: "clinic",
         },
         {
           id: 4,
@@ -103,6 +111,9 @@ export const DataProvider = ({ children }) => {
           // 추가된 카테고리 정보
           mainCategory: "face", // 얼굴 성형
           subCategory: "face-contour", // 얼굴 윤곽
+          // 새로 추가된 정보
+          specialty: "plastic", // 성형외과
+          facilityType: "clinic", // 의원
         },
         {
           id: 5,
@@ -127,6 +138,9 @@ export const DataProvider = ({ children }) => {
           // 추가된 카테고리 정보
           mainCategory: "dental", // 치아 관련 (추가 카테고리로 가정)
           subCategory: "dental-implant", // 임플란트 (가정)
+          // 새로 추가된 정보
+          specialty: "dentistry", // 치과
+          facilityType: "dental", // 치과
         },
         {
           id: 6,
@@ -151,6 +165,9 @@ export const DataProvider = ({ children }) => {
           // 추가된 카테고리 정보
           mainCategory: "sleep", // 수면/피로
           subCategory: "sleep-energy", // 기운이 없어요
+          // 새로 추가된 정보
+          specialty: "oriental", // 한의원
+          facilityType: "oriental", // 한의원
         },
         {
           id: 7,
@@ -194,6 +211,9 @@ export const DataProvider = ({ children }) => {
           // 추가된 카테고리 정보
           mainCategory: "eye", // 눈 문제
           subCategory: "eye-vision", // 시력이 안 좋아졌어요
+          // 새로 추가된 정보
+          specialty: "ophthalmology", // 안과
+          facilityType: "clinic", // 의원
         },
         {
           id: 9,
@@ -242,8 +262,10 @@ export const DataProvider = ({ children }) => {
           // 추가된 카테고리 정보
           mainCategory: "allergy", // 알레르기
           subCategory: "allergy-respiratory", // 알레르기성 비염이 있어요
+          // 새로 추가된 정보
+          specialty: "pediatrics", // 소아과
+          facilityType: "clinic", // 의원
         },
-
         // 머리두통 - 두통이 있어요 (5개)
         {
           id: 11,
@@ -267,6 +289,9 @@ export const DataProvider = ({ children }) => {
           discountRate: "20%",
           mainCategory: "head",
           subCategory: "head-pain",
+          // 추가된 전문 과목 정보
+          specialty: "neurology", // 신경과
+          facilityType: "clinic", // 의원
         },
         {
           id: 12,
@@ -285,6 +310,9 @@ export const DataProvider = ({ children }) => {
           isEvent: false,
           mainCategory: "head",
           subCategory: "head-pain",
+          // 추가된 전문 과목 정보
+          specialty: "neurology", // 신경과
+          facilityType: "clinic", // 의원
         },
         {
           id: 13,
@@ -308,6 +336,9 @@ export const DataProvider = ({ children }) => {
           discountRate: "20%",
           mainCategory: "head",
           subCategory: "head-pain",
+          // 추가된 전문 과목 정보
+          specialty: "neurology", // 신경과
+          facilityType: "clinic", // 의원
         },
         {
           id: 14,
@@ -326,6 +357,9 @@ export const DataProvider = ({ children }) => {
           isEvent: false,
           mainCategory: "head",
           subCategory: "head-pain",
+          // 추가된 전문 과목 정보
+          specialty: "pain", // 통증의학과
+          facilityType: "clinic", // 의원
         },
         {
           id: 15,
@@ -349,6 +383,9 @@ export const DataProvider = ({ children }) => {
           discountRate: "25%",
           mainCategory: "head",
           subCategory: "head-pain",
+          // 추가된 전문 과목 정보
+          specialty: "pain", // 통증의학과
+          facilityType: "clinic", // 의원
         },
         {
           id: 16,
@@ -367,6 +404,9 @@ export const DataProvider = ({ children }) => {
           isEvent: false,
           mainCategory: "sleep",
           subCategory: "sleep-insomnia",
+          // 추가된 전문 과목 정보
+          specialty: "neurology", // 신경과
+          facilityType: "clinic", // 의원
         },
         {
           id: 17,
@@ -390,6 +430,9 @@ export const DataProvider = ({ children }) => {
           discountRate: "25%",
           mainCategory: "eye",
           subCategory: "eye-vision",
+          // 추가된 전문 과목 정보
+          specialty: "ophthalmology", // 안과
+          facilityType: "clinic", // 의원
         },
         {
           id: 18,
@@ -408,6 +451,9 @@ export const DataProvider = ({ children }) => {
           isEvent: false,
           mainCategory: "ear",
           subCategory: "ear-hearing",
+          // 추가된 전문 과목 정보
+          specialty: "ent", // 이비인후과
+          facilityType: "clinic", // 의원
         },
         {
           id: 19,
@@ -431,6 +477,9 @@ export const DataProvider = ({ children }) => {
           discountRate: "25%",
           mainCategory: "mental",
           subCategory: "mental-depression",
+          // 추가된 전문 과목 정보
+          specialty: "psychiatry", // 정신건강의학과
+          facilityType: "clinic", // 의원
         },
         {
           id: 20,
@@ -449,6 +498,9 @@ export const DataProvider = ({ children }) => {
           isEvent: false,
           mainCategory: "allergy",
           subCategory: "allergy-respiratory",
+          // 추가된 전문 과목 정보
+          specialty: "allergy", // 알레르기내과
+          facilityType: "clinic", // 의원
         },
         {
           id: 21,
@@ -472,8 +524,10 @@ export const DataProvider = ({ children }) => {
           discountRate: "20%",
           mainCategory: "fever",
           subCategory: "fever-high",
+          // 추가된 전문 과목 정보
+          specialty: "internal", // 내과
+          facilityType: "clinic", // 의원
         },
-
         // Adding more cosmetic category entries
         {
           id: 22,
@@ -497,6 +551,9 @@ export const DataProvider = ({ children }) => {
           discountRate: "37%",
           mainCategory: "skin",
           subCategory: "skin-pore",
+          // 새로 추가된 정보
+          specialty: "dermatology",
+          facilityType: "clinic",
         },
         {
           id: 23,
@@ -515,6 +572,9 @@ export const DataProvider = ({ children }) => {
           isEvent: false,
           mainCategory: "face",
           subCategory: "face-eye",
+          // 새로 추가된 정보
+          specialty: "plastic",
+          facilityType: "clinic",
         },
         {
           id: 24,
@@ -538,6 +598,9 @@ export const DataProvider = ({ children }) => {
           discountRate: "20%",
           mainCategory: "body",
           subCategory: "body-liposuction",
+          // 새로 추가된 정보
+          specialty: "plastic",
+          facilityType: "clinic",
         },
         {
           id: 25,
@@ -556,6 +619,9 @@ export const DataProvider = ({ children }) => {
           isEvent: false,
           mainCategory: "hair",
           subCategory: "hair-loss",
+          // 새로 추가된 정보
+          specialty: "dermatology",
+          facilityType: "clinic",
         },
         {
           id: 26,
@@ -579,6 +645,9 @@ export const DataProvider = ({ children }) => {
           discountRate: "22%",
           mainCategory: "antiaging",
           subCategory: "antiaging-wrinkle",
+          // 새로 추가된 정보
+          specialty: "plastic",
+          facilityType: "clinic",
         },
         {
           id: 27,
@@ -602,6 +671,9 @@ export const DataProvider = ({ children }) => {
           discountRate: "33%",
           mainCategory: "dental",
           subCategory: "dental-whitening",
+          // 새로 추가된 정보
+          specialty: "dentistry",
+          facilityType: "dental",
         },
         {
           id: 28,
@@ -620,6 +692,9 @@ export const DataProvider = ({ children }) => {
           isEvent: false,
           mainCategory: "injectable",
           subCategory: "injectable-botox",
+          // 새로 추가된 정보
+          specialty: "plastic",
+          facilityType: "clinic",
         },
         {
           id: 29,
@@ -643,6 +718,9 @@ export const DataProvider = ({ children }) => {
           discountRate: "28%",
           mainCategory: "lip",
           subCategory: "lip-plump",
+          // 새로 추가된 정보
+          specialty: "plastic",
+          facilityType: "clinic",
         },
         {
           id: 30,
@@ -653,7 +731,7 @@ export const DataProvider = ({ children }) => {
           rating: 4.8,
           reviewCount: 164,
           description:
-            "여드름 흉터, 수술 흉터, a점 제거 등 흉터 개선 전문. 맞춤형 치료로 최적의 효과.",
+            "여드름 흉터, 수술 흉터, 점 제거 등 흉터 개선 전문. 맞춤형 치료로 최적의 효과.",
           tags: ["흉터제거", "점제거", "레이저"],
           price: "시술 100,000원~",
           location: "서울시 강남구",
@@ -661,6 +739,9 @@ export const DataProvider = ({ children }) => {
           isEvent: false,
           mainCategory: "scar",
           subCategory: "scar-surgical",
+          // 새로 추가된 정보
+          specialty: "dermatology",
+          facilityType: "clinic",
         },
         {
           id: 31,
@@ -684,24 +765,35 @@ export const DataProvider = ({ children }) => {
           discountRate: "28%",
           mainCategory: "eyebrow",
           subCategory: "eyebrow-tattoo",
+          // 새로 추가된 정보
+          specialty: "plastic",
+          facilityType: "clinic",
         },
         {
-          id: 32,
+          id: 31,
           type: "cosmetic",
-          title: "레이저 테라피 센터",
-          image: getCosmeticAdImage("all", 4),
-          subtitle: "레이저 시술 전문",
-          rating: 4.9,
-          reviewCount: 213,
+          title: "눈썹 디자인 살롱",
+          image: getCosmeticAdImage("all", 3),
+          subtitle: "눈썹/속눈썹 전문",
+          rating: 4.7,
+          reviewCount: 152,
           description:
-            "색소 제거, 피부 리서페이싱, 혈관 레이저 등 첨단 레이저 시술. 정확한 타겟팅.",
-          tags: ["레이저", "색소제거", "리서페이싱"],
-          price: "시술 120,000원~",
-          location: "서울시 서초구",
-          distance: "3.3km",
-          isEvent: false,
-          mainCategory: "laser",
-          subCategory: "laser-spot",
+            "눈썹 문신, 속눈썹 연장, 눈썹 리프팅 등 눈썹 관련 모든 시술. 맞춤 디자인.",
+          tags: ["눈썹문신", "속눈썹연장", "반영구"],
+          price: "시술 80,000원~",
+          location: "서울시 강남구",
+          distance: "2.2km",
+          isEvent: true,
+          eventPeriod: "4.1 - 4.30",
+          eventContent: "눈썹 문신 할인",
+          originalPrice: "250,000원",
+          discountPrice: "180,000원",
+          discountRate: "28%",
+          mainCategory: "eyebrow",
+          subCategory: "eyebrow-tattoo",
+          // 새로 추가된 정보
+          specialty: "plastic",
+          facilityType: "clinic",
         },
         {
           id: 33,
@@ -725,8 +817,10 @@ export const DataProvider = ({ children }) => {
           discountRate: "30%",
           mainCategory: "weight",
           subCategory: "weight-management",
+          // 새로 추가된 정보
+          specialty: "plastic",
+          facilityType: "clinic",
         },
-
         // Filling in remaining sub-categories
         {
           id: 34,
@@ -745,6 +839,9 @@ export const DataProvider = ({ children }) => {
           isEvent: false,
           mainCategory: "head",
           subCategory: "head-dizziness",
+          // 추가된 전문 과목 정보
+          specialty: "neurology", // 신경과
+          facilityType: "clinic", // 의원
         },
         {
           id: 35,
@@ -768,6 +865,9 @@ export const DataProvider = ({ children }) => {
           discountRate: "25%",
           mainCategory: "cold",
           subCategory: "cold-cough",
+          // 추가된 전문 과목 정보
+          specialty: "pulmonology", // 호흡기내과
+          facilityType: "clinic", // 의원
         },
         {
           id: 36,
@@ -786,6 +886,9 @@ export const DataProvider = ({ children }) => {
           isEvent: false,
           mainCategory: "stomach",
           subCategory: "stomach-nausea",
+          // 추가된 전문 과목 정보
+          specialty: "gastroenterology", // 소화기내과
+          facilityType: "clinic", // 의원
         },
         {
           id: 37,
@@ -809,6 +912,9 @@ export const DataProvider = ({ children }) => {
           discountRate: "33%",
           mainCategory: "skin",
           subCategory: "skin-whitening",
+          // 새로 추가된 정보
+          specialty: "dermatology",
+          facilityType: "clinic",
         },
         {
           id: 38,
@@ -827,6 +933,9 @@ export const DataProvider = ({ children }) => {
           isEvent: false,
           mainCategory: "face",
           subCategory: "face-nose",
+          // 새로 추가된 정보
+          specialty: "plastic",
+          facilityType: "clinic",
         },
         {
           id: 39,
@@ -850,6 +959,9 @@ export const DataProvider = ({ children }) => {
           discountRate: "22%",
           mainCategory: "body",
           subCategory: "body-cellulite",
+          // 새로 추가된 정보
+          specialty: "plastic",
+          facilityType: "clinic",
         },
         {
           id: 40,
@@ -868,6 +980,9 @@ export const DataProvider = ({ children }) => {
           isEvent: false,
           mainCategory: "hair",
           subCategory: "hair-transplant",
+          // 새로 추가된 정보
+          specialty: "dermatology",
+          facilityType: "clinic",
         },
         {
           id: 41,
@@ -891,6 +1006,9 @@ export const DataProvider = ({ children }) => {
           discountRate: "30%",
           mainCategory: "antiaging",
           subCategory: "antiaging-tightening",
+          // 새로 추가된 정보
+          specialty: "plastic",
+          facilityType: "clinic",
         },
         {
           id: 42,
@@ -909,6 +1027,9 @@ export const DataProvider = ({ children }) => {
           isEvent: false,
           mainCategory: "dental",
           subCategory: "dental-alignment",
+          // 새로 추가된 정보
+          specialty: "dentistry",
+          facilityType: "dental",
         },
         {
           id: 43,
@@ -932,6 +1053,9 @@ export const DataProvider = ({ children }) => {
           discountRate: "22%",
           mainCategory: "injectable",
           subCategory: "injectable-thread",
+          // 새로 추가된 정보
+          specialty: "plastic",
+          facilityType: "clinic",
         },
         {
           id: 44,
@@ -950,6 +1074,9 @@ export const DataProvider = ({ children }) => {
           isEvent: false,
           mainCategory: "lip",
           subCategory: "lip-volume",
+          // 새로 추가된 정보
+          specialty: "plastic",
+          facilityType: "clinic",
         },
         {
           id: 45,
@@ -973,6 +1100,9 @@ export const DataProvider = ({ children }) => {
           discountRate: "20%",
           mainCategory: "scar",
           subCategory: "scar-burn",
+          // 새로 추가된 정보
+          specialty: "dermatology",
+          facilityType: "clinic",
         },
         {
           id: 46,
@@ -991,6 +1121,9 @@ export const DataProvider = ({ children }) => {
           isEvent: false,
           mainCategory: "eyebrow",
           subCategory: "eyebrow-shape",
+          // 새로 추가된 정보
+          specialty: "plastic",
+          facilityType: "clinic",
         },
         {
           id: 47,
@@ -1014,6 +1147,9 @@ export const DataProvider = ({ children }) => {
           discountRate: "20%",
           mainCategory: "laser",
           subCategory: "laser-vein",
+          // 새로 추가된 정보
+          specialty: "dermatology",
+          facilityType: "clinic",
         },
         {
           id: 48,
@@ -1032,11 +1168,59 @@ export const DataProvider = ({ children }) => {
           isEvent: false,
           mainCategory: "weight",
           subCategory: "weight-muscle",
+          // 새로 추가된 정보
+          specialty: "plastic",
+          facilityType: "clinic",
         },
-
-        // Additional medical category entries to cover all subcategories
         {
           id: 49,
+          type: "cosmetic",
+          title: "아큐어 흉터 클리닉",
+          image: getCosmeticAdImage("all", 4),
+          subtitle: "화상 흉터 전문",
+          rating: 4.8,
+          reviewCount: 142,
+          description:
+            "화상 흉터, 수술 흉터, 사고 흉터 등 다양한 흉터 치료. 최신 레이저 기술 활용.",
+          tags: ["흉터치료", "화상흉터", "레이저"],
+          price: "상담 무료",
+          location: "서울시 서초구",
+          distance: "3.6km",
+          isEvent: true,
+          eventPeriod: "4.1 - 5.31",
+          eventContent: "흉터 치료 프로그램 할인",
+          originalPrice: "500,000원",
+          discountPrice: "400,000원",
+          discountRate: "20%",
+          mainCategory: "scar",
+          subCategory: "scar-burn",
+          // 새로 추가된 정보
+          specialty: "dermatology",
+          facilityType: "clinic",
+        },
+        {
+          id: 50,
+          type: "cosmetic",
+          title: "아이브로우 디자인 살롱",
+          image: getCosmeticAdImage("all", 5),
+          subtitle: "눈썹 디자인 전문",
+          rating: 4.6,
+          reviewCount: 158,
+          description:
+            "눈썹 디자인, 눈썹 정리, 반영구 눈썹으로 얼굴형에 맞는 완벽한 눈썹을 찾아드립니다.",
+          tags: ["눈썹", "눈썹정리", "반영구"],
+          price: "시술 80,000원~",
+          location: "서울시 강남구",
+          distance: "2.3km",
+          isEvent: false,
+          mainCategory: "eyebrow",
+          subCategory: "eyebrow-shape",
+          // 새로 추가된 정보
+          specialty: "plastic",
+          facilityType: "clinic",
+        },
+        {
+          id: 51,
           type: "medical",
           title: "기억력 클리닉",
           image: getMedicalAdImage("all", 5),
@@ -1057,9 +1241,12 @@ export const DataProvider = ({ children }) => {
           discountRate: "33%",
           mainCategory: "head",
           subCategory: "head-memory",
+          // 새로 추가된 정보
+          specialty: "neurology",
+          facilityType: "clinic",
         },
         {
-          id: 50,
+          id: 52,
           type: "medical",
           title: "호흡기 케어 의원",
           image: getMedicalAdImage("all", 1),
@@ -1075,9 +1262,12 @@ export const DataProvider = ({ children }) => {
           isEvent: false,
           mainCategory: "cold",
           subCategory: "cold-hard-breath",
+          // 새로 추가된 정보
+          specialty: "pulmonology",
+          facilityType: "clinic",
         },
         {
-          id: 51,
+          id: 53,
           type: "medical",
           title: "벨리케어 소화기 클리닉",
           image: getMedicalAdImage("all", 2),
@@ -1098,9 +1288,12 @@ export const DataProvider = ({ children }) => {
           discountRate: "25%",
           mainCategory: "stomach",
           subCategory: "stomach-pain",
+          // 새로 추가된 정보
+          specialty: "gastroenterology",
+          facilityType: "clinic",
         },
         {
-          id: 52,
+          id: 54,
           type: "medical",
           title: "클린 피부 클리닉",
           image: getMedicalAdImage("all", 3),
@@ -1116,9 +1309,12 @@ export const DataProvider = ({ children }) => {
           isEvent: false,
           mainCategory: "skin",
           subCategory: "skin-itchy",
+          // 새로 추가된 정보
+          specialty: "dermatology",
+          facilityType: "clinic",
         },
         {
-          id: 53,
+          id: 55,
           type: "medical",
           title: "관절 모션 클리닉",
           image: getMedicalAdImage("all", 4),
@@ -1139,9 +1335,12 @@ export const DataProvider = ({ children }) => {
           discountRate: "20%",
           mainCategory: "joint",
           subCategory: "joint-stiffness",
+          // 새로 추가된 정보
+          specialty: "orthopedics",
+          facilityType: "clinic",
         },
         {
-          id: 54,
+          id: 56,
           type: "medical",
           title: "하트 리듬 클리닉",
           image: getMedicalAdImage("all", 5),
@@ -1157,9 +1356,12 @@ export const DataProvider = ({ children }) => {
           isEvent: false,
           mainCategory: "chest",
           subCategory: "chest-palpitation",
+          // 새로 추가된 정보
+          specialty: "cardiology",
+          facilityType: "clinic",
         },
         {
-          id: 55,
+          id: 57,
           type: "medical",
           title: "슬립 웰 클리닉",
           image: getMedicalAdImage("all", 1),
@@ -1180,9 +1382,12 @@ export const DataProvider = ({ children }) => {
           discountRate: "20%",
           mainCategory: "sleep",
           subCategory: "sleep-apnea",
+          // 새로 추가된 정보
+          specialty: "neurology",
+          facilityType: "clinic",
         },
         {
-          id: 56,
+          id: 58,
           type: "medical",
           title: "아이케어 안과 클리닉",
           image: getMedicalAdImage("all", 2),
@@ -1198,9 +1403,12 @@ export const DataProvider = ({ children }) => {
           isEvent: false,
           mainCategory: "eye",
           subCategory: "eye-dry",
+          // 새로 추가된 정보
+          specialty: "ophthalmology",
+          facilityType: "clinic",
         },
         {
-          id: 57,
+          id: 59,
           type: "medical",
           title: "이어 클리닉 센터",
           image: getMedicalAdImage("all", 3),
@@ -1221,9 +1429,12 @@ export const DataProvider = ({ children }) => {
           discountRate: "20%",
           mainCategory: "ear",
           subCategory: "ear-ringing",
+          // 새로 추가된 정보
+          specialty: "ent",
+          facilityType: "clinic",
         },
         {
-          id: 58,
+          id: 60,
           type: "medical",
           title: "마인드 포커스 센터",
           image: getMedicalAdImage("all", 4),
@@ -1239,111 +1450,78 @@ export const DataProvider = ({ children }) => {
           isEvent: false,
           mainCategory: "mental",
           subCategory: "mental-focus",
+          // 새로 추가된 정보
+          specialty: "psychiatry",
+          facilityType: "clinic",
         },
-        {
-          id: 59,
-          type: "medical",
-          title: "알러지 솔루션 센터",
-          image: getMedicalAdImage("all", 5),
-          subtitle: "음식 알레르기 전문",
-          rating: 4.8,
-          reviewCount: 168,
-          description:
-            "음식 알레르기, 불내증, 알레르기 반응 등 음식 관련 알레르기 전문 진단 및 치료.",
-          tags: ["알레르기내과", "음식알레르기", "알레르기검사"],
-          price: "진료비 20,000원~",
-          location: "서울시 서초구",
-          distance: "3.7km",
-          isEvent: true,
-          eventPeriod: "4.15 - 5.15",
-          eventContent: "알레르기 패널 검사 할인",
-          originalPrice: "200,000원",
-          discountPrice: "150,000원",
-          discountRate: "25%",
-          mainCategory: "allergy",
-          subCategory: "allergy-food",
-        },
-        {
-          id: 60,
-          type: "medical",
-          title: "몸살케어 클리닉",
-          image: getMedicalAdImage("all", 1),
-          subtitle: "몸살/근육통 전문",
-          rating: 4.7,
-          reviewCount: 143,
-          description:
-            "몸살, 전신 근육통, 피로 증후군 등 전신 통증 관련 전문 진료 및 통증 관리.",
-          tags: ["가정의학과", "몸살", "근육통"],
-          price: "진료비 15,000원~",
-          location: "서울시 강남구",
-          distance: "2.6km",
-          isEvent: false,
-          mainCategory: "fever",
-          subCategory: "fever-body-ache",
-        }, // 피부관리 - 기본 피부관리 하위 카테고리 더미 데이터 5개
+        // 61-65번 추가 데이터
         {
           id: 61,
           type: "cosmetic",
-          title: "퓨어 스킨 클리닉",
+          title: "아이브로우 디자인 살롱",
           image: getCosmeticAdImage("all", 3),
-          subtitle: "기본 피부관리 전문",
-          rating: 4.8,
-          reviewCount: 198,
+          subtitle: "눈썹 디자인 전문",
+          rating: 4.6,
+          reviewCount: 158,
           description:
-            "개인 피부 타입에 맞는 맞춤형 클렌징, 각질 관리, 마사지와 팩까지 원스톱 관리 서비스를 제공합니다.",
-          tags: ["피부관리", "클렌징", "마사지"],
+            "눈썹 디자인, 눈썹 정리, 반영구 눈썹으로 얼굴형에 맞는 완벽한 눈썹을 찾아드립니다.",
+          tags: ["눈썹", "눈썹정리", "반영구"],
           price: "시술 80,000원~",
           location: "서울시 강남구",
-          distance: "2.2km",
-          isEvent: true,
-          eventPeriod: "4.15 - 5.15",
-          eventContent: "첫 방문 고객 기본 관리 할인",
-          originalPrice: "100,000원",
-          discountPrice: "80,000원",
-          discountRate: "20%",
-          mainCategory: "skin",
-          subCategory: "skin-basic",
+          distance: "2.3km",
+          isEvent: false,
+          mainCategory: "eyebrow",
+          subCategory: "eyebrow-shape",
+          // 새로 추가된 정보
+          specialty: "plastic",
+          facilityType: "clinic",
         },
         {
           id: 62,
           type: "cosmetic",
-          title: "글로우 스킨 랩",
+          title: "베인 케어 클리닉",
           image: getCosmeticAdImage("all", 1),
-          subtitle: "피부 광채 관리 전문",
+          subtitle: "혈관 레이저 전문",
           rating: 4.7,
-          reviewCount: 176,
+          reviewCount: 146,
           description:
-            "클렌징부터 모이스처라이징까지 기본에 충실한 피부관리. 피부 본연의 광채를 되찾아드립니다.",
-          tags: ["기초관리", "광채", "수분공급"],
-          price: "시술 70,000원~",
+            "실핏줄, 다리 정맥류, 홍조 등 혈관성 피부 문제 전문 치료. 정확한 타겟팅 레이저.",
+          tags: ["혈관레이저", "정맥류", "홍조"],
+          price: "시술 150,000원~",
           location: "서울시 서초구",
-          distance: "3.1km",
-          isEvent: false,
-          mainCategory: "skin",
-          subCategory: "skin-basic",
+          distance: "3.4km",
+          isEvent: true,
+          eventPeriod: "4.15 - 5.15",
+          eventContent: "혈관 레이저 패키지 할인",
+          originalPrice: "350,000원",
+          discountPrice: "280,000원",
+          discountRate: "20%",
+          mainCategory: "laser",
+          subCategory: "laser-vein",
+          // 새로 추가된 정보
+          specialty: "dermatology",
+          facilityType: "clinic",
         },
         {
           id: 63,
           type: "cosmetic",
-          title: "클린 스킨 센터",
+          title: "근육 밸런스 클리닉",
           image: getCosmeticAdImage("all", 2),
-          subtitle: "딥 클렌징 전문",
-          rating: 4.9,
-          reviewCount: 215,
+          subtitle: "근육 강화 전문",
+          rating: 4.8,
+          reviewCount: 176,
           description:
-            "모공 속 노폐물까지 깨끗하게 제거하는 딥 클렌징과 기본 관리로 피부 밸런스를 맞춰드립니다.",
-          tags: ["딥클렌징", "모공관리", "기초케어"],
-          price: "시술 85,000원~",
+            "비수술적 근육 강화, 체형 개선, 식이요법을 통한 건강한 다이어트 프로그램 제공.",
+          tags: ["근육강화", "체형교정", "다이어트"],
+          price: "프로그램 250,000원~",
           location: "서울시 강남구",
-          distance: "1.8km",
-          isEvent: true,
-          eventPeriod: "4.1 - 4.30",
-          eventContent: "봄맞이 딥 클렌징 프로모션",
-          originalPrice: "120,000원",
-          discountPrice: "85,000원",
-          discountRate: "29%",
-          mainCategory: "skin",
-          subCategory: "skin-basic",
+          distance: "2.5km",
+          isEvent: false,
+          mainCategory: "weight",
+          subCategory: "weight-muscle",
+          // 새로 추가된 정보
+          specialty: "plastic",
+          facilityType: "clinic",
         },
         {
           id: 64,
@@ -1362,6 +1540,9 @@ export const DataProvider = ({ children }) => {
           isEvent: false,
           mainCategory: "skin",
           subCategory: "skin-basic",
+          // 새로 추가된 정보
+          specialty: "dermatology",
+          facilityType: "clinic",
         },
         {
           id: 65,
@@ -1385,6 +1566,9 @@ export const DataProvider = ({ children }) => {
           discountRate: "27%",
           mainCategory: "skin",
           subCategory: "skin-basic",
+          // 새로 추가된 정보
+          specialty: "dermatology",
+          facilityType: "clinic",
         },
       ],
       facilityInfo: {

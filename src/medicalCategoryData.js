@@ -166,4 +166,130 @@ export const subCategories = {
   ],
 };
 
-export default { mainCategories, subCategories };
+/**
+ * 의료 전문 과목 카테고리
+ * 각 진료과목 별 전문 분야
+ */
+export const medicalSpecialties = [
+  { id: "internal", label: "내과" },
+  { id: "surgery", label: "외과" },
+  { id: "obgyn", label: "산부인과" },
+  { id: "pediatrics", label: "소아과" },
+  { id: "neurology", label: "신경과" },
+  { id: "psychiatry", label: "정신건강의학과" },
+  { id: "orthopedics", label: "정형외과" },
+  { id: "dermatology", label: "피부과" },
+  { id: "ophthalmology", label: "안과" },
+  { id: "ent", label: "이비인후과" },
+  { id: "urology", label: "비뇨기과" },
+  { id: "dentistry", label: "치과" },
+  { id: "rehabilitation", label: "재활의학과" },
+  { id: "family", label: "가정의학과" },
+  { id: "oriental", label: "한의원" },
+  { id: "cardiology", label: "심장내과" },
+  { id: "gastroenterology", label: "소화기내과" },
+  { id: "pulmonology", label: "호흡기내과" },
+  { id: "allergy", label: "알레르기내과" },
+  { id: "endocrinology", label: "내분비내과" },
+  { id: "plastic", label: "성형외과" },
+  { id: "pain", label: "통증의학과" },
+];
+
+/**
+ * 의료 전문 과목 그룹
+ * 세부 전문 분야를 대분류로 묶음
+ */
+export const specialtyGroups = [
+  {
+    id: "internalMedicine",
+    label: "내과계열",
+    specialties: [
+      "internal",
+      "cardiology",
+      "gastroenterology",
+      "pulmonology",
+      "allergy",
+      "endocrinology",
+    ],
+  },
+  {
+    id: "surgery",
+    label: "외과계열",
+    specialties: ["surgery", "orthopedics", "plastic"],
+  },
+  {
+    id: "neuro",
+    label: "신경계열",
+    specialties: ["neurology", "psychiatry", "rehabilitation"],
+  },
+  {
+    id: "specializedClinic",
+    label: "전문클리닉",
+    specialties: [
+      "dermatology",
+      "ophthalmology",
+      "ent",
+      "urology",
+      "obgyn",
+      "pain",
+    ],
+  },
+  {
+    id: "generalPractice",
+    label: "일반진료",
+    specialties: ["family", "pediatrics"],
+  },
+  {
+    id: "dental",
+    label: "치과계열",
+    specialties: ["dentistry"],
+  },
+  {
+    id: "oriental",
+    label: "한의학계열",
+    specialties: ["oriental"],
+  },
+];
+
+/**
+ * 메인 카테고리와 전문 과목 매핑
+ * 증상 기반 메인 카테고리와 관련된 전문 과목 연결
+ */
+export const categoryToSpecialtyMapping = {
+  head: ["neurology", "psychiatry", "pain", "internal", "family"],
+  cold: ["pulmonology", "ent", "internal", "family", "allergy"],
+  stomach: ["gastroenterology", "internal", "surgery", "family"],
+  skin: ["dermatology", "allergy", "family"],
+  joint: ["orthopedics", "rehabilitation", "pain", "family"],
+  chest: ["cardiology", "pulmonology", "internal", "family"],
+  sleep: ["neurology", "psychiatry", "pulmonology", "family"],
+  eye: ["ophthalmology", "family"],
+  ear: ["ent", "family"],
+  mental: ["psychiatry", "neurology", "family"],
+  allergy: ["allergy", "dermatology", "pulmonology", "ent", "family"],
+  fever: ["internal", "allergy", "pulmonology", "gastroenterology", "family"],
+};
+
+/**
+ * 의료 기관 타입 카테고리
+ * 의료기관의 종류
+ */
+export const medicalFacilityTypes = [
+  { id: "clinic", label: "의원" }, // 일반 의원
+  { id: "hospital", label: "병원" }, // 병원
+  { id: "general", label: "종합병원" }, // 종합병원
+  { id: "university", label: "대학병원" }, // 대학병원
+  { id: "oriental", label: "한의원" }, // 한의원
+  { id: "dental", label: "치과" }, // 치과
+  { id: "public", label: "보건소" }, // 보건소
+  { id: "pharmacy", label: "약국" }, // 약국
+];
+
+export default {
+  mainCategories,
+  subCategories,
+  medicalSpecialties,
+  specialtyGroups,
+  categoryToSpecialtyMapping,
+  medicalFacilityTypes,
+};
