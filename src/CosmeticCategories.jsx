@@ -84,9 +84,9 @@ const CosmeticCategories = ({ currentLocation }) => {
           </div>
           <span
             className="cosmetic-category-name"
-            style={{ color: "#0369a1", fontWeight: "bold" }}
+            style={{ color: "#c5587d", fontWeight: "bold" }}
           >
-            {expanded ? "닫기" : "시술 더보기"}
+            {expanded ? "닫기" : "부위 더보기"}
           </span>
         </div>
       </div>

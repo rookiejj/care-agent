@@ -89,7 +89,7 @@ const MedicalCategories = ({ currentLocation }) => {
             className="medical-category-name"
             style={{ color: "#0369a1", fontWeight: "bold" }}
           >
-            {expanded ? "닫기" : "진료 더보기"}
+            {expanded ? "닫기" : "증상 더보기"}
           </span>
         </div>
       </div>
