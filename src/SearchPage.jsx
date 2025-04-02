@@ -146,7 +146,7 @@ const SearchPage = ({ currentLocation, notificationCount }) => {
                 />
               )}
 
-              <div className="section-container">
+              {/* <div className="section-container">
                 <div className="section-header">
                   <h3 className="section-title">증상/부위</h3>
                 </div>
@@ -160,7 +160,7 @@ const SearchPage = ({ currentLocation, notificationCount }) => {
                   />
                 </div>
                 <CosmeticCategories />
-              </div>
+              </div> */}
             </>
           ) : (
             <>

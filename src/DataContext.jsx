@@ -770,7 +770,7 @@ export const DataProvider = ({ children }) => {
           facilityType: "clinic",
         },
         {
-          id: 31,
+          id: 32,
           type: "cosmetic",
           title: "눈썹 디자인 살롱",
           image: getCosmeticAdImage("all", 3),
