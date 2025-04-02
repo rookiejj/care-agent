@@ -20,6 +20,37 @@ const SearchPage = ({ currentLocation, notificationCount }) => {
 
   const { favoritesData } = useData();
 
+  // 페이지 로드 시 검색창에 포커스 주기 위한 효과
+  useEffect(() => {
+    // iOS 키보드를 표시하기 위한 간단한 방법
+    const focusSearchInput = () => {
+      const inputElement = document.querySelector('input[type="text"]');
+      if (inputElement) {
+        // 포커스 시도
+        inputElement.focus();
+
+        // iOS에서 키보드 표시를 위한 추가 도움
+        setTimeout(() => {
+          if (inputElement) {
+            inputElement.focus();
+            inputElement.click();
+          }
+        }, 300);
+      }
+    };
+
+    // 여러 번의 시도로 신뢰성 향상
+    const timer1 = setTimeout(focusSearchInput, 100);
+    const timer2 = setTimeout(focusSearchInput, 500);
+    const timer3 = setTimeout(focusSearchInput, 1000);
+
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+      clearTimeout(timer3);
+    };
+  }, []);
+
   // Load recent searches from localStorage on component mount
   useEffect(() => {
     const savedSearches = localStorage.getItem("recentSearches");
@@ -125,9 +156,14 @@ const SearchPage = ({ currentLocation, notificationCount }) => {
           showNotification={true}
         />
         <div className="header-function">
-          <SearchBar onSearch={handleSearch} initialValue={searchTerm} />
+          <SearchBar
+            onSearch={handleSearch}
+            initialValue={searchTerm}
+            forceKeyboard={true} // 강제 키보드 표시 활성화
+            shouldAutoFocus={true} // 자동 포커스 활성화
+          />
 
-          {/* Category Filter Buttons - keeping original bubble style */}
+          {/* Category Filter Buttons */}
           <CategoryFilterButtons onFilterChange={handleFilterChange} />
         </div>
       </div>
@@ -145,27 +181,10 @@ const SearchPage = ({ currentLocation, notificationCount }) => {
                   onClearAll={handleClearAll}
                 />
               )}
-
-              {/* <div className="section-container">
-                <div className="section-header">
-                  <h3 className="section-title">증상/부위</h3>
-                </div>
-                <MedicalCategories />
-                <div style={{ padding: "0.5rem 0.5rem" }}>
-                  <div
-                    style={{
-                      width: "100%",
-                      borderBottom: "1px solid #eee",
-                    }}
-                  />
-                </div>
-                <CosmeticCategories />
-              </div> */}
             </>
           ) : (
             <>
               <div className="search-empty">
-                {/* <Search size={40} color="#e5e7eb" strokeWidth={1.5} /> */}
                 <p style={{ marginTop: "1rem" }}>검색 결과가 없습니다</p>
                 <p
                   style={{
