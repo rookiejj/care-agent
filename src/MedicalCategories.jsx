@@ -57,10 +57,21 @@ const MedicalCategories = ({ currentLocation }) => {
       // Add a small delay to ensure the DOM has updated
       setTimeout(() => {
         // Scroll to the expanded categories smoothly
-        expandedCategoriesRef.current.scrollIntoView({
-          behavior: "smooth",
-          block: "end",
-        });
+        // 스크롤을 조금 더 내리기 위해 offset 추가
+        const container = document.querySelector(".content");
+        if (container) {
+          const rect = expandedCategoriesRef.current.getBoundingClientRect();
+          const offset = rect.height + 20; // 추가 여백으로 20px 더함
+          container.scrollBy({
+            top: offset,
+            behavior: "smooth",
+          });
+        } else {
+          expandedCategoriesRef.current.scrollIntoView({
+            behavior: "smooth",
+            block: "end",
+          });
+        }
       }, 100);
     }
   }, [expanded]);
