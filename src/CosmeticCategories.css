@@ -13,6 +13,22 @@
   padding: 3px 0;
 }
 
+.expanded-categories {
+  margin-top: 8px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .cosmetic-category-item {
   display: flex;
   flex-direction: column;
@@ -46,7 +62,7 @@
   white-space: nowrap;
 }
 
-/* 미디어 쿼리를 사용하여 모든 해상도에서 항상 5개가 나타나도록 함 */
+/* Media queries */
 @media (max-width: 480px) {
   .cosmetic-categories {
     grid-template-columns: repeat(5, 1fr);

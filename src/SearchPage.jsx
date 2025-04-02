@@ -148,7 +148,7 @@ const SearchPage = ({ currentLocation, notificationCount }) => {
 
               <div className="section-container">
                 <div className="section-header">
-                  <h3 className="section-title">자주 찾는</h3>
+                  <h3 className="section-title">증상/부위</h3>
                 </div>
                 <MedicalCategories />
                 <div style={{ padding: "0.5rem 0.5rem" }}>

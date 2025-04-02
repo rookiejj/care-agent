@@ -1,68 +1,125 @@
-import { useNavigate, useLocation } from "react-router-dom";
-
-import { Heart, Baby, Bone, Brain, GripHorizontal } from "lucide-react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  Heart,
+  Baby,
+  Bone,
+  Brain,
+  ChevronDown,
+  ChevronUp,
+  Thermometer,
+  Pill,
+  Wind,
+  Eye,
+  Ear,
+  Clipboard,
+  UserRound,
+  Sun,
+  Bed,
+} from "lucide-react";
 import "./MedicalCategories.css";
+import { mainCategories } from "./medicalCategoryData";
 
 const MedicalCategories = ({ currentLocation }) => {
   const navigate = useNavigate();
+  const [expanded, setExpanded] = useState(false);
 
-  // 카테고리 데이터
-  const categories = [
-    {
-      id: 1,
-      name: "심장내과",
-      icon: <Heart size={24} strokeWidth={1.5} color="#FF6B6B" />,
-    },
-    {
-      id: 2,
-      name: "소아과",
-      icon: <Baby size={24} strokeWidth={1.5} color="#4D96FF" />,
-    },
-    {
-      id: 3,
-      name: "정형외과",
-      icon: <Bone size={24} strokeWidth={1.5} color="#6BCB77" />,
-    },
-    {
-      id: 4,
-      name: "신경과",
-      icon: <Brain size={24} strokeWidth={1.5} color="#9D65C9" />,
-    },
-    {
-      id: 5,
-      name: "진료 더보기",
-      icon: <GripHorizontal size={24} strokeWidth={1.5} color="#555555" />,
-      onClick: () =>
-        navigate("/categories", {
-          state: {
-            serviceType: "medical",
-            currentLocation: currentLocation,
-          },
-        }),
-    },
-  ];
+  // Icon mapping for categories
+  const getCategoryIcon = (categoryId) => {
+    const iconMap = {
+      head: <Brain size={24} strokeWidth={1.5} color="#9D65C9" />,
+      cold: <Wind size={24} strokeWidth={1.5} color="#FF6B6B" />,
+      stomach: <Pill size={24} strokeWidth={1.5} color="#FDA65D" />,
+      skin: <UserRound size={24} strokeWidth={1.5} color="#FF9D7B" />,
+      joint: <Bone size={24} strokeWidth={1.5} color="#6BCB77" />,
+      chest: <Heart size={24} strokeWidth={1.5} color="#FF5A5A" />,
+      sleep: <Bed size={24} strokeWidth={1.5} color="#6495ED" />,
+      eye: <Eye size={24} strokeWidth={1.5} color="#4D96FF" />,
+      ear: <Ear size={24} strokeWidth={1.5} color="#BB86FC" />,
+      mental: <Clipboard size={24} strokeWidth={1.5} color="#9C7BFF" />,
+      allergy: <Sun size={24} strokeWidth={1.5} color="#FFB74D" />,
+      fever: <Thermometer size={24} strokeWidth={1.5} color="#F06292" />,
+      default: <Pill size={24} strokeWidth={1.5} color="#555555" />,
+    };
+
+    return iconMap[categoryId] || iconMap.default;
+  };
+
+  // Toggle the expanded state
+  const toggleExpanded = () => {
+    setExpanded(!expanded);
+  };
 
   return (
     <div className="medical-categories-container">
       <div className="medical-categories">
-        {categories.map((category) => (
+        {/* Always show first 4 categories */}
+        {mainCategories.slice(0, 4).map((category) => (
           <div
             key={category.id}
             className="medical-category-item"
-            onClick={category.onClick}
+            onClick={() => {
+              // Navigate to categories page with the selected category
+              navigate("/categories", {
+                state: {
+                  serviceType: "medical",
+                  currentLocation: currentLocation,
+                  selectedCategory: category.id,
+                },
+              });
+            }}
           >
-            <div className="medical-category-icon-wrapper">{category.icon}</div>
-            <span
-              className="medical-category-name"
-              style={
-                category.id == 5 ? { color: "#0369a1", fontWeight: "bold" } : {}
-              }
-            >
-              {category.name}
-            </span>
+            <div className="medical-category-icon-wrapper">
+              {getCategoryIcon(category.id)}
+            </div>
+            <span className="medical-category-name">{category.label}</span>
           </div>
         ))}
+
+        {/* Toggle button for expanding/collapsing */}
+        <div className="medical-category-item" onClick={toggleExpanded}>
+          <div className="medical-category-icon-wrapper">
+            {expanded ? (
+              <ChevronUp size={24} strokeWidth={1.5} color="#0369a1" />
+            ) : (
+              <ChevronDown size={24} strokeWidth={1.5} color="#0369a1" />
+            )}
+          </div>
+          <span
+            className="medical-category-name"
+            style={{ color: "#0369a1", fontWeight: "bold" }}
+          >
+            {expanded ? "닫기" : "진료 더보기"}
+          </span>
+        </div>
       </div>
+
+      {/* Expanded container for additional categories */}
+      {expanded && (
+        <div className="medical-categories expanded-categories">
+          {mainCategories.slice(4).map((category) => (
+            <div
+              key={category.id}
+              className="medical-category-item"
+              onClick={() => {
+                // Navigate to categories page with the selected category
+                navigate("/categories", {
+                  state: {
+                    serviceType: "medical",
+                    currentLocation: currentLocation,
+                    selectedCategory: category.id,
+                  },
+                });
+              }}
+            >
+              <div className="medical-category-icon-wrapper">
+                {getCategoryIcon(category.id)}
+              </div>
+              <span className="medical-category-name">{category.label}</span>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

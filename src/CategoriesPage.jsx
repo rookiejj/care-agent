@@ -64,7 +64,7 @@ const CategoriesPage = ({ currentLocation }) => {
 
   // 페이지 타이틀 동적 설정
   const getPageTitle = () => {
-    return serviceType === "medical" ? "진료 카테고리" : "시술 카테고리";
+    return serviceType === "medical" ? "증상" : "부위";
   };
 
   return (
