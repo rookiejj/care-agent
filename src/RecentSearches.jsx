@@ -40,6 +40,7 @@ const RecentSearches = ({
                 onClearOne(term);
               }}
               aria-label="검색어 삭제"
+              style={{ padding: 0 }}
             >
               <X size={14} strokeWidth={2} />
             </button>
