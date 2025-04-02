@@ -20,36 +20,29 @@ const SearchPage = ({ currentLocation, notificationCount }) => {
 
   const { favoritesData } = useData();
 
-  // // 페이지 로드 시 검색창에 포커스 주기 위한 효과
-  // useEffect(() => {
-  //   // iOS 키보드를 표시하기 위한 간단한 방법
-  //   const focusSearchInput = () => {
-  //     const inputElement = document.querySelector('input[type="text"]');
-  //     if (inputElement) {
-  //       // 포커스 시도
-  //       inputElement.focus();
+  // SearchBar 컴포넌트를 위한 ref 생성
+  const searchBarRef = useRef(null);
+  // 페이지 로드 시 검색창에 포커스 주기 위한 효과 (개선된 방식)
+  useEffect(() => {
+    // 여러 타이밍에 시도하여 iOS에서도 키보드가 표시되도록 함
+    const timers = [100, 300, 500, 1000].map((delay) =>
+      setTimeout(() => {
+        if (searchBarRef.current && searchBarRef.current.inputRef.current) {
+          // SearchBar 컴포넌트의 inputRef에 직접 접근
+          const inputElement = searchBarRef.current.inputRef.current;
+          inputElement.focus();
 
-  //       // iOS에서 키보드 표시를 위한 추가 도움
-  //       setTimeout(() => {
-  //         if (inputElement) {
-  //           inputElement.focus();
-  //           inputElement.click();
-  //         }
-  //       }, 300);
-  //     }
-  //   };
+          // iOS에서 키보드 표시를 위한 추가 도움
+          inputElement.click();
+        }
+      }, delay)
+    );
 
-  //   // 여러 번의 시도로 신뢰성 향상
-  //   const timer1 = setTimeout(focusSearchInput, 100);
-  //   const timer2 = setTimeout(focusSearchInput, 500);
-  //   const timer3 = setTimeout(focusSearchInput, 1000);
-
-  //   return () => {
-  //     clearTimeout(timer1);
-  //     clearTimeout(timer2);
-  //     clearTimeout(timer3);
-  //   };
-  // }, []);
+    return () => {
+      // 모든 타이머 정리
+      timers.forEach((timer) => clearTimeout(timer));
+    };
+  }, []);
 
   // Load recent searches from localStorage on component mount
   useEffect(() => {
