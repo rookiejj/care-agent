@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useData } from "./DataContext";
 import { PageHeader } from "./App";
+import { Search } from "lucide-react";
 import EventCard from "./EventCard";
 import HospitalCard from "./HospitalCard";
 import SearchBar from "./SearchBar";
 import CategoryFilterButtons from "./CategoryFilterButtons";
+import MedicalCategories from "./MedicalCategories";
+import CosmeticCategories from "./CosmeticCategories";
 import RecentSearches from "./RecentSearches";
 
 import "./SearchPage.css";
@@ -14,79 +17,39 @@ const SearchPage = ({ currentLocation, notificationCount }) => {
   const [filteredItems, setFilteredItems] = useState([]);
   const [filters, setFilters] = useState({ medical: true, cosmetic: true });
   const [recentSearches, setRecentSearches] = useState([]);
-  const [isMounted, setIsMounted] = useState(false);
 
   const { favoritesData } = useData();
 
-  // 컴포넌트가 마운트되었음을 표시
+  // 페이지 로드 시 검색창에 포커스 주기 위한 효과
   useEffect(() => {
-    setIsMounted(true);
-    return () => setIsMounted(false);
-  }, []);
+    // iOS 키보드를 표시하기 위한 간단한 방법
+    const focusSearchInput = () => {
+      const inputElement = document.querySelector('input[type="text"]');
+      if (inputElement) {
+        // 포커스 시도
+        inputElement.focus();
 
-  // iOS 탐지 함수
-  const isIOS = () => {
-    return (
-      ["iPad", "iPhone", "iPod"].includes(navigator.platform) ||
-      (navigator.userAgent.includes("Mac") && "ontouchend" in document)
-    );
-  };
-
-  // 입력 필드에 강제로 포커스 및 키보드 표시
-  const forceKeyboardOpen = () => {
-    // Hidden input technique for iOS
-    const hiddenInput = document.createElement("input");
-    hiddenInput.setAttribute("type", "text");
-    hiddenInput.style.position = "absolute";
-    hiddenInput.style.opacity = 0;
-    hiddenInput.style.height = "0px";
-    hiddenInput.style.fontSize = "16px"; // iOS에서 16px 이상이면 줌 없이 키보드가 나타남
-
-    // 문서에 추가
-    document.body.appendChild(hiddenInput);
-
-    // 포커스 및 클릭
-    hiddenInput.focus();
-
-    // 짧은 시간 후 실제 검색창으로 포커스 이동
-    setTimeout(() => {
-      const searchInput = document.getElementById("search-bar-input");
-      if (searchInput) {
-        searchInput.focus();
-        searchInput.click();
+        // iOS에서 키보드 표시를 위한 추가 도움
+        setTimeout(() => {
+          if (inputElement) {
+            inputElement.focus();
+            inputElement.click();
+          }
+        }, 300);
       }
+    };
 
-      // 임시 입력 필드 제거
-      document.body.removeChild(hiddenInput);
-    }, 100);
-  };
+    // 여러 번의 시도로 신뢰성 향상
+    const timer1 = setTimeout(focusSearchInput, 100);
+    const timer2 = setTimeout(focusSearchInput, 500);
+    const timer3 = setTimeout(focusSearchInput, 1000);
 
-  // 페이지 로드 시 iOS에 최적화된 키보드 표시 처리
-  useEffect(() => {
-    if (!isMounted) return;
-
-    // iOS 디바이스에 특화된 처리
-    if (isIOS()) {
-      // 여러 번 시도하여 키보드가 확실히 표시되도록 함
-      const timers = [
-        setTimeout(forceKeyboardOpen, 300),
-        setTimeout(forceKeyboardOpen, 500),
-        setTimeout(forceKeyboardOpen, 800),
-        setTimeout(forceKeyboardOpen, 1000),
-        setTimeout(forceKeyboardOpen, 1500),
-      ];
-
-      return () => timers.forEach((timer) => clearTimeout(timer));
-    } else {
-      // iOS가 아닌 기기에서는 간단한 포커스만 적용
-      const timer = setTimeout(() => {
-        const searchInput = document.getElementById("search-bar-input");
-        if (searchInput) searchInput.focus();
-      }, 300);
-
-      return () => clearTimeout(timer);
-    }
-  }, [isMounted]);
+    return () => {
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+      clearTimeout(timer3);
+    };
+  }, []);
 
   // Load recent searches from localStorage on component mount
   useEffect(() => {
@@ -181,16 +144,6 @@ const SearchPage = ({ currentLocation, notificationCount }) => {
     setFilters(newFilters);
   };
 
-  // 검색창을 클릭했을 때 수동으로 키보드 올리기
-  const handleSearchBarAreaClick = () => {
-    if (isIOS()) {
-      forceKeyboardOpen();
-    } else {
-      const searchInput = document.getElementById("search-bar-input");
-      if (searchInput) searchInput.focus();
-    }
-  };
-
   return (
     <div className="container">
       <div className="fixed-header">
@@ -202,12 +155,12 @@ const SearchPage = ({ currentLocation, notificationCount }) => {
           notificationCount={notificationCount}
           showNotification={true}
         />
-        <div className="header-function" onClick={handleSearchBarAreaClick}>
+        <div className="header-function">
           <SearchBar
             onSearch={handleSearch}
             initialValue={searchTerm}
-            forceKeyboard={true}
-            shouldAutoFocus={true}
+            forceKeyboard={true} // 강제 키보드 표시 활성화
+            shouldAutoFocus={true} // 자동 포커스 활성화
           />
 
           {/* Category Filter Buttons */}
