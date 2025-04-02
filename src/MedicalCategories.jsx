@@ -52,7 +52,14 @@ const MedicalCategories = ({ currentLocation }) => {
             onClick={category.onClick}
           >
             <div className="medical-category-icon-wrapper">{category.icon}</div>
-            <span className="medical-category-name">{category.name}</span>
+            <span
+              className="medical-category-name"
+              style={
+                category.id == 5 ? { color: "#0369a1", fontWeight: "bold" } : {}
+              }
+            >
+              {category.name}
+            </span>
           </div>
         ))}
       </div>

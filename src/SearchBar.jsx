@@ -20,6 +20,12 @@ const SearchBar = ({
 
   const navigate = useNavigate();
 
+  // initialValue가 변경될 때 inputText 상태 업데이트
+  useEffect(() => {
+    setInputText(initialValue);
+    previousInputText.current = initialValue;
+  }, [initialValue]);
+
   // 사파리 및 iOS 감지
   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
   const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
@@ -79,9 +85,16 @@ const SearchBar = ({
     }
   }, [shouldAutoFocus, forceKeyboard]); // 의존성 업데이트
 
-  // Simple direct state update
+  // Simple direct state update with immediate search trigger when empty
   const handleChange = (e) => {
-    setInputText(e.target.value);
+    const newValue = e.target.value;
+    setInputText(newValue);
+
+    // 입력값이 비어있으면 즉시 검색 함수 호출
+    if (newValue === "" && onSearch) {
+      onSearch("");
+      previousInputText.current = "";
+    }
   };
 
   // Handle search button click
