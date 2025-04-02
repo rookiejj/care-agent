@@ -39,12 +39,14 @@ const SearchBar = ({
 
   // 페이지 로드/마운트 시 키보드 포커싱
   useEffect(() => {
-    if (shouldAutoFocus || forceKeyboard) {
+    // goSearch가 true면 메인 페이지에 있다는 의미이므로 포커싱하지 않음
+    // 검색 페이지(goSearch=false)에서만 자동 포커싱 적용
+    if ((shouldAutoFocus || forceKeyboard) && !goSearch) {
       // DOM이 완전히 렌더링된 후 실행되도록 타이밍 조정
       const timer = setTimeout(focusInput, 300);
       return () => clearTimeout(timer);
     }
-  }, [shouldAutoFocus, forceKeyboard]);
+  }, [shouldAutoFocus, forceKeyboard, goSearch]);
 
   const handleChange = (e) => {
     const newValue = e.target.value;
@@ -139,20 +141,6 @@ const SearchBar = ({
         }}
         onClick={handleSearchAreaClick}
       >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            padding: "8px 4px 8px 0",
-            color: isFocused ? "#3b82f6" : "#9ca3af",
-            transition: "color 0.2s ease",
-            ...iconStyle,
-          }}
-        >
-          <Search size={18} strokeWidth={2} />
-        </div>
-
         <input
           ref={inputRef}
           type="text"
@@ -173,7 +161,7 @@ const SearchBar = ({
             fontWeight: "500",
             ...inputStyle,
           }}
-          autoFocus={true}
+          autoFocus={!goSearch}
         />
 
         {inputText && (
