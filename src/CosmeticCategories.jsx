@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Scissors,
@@ -17,9 +17,10 @@ import {
 import "./CosmeticCategories.css";
 import { mainCosmeticCategories } from "./cosmeticCategoryData";
 
-const CosmeticCategories = ({ currentLocation }) => {
+const CosmeticCategories = ({ currentLocation, onExpandChange }) => {
   const navigate = useNavigate();
   const [expanded, setExpanded] = useState(false);
+  const expandedCategoriesRef = useRef(null);
 
   // Icon mapping for cosmetic categories
   const getCategoryIcon = (categoryId) => {
@@ -42,10 +43,30 @@ const CosmeticCategories = ({ currentLocation }) => {
     return iconMap[categoryId] || iconMap.default;
   };
 
-  // Toggle the expanded state
+  // Toggle the expanded state and notify parent component
   const toggleExpanded = () => {
-    setExpanded(!expanded);
+    const newExpandedState = !expanded;
+    setExpanded(newExpandedState);
+
+    // 부모 컴포넌트에게 상태 변경 알림
+    if (onExpandChange) {
+      onExpandChange(newExpandedState);
+    }
   };
+
+  // Use useEffect to scroll to the expanded categories when they appear
+  useEffect(() => {
+    if (expanded && expandedCategoriesRef.current) {
+      // Add a small delay to ensure the DOM has updated
+      setTimeout(() => {
+        // Scroll to the expanded categories smoothly
+        expandedCategoriesRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "end",
+        });
+      }, 100);
+    }
+  }, [expanded]);
 
   return (
     <div className="cosmetic-categories-container">
@@ -93,7 +114,10 @@ const CosmeticCategories = ({ currentLocation }) => {
 
       {/* Expanded container for additional categories */}
       {expanded && (
-        <div className="cosmetic-categories expanded-categories">
+        <div
+          className="cosmetic-categories expanded-categories"
+          ref={expandedCategoriesRef}
+        >
           {mainCosmeticCategories.slice(4).map((category) => (
             <div
               key={category.id}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Heart,
@@ -23,6 +23,7 @@ import { mainCategories } from "./medicalCategoryData";
 const MedicalCategories = ({ currentLocation }) => {
   const navigate = useNavigate();
   const [expanded, setExpanded] = useState(false);
+  const expandedCategoriesRef = useRef(null);
 
   // Icon mapping for categories
   const getCategoryIcon = (categoryId) => {
@@ -49,6 +50,20 @@ const MedicalCategories = ({ currentLocation }) => {
   const toggleExpanded = () => {
     setExpanded(!expanded);
   };
+
+  // Use useEffect to scroll to the expanded categories when they appear
+  useEffect(() => {
+    if (expanded && expandedCategoriesRef.current) {
+      // Add a small delay to ensure the DOM has updated
+      setTimeout(() => {
+        // Scroll to the expanded categories smoothly
+        expandedCategoriesRef.current.scrollIntoView({
+          behavior: "smooth",
+          block: "end",
+        });
+      }, 100);
+    }
+  }, [expanded]);
 
   return (
     <div className="medical-categories-container">
@@ -96,7 +111,10 @@ const MedicalCategories = ({ currentLocation }) => {
 
       {/* Expanded container for additional categories */}
       {expanded && (
-        <div className="medical-categories expanded-categories">
+        <div
+          className="medical-categories expanded-categories"
+          ref={expandedCategoriesRef}
+        >
           {mainCategories.slice(4).map((category) => (
             <div
               key={category.id}
