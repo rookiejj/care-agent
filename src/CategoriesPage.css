@@ -10,7 +10,8 @@
   margin: 1rem 0 0;
 }
 
-.medical-categories-page {
+.medical-categories-page,
+.cosmetic-categories-page {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 8px;
