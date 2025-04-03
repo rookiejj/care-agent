@@ -20,7 +20,7 @@ import {
 import "./MedicalCategories.css";
 import { mainCategories } from "./medicalCategoryData";
 
-const MedicalCategories = ({ currentLocation }) => {
+const MedicalCategories = ({ currentLocation, onExpandChange }) => {
   const navigate = useNavigate();
   const [expanded, setExpanded] = useState(false);
   const expandedCategoriesRef = useRef(null);
@@ -46,9 +46,15 @@ const MedicalCategories = ({ currentLocation }) => {
     return iconMap[categoryId] || iconMap.default;
   };
 
-  // Toggle the expanded state
+  // Toggle the expanded state and notify parent component
   const toggleExpanded = () => {
-    setExpanded(!expanded);
+    const newExpandedState = !expanded;
+    setExpanded(newExpandedState);
+
+    // 부모 컴포넌트에게 상태 변경 알림
+    if (onExpandChange) {
+      onExpandChange(newExpandedState);
+    }
   };
 
   // Use useEffect to scroll to the expanded categories when they appear
@@ -57,7 +63,6 @@ const MedicalCategories = ({ currentLocation }) => {
       // Add a small delay to ensure the DOM has updated
       setTimeout(() => {
         // Scroll to the expanded categories smoothly
-        // 스크롤을 조금 더 내리기 위해 offset 추가
         const container = document.querySelector(".content");
         if (container) {
           const rect = expandedCategoriesRef.current.getBoundingClientRect();

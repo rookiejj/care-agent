@@ -6,27 +6,11 @@
 }
 
 .cosmetic-categories {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 8px;
+  display: flex !important; /* flex로 변경 */
+  flex-wrap: nowrap !important; /* 줄바꿈 방지 */
+  justify-content: space-between !important; /* 균등 배치 */
   width: 100%;
   padding: 3px 0;
-}
-
-.expanded-categories {
-  margin-top: 8px;
-  animation: fadeIn 0.3s ease-in-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .cosmetic-category-item {
@@ -36,6 +20,9 @@
   justify-content: center;
   cursor: pointer;
   transition: transform 0.2s;
+  flex: 1 1 0 !important; /* 모든 아이템이 동일한 너비 */
+  min-width: 0 !important; /* 오버플로우 방지 */
+  max-width: 20% !important; /* 최대 너비 20%로 제한 */
 }
 
 .cosmetic-category-item:hover {
@@ -60,15 +47,40 @@
   text-align: center;
   font-weight: 500;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
 }
 
-/* Media queries */
-@media (max-width: 480px) {
-  .cosmetic-categories {
-    grid-template-columns: repeat(5, 1fr);
-    gap: 6px;
-  }
+/* 확장된 카테고리 스타일 */
+.expanded-categories {
+  margin-top: 8px;
+  display: flex !important;
+  flex-wrap: wrap !important; /* 여기서는 wrap 허용 */
+  width: 100%;
+  animation: fadeIn 0.3s ease-in-out;
+}
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 확장된 카테고리에서도 5개씩 표시 */
+.expanded-categories .cosmetic-category-item {
+  flex: 0 0 20% !important; /* 정확히 20%의 너비 */
+  max-width: 20% !important;
+  margin-bottom: 10px;
+}
+
+/* 미디어 쿼리 */
+@media (max-width: 480px) {
   .cosmetic-category-icon-wrapper {
     width: 48px;
     height: 48px;
@@ -83,9 +95,5 @@
   .cosmetic-category-icon-wrapper {
     width: 44px;
     height: 44px;
-  }
-
-  .cosmetic-categories {
-    gap: 4px;
   }
 }
