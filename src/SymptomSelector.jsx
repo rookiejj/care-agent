@@ -98,7 +98,7 @@ const SymptomSelector = ({
   return (
     <div className="category-fixed-container">
       {/* 메인 카테고리 선택 (큰 증상 영역) */}
-      <div className="symptom-selector-main-category">
+      {/* <div className="symptom-selector-main-category">
         <SubCategoryFilterButtons
           filterOptions={mainCategories}
           initialFilter={selectedMainCategory}
@@ -106,7 +106,7 @@ const SymptomSelector = ({
           filterGroupId="main-symptoms"
           color="blue"
         />
-      </div>
+      </div> */}
 
       {/* 하위 카테고리 선택 (세부 증상) */}
       <div

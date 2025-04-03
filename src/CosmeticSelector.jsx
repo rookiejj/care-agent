@@ -102,7 +102,7 @@ const CosmeticSelector = ({
   return (
     <div className="category-fixed-container">
       {/* 메인 카테고리 선택 (분야) */}
-      <div className="cosmetic-selector-main-category">
+      {/* <div className="cosmetic-selector-main-category">
         <SubCategoryFilterButtons
           filterOptions={mainCosmeticCategories}
           initialFilter={selectedMainCategory}
@@ -110,7 +110,7 @@ const CosmeticSelector = ({
           filterGroupId="main-cosmetic"
           color="purple"
         />
-      </div>
+      </div> */}
 
       {/* 하위 카테고리 선택 (세부 시술) */}
       <div
