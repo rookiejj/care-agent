@@ -3,7 +3,7 @@ import { Clock, X } from "lucide-react";
 import "./RecentSearches.css";
 
 const RecentSearches = ({
-  searches = [],
+  searches,
   onSearchClick,
   onClearOne,
   onClearAll,
@@ -13,36 +13,75 @@ const RecentSearches = ({
   return (
     <div className="recent-searches-container">
       <div className="recent-searches-header">
-        <div className="recent-searches-title">
-          <Clock size={16} strokeWidth={1.5} />
-          <span>최근 검색어</span>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <Clock size={16} color="#6b7280" />
+          <h3
+            style={{
+              marginLeft: "0.5rem",
+              fontSize: "0.9rem",
+              fontWeight: "600",
+            }}
+          >
+            최근 검색어
+          </h3>
         </div>
-        {searches.length > 0 && (
-          <button className="recent-searches-clear-all" onClick={onClearAll}>
-            전체 삭제
-          </button>
-        )}
+        <button
+          onClick={onClearAll}
+          style={{
+            background: "none",
+            border: "none",
+            fontSize: "0.8rem",
+            color: "#6b7280",
+            cursor: "pointer",
+          }}
+        >
+          전체 삭제
+        </button>
       </div>
 
-      <div className="recent-searches-list">
+      <div
+        className="recent-searches-list"
+        style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}
+      >
         {searches.map((term, index) => (
-          <div key={index} className="recent-search-item">
+          <div
+            key={index}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              background: "#f3f4f6",
+              borderRadius: "16px",
+              padding: "0.4rem 0.75rem",
+            }}
+          >
             <button
-              className="recent-search-term"
               onClick={() => onSearchClick(term)}
+              style={{
+                background: "none",
+                border: "none",
+                fontSize: "0.85rem",
+                color: "#4b5563",
+                padding: "0",
+                marginRight: "0.5rem",
+                cursor: "pointer",
+              }}
             >
               {term}
             </button>
             <button
-              className="recent-search-remove"
-              onClick={(e) => {
-                e.stopPropagation();
-                onClearOne(term);
+              onClick={() => onClearOne(term)}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                background: "none",
+                border: "none",
+                cursor: "pointer",
+                padding: "0",
               }}
-              aria-label="검색어 삭제"
-              style={{ padding: 0 }}
+              aria-label={`Remove ${term} from recent searches`}
             >
-              <X size={14} strokeWidth={2} />
+              <X size={14} color="#9ca3af" />
             </button>
           </div>
         ))}

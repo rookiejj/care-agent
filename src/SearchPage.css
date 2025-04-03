@@ -1,0 +1,21 @@
+.search-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 0;
+  text-align: center;
+}
+
+/* 버튼 스타일 리셋 */
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus {
+  outline: none;
+}
+
+button:active {
+  outline: none;
+}

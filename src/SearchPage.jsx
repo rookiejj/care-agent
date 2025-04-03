@@ -9,6 +9,7 @@ import CategoryFilterButtons from "./CategoryFilterButtons";
 import MedicalCategories from "./MedicalCategories";
 import CosmeticCategories from "./CosmeticCategories";
 import RecentSearches from "./RecentSearches";
+import PopularSearches from "./PopularSearches";
 
 import "./SearchPage.css";
 
@@ -97,6 +98,12 @@ const SearchPage = ({ currentLocation, notificationCount }) => {
     addToRecentSearches(term); // Move to top of list
   };
 
+  // Handle popular search term click
+  const handlePopularSearchClick = (term) => {
+    setSearchTerm(term);
+    addToRecentSearches(term);
+  };
+
   // Remove a single search term
   const handleClearOne = (term) => {
     setRecentSearches(recentSearches.filter((search) => search !== term));
@@ -112,6 +119,10 @@ const SearchPage = ({ currentLocation, notificationCount }) => {
   const handleFilterChange = (newFilters) => {
     setFilters(newFilters);
   };
+
+  // 검색결과가 없거나 검색어가 없을 때 인기 검색어를 표시할지 여부
+  const showPopularSearches =
+    searchTerm.trim() === "" || filteredItems.length === 0;
 
   return (
     <div className="container">
@@ -144,6 +155,11 @@ const SearchPage = ({ currentLocation, notificationCount }) => {
                   onClearOne={handleClearOne}
                   onClearAll={handleClearAll}
                 />
+              )}
+
+              {/* 인기 검색어 */}
+              {showPopularSearches && (
+                <PopularSearches onSearchClick={handlePopularSearchClick} />
               )}
 
               {/* <div className="section-container">
@@ -188,9 +204,15 @@ const SearchPage = ({ currentLocation, notificationCount }) => {
                   onClearAll={handleClearAll}
                 />
               )}
+
+              {/* 검색 결과가 없을 때도 인기 검색어 표시 */}
+              {showPopularSearches && (
+                <PopularSearches onSearchClick={handlePopularSearchClick} />
+              )}
             </>
           )
         ) : (
+          /* 검색 결과가 있을 때는 인기 검색어를 표시하지 않음 */
           filteredItems.map((item) =>
             item.isEvent ? (
               <EventCard key={item.id} item={item} />

@@ -1,0 +1,28 @@
+.popular-searches-container {
+  background-color: white;
+  border-radius: 0.75rem;
+  padding: 0.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #f0f0f0;
+}
+
+.popular-searches-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.popular-searches-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.5rem;
+}
+
+/* 인기 검색어 버튼 hover 효과 */
+.popular-searches-list button:hover {
+  background-color: #e5e7eb;
+}
