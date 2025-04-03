@@ -5,7 +5,7 @@
  * 일반적으로 표현하는 시술/성형 분야
  */
 export const mainCosmeticCategories = [
-  { id: "skin", label: "피부 관리" },
+  { id: "skin", label: "피부 관리111111111111" },
   { id: "face", label: "얼굴 성형" },
   { id: "body", label: "바디 라인" },
   { id: "hair", label: "모발/탈모" },

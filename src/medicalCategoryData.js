@@ -6,7 +6,7 @@
  */
 export const mainCategories = [
   { id: "head", label: "머리/두통" },
-  { id: "cold", label: "감기/기침/목아픔" },
+  { id: "cold", label: "기침/목아픔" },
   { id: "stomach", label: "배/소화 문제" },
   { id: "skin", label: "피부 문제" },
   { id: "joint", label: "관절/근육 통증" },

@@ -10,11 +10,9 @@
   grid-template-columns: repeat(5, 1fr);
   gap: 8px;
   width: 100%;
-  padding: 3px 0;
 }
 
 .expanded-categories {
-  margin-top: 8px;
   animation: fadeIn 0.3s ease-in-out;
 }
 
@@ -36,6 +34,8 @@
   justify-content: center;
   cursor: pointer;
   transition: transform 0.2s;
+  min-width: 0;
+  margin-bottom: 0.5rem;
 }
 
 .medical-category-item:hover {
@@ -59,7 +59,9 @@
   color: #333;
   text-align: center;
   font-weight: 500;
-  white-space: nowrap;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* 미디어 쿼리를 사용하여 모든 해상도에서 항상 5개가 나타나도록 함 */
