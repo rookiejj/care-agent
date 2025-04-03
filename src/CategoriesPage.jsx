@@ -18,12 +18,16 @@ const CategoriesPage = ({ currentLocation }) => {
   // 검색 페이지에서 전달받은 서비스 타입 (기본값은 medical)
   const serviceType = location.state?.serviceType || "medical";
 
+  // 메인 페이지에서 선택한 카테고리 ID 가져오기
+  const selectedCategory = location.state?.selectedCategory;
+
   // 메인 카테고리 및 하위 카테고리 상태 관리
-  // 서비스 타입에 따라 초기값 설정
+  // 전달받은 카테고리 ID가 있으면 해당 카테고리를 초기값으로 설정, 없으면 첫 번째 카테고리 설정
   const [selectedMainCategory, setSelectedMainCategory] = useState(
-    serviceType === "medical"
-      ? mainCategories[0]?.id || ""
-      : mainCosmeticCategories[0]?.id || ""
+    selectedCategory ||
+      (serviceType === "medical"
+        ? mainCategories[0]?.id || ""
+        : mainCosmeticCategories[0]?.id || "")
   );
 
   // 현재 선택된 메인 카테고리에 해당하는 하위 카테고리 목록
