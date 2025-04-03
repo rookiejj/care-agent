@@ -120,6 +120,8 @@ const SearchBar = ({
         onClick={handleSearchAreaClick}
       >
         <input
+          id="search-bar-input" // 고유 ID 추가
+          name="search-query" // name 속성 추가
           ref={inputRef}
           type="text"
           value={inputText}
