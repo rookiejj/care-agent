@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./SubCategoryFilterButtons.css";
 
 /**
@@ -26,6 +26,7 @@ const SubCategoryFilterButtons = ({
   const defaultFilter = initialFilter || options[0]?.id || "all";
 
   const [activeFilter, setActiveFilter] = useState(defaultFilter);
+  const containerRef = useRef(null);
 
   // initialFilter prop이 변경되면 activeFilter 상태 업데이트
   useEffect(() => {
@@ -33,6 +34,37 @@ const SubCategoryFilterButtons = ({
       setActiveFilter(initialFilter);
     }
   }, [initialFilter]);
+
+  // 선택된 필터 버튼으로 스크롤
+  useEffect(() => {
+    const scrollToActiveFilter = () => {
+      if (!containerRef.current) return;
+
+      const activeButton = containerRef.current.querySelector(
+        `.subcategory-filter-button[data-filter-id="${activeFilter}"]`
+      );
+
+      if (activeButton) {
+        const container = containerRef.current;
+        const containerWidth = container.offsetWidth;
+        const buttonLeft = activeButton.offsetLeft;
+        const buttonWidth = activeButton.offsetWidth;
+
+        // 버튼이 컨테이너 중앙에 오도록 스크롤 계산
+        const scrollPosition =
+          buttonLeft - containerWidth / 2 + buttonWidth / 2;
+
+        container.scrollTo({
+          left: Math.max(0, scrollPosition),
+          behavior: "smooth",
+        });
+      }
+    };
+
+    // DOM이 업데이트된 후 스크롤 실행
+    const timer = setTimeout(scrollToActiveFilter, 100);
+    return () => clearTimeout(timer);
+  }, [activeFilter]);
 
   const handleFilterClick = (filterId) => {
     // 이미 선택된 필터를 다시 클릭하면 무시
@@ -53,6 +85,7 @@ const SubCategoryFilterButtons = ({
       className="subcategory-filter-container"
       data-filter-group-id={filterGroupId}
       data-color={color}
+      ref={containerRef}
     >
       {options.map((option) => (
         <button
@@ -62,6 +95,7 @@ const SubCategoryFilterButtons = ({
           }`}
           onClick={() => handleFilterClick(option.id)}
           data-filter-id={option.id}
+          data-category={option.id}
         >
           {option.label}
         </button>
