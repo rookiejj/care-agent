@@ -10,6 +10,14 @@
   margin: 1rem 0 0;
 }
 
+.medical-categories-page {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  width: 100%;
+  padding: 3px 0;
+}
+
 /* 결과 없을 때 표시되는 영역 */
 .no-results {
   display: flex;
@@ -142,7 +150,7 @@
 }
 
 /* 카테고리 그리드 재정의 */
-.medical-categories,
+/* .medical-categories,
 .cosmetic-categories {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -161,7 +169,7 @@
   transition: transform 0.2s;
   padding: 0.5rem 0.25rem;
   border-radius: 0.5rem;
-}
+} */
 
 .medical-category-item:hover {
   transform: translateY(-3px);
@@ -223,8 +231,8 @@
 
 /* 반응형 조정 */
 @media (max-width: 480px) {
-  .medical-categories,
-  .cosmetic-categories {
+  .medical-categories-page,
+  .cosmetic-categories-page {
     grid-template-columns: repeat(4, 1fr);
   }
 
@@ -236,8 +244,8 @@
 }
 
 @media (max-width: 320px) {
-  .medical-categories,
-  .cosmetic-categories {
+  .medical-categories-page,
+  .cosmetic-categories-page {
     grid-template-columns: repeat(3, 1fr);
   }
 

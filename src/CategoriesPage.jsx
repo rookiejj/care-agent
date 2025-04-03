@@ -237,7 +237,7 @@ const CategoriesPage = ({ currentLocation }) => {
             <div
               className={`${
                 serviceType === "medical" ? "medical" : "cosmetic"
-              }-categories`}
+              }-categories-page`}
             >
               {(serviceType === "medical"
                 ? mainCategories
