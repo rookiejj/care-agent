@@ -388,6 +388,11 @@
   .card-info {
     align-items: flex-start;
   }
+
+  /* 설정 메뉴 한 줄로 표시 */
+  .settings-menu {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (min-width: 421px) and (max-width: 580px) {
@@ -413,6 +418,11 @@
   .activity-cards-container {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  /* 설정 메뉴 한 줄로 표시 */
+  .settings-menu {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* 아주 작은 화면에서의 스타일 */
@@ -421,7 +431,10 @@
     grid-template-columns: 1fr;
   }
 
-  .menu-grid,
+  .menu-grid {
+    grid-template-columns: 1fr;
+  }
+
   .settings-menu {
     grid-template-columns: 1fr;
   }
