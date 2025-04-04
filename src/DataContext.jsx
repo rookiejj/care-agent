@@ -140,7 +140,7 @@ export const DataProvider = ({ children }) => {
           },
           createdAt: "2025-03-29T09:10:00Z",
           updatedAt: "2025-03-29T09:15:00Z",
-          category: "info", // 질문/정보 (정보 공유 목적)
+          category: "question", // 질문/정보 (정보 공유 목적)
           tags: ["tag-medical", "tag-general", "tag-seoul"],
           title: "건강검진 후 복부초음파에서 발견된 '지방간' 관리법 공유",
           content:

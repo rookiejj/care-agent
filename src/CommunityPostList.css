@@ -1,0 +1,146 @@
+/* 커뮤니티 게시글 컴포넌트 스타일 */
+
+/* 게시글 헤더 */
+.community-post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.community-post-category {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #4b5563;
+}
+
+.community-post-date {
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+/* 게시글 제목 */
+.community-post-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+/* 게시글 미리보기 */
+.community-post-preview {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-bottom: 0.5rem;
+  line-height: 1.5;
+}
+
+/* 이미지 표시기 */
+.community-post-image-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-bottom: 0.5rem;
+}
+
+/* 게시글 푸터 */
+.community-post-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.community-post-stats {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.community-post-stat {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.community-post-author {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #4b5563;
+}
+
+/* 태그 컨테이너 */
+.community-post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+/* 기본 태그 스타일 */
+.community-post-tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 1rem;
+  background-color: #f3f4f6;
+  color: #4b5563;
+}
+
+/* 카테고리 태그 스타일 - 의료(진료) 관련 */
+.medical .community-post-tag.category {
+  background-color: #dbeafe; /* 하늘색 계열 */
+  color: #1e40af;
+}
+
+/* 카테고리 태그 스타일 - 미용/성형(시술) 관련 */
+.cosmetic .community-post-tag.category {
+  background-color: #fce7f3; /* 핑크색 계열 */
+  color: #be185d;
+}
+
+/* 병원 태그 스타일 */
+.medical .community-post-tag.hospital {
+  background-color: #fef3c7; /* 노란색 계열 */
+  color: #92400e;
+}
+
+.cosmetic .community-post-tag.hospital {
+  background-color: #fef3c7; /* 노란색 계열 */
+  color: #92400e;
+}
+
+/* 빈 상태 스타일 */
+.community-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  text-align: center;
+  color: #9ca3af;
+}
+
+.community-empty-state-icon {
+  margin-bottom: 1rem;
+  color: #e5e7eb;
+}
+
+.community-empty-state-message {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.community-empty-state-submessage {
+  font-size: 0.875rem;
+  color: #9ca3af;
+}

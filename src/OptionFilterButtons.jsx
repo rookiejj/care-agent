@@ -1,17 +1,24 @@
 import React, { useState } from "react";
 import "./OptionFilterButtons.css";
 
-const OptionFilterButtons = ({ onFilterChange, initialFilter = "all" }) => {
+const OptionFilterButtons = ({
+  onFilterChange,
+  initialFilter = "all",
+  filterOptions = null, // 커스텀 필터 옵션 추가
+}) => {
   const [activeFilter, setActiveFilter] = useState(initialFilter);
 
-  // 필터 옵션 정의 - 추후 옵션 추가/삭제가 용이하도록 배열로 정의
-  const filterOptions = [
+  // 기본 필터 옵션 정의
+  const defaultFilterOptions = [
     { id: "all", label: "전체" },
     { id: "event", label: "이벤트" },
     { id: "recent", label: "최신순" },
     { id: "nearby", label: "가까운 순" },
     { id: "rating", label: "평점 높은 순" },
   ];
+
+  // 커스텀 옵션이 제공되면 그것을 사용, 아니면 기본 옵션 사용
+  const options = filterOptions || defaultFilterOptions;
 
   const handleFilterClick = (filterId) => {
     // 이미 선택된 필터를 다시 클릭하면 무시 (옵션은 하나만 선택 가능)
@@ -29,7 +36,7 @@ const OptionFilterButtons = ({ onFilterChange, initialFilter = "all" }) => {
 
   return (
     <div className="option-filter-container">
-      {filterOptions.map((option) => (
+      {options.map((option) => (
         <button
           key={option.id}
           className={`option-filter-button ${
