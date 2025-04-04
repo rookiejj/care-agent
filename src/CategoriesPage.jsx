@@ -145,6 +145,9 @@ const CategoriesPage = ({ currentLocation }) => {
   const handleSubCategoryChange = (categoryId) => {
     setSelectedSubCategory(categoryId);
     setShowResults(true);
+    if (showCategoryList) {
+      setShowCategoryList(!showCategoryList);
+    }
   };
 
   // 페이지 타이틀 동적 설정
@@ -224,7 +227,7 @@ const CategoriesPage = ({ currentLocation }) => {
             data-service-type={serviceType}
             ref={categoryListRef}
           >
-            <div className="category-list-header">
+            {/* <div className="category-list-header">
               <h3>{serviceType === "medical" ? "증상 선택" : "부위 선택"}</h3>
               <button className="close-button" onClick={toggleCategoryList}>
                 <ChevronUp
@@ -233,7 +236,7 @@ const CategoriesPage = ({ currentLocation }) => {
                   color={serviceType === "medical" ? "#0369a1" : "#c5587d"}
                 />
               </button>
-            </div>
+            </div> */}
             <div
               className={`${
                 serviceType === "medical" ? "medical" : "cosmetic"
@@ -296,7 +299,7 @@ const CategoriesPage = ({ currentLocation }) => {
         </div>
 
         {/* 필터링된 결과 컴포넌트 - 선택된 카테고리에 따라 조건부 렌더링 */}
-        {selectedSubCategory && showResults && (
+        {selectedSubCategory && showResults && !showCategoryList && (
           <div className="filtered-results-container">
             <FilteredResultsView
               serviceType={serviceType}
