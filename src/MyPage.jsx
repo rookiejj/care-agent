@@ -175,10 +175,6 @@ const MyPage = ({ currentLocation, notificationCount }) => {
                   <span className="stat-value">4</span>
                   <span className="stat-label">리뷰</span>
                 </div>
-                <div className="profile-stat">
-                  <span className="stat-value">12</span>
-                  <span className="stat-label">찜</span>
-                </div>
               </div>
             </div>
           </div>
