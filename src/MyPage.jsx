@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { PageHeader, getProfileImage } from "./App";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -12,193 +12,292 @@ import {
   Gift,
   Edit,
   Bell,
+  CreditCard,
+  FileText,
+  Settings,
+  HelpCircle,
+  LogOut,
+  Clock,
+  ClipboardList,
+  Pill,
+  Activity,
+  Shield,
+  User,
+  Lock,
 } from "lucide-react";
 import "./MyPage.css";
 
 const MyPage = ({ currentLocation, notificationCount }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const [activeTab, setActiveTab] = useState("medical");
+
+  // 구현된 페이지 목록 (없는 페이지는 동작하지 않음)
+  const implementedPages = ["/favorites", "/notifications", "/mypage"];
 
   const handleMenuClick = (path) => {
-    navigate(path);
+    // 구현된 페이지인 경우에만 이동
+    if (implementedPages.includes(path)) {
+      navigate(path);
+    } else {
+      // 구현되지 않은 페이지는 아무 동작 없음
+      console.log(`페이지 ${path}는 아직 구현되지 않았습니다.`);
+    }
   };
+
+  // 진료 관리 메뉴 아이템
+  const medicalMenuItems = [
+    {
+      id: "appointments",
+      icon: <Calendar size={20} />,
+      label: t("mypage.medical.menu.appointmentHistory"),
+      color: "#3b82f6",
+    },
+    {
+      id: "records",
+      icon: <ClipboardList size={20} />,
+      label: t("mypage.medical.menu.medicalRecords"),
+      color: "#8b5cf6",
+    },
+    {
+      id: "prescriptions",
+      icon: <Pill size={20} />,
+      label: t("mypage.medical.menu.prescriptionManagement"),
+      color: "#ec4899",
+    },
+    {
+      id: "checkups",
+      icon: <Activity size={20} />,
+      label: t("mypage.medical.menu.healthCheckupResults"),
+      color: "#10b981",
+    },
+  ];
+
+  // 결제 관리 메뉴 아이템
+  const paymentMenuItems = [
+    {
+      id: "payments",
+      icon: <CreditCard size={20} />,
+      label: t("mypage.medical.menu.paymentDetails"),
+      color: "#f59e0b",
+    },
+    {
+      id: "certificates",
+      icon: <Award size={20} />,
+      label: t("mypage.medical.menu.medicalCertificates"),
+      color: "#6366f1",
+    },
+    {
+      id: "reports",
+      icon: <FileText size={20} />,
+      label: t("mypage.medical.menu.medicalReports"),
+      color: "#0ea5e9",
+    },
+  ];
+
+  // 설정 메뉴 아이템
+  const settingsMenuItems = [
+    {
+      id: "notification-settings",
+      icon: <Bell size={20} />,
+      label: t("mypage.medical.menu.alarmSettings"),
+      color: "#ef4444",
+    },
+    {
+      id: "personal",
+      icon: <User size={20} />,
+      label: t("mypage.medical.menu.personalInfoSettings"),
+      color: "#8b5cf6",
+    },
+    {
+      id: "terms",
+      icon: <Shield size={20} />,
+      label: t("mypage.medical.menu.termsOfUse"),
+      color: "#6366f1",
+    },
+    {
+      id: "privacy",
+      icon: <Lock size={20} />,
+      label: t("mypage.medical.menu.privacyPolicy"),
+      color: "#0ea5e9",
+    },
+    {
+      id: "faq",
+      icon: <HelpCircle size={20} />,
+      label: t("mypage.medical.menu.frequentlyAskedQuestions"),
+      color: "#10b981",
+    },
+    {
+      id: "service",
+      icon: <MessageCircle size={20} />,
+      label: t("mypage.medical.menu.customerService"),
+      color: "#f59e0b",
+    },
+  ];
 
   return (
     <div className="container">
-      <PageHeader title={t("mypage.medical.title")} />
+      <PageHeader
+        title={t("mypage.medical.title")}
+        notificationCount={notificationCount}
+        showNotification={true}
+      />
       <div className="content">
-        {/* Profile Section */}
-        <div
-          className="card profile-section"
-          style={{ marginBottom: "1.5rem" }}
-        >
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              marginBottom: "1rem",
-            }}
-          >
-            <img
-              src={getProfileImage()}
-              alt={name}
-              className="profile-avatar"
-              style={{
-                objectFit: "cover", // 이미지가 원형에 맞게 조정
-              }}
-            />
-            <div style={{ marginLeft: "1rem" }}>
-              <h2 style={{ fontWeight: "bold", fontSize: "1.125rem" }}>
-                Doctor King
-              </h2>
-              <p style={{ color: "#6b7280" }}>user@example.com</p>
+        {/* 프로필 섹션 */}
+        <div className="profile-card">
+          <div className="profile-header">
+            <div className="profile-avatar-container">
+              <img
+                src={getProfileImage()}
+                alt="Profile"
+                className="profile-avatar"
+              />
+              {/* 트렌디한 프로필 수정 버튼 - 사진 아래, 정보 영역 하단과 정렬 */}
+              <button
+                className="trendy-edit-button avatar-edit-btn"
+                onClick={() => handleMenuClick("/profile-edit")}
+              >
+                <Edit size={14} />
+                <span>편집</span>
+              </button>
+            </div>
+            <div className="profile-info">
+              <div className="profile-name-container">
+                <h2 className="profile-name">Doctor King</h2>
+                <p className="profile-email">user@example.com</p>
+              </div>
+              <div className="profile-stats">
+                <div className="profile-stat">
+                  <span className="stat-value">7</span>
+                  <span className="stat-label">방문</span>
+                </div>
+                <div className="profile-stat">
+                  <span className="stat-value">4</span>
+                  <span className="stat-label">리뷰</span>
+                </div>
+                <div className="profile-stat">
+                  <span className="stat-value">12</span>
+                  <span className="stat-label">찜</span>
+                </div>
+              </div>
             </div>
           </div>
-          <button className="secondary-button">
-            {t("mypage.medical.profile.edit")}
-          </button>{" "}
         </div>
 
-        {/* Medical Records Section */}
-        <div
-          className="card profile-section"
-          style={{ marginBottom: "1.5rem" }}
-        >
-          <h3
-            style={{
-              fontSize: "1rem",
-              fontWeight: "bold",
-              marginBottom: "0.75rem",
-            }}
+        {/* 활동 요약 */}
+        <div className="activity-summary">
+          <div
+            className="activity-card"
+            onClick={() => handleMenuClick("/appointments")}
           >
+            <Calendar size={24} className="activity-icon appointment" />
+            <div className="activity-info">
+              <span className="activity-label">다음 예약</span>
+              <span className="activity-value">오늘 15:30</span>
+            </div>
+          </div>
+          <div
+            className="activity-card"
+            onClick={() => handleMenuClick("/prescriptions")}
+          >
+            <Pill size={24} className="activity-icon prescription" />
+            <div className="activity-info">
+              <span className="activity-label">처방전</span>
+              <span className="activity-value">2개</span>
+            </div>
+          </div>
+          <div
+            className="activity-card"
+            onClick={() => handleMenuClick("/favorites")}
+          >
+            <Heart size={24} className="activity-icon favorite" />
+            <div className="activity-info">
+              <span className="activity-label">찜 목록</span>
+              <span className="activity-value">12개</span>
+            </div>
+          </div>
+        </div>
+
+        {/* 메뉴 섹션 */}
+        <div className="menu-section">
+          <h3 className="menu-title">
+            <ClipboardList size={18} />
             {t("mypage.medical.menu.treatmentManagement")}
           </h3>
-          <button className="mypage-card-button">
-            <span className="mypage-card-button-text">
-              {t("mypage.medical.menu.appointmentHistory")}
-            </span>
-            <span className="mypage-card-button-icon">→</span>
-          </button>
-          <button className="mypage-card-button">
-            <span className="mypage-card-button-text">
-              {t("mypage.medical.menu.medicalRecords")}
-            </span>
-            <span className="mypage-card-button-icon">→</span>
-          </button>
-          <button className="mypage-card-button">
-            <span className="mypage-card-button-text">
-              {t("mypage.medical.menu.prescriptionManagement")}
-            </span>
-            <span className="mypage-card-button-icon">→</span>
-          </button>
-          <button className="mypage-card-button">
-            <span className="mypage-card-button-text">
-              {t("mypage.medical.menu.healthCheckupResults")}
-            </span>
-            <span className="mypage-card-button-icon">→</span>
-          </button>
+          <div className="menu-grid">
+            {medicalMenuItems.map((item) => (
+              <button
+                key={item.id}
+                className="menu-item"
+                onClick={() => handleMenuClick(`/${item.id}`)}
+              >
+                <div
+                  className="menu-icon-wrapper"
+                  style={{ backgroundColor: `${item.color}15` }}
+                >
+                  <div className="menu-icon" style={{ color: item.color }}>
+                    {item.icon}
+                  </div>
+                </div>
+                <span className="menu-label">{item.label}</span>
+              </button>
+            ))}
+          </div>
         </div>
 
-        {/* Payment Section */}
-        <div
-          className="card profile-section"
-          style={{ marginBottom: "1.5rem" }}
-        >
-          <h3
-            style={{
-              fontSize: "1rem",
-              fontWeight: "bold",
-              marginBottom: "0.75rem",
-            }}
-          >
+        <div className="menu-section">
+          <h3 className="menu-title">
+            <CreditCard size={18} />
             {t("mypage.medical.menu.paymentManagement")}
           </h3>
-          <button className="mypage-card-button">
-            <span className="mypage-card-button-text">
-              {t("mypage.medical.menu.paymentDetails")}
-            </span>
-            <span className="mypage-card-button-icon">→</span>
-          </button>
-          <button className="mypage-card-button">
-            <span className="mypage-card-button-text">
-              {t("mypage.medical.menu.medicalCertificates")}
-            </span>
-            <span className="mypage-card-button-icon">→</span>
-          </button>
-          <button className="mypage-card-button">
-            <span className="mypage-card-button-text">
-              {t("mypage.medical.menu.medicalReports")}
-            </span>
-            <span className="mypage-card-button-icon">→</span>
-          </button>
+          <div className="menu-grid">
+            {paymentMenuItems.map((item) => (
+              <button
+                key={item.id}
+                className="menu-item"
+                onClick={() => handleMenuClick(`/${item.id}`)}
+              >
+                <div
+                  className="menu-icon-wrapper"
+                  style={{ backgroundColor: `${item.color}15` }}
+                >
+                  <div className="menu-icon" style={{ color: item.color }}>
+                    {item.icon}
+                  </div>
+                </div>
+                <span className="menu-label">{item.label}</span>
+              </button>
+            ))}
+          </div>
         </div>
 
-        {/* Settings Section */}
-        <div
-          className="card profile-section"
-          style={{ marginBottom: "1.5rem" }}
-        >
-          <h3
-            style={{
-              fontSize: "1rem",
-              fontWeight: "bold",
-              marginBottom: "0.75rem",
-            }}
-          >
+        <div className="menu-section">
+          <h3 className="menu-title">
+            <Settings size={18} />
             {t("mypage.medical.menu.settings")}
           </h3>
-          <button className="mypage-card-button">
-            <span className="mypage-card-button-text">
-              {t("mypage.medical.menu.alarmSettings")}
-            </span>
-            <span className="mypage-card-button-icon">→</span>
-          </button>
-          <button className="mypage-card-button">
-            <span className="mypage-card-button-text">
-              {t("mypage.medical.menu.personalInfoSettings")}
-            </span>
-            <span className="mypage-card-button-icon">→</span>
-          </button>
-          <button className="mypage-card-button">
-            <span className="mypage-card-button-text">
-              {t("mypage.medical.menu.termsOfUse")}
-            </span>
-            <span className="mypage-card-button-icon">→</span>
-          </button>
-          <button className="mypage-card-button">
-            <span className="mypage-card-button-text">
-              {t("mypage.medical.menu.privacyPolicy")}
-            </span>
-            <span className="mypage-card-button-icon">→</span>
-          </button>
-          <button className="mypage-card-button">
-            <span className="mypage-card-button-text">
-              {t("mypage.medical.menu.frequentlyAskedQuestions")}
-            </span>
-            <span className="mypage-card-button-icon">→</span>
-          </button>
-          <button className="mypage-card-button">
-            <span className="mypage-card-button-text">
-              {t("mypage.medical.menu.customerService")}
-            </span>
-            <span className="mypage-card-button-icon">→</span>
-          </button>
+          <div className="settings-menu">
+            {settingsMenuItems.map((item) => (
+              <button
+                key={item.id}
+                className="settings-item"
+                onClick={() => handleMenuClick(`/${item.id}`)}
+              >
+                <div className="settings-item-content">
+                  <div className="settings-icon" style={{ color: item.color }}>
+                    {item.icon}
+                  </div>
+                  <span className="settings-label">{item.label}</span>
+                </div>
+                <ChevronRight size={16} className="settings-arrow" />
+              </button>
+            ))}
+          </div>
         </div>
 
-        {/* Logout Button */}
-        <button
-          style={{
-            width: "100%",
-            padding: "1rem",
-            textAlign: "left",
-            color: "#ef4444",
-            backgroundColor: "white",
-            borderRadius: "0.75rem",
-            border: "none",
-            cursor: "pointer",
-            marginBottom: "5rem", // Add bottom margin to ensure visibility
-          }}
-        >
+        {/* 로그아웃 버튼 */}
+        <button className="logout-button">
+          <LogOut size={18} />
           {t("mypage.medical.logout")}
         </button>
       </div>
