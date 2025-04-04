@@ -152,9 +152,9 @@ const MyPage = ({ currentLocation, notificationCount }) => {
                 alt="Profile"
                 className="profile-avatar"
               />
-              {/* 트렌디한 프로필 수정 버튼 - 사진 아래, 정보 영역 하단과 정렬 */}
+              {/* 트렌디한 프로필 수정 버튼 - 사진 아래에 배치 */}
               <button
-                className="trendy-edit-button avatar-edit-btn"
+                className="avatar-edit-btn"
                 onClick={() => handleMenuClick("/profile-edit")}
               >
                 <Edit size={14} />
@@ -185,35 +185,41 @@ const MyPage = ({ currentLocation, notificationCount }) => {
         </div>
 
         {/* 활동 요약 */}
-        <div className="activity-summary">
+        <div className="activity-cards-container">
           <div
             className="activity-card"
             onClick={() => handleMenuClick("/appointments")}
           >
-            <Calendar size={24} className="activity-icon appointment" />
-            <div className="activity-info">
-              <span className="activity-label">다음 예약</span>
-              <span className="activity-value">오늘 15:30</span>
+            <div className="card-content">
+              <Calendar size={24} className="card-icon" />
+              <div className="card-info">
+                <div className="card-label">다음 예약</div>
+                <div className="card-value">오늘 15:30</div>
+              </div>
             </div>
           </div>
           <div
             className="activity-card"
             onClick={() => handleMenuClick("/prescriptions")}
           >
-            <Pill size={24} className="activity-icon prescription" />
-            <div className="activity-info">
-              <span className="activity-label">처방전</span>
-              <span className="activity-value">2개</span>
+            <div className="card-content">
+              <Pill size={24} className="card-icon" />
+              <div className="card-info">
+                <div className="card-label">처방전</div>
+                <div className="card-value">2개</div>
+              </div>
             </div>
           </div>
           <div
             className="activity-card"
             onClick={() => handleMenuClick("/favorites")}
           >
-            <Heart size={24} className="activity-icon favorite" />
-            <div className="activity-info">
-              <span className="activity-label">찜 목록</span>
-              <span className="activity-value">12개</span>
+            <div className="card-content">
+              <Heart size={24} className="card-icon" />
+              <div className="card-info">
+                <div className="card-label">찜 목록</div>
+                <div className="card-value">12개</div>
+              </div>
             </div>
           </div>
         </div>
