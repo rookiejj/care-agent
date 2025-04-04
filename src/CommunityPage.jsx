@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { PageHeader, getHospitalImage } from "./App";
+import { useData } from "./DataContext";
+import { PageHeader } from "./App";
 import CategoryFilterButtons from "./CategoryFilterButtons";
 import {
   MessageCircle,
@@ -9,10 +10,14 @@ import {
   Calendar,
   Scissors,
   Stethoscope,
+  Eye,
+  Image,
 } from "lucide-react";
 import "./CommunityPage.css";
+import { mainCommunityCategories } from "./communityCategoryData";
 
 const CommunityPage = ({ currentLocation, notificationCount }) => {
+  const { communityPosts } = useData(); // 데이터 컨텍스트에서 커뮤니티 게시글 가져오기
   const [filters, setFilters] = useState({ medical: true, cosmetic: true });
 
   // 정렬 옵션
@@ -23,70 +28,6 @@ const CommunityPage = ({ currentLocation, notificationCount }) => {
   ];
   const [activeSortOption, setActiveSortOption] = useState("latest");
 
-  // 커뮤니티 게시글 데이터
-  const communityPosts = [
-    {
-      id: 1,
-      type: "medical",
-      title: "무릎 관절 치료 후기",
-      author: "건강한사람",
-      category: "정형외과",
-      likes: 42,
-      comments: 12,
-      date: "1일 전",
-      hospital: "김연아 정형외과",
-      tags: ["관절", "통증", "치료"],
-    },
-    {
-      id: 2,
-      type: "cosmetic",
-      title: "쌍꺼풀 수술 1개월 후기",
-      author: "미모닝",
-      category: "눈 성형",
-      likes: 87,
-      comments: 24,
-      date: "3일 전",
-      hospital: "라인 성형외과",
-      tags: ["쌍꺼풀", "성형", "회복"],
-    },
-    {
-      id: 3,
-      type: "medical",
-      title: "당뇨 관리 팁 공유합니다",
-      author: "건강지기",
-      category: "내과",
-      likes: 35,
-      comments: 8,
-      date: "4일 전",
-      hospital: "서울 연세 내과",
-      tags: ["당뇨", "건강관리", "식단"],
-    },
-    {
-      id: 4,
-      type: "cosmetic",
-      title: "지방이식 상담 고민 중입니다",
-      author: "미의추구",
-      category: "안면윤곽",
-      likes: 29,
-      comments: 17,
-      date: "5일 전",
-      hospital: "뷰티 클리닉 센터",
-      tags: ["지방이식", "상담", "성형"],
-    },
-    {
-      id: 5,
-      type: "cosmetic",
-      title: "쌍꺼풀 수술 1개월 후기",
-      author: "미모닝",
-      category: "눈 성형",
-      likes: 87,
-      comments: 24,
-      date: "3일 전",
-      hospital: "라인 성형외과",
-      tags: ["쌍꺼풀", "성형", "회복"],
-    },
-  ];
-
   // 필터링 로직
   const filteredPosts = communityPosts.filter((post) => {
     if (filters.medical && filters.cosmetic) return true;
@@ -95,8 +36,67 @@ const CommunityPage = ({ currentLocation, notificationCount }) => {
     return false;
   });
 
+  // 정렬 로직
+  const sortedPosts = [...filteredPosts].sort((a, b) => {
+    if (activeSortOption === "latest") {
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    } else if (activeSortOption === "popular") {
+      return b.likeCount - a.likeCount;
+    } else if (activeSortOption === "comments") {
+      return b.commentCount - a.commentCount;
+    }
+    return 0;
+  });
+
   const handleCreatePost = () => {
     alert("글쓰기 페이지로 이동");
+  };
+
+  const getCategoryLabel = (categoryId) => {
+    const category = mainCommunityCategories.find(
+      (cat) => cat.id === categoryId
+    );
+    return category ? category.label : categoryId;
+  };
+
+  const getFormattedDate = (dateString) => {
+    const postDate = new Date(dateString);
+    const now = new Date();
+
+    const diffMs = now - postDate;
+    const diffMins = Math.floor(diffMs / (1000 * 60));
+    const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+    if (diffMins < 60) {
+      return `${diffMins}분 전`;
+    } else if (diffHours < 24) {
+      return `${diffHours}시간 전`;
+    } else if (diffDays < 7) {
+      return `${diffDays}일 전`;
+    } else {
+      return `${postDate.getMonth() + 1}월 ${postDate.getDate()}일`;
+    }
+  };
+
+  // 태그 처리 함수
+  const getDisplayTags = (tags) => {
+    if (!tags || tags.length === 0) return [];
+
+    // 주요 태그 최대 2개 추출
+    const filteredTags = tags.slice(0, 2).map((tag) => {
+      // tag-xxx 형식에서 xxx 부분만 추출
+      const parts = tag.split("-");
+      return parts.length > 1 ? parts[parts.length - 1] : tag;
+    });
+
+    return filteredTags;
+  };
+
+  // 숫자 포맷팅 유틸리티 함수
+  const formatNumber = (num) => {
+    if (num === undefined || num === null) return "0";
+    return Number(num).toLocaleString();
   };
 
   return (
@@ -138,7 +138,7 @@ const CommunityPage = ({ currentLocation, notificationCount }) => {
         </div>
 
         {/* 커뮤니티 게시글 목록 */}
-        {filteredPosts.length === 0 ? (
+        {sortedPosts.length === 0 ? (
           <div className="community-empty-state">
             <MessageCircle size={40} className="community-empty-state-icon" />
             <p className="community-empty-state-message">
@@ -149,7 +149,7 @@ const CommunityPage = ({ currentLocation, notificationCount }) => {
             </p>
           </div>
         ) : (
-          filteredPosts.map((post) => (
+          sortedPosts.map((post) => (
             <div
               key={post.id}
               className="card"
@@ -162,32 +162,60 @@ const CommunityPage = ({ currentLocation, notificationCount }) => {
                   ) : (
                     <Scissors size={16} color="#e879f9" />
                   )}
-                  <span>{post.category}</span>
+                  <span>{getCategoryLabel(post.category)}</span>
                 </div>
-                <span className="community-post-date">{post.date}</span>
+                <span className="community-post-date">
+                  {getFormattedDate(post.createdAt)}
+                </span>
               </div>
 
               <h3 className="community-post-title">{post.title}</h3>
 
+              {post.content.length > 100 ? (
+                <div className="community-post-preview">
+                  {post.content.substring(0, 100).replace(/\n/g, " ")}...
+                </div>
+              ) : null}
+
+              {post.images && post.images.length > 0 && (
+                <div className="community-post-image-indicator">
+                  <Image size={14} />
+                  <span>{post.images.length}</span>
+                </div>
+              )}
+
               <div className="community-post-footer">
                 <div className="community-post-stats">
                   <span className="community-post-stat">
-                    <Heart size={16} /> {post.likes}
+                    <Eye size={16} /> {formatNumber(post.viewCount)}
                   </span>
                   <span className="community-post-stat">
-                    <MessageCircle size={16} /> {post.comments}
+                    <Heart size={16} /> {formatNumber(post.likeCount)}
+                  </span>
+                  <span className="community-post-stat">
+                    <MessageCircle size={16} />{" "}
+                    {formatNumber(post.commentCount)}
                   </span>
                 </div>
 
-                <span className="community-post-hospital">{post.hospital}</span>
+                {post.author && (
+                  <span className="community-post-author">
+                    {post.author.nickname}
+                  </span>
+                )}
               </div>
 
               <div className="community-post-tags">
-                {post.tags.map((tag) => (
+                {getDisplayTags(post.tags).map((tag) => (
                   <span key={tag} className="community-post-tag">
                     #{tag}
                   </span>
                 ))}
+                {post.hospitalInfo && (
+                  <span className="community-post-tag hospital">
+                    {post.hospitalInfo.name}
+                  </span>
+                )}
               </div>
             </div>
           ))
