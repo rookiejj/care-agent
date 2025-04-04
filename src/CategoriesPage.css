@@ -41,7 +41,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.2rem 1rem;
+  padding: 0.4rem 1rem;
   background-color: white;
   border-radius: 0.75rem;
   margin-bottom: 0.75rem;
@@ -95,7 +95,7 @@
 .main-category-list {
   background-color: white;
   border-radius: 0.75rem;
-  padding: 1rem;
+  padding: 0.5rem 0rem;
   margin-bottom: 1rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   border: 1px solid #e5e7eb;
@@ -196,7 +196,6 @@
   height: 40px;
   background-color: #e9f4fb;
   border-radius: 50%;
-  margin-bottom: 6px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
 }
 
@@ -208,7 +207,6 @@
   height: 40px;
   background-color: #fdf4f7;
   border-radius: 50%;
-  margin-bottom: 6px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
 }
 
