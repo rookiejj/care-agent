@@ -31,17 +31,17 @@
 }
 
 .subcategory-filter-button.active {
-  background-color: #3b82f6;
-  color: white;
+  background-color: #fdf2f8;
+  color: 6b7280;
   font-weight: 600;
-  border-color: #3b82f6;
+  border-color: #fbcfe8;
 }
 
 /* 커스텀 색상 지원 */
 .subcategory-filter-container[data-color="blue"]
   .subcategory-filter-button.active {
-  background-color: #3b82f6;
-  border-color: #3b82f6;
+  background-color: #f0f7ff;
+  border-color: #bfdbfe;
 }
 
 .subcategory-filter-container[data-color="purple"]

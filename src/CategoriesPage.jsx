@@ -121,6 +121,14 @@ const CategoriesPage = ({ currentLocation }) => {
     return category ? category.label : "";
   };
 
+  // 현재 선택된 카테고리의 설명 찾기
+  const getCurrentCategoryDescription = () => {
+    const categories =
+      serviceType === "medical" ? mainCategories : mainCosmeticCategories;
+    const category = categories.find((cat) => cat.id === selectedMainCategory);
+    return category && category.description ? category.description : "";
+  };
+
   // 메인 카테고리 변경 핸들러
   const handleMainCategoryChange = (categoryId) => {
     setSelectedMainCategory(categoryId);
@@ -191,17 +199,22 @@ const CategoriesPage = ({ currentLocation }) => {
           data-service-type={serviceType}
           onClick={toggleCategoryList}
         >
+          <div
+            className={`${
+              serviceType === "medical" ? "medical" : "cosmetic"
+            }-category-icon-wrapper`}
+          >
+            {getCategoryIcon(selectedMainCategory)}
+          </div>
           <div className="selected-category-content">
-            <div
-              className={`${
-                serviceType === "medical" ? "medical" : "cosmetic"
-              }-category-icon-wrapper`}
-            >
-              {getCategoryIcon(selectedMainCategory)}
+            <div className="selected-category-text">
+              <span className="selected-category-name">
+                {getCurrentCategoryLabel()}
+              </span>
+              <span className="selected-category-description">
+                {getCurrentCategoryDescription()}
+              </span>
             </div>
-            <span className="selected-category-name">
-              {getCurrentCategoryLabel()}
-            </span>
           </div>
           <div className="category-toggle-button">
             {showCategoryList ? (
@@ -219,7 +232,6 @@ const CategoriesPage = ({ currentLocation }) => {
             )}
           </div>
         </div>
-
         {/* 모든 메인 카테고리 목록 (토글 가능) */}
         {showCategoryList && (
           <div
@@ -274,7 +286,6 @@ const CategoriesPage = ({ currentLocation }) => {
             </div>
           </div>
         )}
-
         {/* 하위 카테고리 선택 */}
         <div
           className={`subcategory-selector ${
@@ -297,7 +308,6 @@ const CategoriesPage = ({ currentLocation }) => {
             />
           )}
         </div>
-
         {/* 필터링된 결과 컴포넌트 - 선택된 카테고리에 따라 조건부 렌더링 */}
         {selectedSubCategory && showResults && !showCategoryList && (
           <div className="filtered-results-container">

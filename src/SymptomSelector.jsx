@@ -119,7 +119,7 @@ const SymptomSelector = ({
             initialFilter={selectedSubCategory}
             onFilterChange={handleSubCategoryChange}
             filterGroupId="sub-symptoms"
-            color="green"
+            color="blue"
           />
         ) : (
           <p className="symptom-selector-no-selection">

@@ -5,18 +5,66 @@
  * 일상적으로 표현하는 신체 부위나 증상 영역
  */
 export const mainCategories = [
-  { id: "head", label: "머리/두통" },
-  { id: "cold", label: "기침/목아픔" },
-  { id: "stomach", label: "배/소화 문제" },
-  { id: "skin", label: "피부 문제" },
-  { id: "joint", label: "관절/근육 통증" },
-  { id: "chest", label: "가슴/심장 문제" },
-  { id: "sleep", label: "수면/피로" },
-  { id: "eye", label: "눈 문제" },
-  { id: "ear", label: "귀 문제" },
-  { id: "mental", label: "마음 건강" },
-  { id: "allergy", label: "알레르기" },
-  { id: "fever", label: "열/감염" },
+  {
+    id: "head",
+    label: "머리/두통",
+    description: "두통, 편두통, 어지러움 등 머리 부위의 통증과 불편함",
+  },
+  {
+    id: "cold",
+    label: "기침/목아픔",
+    description: "감기, 인후통, 기침, 콧물 등 상기도 관련 증상",
+  },
+  {
+    id: "stomach",
+    label: "배/소화 문제",
+    description: "복통, 소화불량, 메스꺼움, 설사, 변비 등의 소화기 증상",
+  },
+  {
+    id: "skin",
+    label: "피부 문제",
+    description: "발진, 가려움, 건조함, 여드름 등 다양한 피부 질환",
+  },
+  {
+    id: "joint",
+    label: "관절/근육 통증",
+    description: "관절통, 근육통, 허리 통증 등 움직임에 관련된 통증",
+  },
+  {
+    id: "chest",
+    label: "가슴/심장 문제",
+    description: "가슴 통증, 심장 두근거림, 호흡 곤란 등의 증상",
+  },
+  {
+    id: "sleep",
+    label: "수면/피로",
+    description: "불면증, 과다 수면, 만성 피로 등 수면과 관련된 문제",
+  },
+  {
+    id: "eye",
+    label: "눈 문제",
+    description: "충혈, 시력 저하, 건조함 등 눈에 관련된 불편함",
+  },
+  {
+    id: "ear",
+    label: "귀 문제",
+    description: "이통, 청력 저하, 이명 등 귀와 관련된 증상",
+  },
+  {
+    id: "mental",
+    label: "마음 건강",
+    description: "우울, 불안, 스트레스 등 정신 건강 관련 증상",
+  },
+  {
+    id: "allergy",
+    label: "알레르기",
+    description: "알레르기 반응, 두드러기, 비염 등 과민 반응",
+  },
+  {
+    id: "fever",
+    label: "열/감염",
+    description: "발열, 오한, 몸살 등 감염 관련 증상",
+  },
 ];
 
 /**

@@ -5,18 +5,66 @@
  * 일반적으로 표현하는 시술/성형 분야
  */
 export const mainCosmeticCategories = [
-  { id: "skin", label: "피부 관리" },
-  { id: "face", label: "얼굴 성형" },
-  { id: "body", label: "바디 라인" },
-  { id: "hair", label: "모발/탈모" },
-  { id: "antiaging", label: "노화 방지" },
-  { id: "dental", label: "치아 교정/미용" },
-  { id: "injectable", label: "주사 시술" },
-  { id: "lip", label: "입술 관리" },
-  { id: "scar", label: "흉터/점 제거" },
-  { id: "eyebrow", label: "눈썹/속눈썹" },
-  { id: "laser", label: "레이저 시술" },
-  { id: "weight", label: "다이어트/체중" },
+  {
+    id: "skin",
+    label: "피부 관리",
+    description: "피부 상태를 개선하고 건강하게 유지하는 다양한 관리 시술",
+  },
+  {
+    id: "face",
+    label: "얼굴 성형",
+    description: "얼굴 부위별 형태와 균형을 개선하는 성형 시술",
+  },
+  {
+    id: "body",
+    label: "바디 라인",
+    description: "체형과 신체 윤곽을 개선하는 다양한 시술",
+  },
+  {
+    id: "hair",
+    label: "모발/탈모",
+    description: "모발 건강 증진과 탈모 개선을 위한 치료 시술",
+  },
+  {
+    id: "antiaging",
+    label: "노화 방지",
+    description: "피부 노화를 늦추고 젊은 외모를 유지하기 위한 시술",
+  },
+  {
+    id: "dental",
+    label: "치아 교정/미용",
+    description: "치아 미관과 기능을 개선하는 치과 미용 시술",
+  },
+  {
+    id: "injectable",
+    label: "주사 시술",
+    description: "보톡스, 필러 등 주사를 통한 다양한 개선 시술",
+  },
+  {
+    id: "lip",
+    label: "입술 관리",
+    description: "입술 모양과 볼륨을 개선하는 전문 시술",
+  },
+  {
+    id: "scar",
+    label: "흉터/점 제거",
+    description: "피부의 흉터, 점, 문신 등을 제거하거나 개선하는 시술",
+  },
+  {
+    id: "eyebrow",
+    label: "눈썹/속눈썹",
+    description: "눈썹과 속눈썹의 형태와 볼륨을 개선하는 시술",
+  },
+  {
+    id: "laser",
+    label: "레이저 시술",
+    description: "다양한 피부 문제를 레이저로 치료하는 첨단 시술",
+  },
+  {
+    id: "weight",
+    label: "다이어트/체중",
+    description: "체중 감량과 체형 관리를 위한 다양한 시술과 프로그램",
+  },
 ];
 
 /**

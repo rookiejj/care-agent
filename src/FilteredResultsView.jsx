@@ -65,7 +65,7 @@ const FilteredResultsView = ({ serviceType, mainCategory, subCategory }) => {
   return (
     <div className="filtered-results-view-container">
       <h4>
-        {serviceType === "medical" ? "진료 결과" : "시술 결과"} (
+        {serviceType === "medical" ? "검색 결과" : "검색 결과"} (
         {filteredResults.length}건)
       </h4>
 

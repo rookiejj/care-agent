@@ -37,7 +37,7 @@
   cursor: pointer;
   transition: transform 0.2s;
   min-width: 0;
-  margin-bottom: 0.5rem;
+  margin: 0.5rem 0;
 }
 
 .cosmetic-category-item:hover {
