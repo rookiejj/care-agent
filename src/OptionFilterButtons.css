@@ -26,14 +26,14 @@
 }
 
 .option-filter-button:hover {
-  background-color: #f3f4f6;
+  /* background-color: #f3f4f6; */
 }
 
 .option-filter-button.active {
   background-color: #3b82f6;
   color: white;
   font-weight: 600;
-  border-color: #3b82f6;
+  /* border-color: #3b82f6; */
 }
 
 /* 옵션별 특별 스타일 설정 (필요한 경우) */
