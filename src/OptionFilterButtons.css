@@ -23,10 +23,19 @@
   color: #6b7280;
   cursor: pointer;
   transition: all 0.2s ease;
+  -webkit-tap-highlight-color: transparent; /* 터치 하이라이트 제거 */
+  outline: none; /* 포커스 아웃라인 제거 */
+  touch-action: manipulation; /* 터치 액션 조작 개선 */
 }
 
 .option-filter-button:hover {
   /* background-color: #f3f4f6; */
+}
+
+/* 드래그 후 포커스 스타일 제거 */
+.option-filter-button:focus {
+  outline: none;
+  border-color: #e5e7eb;
 }
 
 .option-filter-button.active {
