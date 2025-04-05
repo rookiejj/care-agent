@@ -78,13 +78,6 @@ const CommunityPostList = ({ posts, getFormattedDate }) => {
             </div>
           ) : null}
 
-          {/* {post.images && post.images.length > 0 && (
-            <div className="community-post-image-indicator">
-              <Image size={14} />
-              <span>{post.images.length}</span>
-            </div>
-          )} */}
-
           <div className="community-post-footer">
             <div className="community-post-stats">
               <span className="community-post-stat">
@@ -112,18 +105,6 @@ const CommunityPostList = ({ posts, getFormattedDate }) => {
               </span>
             )}
           </div>
-
-          {/* <div className="community-post-tags">
-            <span className="community-post-tag category">
-              #{getCategoryLabel(post.category)}
-            </span>
-
-            {post.hospitalInfo && (
-              <span className="community-post-tag hospital">
-                #{post.hospitalInfo.name}
-              </span>
-            )}
-          </div> */}
         </div>
       ))}
     </>
