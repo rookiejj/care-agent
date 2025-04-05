@@ -150,73 +150,12 @@
   background-color: #f3f4f6;
 }
 
-/* 카테고리 그리드 재정의 */
-/* .medical-categories,
-.cosmetic-categories {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 8px;
-  width: 100%;
-  padding: 3px 0;
-}
-
-.medical-category-item,
-.cosmetic-category-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: transform 0.2s;
-  padding: 0.5rem 0.25rem;
-  border-radius: 0.5rem;
-} */
-
-.medical-category-item:hover {
-  transform: translateY(-3px);
-}
-
-.cosmetic-category-item:hover {
-  transform: translateY(-3px);
-}
-
 .medical-category-item.selected .medical-category-icon-wrapper {
   background-color: #bfdbfe; /* 더 진한 파란색 */
 }
 
 .cosmetic-category-item.selected .cosmetic-category-icon-wrapper {
   background-color: #fbcfe8; /* 더 진한 핑크색 */
-}
-
-.medical-category-icon-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  background-color: #e9f4fb;
-  border-radius: 50%;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
-}
-
-.cosmetic-category-icon-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  background-color: #fdf4f7;
-  border-radius: 50%;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
-}
-
-.medical-category-name,
-.cosmetic-category-name {
-  font-size: 12px;
-  color: #333;
-  text-align: center;
-  font-weight: 500;
-  white-space: nowrap;
 }
 
 /* 서브카테고리 선택기 위치 조정 */

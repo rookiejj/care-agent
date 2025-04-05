@@ -4,6 +4,7 @@ import StatusWidget from "./StatusWidget";
 import SearchBar from "./SearchBar";
 import MedicalCategories from "./MedicalCategories";
 import CosmeticCategories from "./CosmeticCategories";
+import SpecialtyCategories from "./SpecialtyCategories";
 
 const MainPage = ({ currentLocation, notificationCount }) => {
   const handleExternalBack = () => {
@@ -44,6 +45,13 @@ const MainPage = ({ currentLocation, notificationCount }) => {
             />
           </div>
           <CosmeticCategories />
+        </div>
+
+        <div className="section-container">
+          <div className="section-header">
+            <h3 className="section-title">진료과목</h3>
+          </div>
+          <SpecialtyCategories />
         </div>
       </div>
     </div>

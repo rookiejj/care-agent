@@ -161,22 +161,6 @@ const SearchPage = ({ currentLocation, notificationCount }) => {
               {showPopularSearches && (
                 <PopularSearches onSearchClick={handlePopularSearchClick} />
               )}
-
-              {/* <div className="section-container">
-                <div className="section-header">
-                  <h3 className="section-title">증상/부위</h3>
-                </div>
-                <MedicalCategories />
-                <div style={{ padding: "0.5rem 0.5rem" }}>
-                  <div
-                    style={{
-                      width: "100%",
-                      borderBottom: "1px solid #eee",
-                    }}
-                  />
-                </div>
-                <CosmeticCategories />
-              </div> */}
             </>
           ) : (
             <>
