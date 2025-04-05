@@ -46,13 +46,24 @@ const CommunityPostList = ({ posts, getFormattedDate }) => {
           style={{ marginBottom: "1rem" }}
         >
           <div className="community-post-header">
-            <div className="community-post-category">
+            {/* <div className="community-post-category">
               {post.type === "medical" ? (
                 <Stethoscope size={16} color="#0ea5e9" />
               ) : (
                 <Scissors size={16} color="#e879f9" />
               )}
               <span>{getCategoryLabel(post.category)}</span>
+            </div> */}
+            <div className="community-post-tags">
+              <span className="community-post-tag category">
+                #{getCategoryLabel(post.category)}
+              </span>
+
+              {post.hospitalInfo && (
+                <span className="community-post-tag hospital">
+                  #{post.hospitalInfo.name}
+                </span>
+              )}
             </div>
             <span className="community-post-date">
               {getFormattedDate(post.createdAt)}
@@ -94,19 +105,17 @@ const CommunityPostList = ({ posts, getFormattedDate }) => {
             )}
           </div>
 
-          <div className="community-post-tags">
-            {/* 카테고리를 태그로 표시 - post.type에 따라 색상 차별화 */}
+          {/* <div className="community-post-tags">
             <span className="community-post-tag category">
               #{getCategoryLabel(post.category)}
             </span>
 
-            {/* 병원 정보가 있으면 태그로 표시 */}
             {post.hospitalInfo && (
               <span className="community-post-tag hospital">
                 #{post.hospitalInfo.name}
               </span>
             )}
-          </div>
+          </div> */}
         </div>
       ))}
     </>

@@ -82,7 +82,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-top: 0.5rem;
+  /* margin-top: 0.5rem; */
 }
 
 /* 기본 태그 스타일 */
