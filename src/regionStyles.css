@@ -1,0 +1,310 @@
+/* 지역 선택 컴포넌트 스타일 (regionStyles.css) */
+
+/* 공통 스타일 */
+.region-selector,
+.hospital-region-filter {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+h3,
+h4 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  color: #333;
+}
+
+h3 {
+  font-size: 18px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 8px;
+}
+
+h4 {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* 인기 지역 선택 스타일 */
+.region-selector-popular {
+  margin-bottom: 24px;
+}
+
+.popular-regions-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.popular-region-btn {
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+}
+
+.popular-region-btn:hover {
+  background-color: #e9e9e9;
+}
+
+.popular-region-btn.plastic_beauty {
+  background-color: #fde2e4;
+  border-color: #fecdd3;
+}
+
+.popular-region-btn.general {
+  background-color: #e2ece9;
+  border-color: #bee1e6;
+}
+
+.popular-region-btn.hospital {
+  background-color: #dfe7fd;
+  border-color: #cddafd;
+}
+
+.popular-region-btn.dental_eye {
+  background-color: #ede2fe;
+  border-color: #e0c3fc;
+}
+
+.specialty-tag {
+  font-size: 11px;
+  background-color: #ff6b6b;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 10px;
+  margin-left: 6px;
+}
+
+.specialty-tag.plastic {
+  background-color: #ff6b6b;
+}
+
+.specialty-tag.dermatology {
+  background-color: #5f7ddb;
+}
+
+/* 지역 선택 단계 스타일 */
+.region-selection-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.region-step {
+  margin-bottom: 16px;
+}
+
+.region-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-height: 200px;
+  overflow-y: auto;
+  padding: 4px;
+}
+
+.region-btn {
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 90px;
+}
+
+.region-btn:hover {
+  background-color: #e9e9e9;
+}
+
+.region-btn.selected {
+  background-color: #4d80e6;
+  color: white;
+  border-color: #3568d4;
+}
+
+/* 병원 밀집도에 따른 버튼 색상 */
+.region-btn.very_high {
+  border-left: 4px solid #ff5252;
+}
+
+.region-btn.high {
+  border-left: 4px solid #ff9800;
+}
+
+.region-btn.medium {
+  border-left: 4px solid #4caf50;
+}
+
+.region-btn.low {
+  border-left: 4px solid #2196f3;
+}
+
+.region-btn.very_low {
+  border-left: 4px solid #9e9e9e;
+}
+
+/* 경로 표시 스타일 */
+.selected-path {
+  margin-top: 16px;
+  padding: 8px 12px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #666;
+}
+
+/* 의료 특화 지역 태그 */
+.medical-hub-tag {
+  font-size: 11px;
+  background-color: #5f7ddb;
+  color: white;
+  padding: 2px 6px;
+  border-radius: 10px;
+  margin-left: 6px;
+}
+
+/* 선택된 지역 태그 스타일 */
+.selected-regions {
+  margin-top: 16px;
+}
+
+.region-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.region-tag {
+  display: flex;
+  align-items: center;
+  background-color: #4d80e6;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+}
+
+.remove-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  margin-left: 6px;
+  padding: 0 4px;
+}
+
+.tag {
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 10px;
+  margin-left: 6px;
+}
+
+.tag.medical-hub {
+  background-color: #5f7ddb;
+  color: white;
+}
+
+/* 필터 섹션 스타일 */
+.filter-section {
+  margin-bottom: 24px;
+}
+
+/* 반경 선택 스타일 */
+.radius-selector {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.radius-selector input[type="range"] {
+  flex: 1;
+}
+
+/* 체크박스 그룹 스타일 */
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* 필터 버튼 스타일 */
+.filter-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.reset-btn,
+.apply-btn {
+  padding: 10px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.reset-btn {
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  color: #666;
+}
+
+.reset-btn:hover {
+  background-color: #e9e9e9;
+}
+
+.apply-btn {
+  background-color: #4d80e6;
+  border: 1px solid #3568d4;
+  color: white;
+}
+
+.apply-btn:hover {
+  background-color: #3568d4;
+}
+
+/* 반응형 스타일 */
+@media (max-width: 768px) {
+  .region-selector,
+  .hospital-region-filter {
+    padding: 16px;
+  }
+
+  .region-options {
+    max-height: 180px;
+  }
+
+  .checkbox-group {
+    flex-direction: column;
+    gap: 8px;
+  }
+}
