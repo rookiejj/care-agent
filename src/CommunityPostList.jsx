@@ -91,10 +91,10 @@ const CommunityPostList = ({ posts, getFormattedDate }) => {
                 <Eye size={16} /> {formatNumber(post.viewCount)}
               </span>
               <span className="community-post-stat">
-                <Heart size={16} /> {formatNumber(post.likeCount)}
+                <Heart size={14} /> {formatNumber(post.likeCount)}
               </span>
               <span className="community-post-stat">
-                <MessageCircle size={16} /> {formatNumber(post.commentCount)}
+                <MessageCircle size={14} /> {formatNumber(post.commentCount)}
               </span>
               <span className="community-post-stat">
                 {post.images && post.images.length > 0 && (
