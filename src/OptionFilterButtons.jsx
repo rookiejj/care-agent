@@ -13,7 +13,6 @@ const OptionFilterButtons = ({
     { id: "all", label: "전체" },
     { id: "event", label: "이벤트" },
     { id: "recent", label: "최신순" },
-    { id: "nearby", label: "가까운 순" },
     { id: "rating", label: "평점 높은 순" },
   ];
 
