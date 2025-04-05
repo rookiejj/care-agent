@@ -78,12 +78,12 @@ const CommunityPostList = ({ posts, getFormattedDate }) => {
             </div>
           ) : null}
 
-          {post.images && post.images.length > 0 && (
+          {/* {post.images && post.images.length > 0 && (
             <div className="community-post-image-indicator">
               <Image size={14} />
               <span>{post.images.length}</span>
             </div>
-          )}
+          )} */}
 
           <div className="community-post-footer">
             <div className="community-post-stats">
@@ -95,6 +95,14 @@ const CommunityPostList = ({ posts, getFormattedDate }) => {
               </span>
               <span className="community-post-stat">
                 <MessageCircle size={16} /> {formatNumber(post.commentCount)}
+              </span>
+              <span className="community-post-stat">
+                {post.images && post.images.length > 0 && (
+                  <div className="community-post-image-indicator">
+                    <Image size={14} />
+                    <span>{post.images.length}</span>
+                  </div>
+                )}
               </span>
             </div>
 
