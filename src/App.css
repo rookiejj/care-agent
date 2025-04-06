@@ -23,9 +23,6 @@ body {
   color: #333;
   overflow: hidden;
 
-  /* 핀치 줌과 더블탭 줌 방지 */
-  touch-action: none;
-
   /* 텍스트 선택 및 롱클릭 복사 방지 */
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -33,9 +30,6 @@ body {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-
-  /* 화면 바운스 효과 방지 */
-  overscroll-behavior: none;
 }
 
 #root {
