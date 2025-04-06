@@ -42,6 +42,8 @@ import SearchPage from "./SearchPage";
 import CommunityPage from "./CommunityPage";
 import MyPage from "./MyPage";
 import CategoriesPage from "./CategoriesPage";
+import RegionSelectPage from "./RegionSelectPage";
+import LocationHeader from "./LocationHeader";
 
 const getSuperhumanIcon = () => {
   return `/images/${"super_human_icon.png"}`;
@@ -100,7 +102,7 @@ export const PageHeader = ({
   onBack,
   backButtonVisible = false,
   rightComponent,
-  showLocationButton,
+  showLocationButton = false,
   notificationCount = 0,
   showNotification = false,
   currentLocation,
@@ -165,19 +167,20 @@ export const PageHeader = ({
         </h1>
       </div>
 
-      {showNotification && notificationCount !== undefined ? (
-        <div style={{ display: "flex", alignItems: "center" }}>
+      <div style={{ display: "flex", alignItems: "center" }}>
+        {showLocationButton && (
+          <LocationHeader currentLocation={currentLocation} />
+        )}
+
+        {showNotification && notificationCount !== undefined ? (
           <NotificationIcon
             count={notificationCount}
             onClick={handleNotificationClick}
           />
-          {/* <LanguageSwitcher /> */}
-        </div>
-      ) : rightComponent ? (
-        rightComponent
-      ) : (
-        ""
-      )}
+        ) : null}
+
+        {rightComponent ? rightComponent : null}
+      </div>
     </div>
   );
 };
@@ -369,6 +372,7 @@ const AppContent = ({
           }
         />
         <Route path="/main" element={<Navigate to="/" replace />} />
+        <Route path="/region-select" element={<RegionSelectPage />} />
         <Route
           path="/favorites"
           element={

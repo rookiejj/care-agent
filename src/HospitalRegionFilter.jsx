@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import RegionSelector from "./RegionSelector";
 import { regionMedicalStrengths, regionMetadata } from "./regionData";
-import "./regionStyles.css";
+import "./hospitalRegionFilter.css";
 
 /**
  * 지역 기반 병원 필터 컴포넌트
@@ -156,9 +156,9 @@ const HospitalRegionFilter = ({
   };
 
   return (
-    <div className="hospital-region-filter">
-      <div className="filter-section">
-        <h3>지역 선택</h3>
+    <div className="hrf-container">
+      <div className="hrf-filter-section">
+        <h3 className="hrf-heading3">지역 선택</h3>
         <RegionSelector
           onRegionSelect={handleRegionSelect}
           highlightMedicalHubs={true}
@@ -167,20 +167,22 @@ const HospitalRegionFilter = ({
 
         {/* 현재 선택된 지역 표시 */}
         {selectedRegions.length > 0 && (
-          <div className="selected-regions">
-            <h4>선택된 지역</h4>
-            <div className="region-tags">
+          <div className="hrf-selected-regions">
+            <h4 className="hrf-heading4">선택된 지역</h4>
+            <div className="hrf-region-tags">
               {selectedRegions.map((region) => (
-                <div key={region.id} className="region-tag">
+                <div key={region.id} className="hrf-region-tag">
                   <span>{region.label}</span>
                   <button
-                    className="remove-btn"
+                    className="hrf-remove-btn"
                     onClick={() => handleRemoveRegion(region.id)}
                   >
                     ×
                   </button>
                   {region.isMedicalHub && (
-                    <span className="tag medical-hub">의료특화</span>
+                    <span className="hrf-tag hrf-tag-medical-hub">
+                      의료특화
+                    </span>
                   )}
                 </div>
               ))}
@@ -191,9 +193,9 @@ const HospitalRegionFilter = ({
 
       {/* 검색 반경 설정 */}
       {selectedRegions.length > 0 && (
-        <div className="filter-section">
-          <h3>검색 반경</h3>
-          <div className="radius-selector">
+        <div className="hrf-filter-section">
+          <h3 className="hrf-heading3">검색 반경</h3>
+          <div className="hrf-radius-selector">
             <input
               type="range"
               min="1"
@@ -207,11 +209,11 @@ const HospitalRegionFilter = ({
       )}
 
       {/* 진료과목 필터 */}
-      <div className="filter-section">
-        <h3>진료과목</h3>
-        <div className="specialty-filters">
+      <div className="hrf-filter-section">
+        <h3 className="hrf-heading3">진료과목</h3>
+        <div className="hrf-specialty-filters">
           {/* 주요 진료과목 체크박스 */}
-          <div className="checkbox-group">
+          <div className="hrf-checkbox-group">
             <label>
               <input
                 type="checkbox"
@@ -258,10 +260,10 @@ const HospitalRegionFilter = ({
       </div>
 
       {/* 병원 유형 필터 */}
-      <div className="filter-section">
-        <h3>병원 유형</h3>
-        <div className="hospital-type-filters">
-          <div className="checkbox-group">
+      <div className="hrf-filter-section">
+        <h3 className="hrf-heading3">병원 유형</h3>
+        <div className="hrf-hospital-type-filters">
+          <div className="hrf-checkbox-group">
             <label>
               <input
                 type="checkbox"
@@ -299,11 +301,11 @@ const HospitalRegionFilter = ({
       </div>
 
       {/* 필터 초기화 버튼 */}
-      <div className="filter-actions">
-        <button className="reset-btn" onClick={resetAllFilters}>
+      <div className="hrf-filter-actions">
+        <button className="hrf-reset-btn" onClick={resetAllFilters}>
           필터 초기화
         </button>
-        <button className="apply-btn">적용하기</button>
+        <button className="hrf-apply-btn">적용하기</button>
       </div>
     </div>
   );

@@ -34,6 +34,7 @@ import {
   Gem,
 } from "lucide-react";
 import "./CategoriesPage.css";
+import RegionSelector from "./RegionSelector";
 
 const CategoriesPage = ({ currentLocation }) => {
   const location = useLocation();
@@ -180,13 +181,16 @@ const CategoriesPage = ({ currentLocation }) => {
     }
   }, [showCategoryList]);
 
+  // localStorage에서 선택된 지역 정보 가져오기
+  const [selectedRegionName, setSelectedRegionName] = useState("");
+
   return (
     <div className="container">
       <div className="fixed-header">
         <PageHeader
           title={getPageTitle()}
           showLocationButton={true}
-          currentLocation={currentLocation}
+          currentLocation={selectedRegionName || currentLocation}
           backButtonVisible={true}
           onBack={() => navigate(-1)}
         />
