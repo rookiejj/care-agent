@@ -173,6 +173,7 @@
   background-color: #f3f4f6;
   transform: translateY(-1px);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+  border-color: #e5e7eb;
 }
 
 .region-item-content {
@@ -378,71 +379,4 @@
   .region-name {
     font-size: 0.75rem;
   }
-}
-
-/* RegionSelector.css 파일에 추가할 코드 */
-
-/* 모든 버튼 스타일 기본 설정 재정의 */
-.region-item {
-  -webkit-tap-highlight-color: transparent;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  user-select: none;
-}
-
-/* 다양한 포커스 상태에 대한 아웃라인 제거 */
-.region-item:focus,
-.region-item:focus-visible,
-.region-item:focus-within,
-.region-item:-moz-focusring,
-.region-item:active,
-.region-item:visited {
-  outline: none !important;
-  outline-offset: 0 !important;
-  box-shadow: none !important;
-  border-color: #e5e7eb !important; /* 기본 테두리 색상 유지 */
-}
-
-/* 선택된 아이템에 대한 특별 포커스 스타일 유지 */
-.region-item.selected:focus,
-.region-item.selected:focus-visible,
-.region-item.selected:focus-within,
-.region-item.selected:active {
-  /* 여기에 각 선택 상태별 스타일 재정의 */
-}
-
-.city-item.selected:focus,
-.city-item.selected:focus-visible,
-.city-item.selected:active {
-  border-color: #93c5fd !important;
-  box-shadow: 0 0 0 2px #bfdbfe !important;
-}
-
-.district-item.selected:focus,
-.district-item.selected:focus-visible,
-.district-item.selected:active {
-  border-color: #6ee7b7 !important;
-  box-shadow: 0 0 0 2px #a7f3d0 !important;
-}
-
-.neighborhood-item.selected:focus,
-.neighborhood-item.selected:focus-visible,
-.neighborhood-item.selected:active {
-  border-color: #c4b5fd !important;
-  box-shadow: 0 0 0 2px #ddd6fe !important;
-}
-
-.all-item.selected:focus,
-.all-item.selected:focus-visible,
-.all-item.selected:active {
-  border-color: #60a5fa !important;
-  box-shadow: 0 0 0 2px #93c5fd !important;
-}
-
-/* 호버 스타일 명시적 재정의 (기존 스타일 유지) */
-.region-item:hover {
-  background-color: #f3f4f6;
-  transform: translateY(-1px);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
 }
