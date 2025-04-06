@@ -321,6 +321,103 @@ const App = () => {
   const [selectedLocation, setSelectedLocation] = useState("");
   const [notificationCount, setNotificationCount] = useState(2);
 
+  useEffect(() => {
+    // 1. 메타 태그 설정 - 가장 엄격한 설정
+    const setViewportMeta = () => {
+      const viewport = document.querySelector('meta[name="viewport"]');
+      if (viewport) {
+        viewport.content =
+          "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
+      } else {
+        const meta = document.createElement("meta");
+        meta.name = "viewport";
+        meta.content =
+          "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
+        document.head.appendChild(meta);
+      }
+    };
+
+    // 2. 핀치 줌 방지 (touchmove와 함께 사용)
+    const preventPinchZoom = (e) => {
+      if (e.touches.length > 1) {
+        e.preventDefault();
+        return false;
+      }
+    };
+
+    // 3. 더블탭 줌 이벤트 방지
+    const preventDoubleTapZoom = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+    };
+
+    // 4. wheel 이벤트를 통한 확대/축소 방지
+    const preventWheelZoom = (e) => {
+      if (e.ctrlKey) {
+        e.preventDefault();
+      }
+    };
+
+    // 5. 키보드 확대/축소 방지 (ctrl + +/-)
+    const preventKeyboardZoom = (e) => {
+      if (
+        (e.ctrlKey && (e.key === "+" || e.key === "-" || e.key === "=")) ||
+        (e.metaKey && (e.key === "+" || e.key === "-" || e.key === "="))
+      ) {
+        e.preventDefault();
+      }
+    };
+
+    // 6. 터치 이벤트에서의 확대/축소 방지
+    const preventTouchZoom = (e) => {
+      if (e.touches.length > 1) {
+        e.preventDefault();
+      }
+    };
+
+    // 메타 태그 설정
+    setViewportMeta();
+
+    // 디바이스에 따른 이벤트 리스너 등록
+    document.addEventListener("touchstart", preventPinchZoom, {
+      passive: false,
+    });
+    document.addEventListener("touchmove", preventPinchZoom, {
+      passive: false,
+    });
+    document.addEventListener("touchend", preventDoubleTapZoom, {
+      passive: false,
+    });
+    document.addEventListener("wheel", preventWheelZoom, { passive: false });
+    document.addEventListener("keydown", preventKeyboardZoom);
+    document.addEventListener("gesturestart", preventTouchZoom, {
+      passive: false,
+    });
+    document.addEventListener("gesturechange", preventTouchZoom, {
+      passive: false,
+    });
+    document.addEventListener("gestureend", preventTouchZoom, {
+      passive: false,
+    });
+
+    // CSS 설정
+    document.body.style.touchAction = "none";
+    document.body.style.userSelect = "none";
+    document.documentElement.style.overflow = "hidden";
+
+    // 컴포넌트 언마운트 시 이벤트 리스너 제거
+    return () => {
+      document.removeEventListener("touchstart", preventPinchZoom);
+      document.removeEventListener("touchmove", preventPinchZoom);
+      document.removeEventListener("touchend", preventDoubleTapZoom);
+      document.removeEventListener("wheel", preventWheelZoom);
+      document.removeEventListener("keydown", preventKeyboardZoom);
+      document.removeEventListener("gesturestart", preventTouchZoom);
+      document.removeEventListener("gesturechange", preventTouchZoom);
+      document.removeEventListener("gestureend", preventTouchZoom);
+    };
+  }, []);
+
   return (
     <DataProvider>
       <BrowserRouter>
