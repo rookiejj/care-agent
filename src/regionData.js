@@ -525,7 +525,7 @@ export const midRegions = {
  * 세분류 지역 (동/읍/면)
  * 각 구/군 내의 동/읍/면 정보 (import 방식으로 통합)
  */
-import { subRegions } from "./subregions-final";
+import { subRegions } from "./subregions";
 
 /**
  * 지역별 인기 의료 시설 타입

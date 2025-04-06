@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import {
   topRegions,
   midRegions,
-  subRegions,
   regionMedicalStrengths,
   popularRegionSearches,
 } from "./regionData";
+import { subRegions } from "./subregions";
 import "./regionStyles.css";
 
 /**
