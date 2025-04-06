@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { MapPinIcon, ChevronRightIcon } from "lucide-react";
 import { topRegions, midRegions } from "./regionData";
 import { subRegions } from "./subregions";
@@ -13,6 +13,12 @@ const RegionSelector = ({ onRegionSelect = () => {} }) => {
   });
   const [selectedDistrict, setSelectedDistrict] = useState(null);
   const [selectedNeighborhood, setSelectedNeighborhood] = useState(null);
+
+  // 각 섹션에 대한 ref 생성
+  const districtSectionRef = useRef(null);
+  const neighborhoodSectionRef = useRef(null);
+  const scrollContainerRef = useRef(null);
+  const citySectionRef = useRef(null);
 
   // 저장된 지역 정보 불러와서 초기화
   useEffect(() => {
@@ -99,19 +105,79 @@ const RegionSelector = ({ onRegionSelect = () => {} }) => {
   const [districtList, setDistrictList] = useState([]);
   const [neighborhoodList, setNeighborhoodList] = useState([]);
 
+  // 요소의 절대 위치를 계산하는 함수
+  const getElementTopPosition = (element) => {
+    if (!element) return 0;
+
+    let top = 0;
+    while (element) {
+      top += element.offsetTop;
+      element = element.offsetParent;
+    }
+    return top;
+  };
+
+  // 스크롤 컨테이너 내의 요소 상대 위치 계산
+  const getRelativeTopPosition = (element, container) => {
+    if (!element || !container) return 0;
+    return (
+      element.getBoundingClientRect().top -
+      container.getBoundingClientRect().top +
+      container.scrollTop
+    );
+  };
+
+  // 지정된 요소로 스크롤하는 함수
+  const scrollToSection = (ref) => {
+    if (ref && ref.current && scrollContainerRef.current) {
+      const container = scrollContainerRef.current;
+      const element = ref.current;
+
+      // 헤더 영역 높이를 고려한 옵셋 (필요에 따라 조정)
+      const headerOffset = 80;
+
+      // 요소의 컨테이너 내 상대적 위치 계산
+      const relativeTop = getRelativeTopPosition(element, container);
+
+      // 스크롤 위치 계산
+      container.scrollTo({
+        top: relativeTop - headerOffset,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  // 맨 위로 스크롤하는 함수
+  const scrollToTop = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
+  };
+
   // 선택된 시/도가 변경되면 해당 시/도의 구/군 목록 업데이트
   useEffect(() => {
     if (selectedCity) {
       // 전체 시/도 선택시에는 구/군 목록 비우기
       if (selectedCity.isAll) {
         setDistrictList([]);
+        scrollToTop();
       } else {
         setDistrictList(midRegions[selectedCity.id] || []);
+        // 약간의 지연 후 구/군 섹션으로 스크롤
+        setTimeout(() => {
+          if (districtSectionRef.current) {
+            scrollToSection(districtSectionRef);
+          }
+        }, 100);
       }
       setSelectedDistrict(null);
       setSelectedNeighborhood(null);
     } else {
       setDistrictList([]);
+      scrollToTop();
     }
   }, [selectedCity]);
 
@@ -121,6 +187,13 @@ const RegionSelector = ({ onRegionSelect = () => {} }) => {
       const key = `${selectedCity.id}.${selectedDistrict.id}`;
       setNeighborhoodList(subRegions[key] || []);
       setSelectedNeighborhood(null);
+
+      // 약간의 지연 후 동/읍/면 섹션으로 스크롤
+      setTimeout(() => {
+        if (neighborhoodSectionRef.current) {
+          scrollToSection(neighborhoodSectionRef);
+        }
+      }, 100);
     } else {
       setNeighborhoodList([]);
     }
@@ -215,6 +288,40 @@ const RegionSelector = ({ onRegionSelect = () => {} }) => {
   // 동/읍/면 선택 핸들러
   const handleNeighborhoodSelect = (neighborhood) => {
     setSelectedNeighborhood(neighborhood);
+
+    // 동/읍/면을 선택하면 자동으로 완료 버튼이 눌린 것처럼 동작
+    setTimeout(() => {
+      // 선택 완료 이벤트를 발생시키고 localStorage에 저장
+      const selection = {
+        city: selectedCity ? selectedCity.id : null,
+        cityName: selectedCity ? selectedCity.label : null,
+        district: selectedDistrict ? selectedDistrict.id : null,
+        districtName: selectedDistrict ? selectedDistrict.label : null,
+        neighborhood: neighborhood ? neighborhood.id : null,
+        neighborhoodName: neighborhood ? neighborhood.label : null,
+        fullName:
+          selectedCity.label +
+          " " +
+          selectedDistrict.label +
+          " " +
+          neighborhood.label,
+        isAllCity: selectedCity?.isAll || false,
+        isAllDistrict: selectedDistrict?.isAll || false,
+        isAllNeighborhood: neighborhood?.isAll || false,
+        isComplete: true, // 선택 완료 플래그
+      };
+
+      // localStorage에 선택한 지역 정보 저장
+      localStorage.setItem("selectedRegion", JSON.stringify(selection));
+
+      // 부모 컴포넌트에 선택 완료 이벤트 전달
+      onRegionSelect(selection);
+
+      // 지역 선택 후 이전 페이지로 자동 이동 (히스토리 사용)
+      if (window.history.length > 1) {
+        window.history.back();
+      }
+    }, 300); // 약간의 지연 시간을 두어 사용자가 선택을 확인할 수 있도록 함
   };
 
   // "전체" 선택 핸들러
@@ -230,6 +337,7 @@ const RegionSelector = ({ onRegionSelect = () => {} }) => {
       setSelectedCity(allRegion);
       setSelectedDistrict(null);
       setSelectedNeighborhood(null);
+      scrollToTop();
     } else if (level === "district") {
       // 구/군 전체 선택 (선택된 시/도는 유지)
       setSelectedDistrict(allRegion);
@@ -237,6 +345,35 @@ const RegionSelector = ({ onRegionSelect = () => {} }) => {
     } else if (level === "neighborhood") {
       // 동/읍/면 전체 선택 (선택된 시/도, 구/군은 유지)
       setSelectedNeighborhood(allRegion);
+
+      // 동/읍/면 "전체" 선택 시에도 자동으로 완료 처리
+      setTimeout(() => {
+        // 선택 완료 이벤트를 발생시키고 localStorage에 저장
+        const selection = {
+          city: selectedCity ? selectedCity.id : null,
+          cityName: selectedCity ? selectedCity.label : null,
+          district: selectedDistrict ? selectedDistrict.id : null,
+          districtName: selectedDistrict ? selectedDistrict.label : null,
+          neighborhood: "all",
+          neighborhoodName: "전체",
+          fullName: selectedCity.label + " " + selectedDistrict.label,
+          isAllCity: selectedCity?.isAll || false,
+          isAllDistrict: selectedDistrict?.isAll || false,
+          isAllNeighborhood: true,
+          isComplete: true, // 선택 완료 플래그
+        };
+
+        // localStorage에 선택한 지역 정보 저장
+        localStorage.setItem("selectedRegion", JSON.stringify(selection));
+
+        // 부모 컴포넌트에 선택 완료 이벤트 전달
+        onRegionSelect(selection);
+
+        // 지역 선택 후 이전 페이지로 자동 이동 (히스토리 사용)
+        if (window.history.length > 1) {
+          window.history.back();
+        }
+      }, 300);
     }
   };
 
@@ -258,11 +395,21 @@ const RegionSelector = ({ onRegionSelect = () => {} }) => {
       setSelectedCity(null);
       setSelectedDistrict(null);
       setSelectedNeighborhood(null);
+      // 스크롤을 맨 위로 올림
+      scrollToTop();
     } else if (level === "district") {
       setSelectedDistrict(null);
       setSelectedNeighborhood(null);
+      // 시/도 섹션으로 스크롤
+      setTimeout(() => {
+        scrollToSection(citySectionRef);
+      }, 100);
     } else if (level === "neighborhood") {
       setSelectedNeighborhood(null);
+      // 구/군 섹션으로 스크롤
+      setTimeout(() => {
+        scrollToSection(districtSectionRef);
+      }, 100);
     }
   };
 
@@ -355,9 +502,9 @@ const RegionSelector = ({ onRegionSelect = () => {} }) => {
         </div>
       </div>
       {/* 스크롤 가능한 본문 영역 */}
-      <div className="region-content-scrollable">
+      <div className="region-content-scrollable" ref={scrollContainerRef}>
         {/* 시/도 선택 섹션 */}
-        <div className="region-section">
+        <div className="region-section" ref={citySectionRef}>
           <div className="section-header">
             <h4>시/도 선택</h4>
           </div>
@@ -395,7 +542,7 @@ const RegionSelector = ({ onRegionSelect = () => {} }) => {
 
         {/* 구/군 선택 섹션 - 시/도가 선택되고 전체가 아닌 경우에만 표시 */}
         {selectedCity && !selectedCity.isAll && districtList.length > 0 && (
-          <div className="region-section">
+          <div className="region-section" ref={districtSectionRef}>
             <div className="section-header">
               <h4>{selectedCity.label} 내 구/군 선택</h4>
             </div>
@@ -442,7 +589,7 @@ const RegionSelector = ({ onRegionSelect = () => {} }) => {
         {selectedDistrict &&
           !selectedDistrict.isAll &&
           neighborhoodList.length > 0 && (
-            <div className="region-section">
+            <div className="region-section" ref={neighborhoodSectionRef}>
               <div className="section-header">
                 <h4>{selectedDistrict.label} 내 동/읍/면 선택</h4>
               </div>
