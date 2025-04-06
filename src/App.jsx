@@ -321,54 +321,6 @@ const App = () => {
   const [selectedLocation, setSelectedLocation] = useState("");
   const [notificationCount, setNotificationCount] = useState(2);
 
-  useEffect(() => {
-    // 1. 핀치 줌(확대/축소) 방지
-    const preventZoom = (e) => {
-      if (e.touches.length > 1) {
-        e.preventDefault();
-      }
-    };
-
-    // 2. 더블 탭 줌 방지
-    const preventDoubleTapZoom = () => {
-      document
-        .querySelector('meta[name="viewport"]')
-        .setAttribute(
-          "content",
-          "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-        );
-    };
-
-    // 3. 롱클릭 컨텍스트 메뉴(복사 등) 방지
-    const preventLongPress = (e) => {
-      e.preventDefault();
-      return false;
-    };
-
-    // 4. 텍스트 선택 방지 (CSS와 함께 사용)
-    const preventSelection = () => {
-      document.body.style.webkitUserSelect = "none";
-      document.body.style.mozUserSelect = "none";
-      document.body.style.msUserSelect = "none";
-      document.body.style.userSelect = "none";
-    };
-
-    // 이벤트 리스너 등록
-    document.addEventListener("touchstart", preventZoom, { passive: false });
-    document.addEventListener("contextmenu", preventLongPress);
-    document.addEventListener("touchend", preventLongPress, { passive: false });
-
-    preventDoubleTapZoom();
-    preventSelection();
-
-    // 컴포넌트 언마운트 시 이벤트 리스너 제거
-    return () => {
-      document.removeEventListener("touchstart", preventZoom);
-      document.removeEventListener("contextmenu", preventLongPress);
-      document.removeEventListener("touchend", preventLongPress);
-    };
-  }, []);
-
   return (
     <DataProvider>
       <BrowserRouter>
