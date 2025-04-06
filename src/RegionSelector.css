@@ -20,7 +20,6 @@
   top: 0;
   z-index: 10;
   background-color: white;
-  /* border-bottom: 1px solid #f3f4f6; */
   margin: 0 1rem 1rem;
 }
 
@@ -329,10 +328,6 @@
     padding: 0;
   }
 
-  .region-header-fixed {
-    padding: 1rem 1rem 0.5rem;
-  }
-
   .region-content-scrollable {
     padding: 0 1rem 1rem;
   }
@@ -369,10 +364,6 @@
 @media (max-width: 360px) {
   .region-selector {
     height: calc(100vh - 80px);
-  }
-
-  .region-header-fixed {
-    padding: 0.75rem 0.75rem 0.5rem;
   }
 
   .region-content-scrollable {
