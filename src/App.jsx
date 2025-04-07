@@ -321,6 +321,30 @@ const App = () => {
   const [selectedLocation, setSelectedLocation] = useState("");
   const [notificationCount, setNotificationCount] = useState(2);
 
+  // iOS 스와이프 방지를 위한 처리
+  useEffect(() => {
+    // iOS 장치인지 확인
+    const isIOS =
+      /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+    if (isIOS) {
+      // 뒤로가기 방지를 위한 빈 state 추가
+      window.history.pushState(null, "", window.location.pathname);
+
+      // 사용자가 뒤로가기를 시도할 때마다 이벤트 발생
+      const handlePopState = (event) => {
+        // 다시 상태를 푸시해서 뒤로가기를 막음
+        window.history.pushState(null, "", window.location.pathname);
+      };
+
+      window.addEventListener("popstate", handlePopState);
+
+      return () => {
+        window.removeEventListener("popstate", handlePopState);
+      };
+    }
+  }, []);
+
   return (
     <DataProvider>
       <BrowserRouter>
@@ -342,7 +366,6 @@ const AppContent = ({
   setNotificationCount,
 }) => {
   const location = useLocation();
-  const { t, i18n } = useTranslation();
   const currentPage = getPageFromPath(location.pathname);
 
   // 현재 경로에서 페이지 이름을 추출하는 함수
@@ -359,52 +382,6 @@ const AppContent = ({
     "community",
     "mypage",
   ].includes(currentPage);
-
-  // Handle iOS swipe prevention
-  useEffect(() => {
-    // Detect if device is iOS
-    const isIOS =
-      /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-
-    if (isIOS && showBottomNav) {
-      document.body.classList.add("bottom-navigation-active");
-      document.querySelector(".app-wrapper").classList.add("has-bottom-nav");
-
-      // Handle orientation changes
-      const handleOrientationChange = () => {
-        // Force layout recalculation
-        setTimeout(() => {
-          window.scrollTo(0, 0);
-        }, 50);
-      };
-
-      window.addEventListener("orientationchange", handleOrientationChange);
-
-      return () => {
-        document.body.classList.remove("bottom-navigation-active");
-        document
-          .querySelector(".app-wrapper")
-          .classList.remove("has-bottom-nav");
-        window.removeEventListener(
-          "orientationchange",
-          handleOrientationChange
-        );
-      };
-    }
-
-    return () => {
-      document.body.classList.remove("bottom-navigation-active");
-      document.querySelector(".app-wrapper").classList.remove("has-bottom-nav");
-    };
-  }, [showBottomNav]);
-
-  // Set correct text direction based on language
-  useEffect(() => {
-    document.documentElement.setAttribute(
-      "dir",
-      ["ar", "he", "fa", "ur"].includes(i18n.language) ? "rtl" : "ltr"
-    );
-  }, [i18n.language]);
 
   return (
     <div className="app-wrapper">
