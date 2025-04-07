@@ -21,7 +21,7 @@ const SearchBar = ({
   const navigate = useNavigate();
 
   useEffect(() => {
-    // handleClear();
+    handleClear();
   }, []);
 
   // initialValue가 변경될 때 inputText 상태 업데이트
