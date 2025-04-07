@@ -4,6 +4,7 @@ import { PageHeader } from "./App";
 import CategoryFilterButtons from "./CategoryFilterButtons";
 import CommunityPostList from "./CommunityPostList";
 import OptionFilterButtons from "./OptionFilterButtons";
+import FloatingActionButton from "./FloatingActionButton";
 import {
   communitySortOptions,
   mainCommunityCategories,
@@ -107,14 +108,6 @@ const CommunityPage = ({ currentLocation, notificationCount }) => {
           backButtonVisible={false}
           notificationCount={notificationCount}
           showNotification={true}
-          // rightComponent={
-          //   <button
-          //     onClick={handleCreatePost}
-          //     className="community-write-button"
-          //   >
-          //     <Edit size={18} /> 글쓰기
-          //   </button>
-          // }
         />
 
         {/* 고정된 필터 영역 */}
@@ -140,6 +133,9 @@ const CommunityPage = ({ currentLocation, notificationCount }) => {
           getFormattedDate={getFormattedDate}
         />
       </div>
+
+      {/* 글쓰기 플로팅 버튼 */}
+      <FloatingActionButton onClick={handleCreatePost} />
     </div>
   );
 };

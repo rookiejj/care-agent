@@ -1,0 +1,44 @@
+/* Floating action button styles */
+.floating-action-button {
+  position: fixed;
+  bottom: 5.5rem; /* More distance from bottom to place ABOVE the navigation */
+  right: 1.5rem;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: rgba(59, 130, 246, 0.85); /* Semi-transparent blue */
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  border: none;
+  cursor: pointer;
+  z-index: 30; /* Higher than bottom navigation (z-index: 20) */
+  transition: all 0.3s ease;
+  bottom: 8rem; /* Increased to move it HIGHER above the bottom navigation */
+}
+
+.floating-action-button:hover {
+  background-color: rgba(
+    37,
+    99,
+    235,
+    0.9
+  ); /* Slightly darker and more opaque on hover */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.floating-action-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Ensure the button is centered properly in mobile view */
+@media (max-width: 480px) {
+  .floating-action-button {
+    right: 1rem;
+    bottom: 8rem; /* Increased to move it HIGHER above the bottom navigation */
+  }
+}
