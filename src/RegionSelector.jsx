@@ -545,6 +545,14 @@ const RegionSelector = ({ onRegionSelect = () => {} }) => {
           <div className="region-section" ref={districtSectionRef}>
             <div className="section-header">
               <h4>{selectedCity.label} 내 구/군 선택</h4>
+
+              {/* 간략한 병원 밀집도 범례 - 개선된 반응형 디자인 */}
+              <div className="simple-density-legend">
+                <span className="density-label">병원 밀집도:</span>
+                <span className="density-label">매우 높음</span>
+                <div className="density-bar"></div>
+                <span className="density-label">매우 낮음</span>
+              </div>
             </div>
 
             <div className="region-grid district-grid">

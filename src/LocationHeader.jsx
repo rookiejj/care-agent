@@ -12,7 +12,6 @@ const LocationHeader = ({ currentLocation }) => {
     if (savedRegion) {
       try {
         const regionData = JSON.parse(savedRegion);
-        // fullName 속성을 사용하여 표시할 위치 결정
         if (regionData.fullName) {
           setLocation(regionData.fullName);
         }
@@ -22,14 +21,7 @@ const LocationHeader = ({ currentLocation }) => {
     }
   }, []);
 
-  // 현재 표시할 위치 텍스트 결정
   const displayLocation = location || currentLocation || "전체지역";
-
-  // 위치 텍스트 처리 - 말줄임 제거
-  const shortenLocation = (text) => {
-    if (!text) return "전체지역";
-    return text;
-  };
 
   return (
     <button
@@ -44,9 +36,15 @@ const LocationHeader = ({ currentLocation }) => {
         padding: "0.5rem",
         borderRadius: "8px",
         cursor: "pointer",
+        maxWidth: "100%", // 컨테이너의 너비에 맞춤
       }}
     >
-      <MapPin size={18} color="#3b82f6" strokeWidth={2} />
+      <MapPin
+        size={18}
+        color="#3b82f6"
+        strokeWidth={2}
+        style={{ flexShrink: 0 }}
+      />
       <span
         className="location-text"
         style={{
@@ -54,9 +52,11 @@ const LocationHeader = ({ currentLocation }) => {
           fontWeight: "500",
           color: "#374151",
           whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
         }}
       >
-        {shortenLocation(displayLocation)}
+        {displayLocation}
       </span>
     </button>
   );

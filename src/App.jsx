@@ -113,30 +113,31 @@ export const PageHeader = ({
     navigate("/notifications");
   };
 
-  const handleLocationSelect = () => {
-    navigate("/location");
-  };
-
   return (
     <div
       style={{
         padding: "1rem",
         display: "flex",
         alignItems: "center",
-        justifyContent: "space-between",
         zIndex: "100",
         height: "1.5rem",
         marginTop: "0.5rem",
       }}
     >
-      <div style={{ display: "flex", alignItems: "center" }}>
+      {/* 왼쪽 부분 - 백 버튼과 타이틀 */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          flexShrink: 0, // 타이틀 영역은 줄어들지 않음
+          marginRight: "8px", // 타이틀과 지역명 사이 최소 간격
+        }}
+      >
         {backButtonVisible && (
           <button
             onClick={onBack}
             className="back-button"
-            // onMouseOver={(e) =>
-            //   (e.currentTarget.style.backgroundColor = "#e5e7eb")
-            // }
+            style={{ flexShrink: 0 }} // 백 버튼도 줄어들지 않음
             onMouseOut={(e) =>
               (e.currentTarget.style.backgroundColor = "transparent")
             }
@@ -144,7 +145,7 @@ export const PageHeader = ({
             {showMainIcon ? (
               <img
                 src={getSuperhumanIcon()}
-                alt={name}
+                alt="logo"
                 style={{
                   width: "2.5rem",
                   height: "2.5rem",
@@ -161,17 +162,37 @@ export const PageHeader = ({
           style={{
             fontSize: "1.25rem",
             fontWeight: "bold",
+            flexShrink: 0, // 타이틀은 줄어들지 않음
+            whiteSpace: "nowrap", // 타이틀은 항상 한 줄로 표시
           }}
         >
           {title}
         </h1>
       </div>
 
-      <div style={{ display: "flex", alignItems: "center" }}>
+      {/* 중앙 부분 - 지역 선택 버튼 (남은 공간 모두 사용) */}
+      <div
+        style={{
+          display: "flex",
+          flex: 1, // 남은 공간 모두 사용
+          overflow: "hidden", // 넘치는 부분 숨김
+          minWidth: "20px", // 최소한의 너비 보장
+          justifyContent: "flex-end",
+        }}
+      >
         {showLocationButton && (
           <LocationHeader currentLocation={currentLocation} />
         )}
+      </div>
 
+      {/* 오른쪽 부분 - 알림 아이콘 */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          flexShrink: 0, // 알림 아이콘 영역은 줄어들지 않음
+        }}
+      >
         {showNotification && notificationCount !== undefined ? (
           <NotificationIcon
             count={notificationCount}
@@ -194,20 +215,19 @@ const LocationButton = ({ currentLocation }) => {
       onClick={() => navigate("/location")}
       style={{
         backgroundColor: "#dbeafe",
-        padding: "1.2rem 1rem",
+        padding: "0.5rem 0.75rem",
         borderRadius: "9999px",
         border: "none",
         cursor: "pointer",
         color: "black",
         fontSize: "0.875rem",
-        whiteSpace: "nowrap",
         display: "flex",
         alignItems: "center",
         gap: "0.25rem",
         height: "28px",
       }}
     >
-      <MapPin size={20} color="black" strokeWidth={1.5} />{" "}
+      <MapPin size={20} color="black" strokeWidth={1.5} />
       {currentLocation || t("common.location")}
     </button>
   );

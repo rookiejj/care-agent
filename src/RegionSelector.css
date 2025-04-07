@@ -206,13 +206,13 @@
 .region-item.selected {
   background-color: #eef2ff;
   border-color: #a5b4fc;
-  box-shadow: 0 0 0 2px #c7d2fe;
+  box-shadow: 0 0 0 1px #c7d2fe;
 }
 
 .city-item.selected {
   background-color: #dbeafe;
   border-color: #93c5fd;
-  box-shadow: 0 0 0 2px #bfdbfe;
+  box-shadow: 0 0 0 1px #bfdbfe;
 }
 
 .city-item.selected .region-name {
@@ -223,7 +223,7 @@
 .district-item.selected {
   background-color: #d1fae5;
   border-color: #6ee7b7;
-  box-shadow: 0 0 0 2px #a7f3d0;
+  box-shadow: 0 0 0 1px #a7f3d0;
 }
 
 .district-item.selected .region-name {
@@ -234,7 +234,7 @@
 .neighborhood-item.selected {
   background-color: #f3e8ff;
   border-color: #c4b5fd;
-  box-shadow: 0 0 0 2px #ddd6fe;
+  box-shadow: 0 0 0 1px #ddd6fe;
 }
 
 .neighborhood-item.selected .region-name {
@@ -386,5 +386,76 @@
 
   .region-name {
     font-size: 0.75rem;
+  }
+}
+
+/* 섹션 헤더 스타일 수정 - 항상 세로 방향으로 표시 */
+.section-header {
+  margin-bottom: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.section-header h4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #374151;
+  margin: 0 0 6px 0;
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+/* 간략한 병원 밀집도 범례 */
+.simple-density-legend {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 8px;
+  font-size: 0.7rem;
+}
+
+.density-label {
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.density-bar {
+  height: 7px;
+  width: 80px;
+  border-radius: 4px;
+  background: linear-gradient(
+    to right,
+    #ef4444,
+    #f97316,
+    #22c55e,
+    #3b82f6,
+    #9ca3af
+  );
+  margin: 0 4px;
+}
+
+/* 반응형 설정 - 크기만 약간 조정 */
+@media (max-width: 480px) {
+  .density-bar {
+    width: 60px;
+    height: 6px;
+  }
+
+  .density-label {
+    font-size: 0.65rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .simple-density-legend {
+    gap: 3px;
+  }
+
+  .density-bar {
+    width: 50px;
   }
 }
