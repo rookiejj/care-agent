@@ -321,30 +321,6 @@ const App = () => {
   const [selectedLocation, setSelectedLocation] = useState("");
   const [notificationCount, setNotificationCount] = useState(2);
 
-  // iOS 스와이프 방지를 위한 처리
-  useEffect(() => {
-    // iOS 장치인지 확인
-    const isIOS =
-      /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-
-    if (isIOS) {
-      // 뒤로가기 방지를 위한 빈 state 추가
-      window.history.pushState(null, "", window.location.pathname);
-
-      // 사용자가 뒤로가기를 시도할 때마다 이벤트 발생
-      const handlePopState = (event) => {
-        // 다시 상태를 푸시해서 뒤로가기를 막음
-        window.history.pushState(null, "", window.location.pathname);
-      };
-
-      window.addEventListener("popstate", handlePopState);
-
-      return () => {
-        window.removeEventListener("popstate", handlePopState);
-      };
-    }
-  }, []);
-
   return (
     <DataProvider>
       <BrowserRouter>
@@ -382,42 +358,6 @@ const AppContent = ({
     "community",
     "mypage",
   ].includes(currentPage);
-
-  useEffect(() => {
-    // iOS 장치인지 확인
-    const isIOS =
-      /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-
-    if (isIOS && showBottomNav) {
-      let startX = 0;
-
-      const handleTouchStart = (e) => {
-        startX = e.touches[0].clientX;
-      };
-
-      const handleTouchMove = (e) => {
-        // 화면 왼쪽 가장자리에서 20px 이내에서 시작된 터치인 경우
-        if (startX <= 20) {
-          // 오른쪽으로 스와이프하려는 경우 이벤트 취소
-          if (e.touches[0].clientX > startX) {
-            e.preventDefault();
-          }
-        }
-      };
-
-      document.addEventListener("touchstart", handleTouchStart, {
-        passive: false,
-      });
-      document.addEventListener("touchmove", handleTouchMove, {
-        passive: false,
-      });
-
-      return () => {
-        document.removeEventListener("touchstart", handleTouchStart);
-        document.removeEventListener("touchmove", handleTouchMove);
-      };
-    }
-  }, [showBottomNav]);
 
   return (
     <div className="app-wrapper">
