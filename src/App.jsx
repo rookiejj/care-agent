@@ -217,33 +217,32 @@ const BottomNavigation = ({ currentPage }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
 
-  // New handler for search navigation
-  const handleSearchClick = (e) => {
-    e.preventDefault();
-    navigate("/search");
+  // const handleSearchClick = (e) => {
+  //   e.preventDefault();
+  //   navigate("/search");
 
-    // Add a small delay before trying to focus the search input
-    setTimeout(() => {
-      const searchInput = document.querySelector('input[type="text"]');
-      if (searchInput) {
-        searchInput.focus();
+  //   // Add a small delay before trying to focus the search input
+  //   setTimeout(() => {
+  //     const searchInput = document.querySelector('input[type="text"]');
+  //     if (searchInput) {
+  //       searchInput.focus();
 
-        // Create a touch event for iOS
-        try {
-          const touchEvent = new TouchEvent("touchstart", {
-            bubbles: true,
-            cancelable: true,
-            view: window,
-          });
-          searchInput.dispatchEvent(touchEvent);
-          searchInput.click();
-        } catch (e) {
-          // Fallback
-          searchInput.click();
-        }
-      }
-    }, 100);
-  };
+  //       // Create a touch event for iOS
+  //       try {
+  //         const touchEvent = new TouchEvent("touchstart", {
+  //           bubbles: true,
+  //           cancelable: true,
+  //           view: window,
+  //         });
+  //         searchInput.dispatchEvent(touchEvent);
+  //         searchInput.click();
+  //       } catch (e) {
+  //         // Fallback
+  //         searchInput.click();
+  //       }
+  //     }
+  //   }, 100);
+  // };
 
   return (
     <div className="bottom-navigation">

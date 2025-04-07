@@ -167,11 +167,13 @@ button:active {
 .nav-button:focus {
   outline: none;
   -webkit-tap-highlight-color: transparent;
+  color: #3b82f6;
 }
 
 .nav-button:active {
   outline: none;
   -webkit-tap-highlight-color: transparent;
+  color: #3b82f6;
 }
 
 .nav-button-active {
