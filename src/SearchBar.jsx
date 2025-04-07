@@ -20,10 +20,6 @@ const SearchBar = ({
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    handleClear();
-  }, []);
-
   // initialValue가 변경될 때 inputText 상태 업데이트
   useEffect(() => {
     setInputText(initialValue);
@@ -32,8 +28,6 @@ const SearchBar = ({
 
   // 페이지 로드/마운트 시 키보드 포커싱 - 단 한 번만 실행되도록 수정
   useEffect(() => {
-    console.log("shouldAutoFocus", inputRef.current);
-
     // goSearch가 true면 메인 페이지에 있다는 의미이므로 포커싱하지 않음
     // 검색 페이지(goSearch=false)에서만 자동 포커싱 적용
     if ((shouldAutoFocus || forceKeyboard) && !goSearch) {
