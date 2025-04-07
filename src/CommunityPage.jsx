@@ -104,19 +104,17 @@ const CommunityPage = ({ currentLocation, notificationCount }) => {
       <div className="fixed-header">
         <PageHeader
           title="커뮤니티"
-          showLocationButton={true}
-          currentLocation={currentLocation}
           backButtonVisible={false}
           notificationCount={notificationCount}
           showNotification={true}
-          rightComponent={
-            <button
-              onClick={handleCreatePost}
-              className="community-write-button"
-            >
-              <Edit size={18} /> 글쓰기
-            </button>
-          }
+          // rightComponent={
+          //   <button
+          //     onClick={handleCreatePost}
+          //     className="community-write-button"
+          //   >
+          //     <Edit size={18} /> 글쓰기
+          //   </button>
+          // }
         />
 
         {/* 고정된 필터 영역 */}
