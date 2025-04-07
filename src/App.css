@@ -184,6 +184,14 @@ button:active {
   color: #9ca3af;
 }
 
+.nav-button-active:hover {
+  color: #3b82f6;
+}
+
+.nav-button-inactive:hover {
+  color: #9ca3af;
+}
+
 .nav-button span {
   font-size: 0.625rem;
   margin-top: 0.125rem;
