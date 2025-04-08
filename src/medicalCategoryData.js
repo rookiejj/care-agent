@@ -219,28 +219,125 @@ export const subCategories = {
  * 각 진료과목 별 전문 분야
  */
 export const medicalSpecialties = [
-  { id: "internal", label: "내과" },
-  { id: "surgery", label: "외과" },
-  { id: "obgyn", label: "산부인과" },
-  { id: "pediatrics", label: "소아과" },
-  { id: "neurology", label: "신경과" },
-  { id: "psychiatry", label: "정신건강의학과" },
-  { id: "orthopedics", label: "정형외과" },
-  { id: "dermatology", label: "피부과" },
-  { id: "ophthalmology", label: "안과" },
-  { id: "ent", label: "이비인후과" },
-  { id: "urology", label: "비뇨기과" },
-  { id: "dentistry", label: "치과" },
-  { id: "rehabilitation", label: "재활의학과" },
-  { id: "family", label: "가정의학과" },
-  { id: "oriental", label: "한의원" },
-  { id: "cardiology", label: "심장내과" },
-  { id: "gastroenterology", label: "소화기내과" },
-  { id: "pulmonology", label: "호흡기내과" },
-  { id: "allergy", label: "알레르기내과" },
-  { id: "endocrinology", label: "내분비내과" },
-  { id: "plastic", label: "성형외과" },
-  { id: "pain", label: "통증의학과" },
+  {
+    id: "internal",
+    label: "내과",
+    description: "성인의 내부 장기 질환을 진단하고 치료하는 비수술적 의학 분야",
+  },
+  {
+    id: "surgery",
+    label: "외과",
+    description: "수술적 방법으로 질병이나 외상을 치료하는 의학 분야",
+  },
+  {
+    id: "obgyn",
+    label: "산부인과",
+    description:
+      "여성 생식기 질환, 임신, 출산 관련 건강을 전문으로 하는 의학 분야",
+  },
+  {
+    id: "pediatrics",
+    label: "소아과",
+    description: "영유아부터 청소년까지의 성장과 발달, 질병을 다루는 의학 분야",
+  },
+  {
+    id: "neurology",
+    label: "신경과",
+    description:
+      "뇌, 척수, 말초신경 등 신경계 질환을 진단하고 치료하는 의학 분야",
+  },
+  {
+    id: "psychiatry",
+    label: "정신건강의학과",
+    description:
+      "정신 질환, 정서적 장애, 행동 문제를 진단하고 치료하는 의학 분야",
+  },
+  {
+    id: "orthopedics",
+    label: "정형외과",
+    description:
+      "근골격계(뼈, 관절, 근육, 인대, 힘줄) 질환과 외상을 치료하는 의학 분야",
+  },
+  {
+    id: "dermatology",
+    label: "피부과",
+    description:
+      "피부, 머리카락, 손톱 등 피부 관련 질환을 진단하고 치료하는 의학 분야",
+  },
+  {
+    id: "ophthalmology",
+    label: "안과",
+    description: "눈 질환과 시력 문제를 진단하고 치료하는 의학 분야",
+  },
+  {
+    id: "ent",
+    label: "이비인후과",
+    description: "귀, 코, 목 관련 질환을 진단하고 치료하는 의학 분야",
+  },
+  {
+    id: "urology",
+    label: "비뇨기과",
+    description: "요로계통과 남성 생식기 질환을 진단하고 치료하는 의학 분야",
+  },
+  {
+    id: "dentistry",
+    label: "치과",
+    description: "치아, 잇몸, 구강 건강을 관리하고 치료하는 의학 분야",
+  },
+  {
+    id: "rehabilitation",
+    label: "재활의학과",
+    description: "장애나 부상 후 신체 기능을 회복하는데 도움을 주는 의학 분야",
+  },
+  {
+    id: "family",
+    label: "가정의학과",
+    description:
+      "모든 연령과 성별의 일반적인 건강 문제를 다루는 통합적 의학 분야",
+  },
+  {
+    id: "oriental",
+    label: "한의원",
+    description:
+      "한약, 침술 등 전통적인 동양 의학 방법으로 질병을 치료하는 의료 분야",
+  },
+  {
+    id: "cardiology",
+    label: "심장내과",
+    description: "심장 및 혈관 질환을 전문적으로 진단하고 치료하는 내과 분야",
+  },
+  {
+    id: "gastroenterology",
+    label: "소화기내과",
+    description:
+      "식도, 위, 장, 간, 담도, 췌장 등 소화기관 질환을 다루는 내과 분야",
+  },
+  {
+    id: "pulmonology",
+    label: "호흡기내과",
+    description: "폐, 기관지 등 호흡기 질환을 진단하고 치료하는 내과 분야",
+  },
+  {
+    id: "allergy",
+    label: "알레르기내과",
+    description: "알레르기, 천식, 면역 관련 질환을 전문적으로 다루는 내과 분야",
+  },
+  {
+    id: "endocrinology",
+    label: "내분비내과",
+    description: "호르몬 관련 질환과 대사 장애를 진단하고 치료하는 내과 분야",
+  },
+  {
+    id: "plastic",
+    label: "성형외과",
+    description:
+      "선천적 또는 후천적 신체 결함이나 미용 목적의 수술을 하는 외과 분야",
+  },
+  {
+    id: "pain",
+    label: "통증의학과",
+    description: "만성 통증을 전문적으로 진단하고 관리하는 의학 분야",
+  },
 ];
 
 /**

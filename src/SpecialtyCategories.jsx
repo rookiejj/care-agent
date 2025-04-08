@@ -95,6 +95,17 @@ const SpecialtyCategories = ({ currentLocation, onExpandChange }) => {
     }
   }, [expanded]);
 
+  // 진료과목 항목 클릭 핸들러
+  const handleSpecialtyClick = (specialty) => {
+    navigate("/categories", {
+      state: {
+        serviceType: "specialty",
+        currentLocation: currentLocation,
+        selectedSpecialty: specialty.id,
+      },
+    });
+  };
+
   return (
     <div className="specialty-categories-container">
       <div className="specialty-categories">
@@ -103,16 +114,7 @@ const SpecialtyCategories = ({ currentLocation, onExpandChange }) => {
           <div
             key={specialty.id}
             className="specialty-category-item"
-            onClick={() => {
-              // Navigate to categories page with the selected specialty
-              navigate("/categories", {
-                state: {
-                  serviceType: "specialty",
-                  currentLocation: currentLocation,
-                  selectedSpecialty: specialty.id,
-                },
-              });
-            }}
+            onClick={() => handleSpecialtyClick(specialty)}
           >
             <div className="specialty-category-icon-wrapper">
               {getSpecialtyIcon(specialty.id)}
@@ -149,16 +151,7 @@ const SpecialtyCategories = ({ currentLocation, onExpandChange }) => {
             <div
               key={specialty.id}
               className="specialty-category-item"
-              onClick={() => {
-                // Navigate to categories page with the selected specialty
-                navigate("/categories", {
-                  state: {
-                    serviceType: "specialty",
-                    currentLocation: currentLocation,
-                    selectedSpecialty: specialty.id,
-                  },
-                });
-              }}
+              onClick={() => handleSpecialtyClick(specialty)}
             >
               <div className="specialty-category-icon-wrapper">
                 {getSpecialtyIcon(specialty.id)}
