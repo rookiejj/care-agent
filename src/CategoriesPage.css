@@ -220,8 +220,7 @@
 
 /* 카테고리 이름 공통 스타일 */
 .medical-category-name,
-.cosmetic-category-name,
-.specialty-category-name {
+.cosmetic-category-name {
   font-size: 12px;
   color: #333;
   text-align: center;
@@ -314,8 +313,7 @@
   }
 
   .medical-category-name,
-  .cosmetic-category-name,
-  .specialty-category-name {
+  .cosmetic-category-name {
     font-size: 11px;
   }
 }

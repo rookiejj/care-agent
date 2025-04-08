@@ -134,7 +134,7 @@ const SpecialtyCategories = ({ currentLocation, onExpandChange }) => {
           </div>
           <span
             className="specialty-category-name"
-            style={{ color: "#2563eb", fontWeight: "bold" }}
+            style={{ color: "#0d9488", fontWeight: "bold" }}
           >
             {expanded ? "닫기" : "과목 더보기"}
           </span>
