@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./OptionFilterButtons.css";
 
 const OptionFilterButtons = ({
@@ -18,6 +18,10 @@ const OptionFilterButtons = ({
 
   // 커스텀 옵션이 제공되면 그것을 사용, 아니면 기본 옵션 사용
   const options = filterOptions || defaultFilterOptions;
+
+  useEffect(() => {
+    setActiveFilter(initialFilter);
+  }, [initialFilter]);
 
   const handleFilterClick = (filterId) => {
     // 이미 선택된 필터를 다시 클릭하면 무시 (옵션은 하나만 선택 가능)

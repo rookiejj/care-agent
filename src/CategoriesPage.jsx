@@ -271,6 +271,10 @@ const CategoriesPage = ({ currentLocation }) => {
   // 필터 변경 핸들러 (진료과목 전용)
   const handleFilterChange = (filterId) => {
     setSelectedFilter(filterId);
+    setShowResults(true);
+    if (showCategoryList) {
+      setShowCategoryList(false);
+    }
   };
 
   // 페이지 타이틀 동적 설정
