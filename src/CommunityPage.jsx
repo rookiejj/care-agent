@@ -126,7 +126,7 @@ const CommunityPage = ({ currentLocation, notificationCount }) => {
         </div>
       </div>
 
-      <div className="content">
+      <div className="content" style={{ marginTop: "1rem" }}>
         {/* 커뮤니티 게시글 목록 */}
         <CommunityPostList
           posts={filteredAndSortedPosts}
