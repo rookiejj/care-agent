@@ -65,7 +65,7 @@
   flex: 1;
   flex-wrap: wrap;
   gap: 0.2rem;
-  height: 1.5rem;
+  min-height: 1.5rem;
 }
 
 .event-tag {
@@ -76,6 +76,7 @@
   margin-right: 0.3rem;
   background-color: #f3f4f6;
   color: #6b7280;
+  margin-bottom: 0.3rem;
 }
 
 .event-tag-date {
