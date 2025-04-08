@@ -109,9 +109,9 @@ const CosmeticCategories = ({ currentLocation, onExpandChange }) => {
         <div className="cosmetic-category-item" onClick={toggleExpanded}>
           <div className="cosmetic-category-icon-wrapper">
             {expanded ? (
-              <ChevronUp size={24} strokeWidth={1.5} color="#0369a1" />
+              <ChevronUp size={24} strokeWidth={1.5} color="#c5587d" />
             ) : (
-              <ChevronDown size={24} strokeWidth={1.5} color="#0369a1" />
+              <ChevronDown size={24} strokeWidth={1.5} color="#c5587d" />
             )}
           </div>
           <span

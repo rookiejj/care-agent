@@ -39,7 +39,7 @@
 }
 
 .specialty-category-item:hover {
-  transform: translateY(-3px);
+  /* transform: translateY(-3px); */
 }
 
 .specialty-category-icon-wrapper {

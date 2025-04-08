@@ -476,7 +476,7 @@ const CategoriesPage = ({ currentLocation }) => {
                     ? "#0369a1"
                     : serviceType === "cosmetic"
                     ? "#c5587d"
-                    : "#3b82f6"
+                    : "#0d9488"
                 }
               />
             ) : (
@@ -488,7 +488,7 @@ const CategoriesPage = ({ currentLocation }) => {
                     ? "#0369a1"
                     : serviceType === "cosmetic"
                     ? "#c5587d"
-                    : "#3b82f6"
+                    : "#0d9488"
                 }
               />
             )}

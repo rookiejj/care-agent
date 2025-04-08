@@ -41,7 +41,7 @@
 }
 
 .cosmetic-category-item:hover {
-  transform: translateY(-3px);
+  /* transform: translateY(-3px); */
 }
 
 .cosmetic-category-icon-wrapper {
@@ -54,6 +54,10 @@
   border-radius: 50%;
   margin-bottom: 6px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+}
+
+.cosmetic-category-item.selected .cosmetic-category-icon-wrapper {
+  background-color: #fbcfe8; /* 더 진한 핑크색 */
 }
 
 .cosmetic-category-name {

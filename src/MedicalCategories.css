@@ -39,7 +39,7 @@
 }
 
 .medical-category-item:hover {
-  transform: translateY(-3px);
+  /* transform: translateY(-3px); */
 }
 
 .medical-category-icon-wrapper {
@@ -52,6 +52,10 @@
   border-radius: 50%;
   margin-bottom: 6px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+}
+
+.medical-category-item.selected .medical-category-icon-wrapper {
+  background-color: #bfdbfe; /* 더 진한 파란색 */
 }
 
 .medical-category-name {

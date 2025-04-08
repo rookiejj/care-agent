@@ -93,11 +93,11 @@
 }
 
 .selected-main-category[data-service-type="specialty"] {
-  border-color: #e0e7ff;
+  border-color: #a7f3d0;
 }
 
 .selected-main-category[data-service-type="specialty"]:hover {
-  background-color: #f5f3ff;
+  background-color: #ecfdf5;
 }
 
 /* 메인 카테고리 목록 영역 */
@@ -165,57 +165,6 @@
 
 .close-button:hover {
   background-color: #f3f4f6;
-}
-
-/* 카테고리 아이템 공통 스타일 */
-.medical-category-item,
-.cosmetic-category-item,
-.specialty-category-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: transform 0.2s;
-  min-width: 0;
-  margin: 0.5rem 0;
-}
-
-.medical-category-item:hover,
-.cosmetic-category-item:hover,
-.specialty-category-item:hover {
-  transform: translateY(-3px);
-}
-
-/* 카테고리 아이콘 래퍼 공통 스타일 */
-.medical-category-icon-wrapper,
-.cosmetic-category-icon-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  margin-bottom: 6px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
-}
-
-/* 서비스 타입별 아이콘 래퍼 배경색 */
-.medical-category-icon-wrapper {
-  background-color: #dbeafe;
-}
-
-.cosmetic-category-icon-wrapper {
-  background-color: #fce7f3;
-}
-
-/* 선택된 아이템 스타일 */
-.medical-category-item.selected .medical-category-icon-wrapper {
-  background-color: #bfdbfe; /* 더 진한 파란색 */
-}
-
-.cosmetic-category-item.selected .cosmetic-category-icon-wrapper {
-  background-color: #fbcfe8; /* 더 진한 핑크색 */
 }
 
 /* 카테고리 이름 공통 스타일 */

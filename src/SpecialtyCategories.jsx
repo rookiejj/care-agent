@@ -127,9 +127,9 @@ const SpecialtyCategories = ({ currentLocation, onExpandChange }) => {
         <div className="specialty-category-item" onClick={toggleExpanded}>
           <div className="specialty-category-icon-wrapper">
             {expanded ? (
-              <ChevronUp size={24} strokeWidth={1.5} color="#2563eb" />
+              <ChevronUp size={24} strokeWidth={1.5} color="#0d9488" />
             ) : (
-              <ChevronDown size={24} strokeWidth={1.5} color="#2563eb" />
+              <ChevronDown size={24} strokeWidth={1.5} color="#0d9488" />
             )}
           </div>
           <span
