@@ -48,10 +48,14 @@
   justify-content: center;
   width: 52px;
   height: 52px;
-  background-color: #e0e7ff; /* 인디고 계열 색상 - 유일한 차이점 */
+  background-color: #d1fae5; /* 청록색(민트) 계열로 변경 */
   border-radius: 50%;
   margin-bottom: 6px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+}
+
+.specialty-category-item.selected .specialty-category-icon-wrapper {
+  background-color: #5eead4; /* 더 진한 인디고 색 */
 }
 
 .specialty-category-name {

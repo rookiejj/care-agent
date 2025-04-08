@@ -189,8 +189,7 @@
 
 /* 카테고리 아이콘 래퍼 공통 스타일 */
 .medical-category-icon-wrapper,
-.cosmetic-category-icon-wrapper,
-.specialty-category-icon-wrapper {
+.cosmetic-category-icon-wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -210,10 +209,6 @@
   background-color: #fce7f3;
 }
 
-.specialty-category-icon-wrapper {
-  background-color: #e0e7ff;
-}
-
 /* 선택된 아이템 스타일 */
 .medical-category-item.selected .medical-category-icon-wrapper {
   background-color: #bfdbfe; /* 더 진한 파란색 */
@@ -221,10 +216,6 @@
 
 .cosmetic-category-item.selected .cosmetic-category-icon-wrapper {
   background-color: #fbcfe8; /* 더 진한 핑크색 */
-}
-
-.specialty-category-item.selected .specialty-category-icon-wrapper {
-  background-color: #c7d2fe; /* 더 진한 인디고 색 */
 }
 
 /* 카테고리 이름 공통 스타일 */
@@ -317,8 +308,7 @@
   }
 
   .medical-category-icon-wrapper,
-  .cosmetic-category-icon-wrapper,
-  .specialty-category-icon-wrapper {
+  .cosmetic-category-icon-wrapper {
     width: 48px;
     height: 48px;
   }
@@ -342,8 +332,7 @@
   }
 
   .medical-category-icon-wrapper,
-  .cosmetic-category-icon-wrapper,
-  .specialty-category-icon-wrapper {
+  .cosmetic-category-icon-wrapper {
     width: 44px;
     height: 44px;
   }
