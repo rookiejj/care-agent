@@ -4,6 +4,13 @@ import { Clock, Calendar, Heart, MapPin } from "lucide-react";
 import "./EventCard.css";
 
 const EventCard = ({ item }) => {
+  const [isFavorite, setIsFavorite] = useState(true);
+
+  const toggleFavorite = (e) => {
+    e.stopPropagation(); // 카드 클릭 이벤트 전파 방지
+    setIsFavorite(!isFavorite);
+  };
+
   return (
     <div className="card" style={{ marginBottom: "1rem" }}>
       <div className="event-card-item-header">
@@ -39,32 +46,18 @@ const EventCard = ({ item }) => {
           </span>
           <span className="event-tag event-tag-event">이벤트</span>
         </div>
-        <button className="event-card-action-button" aria-label="찜 삭제">
-          <Heart size={18} className={`event-card-action-button-${"active"}`} />
+        <button
+          className="event-card-action-button"
+          aria-label="찜하기"
+          onClick={toggleFavorite}
+        >
+          <Heart
+            size={18}
+            className={`event-card-action-button-${isFavorite ? "active" : ""}`}
+            fill={isFavorite ? "#ef4444" : "none"}
+          />
         </button>
       </div>
-
-      {/* <div
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        fontSize: "0.75rem",
-        color: "#6b7280",
-        marginBottom: "8px",
-      }}
-    >
-      <span>{item.title}</span>
-      <span style={{ display: "flex", alignItems: "center" }}>
-        <MapPin size={10} style={{ marginRight: "4px" }} /> {item.location}
-      </span>
-    </div> */}
-
-      {/* <div className="event-card-item-footer">
-      <span style={{ flex: 1, fontSize: "0.8rem" }}>{item.description}</span>
-      <button className="event-card-action-button" aria-label="찜 삭제">
-        <Heart size={18} className={`event-card-action-button-${"active"}`} />
-      </button>
-    </div> */}
     </div>
   );
 };

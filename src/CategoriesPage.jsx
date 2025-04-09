@@ -408,21 +408,7 @@ const CategoriesPage = ({ currentLocation }) => {
           />
         </div>
       );
-    }
-    // 증상 및 부위 페이지에서도 의사 목록을 표시하려면
-    // else if (serviceType === "medical") {
-    //   return (
-    //     <div className="filtered-results-container">
-    //       <DoctorResultsView
-    //         specialty={null}
-    //         mainCategory={selectedMainCategory}
-    //         subCategory={selectedSubCategory}
-    //       />
-    //     </div>
-    //   );
-    // }
-    // 시술/성형 카테고리의 경우 기존 FilteredResultsView 사용
-    else {
+    } else {
       return (
         <div className="filtered-results-container">
           <FilteredResultsView

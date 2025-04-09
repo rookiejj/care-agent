@@ -142,7 +142,7 @@ const SearchPage = ({ currentLocation, notificationCount }) => {
           <CategoryFilterButtons onFilterChange={handleFilterChange} />
         </div>
       </div>
-      <div className="content">
+      <div className="content" style={{ marginTop: "0.5rem" }}>
         {/* Search results */}
         {filteredItems.length === 0 ? (
           searchTerm.trim() === "" ? (

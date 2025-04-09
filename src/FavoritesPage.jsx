@@ -101,7 +101,7 @@ const FavoritesPage = ({ currentLocation, notificationCount }) => {
           />
         </div>
       </div>
-      <div className="content">
+      <div className="content" style={{ marginTop: "1rem" }}>
         {/* 찜 목록 아이템 */}
         {filteredItems.length === 0 ? (
           <div className="favorites-empty">

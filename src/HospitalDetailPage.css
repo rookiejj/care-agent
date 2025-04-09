@@ -1,0 +1,454 @@
+.detail-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background-color: white;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.detail-page-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0;
+  text-align: center;
+  flex: 1;
+}
+
+.favorite-button {
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+  border-radius: 9999px;
+  cursor: pointer;
+}
+
+.hospital-detail-content {
+  padding-bottom: 5rem; /* Floating buttons 높이만큼 패딩 추가 */
+}
+
+.hospital-image-container {
+  position: relative;
+  width: 100%;
+  height: 12rem;
+  overflow: hidden;
+}
+
+.hospital-detail-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.event-badge {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  background-color: #ef4444;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.hospital-info-section {
+  padding: 1rem;
+  background-color: white;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.hospital-info-header {
+  margin-bottom: 0.75rem;
+}
+
+.hospital-rating-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.hospital-rating {
+  font-weight: 600;
+  font-size: 0.875rem;
+  margin-left: 0.25rem;
+}
+
+.hospital-reviews {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-left: 0.5rem;
+}
+
+.hospital-tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.hospital-tag {
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  background-color: #f3f4f6;
+  color: #6b7280;
+}
+
+.hospital-tag-medical {
+  background-color: #e0f2fe;
+  color: #0369a1;
+}
+
+.hospital-tag-cosmetic {
+  background-color: #fae8ff;
+  color: #a21caf;
+}
+
+.hospital-description {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #4b5563;
+  margin-bottom: 1rem;
+}
+
+.hospital-contact-info {
+  font-size: 0.8125rem;
+  color: #6b7280;
+}
+
+.info-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.info-icon {
+  margin-right: 0.5rem;
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+}
+
+.hospital-detail-tabs {
+  display: flex;
+  background-color: white;
+  border-bottom: 1px solid #f3f4f6;
+  position: sticky;
+  top: 3.5rem; /* header 높이 */
+  z-index: 9;
+}
+
+.hospital-tab {
+  flex: 1;
+  text-align: center;
+  padding: 0.75rem 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #6b7280;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+}
+
+.hospital-tab.active {
+  color: #3b82f6;
+  border-bottom-color: #3b82f6;
+}
+
+.hospital-tab-content {
+  padding: 1rem;
+  background-color: white;
+}
+
+.info-section {
+  margin-bottom: 1.5rem;
+}
+
+.info-section h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #1f2937;
+}
+
+.info-section p {
+  font-size: 0.875rem;
+  color: #4b5563;
+}
+
+.event-section {
+  background-color: #fef2f2;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.event-info {
+  font-size: 0.875rem;
+}
+
+.event-period {
+  display: flex;
+  align-items: center;
+  color: #6b7280;
+  margin-bottom: 0.5rem;
+}
+
+.event-icon {
+  margin-right: 0.5rem;
+}
+
+.event-content {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ef4444;
+  margin-bottom: 0.5rem;
+}
+
+.event-price {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.original-price {
+  text-decoration: line-through;
+  color: #9ca3af;
+}
+
+.discount-price {
+  font-weight: 600;
+  color: #111827;
+}
+
+.discount-rate {
+  color: #ef4444;
+  font-weight: 500;
+  font-size: 0.75rem;
+  background-color: #fee2e2;
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+}
+
+.facility-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.facility-item {
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+  color: #4b5563;
+}
+
+.facility-icon {
+  margin-right: 0.5rem;
+  font-size: 1.125rem;
+}
+
+.doctors-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.doctor-card {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background-color: #f9fafb;
+  border-radius: 0.5rem;
+}
+
+.doctor-image {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 9999px;
+  object-fit: cover;
+  margin-right: 1rem;
+}
+
+.doctor-info {
+  flex: 1;
+}
+
+.doctor-name {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem 0;
+  display: flex;
+  align-items: center;
+}
+
+.doctor-title {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #6b7280;
+  margin-left: 0.25rem;
+}
+
+.doctor-specialty,
+.doctor-education {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin: 0 0 0.25rem 0;
+}
+
+.doctor-detail-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+}
+
+.review-summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.review-rating {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.review-rating h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 0 0 0.25rem 0;
+}
+
+.review-stars {
+  display: flex;
+  gap: 0.125rem;
+  margin-bottom: 0.25rem;
+}
+
+.review-rating p {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.write-review-button {
+  background-color: #3b82f6;
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+}
+
+.reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.review-item {
+  padding: 1rem;
+  background-color: #f9fafb;
+  border-radius: 0.5rem;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.reviewer-info {
+  display: flex;
+  align-items: center;
+}
+
+.reviewer-icon {
+  margin-right: 0.25rem;
+}
+
+.reviewer-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.review-date {
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+.review-content {
+  font-size: 0.875rem;
+  color: #4b5563;
+  line-height: 1.5;
+  margin: 0.5rem 0 0;
+}
+
+.more-reviews-button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #6b7280;
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+
+.floating-action-buttons {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  background-color: white;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid #e5e7eb;
+  z-index: 20;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.action-button {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #6b7280;
+  cursor: pointer;
+  gap: 0.25rem;
+  padding: 0.5rem 0;
+}
+
+.appointment-button {
+  flex: 1.5;
+  background-color: #3b82f6;
+  color: white;
+  border-radius: 0.375rem;
+}

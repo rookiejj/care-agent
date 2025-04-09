@@ -3,6 +3,13 @@ import { Heart, MessageCircle, Calendar, X } from "lucide-react";
 import "./DoctorCard.css";
 
 const DoctorCard = ({ item }) => {
+  const [isFavorite, setIsFavorite] = useState(true);
+
+  const toggleFavorite = (e) => {
+    e.stopPropagation(); // 카드 클릭 이벤트 전파 방지
+    setIsFavorite(!isFavorite);
+  };
+
   // 별점을 표현하는 함수
   const renderStars = (rating) => {
     // 소수점 반올림하여 별 표시
@@ -304,8 +311,18 @@ const DoctorCard = ({ item }) => {
               </span>
             ))}
         </div>
-        <button className="doctor-card-action-button" aria-label="찜 하기">
-          <Heart size={18} className="doctor-card-action-button" />
+        <button
+          className="doctor-card-action-button"
+          aria-label="찜하기"
+          onClick={toggleFavorite}
+        >
+          <Heart
+            size={18}
+            className={`doctor-card-action-button-${
+              isFavorite ? "active" : ""
+            }`}
+            fill={isFavorite ? "#ef4444" : "none"}
+          />
         </button>
       </div>
     </div>
