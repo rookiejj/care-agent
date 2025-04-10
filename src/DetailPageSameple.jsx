@@ -1,19 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { PageHeader } from "./App";
-import "./HospitalDetailPage.css";
 
-const HospitalDetailPage = ({ currentLocation }) => {
+const DetailPageSample = ({ currentLocation }) => {
   const location = useLocation();
   const navigate = useNavigate();
-
-  const item = location.state?.item;
 
   return (
     <div className="container">
       <div className="fixed-header">
         <PageHeader
-          title={item.title}
+          title="타이틀"
           // showLocationButton={true}
           currentLocation={currentLocation}
           backButtonVisible={true}
@@ -22,7 +19,7 @@ const HospitalDetailPage = ({ currentLocation }) => {
       </div>
       <div className="detail-page-content">
         <div className="no-detail-info">
-          <p>{item.isEvent ? "이벤트 정보" : "병원 정보"}</p>
+          <p>정보</p>
         </div>
       </div>
       <div className="detail-page-footer">
@@ -47,4 +44,4 @@ const HospitalDetailPage = ({ currentLocation }) => {
   );
 };
 
-export default HospitalDetailPage;
+export default DetailPageSample;

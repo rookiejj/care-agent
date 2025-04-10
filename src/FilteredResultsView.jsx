@@ -87,12 +87,6 @@ const FilteredResultsView = ({ serviceType, mainCategory, subCategory }) => {
     saveEventVisibilityPreference(serviceType, newShowEvents);
   };
 
-  // 결과 항목 클릭 처리
-  const handleItemClick = (item) => {
-    // 상세 페이지로 이동 (구현 예시)
-    navigate(`/detail/${item.type}/${item.id}`, { state: { item } });
-  };
-
   // 이벤트 항목 수 계산
   const eventCount = allResults.filter((item) => item.isEvent).length;
 

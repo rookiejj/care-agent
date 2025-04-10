@@ -21,20 +21,6 @@ const DoctorResultsView = ({
   const navigate = useNavigate();
   const [filteredResults, setFilteredResults] = useState([]);
 
-  // 디버깅용 로그
-  useEffect(() => {
-    console.log("DoctorResultsView props:", {
-      specialty,
-      mainCategory,
-      subCategory,
-    });
-    console.log("doctorsData type:", typeof doctorsData);
-    console.log(
-      "doctorsData keys:",
-      doctorsData ? Object.keys(doctorsData) : "undefined"
-    );
-  }, [specialty, mainCategory, subCategory, doctorsData]);
-
   // 의사 데이터 필터링
   // 의사 데이터 필터링 useEffect 내부 (약 라인 25)
   useEffect(() => {
@@ -74,11 +60,6 @@ const DoctorResultsView = ({
     setFilteredResults(sortedResults);
   }, [specialty, mainCategory, subCategory, filter, doctorsData]); // filter 의존성 추가
 
-  // 의사 카드 클릭 처리
-  const handleDoctorClick = (doctor) => {
-    navigate(`/doctor/${doctor.id}`, { state: { doctor } });
-  };
-
   return (
     <div className="filtered-results-view-container">
       <div className="results-header">
@@ -87,10 +68,8 @@ const DoctorResultsView = ({
 
       {filteredResults.length > 0 ? (
         <div className="results-list">
-          {filteredResults.map((doctor) => (
-            <div key={doctor.id} onClick={() => handleDoctorClick(doctor)}>
-              <DoctorCard item={doctor} />
-            </div>
+          {filteredResults.map((item) => (
+            <DoctorCard key={item.id} item={{ ...item, type: "doctor" }} />
           ))}
         </div>
       ) : (

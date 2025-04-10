@@ -21,7 +21,7 @@ const HospitalCard = ({ item }) => {
   return (
     <div
       className="card"
-      style={{ marginBottom: "1rem" }}
+      style={{ marginBottom: "1rem", cursor: "pointer" }}
       onClick={handleCardClick}
     >
       <div className="hospital-card-item-header">

@@ -44,7 +44,8 @@ import MyPage from "./MyPage";
 import CategoriesPage from "./CategoriesPage";
 import RegionSelectPage from "./RegionSelectPage";
 import LocationHeader from "./LocationHeader";
-import HospitalDetailPage from "./HospitalDetailPage";
+import DetailPageBridge from "./DetailPageBridge";
+import CommunityDetailPage from "./CommunityDetailPage";
 
 const getSuperhumanIcon = () => {
   return `/images/${"super_human_icon.png"}`;
@@ -433,7 +434,7 @@ const AppContent = ({
             />
           }
         />
-        <Route path="/detail/:type/:id" element={<HospitalDetailPage />} />
+        <Route path="/detail/:type/:id" element={<DetailPageBridge />} />
 
         {/* <Route
           path="/location"

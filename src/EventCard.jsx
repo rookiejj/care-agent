@@ -1,10 +1,17 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { PageHeader, getHospitalImage } from "./App";
 import { Clock, Calendar, Heart, MapPin } from "lucide-react";
 import "./EventCard.css";
 
 const EventCard = ({ item }) => {
+  const navigate = useNavigate();
   const [isFavorite, setIsFavorite] = useState(true);
+
+  const handleCardClick = () => {
+    // 상세 페이지로 이동
+    navigate(`/detail/${item.type}/${item.id}`, { state: { item } });
+  };
 
   const toggleFavorite = (e) => {
     e.stopPropagation(); // 카드 클릭 이벤트 전파 방지
@@ -12,7 +19,11 @@ const EventCard = ({ item }) => {
   };
 
   return (
-    <div className="card" style={{ marginBottom: "1rem" }}>
+    <div
+      className="card"
+      style={{ marginBottom: "1rem", cursor: "pointer" }}
+      onClick={handleCardClick}
+    >
       <div className="event-card-item-header">
         <img
           src={item.image}
@@ -34,7 +45,6 @@ const EventCard = ({ item }) => {
           </span>
         </div>
       </div>
-
       <div style={{ display: "flex", marginTop: "0.5rem" }}>
         <div className="event-card-item-tags-container">
           <span className="event-tag event-tag-date">
