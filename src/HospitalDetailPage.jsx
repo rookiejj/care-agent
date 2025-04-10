@@ -33,6 +33,12 @@ const HospitalDetailPage = ({ currentLocation }) => {
   const [showAllReviews, setShowAllReviews] = useState(false);
   const [selectedDoctor, setSelectedDoctor] = useState(null);
 
+  useEffect(() => {
+    if (item.isEvent) {
+      setActiveTab("events");
+    }
+  }, []);
+
   // Mock data for demonstration
   const hospitalDetails = {
     address: "서울시 강남구 역삼동 123-45",
