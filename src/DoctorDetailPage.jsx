@@ -9,7 +9,14 @@ const DoctorDetailPage = ({ currentLocation }) => {
 
   const item = location.state?.item;
 
-  console.log(item);
+  const handleBookingClick = () => {
+    navigate(`/booking`, { state: { item } });
+  };
+
+  const handleReviewClick = () => {
+    alert("후기보기 페이지로 이동");
+  };
+
   return (
     <div className="container">
       <div className="fixed-header">
@@ -28,8 +35,12 @@ const DoctorDetailPage = ({ currentLocation }) => {
       </div>
       <div className="detail-page-footer">
         <div style={{ display: "flex", gap: "0.5rem" }}>
-          <button className="primary-button">버튼1</button>
-          <button className="primary-button">버튼2</button>
+          <button className="primary-button" onClick={handleBookingClick}>
+            예약하기
+          </button>
+          <button className="primary-button" onClick={handleReviewClick}>
+            후기보기
+          </button>
           {/* <button
             className="primary-button"
             onClick={() =>

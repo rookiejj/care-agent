@@ -6,6 +6,14 @@ const DetailPageSample = ({ currentLocation }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const handleButton1Click = () => {
+    alert("버튼1 페이지로 이동");
+  };
+
+  const handleButton2Click = () => {
+    alert("버튼2 페이지로 이동");
+  };
+
   return (
     <div className="container">
       <div className="fixed-header">
@@ -24,8 +32,12 @@ const DetailPageSample = ({ currentLocation }) => {
       </div>
       <div className="detail-page-footer">
         <div style={{ display: "flex", gap: "0.5rem" }}>
-          <button className="primary-button">버튼1</button>
-          <button className="primary-button">버튼2</button>
+          <button className="primary-button" onClick={handleButton1Click}>
+            버튼1
+          </button>
+          <button className="primary-button" onClick={handleButton2Click}>
+            버튼2
+          </button>
           {/* <button
             className="primary-button"
             onClick={() =>

@@ -45,7 +45,8 @@ import CategoriesPage from "./CategoriesPage";
 import RegionSelectPage from "./RegionSelectPage";
 import LocationHeader from "./LocationHeader";
 import DetailPageBridge from "./DetailPageBridge";
-import CommunityDetailPage from "./CommunityDetailPage";
+import BookingPage from "./BookingPage";
+import CommunityCreatePage from "./CommunityCreatePage";
 
 const getSuperhumanIcon = () => {
   return `/images/${"super_human_icon.png"}`;
@@ -435,7 +436,24 @@ const AppContent = ({
           }
         />
         <Route path="/detail/:type/:id" element={<DetailPageBridge />} />
-
+        <Route
+          path="/booking"
+          element={
+            <BookingPage
+              currentLocation={selectedLocation}
+              notificationCount={notificationCount}
+            />
+          }
+        />
+        <Route
+          path="/communityCreate"
+          element={
+            <CommunityCreatePage
+              currentLocation={selectedLocation}
+              notificationCount={notificationCount}
+            />
+          }
+        />
         {/* <Route
           path="/location"
           element={

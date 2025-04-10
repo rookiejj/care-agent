@@ -20,7 +20,7 @@ const DetailPageBridge = () => {
       case "community":
         return <CommunityDetailPage id={id} />;
       default:
-        return <div>알 수 없는 병원 타입입니다.</div>;
+        return <div>알 수 없는 상세 페이지 타입입니다.</div>;
     }
   };
 

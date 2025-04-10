@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useData } from "./DataContext";
 import { PageHeader } from "./App";
 import CategoryFilterButtons from "./CategoryFilterButtons";
@@ -20,6 +21,7 @@ import {
 import "./CommunityPage.css";
 
 const CommunityPage = ({ currentLocation, notificationCount }) => {
+  const navigate = useNavigate();
   const { communityPosts } = useData();
   const [filters, setFilters] = useState({ medical: true, cosmetic: true });
   const [activeFilterOption, setActiveFilterOption] = useState("latest");
@@ -72,7 +74,8 @@ const CommunityPage = ({ currentLocation, notificationCount }) => {
     });
 
   const handleCreatePost = () => {
-    alert("글쓰기 페이지로 이동");
+    // alert("글쓰기 페이지로 이동"); // 수정
+    navigate("/communityCreate"); // 글쓰기 페이지로 이동
   };
 
   const getFormattedDate = (dateString) => {
