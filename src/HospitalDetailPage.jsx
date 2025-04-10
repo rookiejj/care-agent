@@ -299,12 +299,12 @@ const HospitalDetailPage = ({ currentLocation }) => {
             <span>
               {hospitalDetails.openingHours[0].day}:{" "}
               {hospitalDetails.openingHours[0].hours}
-              <button
+              {/* <button
                 className="view-more-button"
                 onClick={() => setActiveTab("info")}
               >
                 더보기 <ChevronRight size={14} />
-              </button>
+              </button> */}
             </span>
           </div>
         </div>
