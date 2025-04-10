@@ -12,7 +12,7 @@ const CommunityDetailPage = ({ currentLocation }) => {
     <div className="container">
       <div className="fixed-header">
         <PageHeader
-          title={post.author.nickname}
+          title={"게시글 상세"}
           // showLocationButton={true}
           currentLocation={currentLocation}
           backButtonVisible={true}
