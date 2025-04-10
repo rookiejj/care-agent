@@ -127,7 +127,8 @@ const HospitalDetailPage = ({ currentLocation }) => {
   // };
 
   const handleBookingClick = () => {
-    changeTab("doctors");
+    setActiveTab("doctors");
+    window.scrollTo(0, 0);
   };
 
   // 의사 옆의 예약 버튼
@@ -137,7 +138,8 @@ const HospitalDetailPage = ({ currentLocation }) => {
   };
 
   const handleReviewClick = () => {
-    changeTab("reviews");
+    setActiveTab("reviews");
+    window.scrollTo(0, 0);
   };
 
   const handleShareClick = () => {
@@ -191,29 +193,29 @@ const HospitalDetailPage = ({ currentLocation }) => {
   //   window.location.hash = `tab-${tab}`;
   // };
 
-  const changeTab = (tab) => {
-    // 탭 상태 변경
-    setActiveTab(tab);
+  // const changeTab = (tab) => {
+  //   // 탭 상태 변경
+  //   setActiveTab(tab);
 
-    // 브라우저의 현재 해시 확인
-    const currentHash = window.location.hash;
-    const newHash = `#tab-${tab}`;
+  //   // 브라우저의 현재 해시 확인
+  //   const currentHash = window.location.hash;
+  //   const newHash = `#tab-${tab}`;
 
-    // 해시를 변경하여 스크롤 트리거
-    // 같은 탭을 다시 클릭한 경우에도 스크롤되도록 처리
-    if (currentHash === newHash) {
-      // 해시가 이미 같은 경우, 임시로 다른 해시로 변경했다가 다시 원래 해시로 복귀
-      window.location.hash = "";
+  //   // 해시를 변경하여 스크롤 트리거
+  //   // 같은 탭을 다시 클릭한 경우에도 스크롤되도록 처리
+  //   if (currentHash === newHash) {
+  //     // 해시가 이미 같은 경우, 임시로 다른 해시로 변경했다가 다시 원래 해시로 복귀
+  //     window.location.hash = "";
 
-      // 약간의 지연 후에 다시 원래 해시로 변경
-      setTimeout(() => {
-        window.location.hash = newHash.substring(1); // # 제거
-      }, 10);
-    } else {
-      // 해시가 다른 경우, 바로 변경
-      window.location.hash = newHash.substring(1); // # 제거
-    }
-  };
+  //     // 약간의 지연 후에 다시 원래 해시로 변경
+  //     setTimeout(() => {
+  //       window.location.hash = newHash.substring(1); // # 제거
+  //     }, 10);
+  //   } else {
+  //     // 해시가 다른 경우, 바로 변경
+  //     window.location.hash = newHash.substring(1); // # 제거
+  //   }
+  // };
 
   return (
     <div className="container">
@@ -340,10 +342,12 @@ const HospitalDetailPage = ({ currentLocation }) => {
         </div>
 
         {/* 탭 네비게이션 */}
-        <div className="tab-navigation" id="tab-navigation">
+        {/* <div className="tab-navigation" id="tab-navigation">
           <a id="tab-info"></a>
           <a id="tab-doctors"></a>
-          <a id="tab-reviews"></a>{" "}
+          <a id="tab-reviews"></a> */}
+
+        <div className="tab-navigation">
           <button
             className={`tab-button ${activeTab === "info" ? "active" : ""}`}
             onClick={() => setActiveTab("info")}
