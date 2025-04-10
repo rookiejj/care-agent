@@ -1,1 +1,717 @@
+.hospital-detail-content {
+  padding-bottom: 4rem;
+  overflow-x: hidden;
+}
 
+/* 이미지 슬라이더 */
+.hospital-image-slider {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.hospital-main-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-count-badge {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  border-radius: 999px;
+  padding: 0.25rem 0.5rem;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* 병원 기본 정보 */
+.hospital-basic-info {
+  padding: 0 1rem;
+  margin-bottom: 1rem;
+}
+
+.hospital-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.5rem;
+}
+
+.hospital-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin: 0 0 0.25rem 0;
+  color: #1f2937;
+}
+
+.hospital-specialty {
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.specialty-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin-right: 0.3rem;
+  margin-bottom: 0.3rem;
+}
+
+.specialty-tag-neurology {
+  background-color: #e0f2fe;
+  color: #0369a1;
+}
+
+.specialty-tag-cardiology {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.specialty-tag-dermatology {
+  background-color: #fae8ff;
+  color: #a21caf;
+}
+
+.specialty-tag-orthopedics {
+  background-color: #e0e7ff;
+  color: #4338ca;
+}
+
+.specialty-tag-gastroenterology {
+  background-color: #def7ec;
+  color: #047857;
+}
+
+.specialty-tag-ophthalmology {
+  background-color: #fff7ed;
+  color: #c2410c;
+}
+
+.specialty-tag-ent {
+  background-color: #ede9fe;
+  color: #6d28d9;
+}
+
+.specialty-tag-psychiatry {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.specialty-tag-pulmonology {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.hospital-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  cursor: pointer;
+}
+
+.hospital-rating {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.rating-value {
+  font-weight: 600;
+  font-size: 0.875rem;
+  margin-left: 0.25rem;
+}
+
+.review-count {
+  color: #6b7280;
+  font-size: 0.875rem;
+  margin-left: 0.25rem;
+}
+
+.hospital-event-banner {
+  display: flex;
+  align-items: center;
+  background-color: #f0f9ff;
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.event-badge {
+  background-color: #3b82f6;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  margin-right: 0.5rem;
+}
+
+.event-info {
+  flex: 1;
+}
+
+.event-period {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.event-content {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.event-price {
+  text-align: right;
+}
+
+.original-price {
+  font-size: 0.75rem;
+  color: #6b7280;
+  text-decoration: line-through;
+}
+
+.discount-rate {
+  font-size: 0.75rem;
+  color: #ef4444;
+  font-weight: 500;
+}
+
+.hospital-address,
+.hospital-phone,
+.hospital-hours {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+  color: #4b5563;
+}
+
+.hospital-address span,
+.hospital-phone span,
+.hospital-hours span {
+  margin-left: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 1;
+}
+
+.view-more-button {
+  background: none;
+  border: none;
+  color: #3b82f6;
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.view-more-button.centered {
+  margin: 1rem auto;
+  padding: 0.5rem 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  background-color: #f9fafb;
+}
+
+/* 탭 네비게이션 */
+.tab-navigation {
+  display: flex;
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 1rem;
+  position: sticky;
+  top: 3.5rem;
+  background-color: white;
+  z-index: 5;
+}
+
+.tab-button {
+  flex: 1;
+  padding: 0.75rem 0;
+  background: none;
+  border: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #6b7280;
+  position: relative;
+  cursor: pointer;
+}
+
+.tab-button.active {
+  color: #3b82f6;
+  font-weight: 600;
+}
+
+.tab-button.active::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #3b82f6;
+}
+
+/* 탭 콘텐츠 */
+.tab-content {
+  padding: 0 1rem;
+}
+
+/* 정보 탭 */
+.info-section {
+  margin-bottom: 1.5rem;
+}
+
+.section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 0.75rem 0;
+  color: #1f2937;
+}
+
+.hospital-description {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #4b5563;
+  max-height: 6rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.hospital-description.show-full {
+  max-height: none;
+}
+
+.hospital-description:not(.show-full)::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2rem;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 1)
+  );
+}
+
+.view-more-text {
+  background: none;
+  border: none;
+  color: #3b82f6;
+  font-size: 0.875rem;
+  padding: 0;
+  margin-top: 0.25rem;
+  cursor: pointer;
+}
+
+.opening-hours-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.opening-hours-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  font-size: 0.875rem;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.opening-hours-item:last-child {
+  border-bottom: none;
+}
+
+.day {
+  font-weight: 500;
+  color: #4b5563;
+}
+
+.hours {
+  color: #6b7280;
+}
+
+.facilities-list,
+.insurance-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+}
+
+.facility-item,
+.insurance-item {
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+  color: #4b5563;
+}
+
+.facility-item svg,
+.insurance-item svg {
+  margin-right: 0.5rem;
+  flex-shrink: 0;
+}
+
+.hospital-map-container {
+  border-radius: 0.75rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.hospital-map {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.map-address {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  font-size: 0.75rem;
+  color: #4b5563;
+}
+
+.map-address svg {
+  margin-right: 0.5rem;
+  flex-shrink: 0;
+}
+
+/* 의사 탭 */
+.doctors-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.doctor-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid #f3f4f6;
+  position: relative;
+}
+
+.doctor-item.selected {
+  background-color: #f0f9ff;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin: 0 -1rem;
+}
+
+.doctor-image-container {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 1rem;
+  flex-shrink: 0;
+}
+
+.doctor-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.doctor-info {
+  flex: 1;
+}
+
+.doctor-name-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+
+.doctor-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin: 0;
+  color: #1f2937;
+}
+
+.award-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff7ed;
+  color: #c2410c;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  margin-left: 0.5rem;
+}
+
+.doctor-specialty,
+.doctor-experience {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin: 0.125rem 0;
+}
+
+.doctor-rating {
+  display: flex;
+  align-items: center;
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+}
+
+.doctor-rating svg {
+  margin-right: 0.25rem;
+}
+
+.doctor-rating .review-count {
+  font-size: 0.75rem;
+}
+
+.select-doctor-button {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.doctor-item.selected .select-doctor-button {
+  background-color: #1d4ed8;
+}
+
+.no-doctors-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 0;
+  color: #6b7280;
+  text-align: center;
+}
+
+.no-doctors-message svg {
+  margin-bottom: 0.5rem;
+}
+
+/* 후기 탭 */
+.reviews-summary {
+  display: flex;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background-color: #f9fafb;
+  border-radius: 0.75rem;
+}
+
+.average-rating {
+  flex: 1;
+  text-align: center;
+  padding-right: 1rem;
+  border-right: 1px solid #e5e7eb;
+}
+
+.average-rating h3 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 0.25rem 0;
+}
+
+.rating-stars {
+  margin-bottom: 0.25rem;
+}
+
+.stars-container {
+  display: flex;
+  align-items: center;
+}
+
+.star {
+  color: #d1d5db;
+  font-size: 1rem;
+}
+
+.star.filled {
+  color: #fbbf24;
+}
+
+.star.half-filled {
+  position: relative;
+  color: #d1d5db;
+}
+
+.star.half-filled::after {
+  content: "★";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 50%;
+  overflow: hidden;
+  color: #fbbf24;
+}
+
+.total-reviews {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.rating-bars {
+  flex: 2;
+  padding-left: 1rem;
+}
+
+.rating-bar-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.25rem;
+  font-size: 0.75rem;
+}
+
+.rating-label {
+  width: 2rem;
+  text-align: left;
+  color: #6b7280;
+}
+
+.rating-bar-container {
+  flex: 1;
+  height: 0.5rem;
+  background-color: #e5e7eb;
+  border-radius: 9999px;
+  margin: 0 0.5rem;
+  overflow: hidden;
+}
+
+.rating-bar-fill {
+  height: 100%;
+  background-color: #fbbf24;
+  border-radius: 9999px;
+}
+
+.rating-percentage {
+  width: 2rem;
+  text-align: right;
+  color: #6b7280;
+}
+
+.reviews-list-container {
+  margin-top: 1.5rem;
+}
+
+.reviews-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.review-item {
+  padding: 1rem 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.reviewer-info {
+  display: flex;
+  align-items: center;
+}
+
+.reviewer-image {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  margin-right: 0.75rem;
+  object-fit: cover;
+}
+
+.reviewer-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem 0;
+  color: #1f2937;
+}
+
+.review-rating {
+  display: flex;
+  align-items: center;
+}
+
+.review-date {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-left: 0.5rem;
+}
+
+.report-button {
+  background: none;
+  border: none;
+  padding: 0.25rem;
+  color: #6b7280;
+}
+
+.review-content {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #4b5563;
+  margin: 0;
+}
+
+/* 하단 푸터 - App.css의 기존 클래스 사용 */
+.selected-doctor-chip {
+  display: flex;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  background-color: #f3f4f6;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.mini-doctor-image {
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  margin-right: 0.25rem;
+  object-fit: cover;
+}
+
+/* 모바일 최적화 */
+@media (max-width: 480px) {
+  .hospital-detail-content {
+    padding-bottom: 4rem;
+  }
+}
