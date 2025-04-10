@@ -219,13 +219,43 @@ const HospitalDetailPage = ({ currentLocation }) => {
 
   return (
     <div className="container">
-      <div className="fixed-header">
+      <div
+        className="fixed-header"
+        style={{ display: "flex", justifyContent: "space-between" }}
+      >
         <PageHeader
-          title={item.title}
           currentLocation={currentLocation}
           backButtonVisible={true}
           onBack={() => navigate(-1)}
         />
+        <div
+          style={{
+            alignContent: "center",
+            marginTop: "0.5rem",
+            marginRight: "1rem",
+          }}
+        >
+          <div className="hospital-actions">
+            <button
+              className="icon-button"
+              onClick={toggleFavorite}
+              aria-label="찜하기"
+            >
+              <Heart
+                fill={isFavorite ? "#ef4444" : "none"}
+                color={isFavorite ? "#ef4444" : "#6b7280"}
+                size={24}
+              />
+            </button>
+            <button
+              className="icon-button"
+              onClick={handleShareClick}
+              aria-label="공유하기"
+            >
+              <Share2 size={24} color="#6b7280" />
+            </button>
+          </div>
+        </div>
       </div>
 
       <div className="hospital-detail-content">
@@ -245,63 +275,39 @@ const HospitalDetailPage = ({ currentLocation }) => {
         {/* 병원 기본 정보 */}
         <div className="hospital-basic-info">
           <div className="hospital-header">
-            <div>
-              <h2 className="hospital-title">{item.title}</h2>
-              <div className="hospital-specialty">
-                <span
-                  className={`specialty-tag specialty-tag-${item.specialty}`}
-                >
-                  {item.specialty === "neurology"
-                    ? "신경과"
-                    : item.specialty === "cardiology"
-                    ? "심장내과"
-                    : item.specialty === "dermatology"
-                    ? "피부과"
-                    : item.specialty === "orthopedics"
-                    ? "정형외과"
-                    : item.specialty === "gastroenterology"
-                    ? "소화기내과"
-                    : item.specialty === "ophthalmology"
-                    ? "안과"
-                    : item.specialty === "ent"
-                    ? "이비인후과"
-                    : item.specialty === "psychiatry"
-                    ? "정신건강의학과"
-                    : item.specialty === "pulmonology"
-                    ? "호흡기내과"
-                    : item.specialty}
-                </span>
-              </div>
-            </div>
-            <div className="hospital-actions">
-              <button
-                className="icon-button"
-                onClick={toggleFavorite}
-                aria-label="찜하기"
-              >
-                <Heart
-                  fill={isFavorite ? "#ef4444" : "none"}
-                  color={isFavorite ? "#ef4444" : "#6b7280"}
-                  size={24}
-                />
-              </button>
-              <button
-                className="icon-button"
-                onClick={handleShareClick}
-                aria-label="공유하기"
-              >
-                <Share2 size={24} color="#6b7280" />
-              </button>
+            <h2 className="hospital-title">{item.title}</h2>
+            <div className="hospital-specialty">
+              <span className={`specialty-tag specialty-tag-${item.specialty}`}>
+                {item.specialty === "neurology"
+                  ? "신경과"
+                  : item.specialty === "cardiology"
+                  ? "심장내과"
+                  : item.specialty === "dermatology"
+                  ? "피부과"
+                  : item.specialty === "orthopedics"
+                  ? "정형외과"
+                  : item.specialty === "gastroenterology"
+                  ? "소화기내과"
+                  : item.specialty === "ophthalmology"
+                  ? "안과"
+                  : item.specialty === "ent"
+                  ? "이비인후과"
+                  : item.specialty === "psychiatry"
+                  ? "정신건강의학과"
+                  : item.specialty === "pulmonology"
+                  ? "호흡기내과"
+                  : item.specialty}
+              </span>
             </div>
           </div>
 
-          <div className="hospital-rating">
+          <div className="hospital-rating" onClick={handleReviewClick}>
             <Star size={20} color="#fbbf24" fill="#fbbf24" />
             <span className="rating-value">{item.rating}</span>
             <span className="review-count">({item.reviewCount})</span>
           </div>
 
-          {item.isEvent && (
+          {/* {item.isEvent && (
             <div className="hospital-event-banner">
               <div className="event-badge">이벤트</div>
               <div className="event-info">
@@ -314,20 +320,20 @@ const HospitalDetailPage = ({ currentLocation }) => {
                 <div className="discount-rate">{item.discountRate} 할인</div>
               </div>
             </div>
-          )}
+          )} */}
 
           <div className="hospital-address">
-            <MapPin size={18} color="#6b7280" />
+            <MapPin size={16} color="#6b7280" />
             <span>{hospitalDetails.address}</span>
           </div>
 
           <div className="hospital-phone">
-            <Phone size={18} color="#6b7280" />
+            <Phone size={16} color="#6b7280" />
             <span>{hospitalDetails.phone}</span>
           </div>
 
           <div className="hospital-hours">
-            <Clock size={18} color="#6b7280" />
+            <Clock size={16} color="#6b7280" />
             <span>
               {hospitalDetails.openingHours[0].day}:{" "}
               {hospitalDetails.openingHours[0].hours}
@@ -365,6 +371,12 @@ const HospitalDetailPage = ({ currentLocation }) => {
             onClick={() => setActiveTab("reviews")}
           >
             후기 ({reviews.length})
+          </button>
+          <button
+            className={`tab-button ${activeTab === "events" ? "active" : ""}`}
+            onClick={() => setActiveTab("events")}
+          >
+            이벤트
           </button>
         </div>
 
@@ -647,36 +659,52 @@ const HospitalDetailPage = ({ currentLocation }) => {
               </div>
             </div>
           )}
+
+          {/* 이벤트 탭 */}
+          {activeTab === "events" && (
+            <div className="reviews-tab">
+              {item.isEvent && (
+                <div className="hospital-event-banner">
+                  <div className="event-badge">이벤트</div>
+                  <div className="event-info">
+                    <div className="event-period">{item.eventPeriod}</div>
+                    <div className="event-content">{item.eventContent}</div>
+                  </div>
+                  <div className="event-price">
+                    <div className="original-price">{item.originalPrice}</div>
+                    <div className="discount-price">{item.discountPrice}</div>
+                    <div className="discount-rate">
+                      {item.discountRate} 할인
+                    </div>
+                  </div>
+                </div>
+              )}
+              {item.isEvent && (
+                <div className="hospital-event-banner">
+                  <div className="event-badge">이벤트</div>
+                  <div className="event-info">
+                    <div className="event-period">{item.eventPeriod}</div>
+                    <div className="event-content">{item.eventContent}</div>
+                  </div>
+                  <div className="event-price">
+                    <div className="original-price">{item.originalPrice}</div>
+                    <div className="discount-price">{item.discountPrice}</div>
+                    <div className="discount-rate">
+                      {item.discountRate} 할인
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
 
       <div className="detail-page-footer">
-        {/* <div className="booking-doctor-info">
-          {selectedDoctor && (
-            <div className="selected-doctor">
-              <img
-                src={selectedDoctor.profileImage}
-                alt={selectedDoctor.name}
-                className="mini-doctor-image"
-              />
-              <span>{selectedDoctor.name} 의사</span>
-            </div>
-          )}
-        </div> */}
         <div style={{ display: "flex", gap: "0.5rem" }}>
-          {/* {selectedDoctor && (
-            <div className="selected-doctor-chip">
-              <img
-                src={selectedDoctor.profileImage}
-                alt={selectedDoctor.name}
-                className="mini-doctor-image"
-              />
-              <span>{selectedDoctor.name} 의사 선택됨</span>
-            </div>
-          )} */}
-          <button className="primary-button" onClick={handleReviewClick}>
+          {/* <button className="primary-button" onClick={handleReviewClick}>
             후기보기
-          </button>
+          </button> */}
           <button className="primary-button" onClick={handleBookingClick}>
             예약하기
           </button>

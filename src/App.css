@@ -310,11 +310,11 @@ button:active {
   width: 100%;
   padding: 0.5rem;
   background-color: white;
-  border-top: 1px solid #e5e7eb;
+  /* border-top: 1px solid #e5e7eb; */
   position: sticky;
   bottom: 0;
   justify-content: space-around;
-  margin: 0 auto;
+  margin: 0.5rem auto 0;
   box-sizing: border-box;
 }
 
