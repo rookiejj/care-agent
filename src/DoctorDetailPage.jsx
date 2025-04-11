@@ -79,7 +79,13 @@ const DoctorDetailPage = ({ currentLocation }) => {
   };
 
   const handleBookingClick = () => {
-    navigate("/booking", { state: { item: doctor, selectedDoctor: doctor } });
+    navigate("/booking", {
+      state: {
+        item: doctor,
+        selectedDoctor: doctor,
+        type: location.state?.type,
+      },
+    });
   };
 
   const handleReviewClick = () => {
@@ -820,7 +826,9 @@ const DoctorDetailPage = ({ currentLocation }) => {
       <div className="detail-page-footer">
         <div style={{ display: "flex", gap: "0.5rem" }}>
           <button className="primary-button" onClick={handleBookingClick}>
-            비대면 진료 예약하기
+            {location.state?.type == "medical"
+              ? "비대면 진료 예약하기"
+              : "예약하기"}
           </button>
         </div>
       </div>

@@ -408,10 +408,10 @@ const HospitalDetailPage = ({ currentLocation }) => {
             <div className="doctors-tab">
               {displayedDoctors.length > 0 ? (
                 <>
-                  {displayedDoctors.map((item) => (
+                  {displayedDoctors.map((doctor) => (
                     <DoctorCard
-                      key={item.id}
-                      item={{ ...item, type: "doctor" }}
+                      key={doctor.id}
+                      item={{ ...doctor, type: item.type }}
                       showBooking={true}
                     />
                   ))}

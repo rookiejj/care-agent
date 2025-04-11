@@ -10,6 +10,9 @@ const BookingPage = ({ currentLocation }) => {
     alert("결제완료 페이지로 이동");
   };
 
+  const medicalType = location.state?.type || "medical";
+
+  console.log(medicalType);
   return (
     <div className="container">
       <div className="fixed-header">

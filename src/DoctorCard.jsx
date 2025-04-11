@@ -12,14 +12,20 @@ const DoctorCard = ({ item, showBooking = false }) => {
   const navigate = useNavigate();
   const [isFavorite, setIsFavorite] = useState(true);
 
+  const medicalType = item.type || "medical";
+
   const handleCardClick = () => {
     // 상세 페이지로 이동
-    navigate(`/detail/${item.type}/${item.id}`, { state: { item } });
+    navigate(`/detail/doctor/${item.id}`, {
+      state: { item, type: medicalType },
+    });
   };
 
   const handleBookingClick = (e) => {
     e.stopPropagation(); // 카드 클릭 이벤트 전파 방지
-    navigate("/booking", { state: { item: item, selectedDoctor: item } });
+    navigate("/booking", {
+      state: { item: item, selectedDoctor: item, type: medicalType },
+    });
   };
 
   const toggleFavorite = (e) => {
