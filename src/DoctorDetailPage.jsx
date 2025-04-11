@@ -27,7 +27,7 @@ import "./DoctorDetailPage.css";
 const DoctorDetailPage = ({ currentLocation }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { doctorsData } = useData();
+  const { doctorsData, favoritesData } = useData();
   const { id } = useParams();
 
   // Try to get doctor data from location state or find by ID in doctorsData
@@ -581,6 +581,8 @@ const DoctorDetailPage = ({ currentLocation }) => {
                   </div>
                 </div>
               )}
+
+              {favoritesData.slice(4).map((category) => console.log("aa"))}
 
               {doctor.hospitalName && (
                 <div className="info-section">

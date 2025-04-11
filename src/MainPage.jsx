@@ -26,7 +26,7 @@ const MainPage = ({ currentLocation, notificationCount }) => {
       <div className="content">
         <StatusWidget />
         <SearchBar
-          style={{ margin: "1rem 0 0.5rem" }}
+          style={{ margin: "1rem 0 1rem" }}
           goSearch={true}
           shouldAutoFocus={false}
         />

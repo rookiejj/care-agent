@@ -4,7 +4,6 @@ import { useData } from "./DataContext";
 import HospitalCard from "./HospitalCard";
 import EventCard from "./EventCard";
 import { Toggle } from "./Toggle"; // 토글 컴포넌트 임포트
-import { Calendar } from "lucide-react"; // 이벤트 아이콘 (선택사항)
 import "./FilteredResultsView.css";
 
 // 이벤트 보기 상태를 로컬 스토리지에 저장/불러오는 함수들
