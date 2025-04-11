@@ -23,6 +23,8 @@ import {
   getSubSpecialtyKoreanName,
 } from "./medicalCategoryData";
 import "./DoctorDetailPage.css";
+import HospitalCard from "./HospitalCard";
+import FavoritesPage from "./FavoritesPage";
 
 const DoctorDetailPage = ({ currentLocation }) => {
   const location = useLocation();
@@ -310,6 +312,10 @@ const DoctorDetailPage = ({ currentLocation }) => {
     );
   };
 
+  const hospital =
+    favoritesData.find((item) => item.id == doctor.hospitalId) ||
+    favoritesData.find((item) => item.isEvent == false);
+
   return (
     <div className="container">
       <div
@@ -582,36 +588,10 @@ const DoctorDetailPage = ({ currentLocation }) => {
                 </div>
               )}
 
-              {favoritesData.slice(4).map((category) => console.log("aa"))}
-
               {doctor.hospitalName && (
                 <div className="info-section">
                   <h3 className="section-title">진료 병원</h3>
-                  <div className="hospital-card">
-                    <div className="hospital-card-image">
-                      <img
-                        src={getHospitalImage("all", (doctor.id % 3) + 1)}
-                        alt={doctor.hospitalName}
-                      />
-                    </div>
-                    <div className="hospital-card-info">
-                      <h4 className="hospital-card-name">
-                        {doctor.hospitalName}
-                      </h4>
-                      <p className="hospital-card-address">
-                        서울시 {doctor.id % 2 === 0 ? "강남구" : "서초구"}{" "}
-                        {doctor.id * 123}번지
-                      </p>
-                      <button
-                        className="view-hospital-button"
-                        onClick={() =>
-                          navigate(`/detail/medical/${doctor.hospitalId}`)
-                        }
-                      >
-                        병원 정보 보기
-                      </button>
-                    </div>
-                  </div>
+                  {hospital ? <HospitalCard item={hospital} /> : <div></div>}
                 </div>
               )}
             </div>
