@@ -339,7 +339,7 @@ const HospitalDetailPage = ({ currentLocation }) => {
                   {hospitalDetails.description}
                 </p>
                 {!showFullDescription &&
-                  hospitalDetails.description.length > 150 && (
+                  hospitalDetails.description.length > 10 && (
                     <button
                       className="view-more-text"
                       onClick={() => setShowFullDescription(true)}
