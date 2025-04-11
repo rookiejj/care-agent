@@ -400,13 +400,13 @@ const DoctorDetailPage = ({ currentLocation }) => {
               alt={doctor.name}
               className="doctor-profile-image"
             />
-            {doctor.awards && doctor.awards.length > 0 && (
+            {/* {doctor.awards && doctor.awards.length > 0 && (
               <div className="doctor-badge-container">
                 <span className="doctor-badge">
                   <Award size={12} />
                 </span>
               </div>
-            )}
+            )} */}
           </div>
         </div>
 

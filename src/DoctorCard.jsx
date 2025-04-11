@@ -8,13 +8,18 @@ import {
   getSubSpecialtyKoreanName,
 } from "./medicalCategoryData";
 
-const DoctorCard = ({ item }) => {
+const DoctorCard = ({ item, showBooking = false }) => {
   const navigate = useNavigate();
   const [isFavorite, setIsFavorite] = useState(true);
 
   const handleCardClick = () => {
     // 상세 페이지로 이동
     navigate(`/detail/${item.type}/${item.id}`, { state: { item } });
+  };
+
+  const handleBookingClick = (e) => {
+    e.stopPropagation(); // 카드 클릭 이벤트 전파 방지
+    navigate("/booking", { state: { item: item, selectedDoctor: item } });
   };
 
   const toggleFavorite = (e) => {
@@ -95,6 +100,15 @@ const DoctorCard = ({ item }) => {
             fill={isFavorite ? "#ef4444" : "none"}
           />
         </button>
+      </div>
+      <div style={{ display: "flex", justifyContent: "right" }}>
+        {showBooking ? (
+          <button className="booking-button" onClick={handleBookingClick}>
+            예약하기
+          </button>
+        ) : (
+          <div></div>
+        )}
       </div>
     </div>
   );

@@ -205,3 +205,15 @@
   color: #ef4444;
   fill: #ef4444;
 }
+
+.booking-button {
+  width: 30%;
+  background-color: #507abe;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  margin-top: 0.2rem;
+  height: 2rem;
+  font-size: 0.8rem;
+}

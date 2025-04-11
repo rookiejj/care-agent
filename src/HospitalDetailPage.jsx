@@ -16,6 +16,7 @@ import {
   Siren,
 } from "lucide-react";
 import "./HospitalDetailPage.css";
+import DoctorCard from "./DoctorCard";
 
 const HospitalDetailPage = ({ currentLocation }) => {
   const location = useLocation();
@@ -407,7 +408,14 @@ const HospitalDetailPage = ({ currentLocation }) => {
             <div className="doctors-tab">
               {displayedDoctors.length > 0 ? (
                 <>
-                  <ul className="doctors-list">
+                  {displayedDoctors.map((item) => (
+                    <DoctorCard
+                      key={item.id}
+                      item={{ ...item, type: "doctor" }}
+                      showBooking={true}
+                    />
+                  ))}
+                  {/* <ul className="doctors-list">
                     {displayedDoctors.map((doctor) => (
                       <li
                         key={doctor.id}
@@ -475,7 +483,7 @@ const HospitalDetailPage = ({ currentLocation }) => {
                         </button>{" "}
                       </li>
                     ))}
-                  </ul>
+                  </ul> */}
 
                   {relevantDoctors.length > 3 && !showAllDoctors && (
                     <button
