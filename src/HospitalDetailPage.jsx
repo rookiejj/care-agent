@@ -250,7 +250,7 @@ const HospitalDetailPage = ({ currentLocation }) => {
               <Heart
                 fill={isFavorite ? "#ef4444" : "none"}
                 color={isFavorite ? "#ef4444" : "#6b7280"}
-                size={24}
+                size={20}
               />
             </button>
             <button
@@ -258,7 +258,7 @@ const HospitalDetailPage = ({ currentLocation }) => {
               onClick={handleShareClick}
               aria-label="공유하기"
             >
-              <Share2 size={24} color="#6b7280" />
+              <Share2 size={20} color="#6b7280" />
             </button>
           </div>
         </div>
@@ -307,7 +307,7 @@ const HospitalDetailPage = ({ currentLocation }) => {
             </div>
           </div>
 
-          <div className="hospital-rating" onClick={handleReviewClick}>
+          <div className="hospital-rating">
             <Star size={20} color="#fbbf24" fill="#fbbf24" />
             <span className="rating-value">{item.rating}</span>
             <span className="review-count">({item.reviewCount})</span>
