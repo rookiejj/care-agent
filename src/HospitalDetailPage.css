@@ -113,6 +113,11 @@
   color: #1e40af;
 }
 
+.specialty-tag-plastic {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
 .hospital-actions {
   display: flex;
   gap: 0.5rem;

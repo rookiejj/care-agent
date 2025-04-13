@@ -268,6 +268,8 @@ const HospitalDetailPage = ({ currentLocation }) => {
                   ? "정신건강의학과"
                   : item.specialty === "pulmonology"
                   ? "호흡기내과"
+                  : item.specialty === "plastic"
+                  ? "성형외과"
                   : item.specialty}
               </span>
             </div>
