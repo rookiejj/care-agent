@@ -13,6 +13,9 @@ import {
   ChevronRight,
   Image,
   X,
+  CreditCard,
+  CheckCircle,
+  AlertCircle,
 } from "lucide-react";
 import "./BookingPage.css";
 
@@ -38,6 +41,15 @@ const BookingPage = ({ currentLocation }) => {
   const [availableTimes, setAvailableTimes] = useState([]);
   const [step, setStep] = useState(1);
   const fileInputRef = useRef(null);
+  // Payment related states
+  const [paymentMethod, setPaymentMethod] = useState("card");
+  const [cardNumber, setCardNumber] = useState("");
+  const [cardExpiry, setCardExpiry] = useState("");
+  const [cardCVC, setCardCVC] = useState("");
+  const [cardName, setCardName] = useState("");
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const [agreePaymentTerms, setAgreePaymentTerms] = useState(false);
 
   useEffect(() => {
     if (!item || Object.keys(item).length === 0) {
@@ -86,7 +98,12 @@ const BookingPage = ({ currentLocation }) => {
   }, [selectedDate]);
 
   const handleBackClick = () => {
-    navigate(-1);
+    if (step === 1) {
+      navigate(-1);
+    } else {
+      setStep(step - 1);
+      window.scrollTo(0, 0);
+    }
   };
 
   const formatDate = (date) => {
@@ -239,13 +256,99 @@ const BookingPage = ({ currentLocation }) => {
       }
       setStep(3);
       window.scrollTo(0, 0);
+    } else if (step === 3) {
+      // Move to payment step
+      setStep(4);
+      window.scrollTo(0, 0);
     }
   };
 
-  const handleSubmit = () => {
+  const handlePrevStep = () => {
+    if (step > 1) {
+      setStep(step - 1);
+      window.scrollTo(0, 0);
+    }
+  };
+
+  // Format credit card number with spaces
+  const formatCardNumber = (value) => {
+    const v = value.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
+    const matches = v.match(/\d{4,16}/g);
+    const match = (matches && matches[0]) || "";
+    const parts = [];
+
+    for (let i = 0, len = match.length; i < len; i += 4) {
+      parts.push(match.substring(i, i + 4));
+    }
+
+    if (parts.length) {
+      return parts.join(" ");
+    } else {
+      return value;
+    }
+  };
+
+  // Format expiry date MM/YY
+  const formatExpiryDate = (value) => {
+    const v = value.replace(/\s+/g, "").replace(/[^0-9]/gi, "");
+
+    if (v.length > 2) {
+      return `${v.substring(0, 2)}/${v.substring(2, 4)}`;
+    }
+
+    return v;
+  };
+
+  const handleCardNumberChange = (e) => {
+    const formattedValue = formatCardNumber(e.target.value);
+    setCardNumber(formattedValue);
+  };
+
+  const handleExpiryChange = (e) => {
+    const formattedValue = formatExpiryDate(e.target.value);
+    setCardExpiry(formattedValue);
+  };
+
+  const handleCVCChange = (e) => {
+    const value = e.target.value.replace(/\D/g, "").substring(0, 3);
+    setCardCVC(value);
+  };
+
+  const handlePayment = () => {
+    // Validate payment information
+    if (paymentMethod === "card") {
+      if (
+        !cardNumber.replace(/\s/g, "").trim() ||
+        !cardExpiry.replace(/\//g, "").trim() ||
+        !cardCVC.trim()
+      ) {
+        alert("카드 정보를 모두 입력해주세요.");
+        console.log("카드 정보 검증:", {
+          cardNumber: cardNumber.replace(/\s/g, "").trim(),
+          cardExpiry: cardExpiry.replace(/\//g, "").trim(),
+          cardCVC: cardCVC.trim(),
+        });
+        return;
+      }
+    }
+
+    if (!agreePaymentTerms) {
+      alert("결제 동의 약관에 동의해주세요.");
+      return;
+    }
+
+    // Simulate payment processing
+    setIsProcessingPayment(true);
+
+    // Fake payment processing delay
+    setTimeout(() => {
+      setIsProcessingPayment(false);
+      setPaymentSuccess(true);
+    }, 2000);
+  };
+
+  const handleBookingComplete = () => {
     // In a real app, this would send the booking data to a server
-    // For demo purposes, we'll just show a success message
-    alert("예약이 완료되었습니다.");
     navigate(-1);
   };
 
@@ -261,6 +364,39 @@ const BookingPage = ({ currentLocation }) => {
     return `${ampm} ${displayHour}:${minuteStr}`;
   };
 
+  // Calculate the total price (example)
+  const calculatePrice = () => {
+    // Default consultation fee
+    let basePrice = 15000;
+
+    // Additional fee for specific doctors or specialties
+    if (selectedDoctor && selectedDoctor.premium) {
+      basePrice += 5000;
+    }
+
+    // Add any other fees based on booking type
+    if (bookingType === "procedure") {
+      basePrice += 10000;
+    }
+
+    return basePrice;
+  };
+
+  const getStepTitle = () => {
+    switch (step) {
+      case 1:
+        return "예약하기";
+      case 2:
+        return "예약자 정보";
+      case 3:
+        return "예약 확인";
+      case 4:
+        return "결제하기";
+      default:
+        return "예약하기";
+    }
+  };
+
   return (
     <div className="container">
       <div className="fixed-header">
@@ -268,9 +404,7 @@ const BookingPage = ({ currentLocation }) => {
           currentLocation={currentLocation}
           backButtonVisible={true}
           onBack={handleBackClick}
-          title={
-            step === 1 ? "예약하기" : step === 2 ? "예약자 정보" : "예약 확인"
-          }
+          title={getStepTitle()}
         />
       </div>
 
@@ -345,13 +479,21 @@ const BookingPage = ({ currentLocation }) => {
               </div>
             )}
 
-            <button
-              className="booking-next-button"
-              onClick={handleNextStep}
-              disabled={!selectedDate || !selectedTime}
-            >
-              다음
-            </button>
+            <div className="button-group">
+              <button
+                className="booking-prev-button"
+                onClick={() => navigate(-1)}
+              >
+                이전
+              </button>
+              <button
+                className="booking-next-button"
+                onClick={handleNextStep}
+                disabled={!selectedDate || !selectedTime}
+              >
+                다음
+              </button>
+            </div>
           </div>
         )}
 
@@ -492,13 +634,18 @@ const BookingPage = ({ currentLocation }) => {
               </button>
             </div>
 
-            <button
-              className="booking-next-button"
-              onClick={handleNextStep}
-              disabled={!patientName || !patientPhone || !agreeTerms}
-            >
-              다음
-            </button>
+            <div className="button-group">
+              <button className="booking-prev-button" onClick={handlePrevStep}>
+                이전
+              </button>
+              <button
+                className="booking-next-button"
+                onClick={handleNextStep}
+                disabled={!patientName || !patientPhone || !agreeTerms}
+              >
+                다음
+              </button>
+            </div>
           </div>
         )}
 
@@ -566,6 +713,19 @@ const BookingPage = ({ currentLocation }) => {
                 </div>
               )}
 
+              <div className="confirmation-section">
+                <h4 className="confirmation-section-title">진료비</h4>
+                <div className="confirmation-price">
+                  <span className="confirmation-price-label">총 결제 금액</span>
+                  <span className="confirmation-price-value">
+                    {calculatePrice().toLocaleString()}원
+                  </span>
+                </div>
+                <p className="confirmation-price-note">
+                  * 진료비는 예상 금액이며, 실제 진료 후 변경될 수 있습니다.
+                </p>
+              </div>
+
               <div className="confirmation-notes">
                 <h4 className="confirmation-notes-title">예약 시 참고사항</h4>
                 <ul className="confirmation-notes-list">
@@ -580,17 +740,268 @@ const BookingPage = ({ currentLocation }) => {
               </div>
             </div>
 
-            <div className="booking-actions">
-              <button
-                className="booking-modify-button"
-                onClick={() => setStep(1)}
-              >
-                수정하기
+            <div className="button-group">
+              <button className="booking-prev-button" onClick={handlePrevStep}>
+                이전
               </button>
-              <button className="booking-confirm-button" onClick={handleSubmit}>
-                예약 확정하기
+              <button className="booking-next-button" onClick={handleNextStep}>
+                결제하기
               </button>
             </div>
+          </div>
+        )}
+
+        {step === 4 && (
+          <div className="booking-step payment-step">
+            <div className="booking-summary-card">
+              <div className="booking-summary-item">
+                <span className="booking-summary-label">예약 일시</span>
+                <span className="booking-summary-value">
+                  {getFullDateDisplay(selectedDate)}{" "}
+                  {formatTimeWithAmPm(selectedTime)}
+                </span>
+              </div>
+              <div className="booking-summary-item">
+                <span className="booking-summary-label">
+                  {selectedDoctor ? "의사" : "병원"}
+                </span>
+                <span className="booking-summary-value">
+                  {selectedDoctor ? `${selectedDoctor.name} 의사` : item.title}
+                </span>
+              </div>
+              <div className="booking-summary-item payment-amount">
+                <span className="booking-summary-label">결제 금액</span>
+                <span className="booking-summary-value price-value">
+                  {calculatePrice().toLocaleString()}원
+                </span>
+              </div>
+            </div>
+
+            {!paymentSuccess ? (
+              <>
+                <div className="booking-section payment-methods">
+                  <h3 className="booking-section-title">
+                    <CreditCard size={18} />
+                    결제 수단 선택
+                  </h3>
+                  <div className="payment-method-options">
+                    <div
+                      className={`payment-method-option ${
+                        paymentMethod === "card" ? "selected" : ""
+                      }`}
+                      onClick={() => setPaymentMethod("card")}
+                    >
+                      <div className="payment-method-radio">
+                        <div
+                          className={`radio-inner ${
+                            paymentMethod === "card" ? "selected" : ""
+                          }`}
+                        ></div>
+                      </div>
+                      <span>신용/체크카드</span>
+                    </div>
+                    <div
+                      className={`payment-method-option ${
+                        paymentMethod === "transfer" ? "selected" : ""
+                      }`}
+                      onClick={() => setPaymentMethod("transfer")}
+                    >
+                      <div className="payment-method-radio">
+                        <div
+                          className={`radio-inner ${
+                            paymentMethod === "transfer" ? "selected" : ""
+                          }`}
+                        ></div>
+                      </div>
+                      <span>실시간 계좌이체</span>
+                    </div>
+                    <div
+                      className={`payment-method-option ${
+                        paymentMethod === "virtual" ? "selected" : ""
+                      }`}
+                      onClick={() => setPaymentMethod("virtual")}
+                    >
+                      <div className="payment-method-radio">
+                        <div
+                          className={`radio-inner ${
+                            paymentMethod === "virtual" ? "selected" : ""
+                          }`}
+                        ></div>
+                      </div>
+                      <span>가상계좌</span>
+                    </div>
+                    <div
+                      className={`payment-method-option ${
+                        paymentMethod === "phone" ? "selected" : ""
+                      }`}
+                      onClick={() => setPaymentMethod("phone")}
+                    >
+                      <div className="payment-method-radio">
+                        <div
+                          className={`radio-inner ${
+                            paymentMethod === "phone" ? "selected" : ""
+                          }`}
+                        ></div>
+                      </div>
+                      <span>휴대폰 결제</span>
+                    </div>
+                  </div>
+                </div>
+
+                {paymentMethod === "card" && (
+                  <div className="booking-section payment-card-info">
+                    <h3 className="booking-section-title">카드 정보 입력</h3>
+                    <div className="form-group">
+                      <label className="form-label">카드번호 *</label>
+                      <input
+                        type="text"
+                        className="form-input"
+                        value={cardNumber}
+                        onChange={handleCardNumberChange}
+                        placeholder="0000 0000 0000 0000"
+                        maxLength={19}
+                        required
+                      />
+                      <span className="input-help-text">
+                        16자리 숫자를 입력하세요 (공백 자동 추가)
+                      </span>
+                    </div>
+                    <div className="form-row">
+                      <div className="form-group half">
+                        <label className="form-label">유효기간 *</label>
+                        <input
+                          type="text"
+                          className="form-input"
+                          value={cardExpiry}
+                          onChange={handleExpiryChange}
+                          placeholder="MM/YY"
+                          maxLength={5}
+                          required
+                        />
+                        <span className="input-help-text">예: 01/26</span>
+                      </div>
+                      <div className="form-group half">
+                        <label className="form-label">CVC *</label>
+                        <input
+                          type="text"
+                          className="form-input"
+                          value={cardCVC}
+                          onChange={handleCVCChange}
+                          placeholder="000"
+                          maxLength={3}
+                          required
+                        />
+                        <span className="input-help-text">카드 뒷면 3자리</span>
+                      </div>
+                    </div>
+                    <div className="form-group">
+                      <label className="form-label">카드 소유자 이름</label>
+                      <input
+                        type="text"
+                        className="form-input"
+                        value={cardName}
+                        onChange={(e) => setCardName(e.target.value)}
+                        placeholder="카드에 표시된 이름"
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {paymentMethod === "transfer" && (
+                  <div className="booking-section payment-transfer-info">
+                    <div className="payment-info-message">
+                      <AlertCircle size={18} />
+                      <p>다음 화면에서 계좌이체 정보를 입력하게 됩니다.</p>
+                    </div>
+                  </div>
+                )}
+
+                {paymentMethod === "virtual" && (
+                  <div className="booking-section payment-virtual-info">
+                    <div className="payment-info-message">
+                      <AlertCircle size={18} />
+                      <p>
+                        가상계좌 발급 후 24시간 이내에 입금해주셔야 예약이
+                        확정됩니다.
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                {paymentMethod === "phone" && (
+                  <div className="booking-section payment-phone-info">
+                    <div className="payment-info-message">
+                      <AlertCircle size={18} />
+                      <p>
+                        휴대폰 결제는 월 결제한도 범위 내에서 이용 가능합니다.
+                      </p>
+                    </div>
+                  </div>
+                )}
+
+                <div className="payment-terms-agreement">
+                  <div
+                    className="checkbox-container"
+                    onClick={() => setAgreePaymentTerms(!agreePaymentTerms)}
+                  >
+                    <div
+                      className={`custom-checkbox ${
+                        agreePaymentTerms ? "checked" : ""
+                      }`}
+                    >
+                      {agreePaymentTerms && <span className="checkmark"></span>}
+                    </div>
+                    <label>결제 진행 및 예약 정보 제공에 동의합니다 *</label>
+                  </div>
+                  <button className="terms-detail-button">
+                    자세히 <ChevronRight size={14} />
+                  </button>
+                </div>
+
+                <div className="button-group">
+                  <button
+                    className="booking-prev-button"
+                    onClick={handlePrevStep}
+                    disabled={isProcessingPayment}
+                  >
+                    이전
+                  </button>
+                  <button
+                    className={`payment-button ${
+                      isProcessingPayment ? "processing" : ""
+                    }`}
+                    onClick={handlePayment}
+                    disabled={isProcessingPayment || !agreePaymentTerms}
+                  >
+                    {isProcessingPayment ? (
+                      <span className="payment-processing">
+                        <span className="spinner"></span>
+                        결제 처리 중...
+                      </span>
+                    ) : (
+                      `${calculatePrice().toLocaleString()}원 결제하기`
+                    )}
+                  </button>
+                </div>
+              </>
+            ) : (
+              <div className="payment-success">
+                <div className="payment-success-icon">
+                  <CheckCircle size={48} />
+                </div>
+                <h3 className="payment-success-title">결제가 완료되었습니다</h3>
+                <p className="payment-success-message">
+                  예약이 확정되었습니다.<br></br>예약 내역은 마이페이지에서
+                  확인하실 수 있습니다.
+                </p>
+                <button
+                  className="payment-complete-button"
+                  onClick={handleBookingComplete}
+                >
+                  확인
+                </button>
+              </div>
+            )}
           </div>
         )}
       </div>
