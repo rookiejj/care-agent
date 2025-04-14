@@ -48,7 +48,6 @@ import {
 } from "lucide-react";
 import "./CategoriesPage.css";
 import OptionFilterButtons from "./OptionFilterButtons";
-import RegionSelector from "./RegionSelector";
 
 const CategoriesPage = ({ currentLocation }) => {
   const location = useLocation();

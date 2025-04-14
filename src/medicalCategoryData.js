@@ -621,7 +621,7 @@ export const getSubSpecialtyKoreanName = (tag) => {
 
   // 미리 정의된 부분 태그 매핑을 사용해 한글로 변환
   const subSpecialtyKoreanMap = {
-    // 증상 관련
+    // 기존 증상 관련
     pain: "통증",
     high: "고열",
     fever: "발열",
@@ -668,12 +668,63 @@ export const getSubSpecialtyKoreanName = (tag) => {
     swelling: "부종",
     respiratory: "호흡기질환",
 
+    // 성형 관련 항목 추가
+    facelift: "안면거상술",
+    rhinoplasty: "코성형",
+    blepharoplasty: "눈꺼풀성형",
+    liposuction: "지방흡입",
+    botox: "보톡스",
+    filler: "필러",
+    lifting: "리프팅",
+    augmentation: "확대성형",
+    reduction: "축소성형",
+    implant: "임플란트",
+    rejuvenation: "회춘술",
+    thread: "실리프팅",
+    laser: "레이저시술",
+    dermabrasion: "박피술",
+    peel: "필링",
+    contouring: "윤곽술",
+    jawline: "턱선성형",
+    cheekbone: "광대축소",
+    double: "쌍꺼풀",
+    eyelid: "눈꺼풀",
+    nose: "코성형",
+    chin: "턱성형",
+    breast: "가슴성형",
+    abdomen: "복부성형",
+    body: "체형교정",
+    scar: "흉터제거",
+    forehead: "이마성형",
+    wrinkle: "주름개선",
+    face: "안면성형",
+    hair: "모발이식",
+    lipoplasty: "지방흡입",
+    tummy: "복부성형",
+    anti: "안티에이징",
+    aging: "노화방지",
+    cellulite: "셀룰라이트",
+    pigmentation: "색소침착",
+    spot: "기미/잡티",
+    acne: "여드름치료",
+    injection: "주사요법",
+
     // 기타 태그
     specialist: "전문의",
     general: "일반의",
     emergency: "응급진료",
     chronic: "만성질환",
     acute: "급성질환",
+    cosmetic: "미용성형",
+    reconstructive: "재건성형",
+    minimal: "최소침습",
+    non: "비수술적",
+    surgical: "수술적",
+    consultation: "상담",
+    procedure: "시술",
+    operation: "수술",
+    recovery: "회복",
+    postop: "수술후관리",
   };
 
   // 부분 태그 매핑에서 찾기

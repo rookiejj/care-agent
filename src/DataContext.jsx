@@ -31,7 +31,7 @@ export const DataProvider = ({ children }) => {
           author: {
             id: "user123",
             nickname: "뷰티러버",
-            profileImage: "/images/profiles/user1.jpg",
+            profileImage: "/images/profile.png",
             level: 3, // 일반 레벨
             badges: ["정보제공왕", "인기작가"],
             isVerified: true, // 의사나 의료종사자 인증 여부
@@ -39,14 +39,14 @@ export const DataProvider = ({ children }) => {
           createdAt: "2025-04-01T14:30:00Z",
           updatedAt: "2025-04-01T15:45:00Z",
           category: "review", // 후기/경험담
-          tags: ["tag-face", "tag-plastic", "tag-completed", "tag-seoul"],
+          tags: ["eyelid", "blepharoplasty", "double"],
           title: "눈매교정+안검하수 수술 3개월 후기 (비포&애프터 포함)",
           content:
             "안녕하세요! 3개월 전에 강남 미소성형외과에서 눈매교정+안검하수 수술을 받았는데요, 드디어 붓기가 가라앉아서 후기를 공유합니다.\n\n**수술 결정 이유**\n어릴 때부터 눈이 작고 항상 졸려 보인다는 말을 많이 들었어요. 특히 사진 찍을 때 눈이 반쯤 감겨 보이는 경우가 많았습니다. 상담 결과 경증 안검하수와 눈매 비대칭이 있다고 하더라고요.\n\n**수술 과정**\n국소마취로 진행했고, 생각보다 통증은 적었습니다. 약 1시간 정도 소요되었어요. 의사선생님이 매우 꼼꼼하게 설명해주셔서 안심하고 받을 수 있었습니다.\n\n**회복 과정**\n- 1주차: 붓기와 멍이 심했고, 실밥 제거 전까지 불편함이 있었어요\n- 2주차: 실밥 제거 후 붓기가 많이 가라앉았지만 아직 부자연스러움\n- 1개월: 일상생활에 지장 없고, 주변 사람들이 달라 보인다고 인지할 정도\n- 3개월: 거의 자연스러워졌고, 눈매가 또렷해져 만족스럽습니다\n\n**비용**\n눈매교정+안검하수 교정 총 220만원 (이벤트 할인 적용)\n\n**장점**\n- 눈이 확실히 또렷해지고 시원해짐\n- 화장이 훨씬 잘 받고 사진 찍을 때도 자신감 상승\n- 피곤해 보인다는 말을 더 이상 듣지 않게 됨\n\n**단점**\n- 회복 초기에는 비대칭이 있었으나 3개월 차에 자연스러워짐\n- 병원 내원이 여러 번 필요해서 시간 소요가 많았음\n\n궁금한 점 있으시면 편하게 댓글 남겨주세요! 사진은 첨부했습니다 :)",
           images: [
-            "/images/community/before_after_1.jpg",
-            "/images/community/before_after_2.jpg",
-            "/images/community/recovery_process.jpg",
+            "/images/beforeafter.jpg",
+            "/images/beforeafter.jpg",
+            "/images/beforeafter.jpg",
           ],
           hospitalInfo: {
             id: "hospital123",
@@ -64,7 +64,7 @@ export const DataProvider = ({ children }) => {
               author: {
                 id: "user456",
                 nickname: "눈매고민중",
-                profileImage: "/images/profiles/user2.jpg",
+                profileImage: "/images/profile.png",
                 level: 1,
               },
               content:
@@ -78,7 +78,7 @@ export const DataProvider = ({ children }) => {
               author: {
                 id: "user123",
                 nickname: "뷰티러버",
-                profileImage: "/images/profiles/user1.jpg",
+                profileImage: "/images/profile.png",
                 level: 3,
               },
               content:
@@ -96,14 +96,14 @@ export const DataProvider = ({ children }) => {
           author: {
             id: "user456",
             nickname: "피부맑음이",
-            profileImage: "/images/profiles/user2.jpg",
+            profileImage: "/images/profile.png",
             level: 4, // 우수 레벨
             badges: ["후기왕"],
           },
           createdAt: "2025-03-30T10:25:00Z",
           updatedAt: null,
           category: "question", // 질문/정보
-          tags: ["tag-skin", "tag-laser", "tag-planning", "tag-gyeonggi"],
+          tags: ["laser", "pigmentation", "spot"],
           title: "레이저 토닝 시술 전 꼭 알아야 할 것들 질문이요",
           content:
             "안녕하세요, 기미와 잡티가 심해져서 레이저 토닝 시술을 알아보고 있어요. 다음 주에 상담 예정인데 미리 알아두면 좋을 정보들이나 질문할 내용 있을까요?\n\n특히 궁금한 점은:\n1. 토닝과 피코슈어의 차이점\n2. 시술 횟수와 간격은 보통 어떻게 되나요?\n3. 시술 후 관리법\n4. 부작용이나 주의사항\n\n경험자분들 조언 부탁드립니다!",
@@ -118,7 +118,7 @@ export const DataProvider = ({ children }) => {
               author: {
                 id: "doctor789",
                 nickname: "김태영피부과의사",
-                profileImage: "/images/profiles/doctor1.jpg",
+                profileImage: "/images/profile.png",
                 level: 5,
                 isVerified: true,
               },
@@ -136,13 +136,13 @@ export const DataProvider = ({ children }) => {
           author: {
             id: "user789",
             nickname: "건강지킴이",
-            profileImage: "/images/profiles/user3.jpg",
+            profileImage: "/images/profile.png",
             level: 2,
           },
           createdAt: "2025-03-29T09:10:00Z",
           updatedAt: "2025-03-29T09:15:00Z",
           category: "question", // 질문/정보 (정보 공유 목적)
-          tags: ["tag-medical", "tag-general", "tag-seoul"],
+          tags: ["medical", "internal"],
           title: "건강검진 후 복부초음파에서 발견된 '지방간' 관리법 공유",
           content:
             "얼마 전 직장 건강검진에서 복부초음파 결과 '경도 지방간' 소견을 받았어요. 처음에는 굉장히 당황했는데, 의사 선생님 상담과 제가 찾아본 정보들을 공유합니다.\n\n**지방간이란?**\n간 세포에 지방이 5% 이상 축적된 상태를 말합니다. 초기에는 증상이 거의 없지만 방치하면 간염, 간경화로 진행될 수 있어요.\n\n**원인**\n- 과도한 알코올 섭취 (알코올성 지방간)\n- 비만, 당뇨병, 고지혈증 (비알코올성 지방간)\n- 잘못된 식습관과 운동 부족\n\n**관리 방법**\n1. 식이요법\n   - 탄수화물과 당류 섭취 줄이기\n   - 트랜스지방, 포화지방 제한\n   - 오메가3 풍부한 식품 섭취 (고등어, 연어 등)\n   - 식이섬유 풍부한 채소 섭취 늘리기\n\n2. 운동요법\n   - 주 3-5회, 회당 30-60분 유산소 운동\n   - 걷기, 수영, 자전거 등이 효과적\n\n3. 생활습관 교정\n   - 금주 또는 절주\n   - 규칙적인 수면 습관\n   - 스트레스 관리\n\n**효과**\n위 방법으로 약 3개월간 관리했더니 8kg 감량과 함께 지방간 수치가 정상으로 돌아왔어요. 무엇보다 평소 피로감이 많이 줄었습니다.\n\n건강은 잃고 나서야 소중함을 깨닫게 되더라고요. 증상이 없다고 방심하지 마시고, 건강검진에서 이상이 발견되면 꼭 관리하세요!",
@@ -159,13 +159,13 @@ export const DataProvider = ({ children }) => {
           author: {
             id: "user101",
             nickname: "치과공포증",
-            profileImage: "/images/profiles/user4.jpg",
+            profileImage: "/images/profile.png",
             level: 1,
           },
           createdAt: "2025-03-28T16:45:00Z",
           updatedAt: null,
           category: "support", // 응원/지지
-          tags: ["tag-dental", "tag-dental-clinic", "tag-proceeding"],
+          tags: ["dentistry", "implant", "procedure"],
           title: "임플란트 시술 중인데 너무 무서워요... 응원 부탁드려요",
           content:
             "안녕하세요, 어제 첫 임플란트 시술을 받았어요. 사실 치과 공포증이 심한데 어금니가 깨져서 어쩔 수 없이 하게 됐어요.\n\n어제 발치하고 뼈 이식까지 했는데, 시술 자체는 생각보다 덜 아팠지만 지금 붓기가 심하고 통증도 있네요. 무엇보다 앞으로 몇 개월간 여러 번 치과를 가야 한다는 사실이 너무 두려워요.\n\n비슷한 경험 있으신 분들, 어떻게 이 과정을 견디셨나요? 임플란트 회복 과정에서 도움되는 팁이나 마음가짐 있으면 공유해주세요. 정말 응원이 필요합니다...",
@@ -180,7 +180,7 @@ export const DataProvider = ({ children }) => {
               author: {
                 id: "user202",
                 nickname: "임플란트생존자",
-                profileImage: "/images/profiles/user5.jpg",
+                profileImage: "/images/profile.png",
                 level: 3,
               },
               content:
@@ -196,17 +196,17 @@ export const DataProvider = ({ children }) => {
           author: {
             id: "user303",
             nickname: "피부관리중",
-            profileImage: "/images/profiles/user6.jpg",
+            profileImage: "/images/profile.png",
             level: 2,
           },
           createdAt: "2025-03-27T11:20:00Z",
           updatedAt: null,
           category: "recommend", // 추천/이벤트
-          tags: ["tag-skin", "tag-derm", "tag-seoul"],
+          tags: ["dermatology", "skincare", "injection"],
           title: "4월 피부과/피부관리 할인 정보 총정리 (가격정보 포함)",
           content:
             "안녕하세요! 4월에 진행되는 피부과/피부관리 클리닉 할인 정보를 총정리했어요.\n\n**강남 지역**\n\n1. 클리어 스킨 클리닉\n   - 기간: 4.1 - 4.30\n   - 내용: 여드름 케어 프로그램 30% 할인\n   - 가격: 300,000원 → 210,000원\n   - 특징: 첫 방문 고객 피부 분석 무료\n\n2. 에이스 피부과\n   - 기간: 4.5 - 5.5\n   - 내용: 색소 레이저 5회 패키지 40% 할인\n   - 가격: 750,000원 → 450,000원\n   - 특징: 홈케어 제품 증정\n\n**홍대 지역**\n\n3. 루미에르 클리닉\n   - 기간: 4.1 - 4.15\n   - 내용: 리쥬란 힐러 + 물광주사 콤보 할인\n   - 가격: 400,000원 → 280,000원\n   - 특징: 예약시 멤버십 추가 할인\n\n**건대 지역**\n\n4. 글로우 더마 클리닉\n   - 기간: 4월 한달간\n   - 내용: 모공 축소 프로그램 20% 할인\n   - 가격: 500,000원 → 400,000원\n   - 특징: 피부결 개선 마스크팩 증정\n\n**온라인 이벤트**\n\n5. 센트럴 메디 앱\n   - 기간: 4.10 - 4.20\n   - 내용: 앱 가입자 피부과 상담권 증정\n   - 참여방법: 앱 다운로드 후 회원가입\n\n실제 방문해본 1번과 3번은 의사선생님 실력이 좋고 과잉진료 없이 정직한 편이었어요. 할인 정보는 직접 전화로 확인했으니 예약하실 때 꼭 언급하세요!\n\n다른 좋은 정보 있으시면 댓글로 공유해주세요 :)",
-          images: ["/images/community/event_info.jpg"],
+          images: ["/images/beforeafter.jpg"],
           viewCount: 2145,
           likeCount: 142,
           isBookmarked: true,
@@ -219,13 +219,13 @@ export const DataProvider = ({ children }) => {
           author: {
             id: "user404",
             nickname: "일상공유러",
-            profileImage: "/images/profiles/user7.jpg",
+            profileImage: "/images/profile.png",
             level: 2,
           },
           createdAt: "2025-03-26T18:15:00Z",
           updatedAt: null,
           category: "general", // 자유/잡담
-          tags: [],
+          tags: ["ent", "ear-hearing"],
           title: "병원 진료받으러 갔다가 웃긴 일 있었어요ㅋㅋ",
           content:
             '오늘 목감기로 이비인후과에 갔는데요, 대기실에서 있었던 일을 공유합니다ㅋㅋ\n\n저보다 먼저 와계신 할머니께서 접수 창구에서 이러시더라고요.\n\n할머니: "선생님, 저 귀에서 계속 소리가 나요."\n간호사: "어떤 소리가 나시는데요?"\n할머니: "웅- 하고 계속 소리가 나."\n간호사: "네, 진료실에서 선생님께 말씀해주세요."\n할머니: "그런데 말이야... 그 소리가 여기 병원 에어컨 소리랑 똑같아."\n\n그 순간 대기실에 있던 모든 사람들이 귀를 기울였고... 정말 에어컨에서 \'웅-\' 소리가 나고 있었어요ㅋㅋㅋ\n\n할머니는 본인 귀에서 나는 소리인줄 알았는데, 알고보니 병원 에어컨 소리였던 거죠.\n\n간호사님도 웃음 참느라 진땀 빼시더라고요. 할머니도 결국 웃으시면서 "아이고, 나 바보같이..." 하시며 민망해 하셨답니다.\n\n병원 대기실이라 다들 긴장하고 있었는데, 이 해프닝 덕분에 분위기가 한결 밝아졌어요. 오늘의 소소한 웃음 한 조각이었습니다!',
