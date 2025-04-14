@@ -709,7 +709,6 @@
 
 .payment-button {
   width: 100%;
-  padding: 0.875rem;
   border-radius: 0.5rem;
   border: none;
   background-color: #3b82f6;
@@ -792,7 +791,6 @@
 }
 
 .payment-complete-button {
-  padding: 0.875rem 2rem;
   border-radius: 0.5rem;
   border: none;
   background-color: #3b82f6;
