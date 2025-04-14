@@ -708,7 +708,7 @@
 }
 
 .payment-button {
-  flex: 2;
+  width: 100%;
   padding: 0.875rem;
   border-radius: 0.5rem;
   border: none;
