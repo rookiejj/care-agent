@@ -201,6 +201,11 @@
   border: 1px solid #f0f0f0; /* 테두리 추가 */
 }
 
+.community-detail-text {
+  line-height: 2rem;
+  font-size: 0.9rem;
+}
+
 /* 이미지 갤러리 */
 .community-detail-images {
   display: grid;
