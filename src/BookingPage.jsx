@@ -8,7 +8,6 @@ import {
   MapPin,
   User,
   Phone,
-  Mail,
   MessageSquare,
   ChevronRight,
   Image,
@@ -16,6 +15,7 @@ import {
   CreditCard,
   CheckCircle,
   AlertCircle,
+  Edit2,
 } from "lucide-react";
 import "./BookingPage.css";
 
@@ -33,7 +33,10 @@ const BookingPage = ({ currentLocation }) => {
   );
   const [patientName, setPatientName] = useState("");
   const [patientPhone, setPatientPhone] = useState("");
-  const [patientEmail, setPatientEmail] = useState("");
+  const [savedName, setSavedName] = useState("");
+  const [savedPhone, setSavedPhone] = useState("");
+  const [patientSsn, setPatientSsn] = useState(""); // 주민등록번호
+  const [savedSsn, setSavedSsn] = useState(""); // 저장된 주민등록번호
   const [symptoms, setSymptoms] = useState("");
   const [symptomImages, setSymptomImages] = useState([]);
   const [agreeTerms, setAgreeTerms] = useState(false);
@@ -47,6 +50,10 @@ const BookingPage = ({ currentLocation }) => {
   const [cardExpiry, setCardExpiry] = useState("");
   const [cardCVC, setCardCVC] = useState("");
   const [cardName, setCardName] = useState("");
+  const [savedCardNumber, setSavedCardNumber] = useState("");
+  const [savedCardExpiry, setSavedCardExpiry] = useState("");
+  const [savedCardCVC, setSavedCardCVC] = useState("");
+  const [savedCardName, setSavedCardName] = useState("");
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const [agreePaymentTerms, setAgreePaymentTerms] = useState(false);
@@ -79,6 +86,37 @@ const BookingPage = ({ currentLocation }) => {
     }
 
     setAvailableDates(dates);
+
+    // 저장된 주민번호 불러오기 (localStorage에서)
+    const storedSsn = localStorage.getItem("patientSsn");
+    const storedName = localStorage.getItem("patientName");
+    const storedPhone = localStorage.getItem("patientPhone");
+    const storedCardNumber = localStorage.getItem("cardNumber");
+    const storedCardExpiry = localStorage.getItem("cardExpiry");
+    const storedCardCVC = localStorage.getItem("cardCVC");
+    const storedCardName = localStorage.getItem("cardName");
+
+    if (storedSsn) {
+      setSavedSsn(storedSsn);
+    }
+    if (storedName) {
+      setSavedName(storedName);
+    }
+    if (storedPhone) {
+      setSavedPhone(storedPhone);
+    }
+    if (storedCardNumber) {
+      setSavedCardNumber(storedCardNumber);
+    }
+    if (storedCardExpiry) {
+      setSavedCardExpiry(storedCardExpiry);
+    }
+    if (storedCardCVC) {
+      setSavedCardCVC(storedCardCVC);
+    }
+    if (storedCardName) {
+      setSavedCardName(storedCardName);
+    }
   }, [item]);
 
   useEffect(() => {
@@ -98,12 +136,12 @@ const BookingPage = ({ currentLocation }) => {
   }, [selectedDate]);
 
   const handleBackClick = () => {
-    if (step === 1) {
+    if (step == 1) {
       navigate(-1);
-    } else {
-      setStep(step - 1);
-      window.scrollTo(0, 0);
     }
+
+    setStep(step - 1);
+    window.scrollTo(0, 0);
   };
 
   const formatDate = (date) => {
@@ -235,39 +273,243 @@ const BookingPage = ({ currentLocation }) => {
     setSymptomImages(updatedImages);
   };
 
-  const handleNextStep = () => {
+  const handleSsnChange = (e) => {
+    const value = e.target.value.replace(/[^0-9-]/g, "");
+
+    // 주민번호 포맷팅 (6자리-7자리)
+    if (value.length <= 6) {
+      setPatientSsn(value);
+      const handleNextButtonClick = () => {
+        switch (step) {
+          case 1:
+            if (!selectedDate || !selectedTime) {
+              alert("날짜와 시간을 선택해주세요.");
+              return;
+            }
+            break;
+          case 2:
+            if (!patientName.trim() || !patientPhone.trim()) {
+              alert("이름과 전화번호는 필수 입력사항입니다.");
+              return;
+            }
+
+            // 주민번호 검증 - 현재 표시된 주민번호 사용
+            const currentSsn = editingSsn ? patientSsn : savedSsn;
+            const isValidSsn =
+              currentSsn &&
+              ((currentSsn.includes("-") && currentSsn.length === 14) ||
+                (!currentSsn.includes("-") && currentSsn.length === 13));
+
+            if (!isValidSsn) {
+              alert("주민등록번호를 정확히 입력해주세요.");
+              return;
+            }
+
+            if (!agreeTerms) {
+              alert("개인정보 수집 및 이용에 동의해주세요.");
+              return;
+            }
+
+            // 주민번호 저장 (수정 모드인 경우에만)
+            if (editingSsn) {
+              localStorage.setItem("patientSsn", patientSsn);
+              setSavedSsn(patientSsn);
+              setEditingSsn(false);
+            }
+            break;
+          case 3:
+            // 예약 확인 단계에서는 추가 검증 없음
+            break;
+          case 4:
+            // 결제 단계 - 이 단계에서는 이 함수 사용하지 않음
+            return;
+        }
+
+        setStep(step + 1);
+        window.scrollTo(0, 0);
+      };
+    } else {
+      const prefix = value.substring(0, 6);
+      let suffix = value.substring(6).replace(/-/g, "");
+
+      // 최대 7자리까지만 허용
+      suffix = suffix.substring(0, 7);
+
+      if (suffix.length > 0) {
+        setPatientSsn(`${prefix}-${suffix}`);
+      } else {
+        setPatientSsn(prefix);
+      }
+    }
+  };
+
+  // 이름 변경 버튼 클릭 처리
+  const toggleNameEdit = () => {
+    setPatientName(savedName);
+  };
+
+  // 전화번호 변경 버튼 클릭 처리
+  const togglePhoneEdit = () => {
+    setPatientPhone(savedPhone);
+  };
+
+  const toggleSsnEdit = () => {
+    setPatientSsn(savedSsn);
+  };
+
+  const toggleCardNumberEdit = () => {
+    setCardNumber(savedCardNumber);
+  };
+
+  const toggleCardExpiryEdit = () => {
+    setCardExpiry(savedCardExpiry);
+  };
+
+  const toggleCardCVCEdit = () => {
+    setCardCVC(savedCardCVC);
+  };
+
+  const toggleCardNameEdit = () => {
+    setCardName(savedCardName);
+  };
+
+  const handleNextButtonClick = () => {
+    switch (step) {
+      case 1:
+        if (!selectedDate || !selectedTime) {
+          alert("날짜와 시간을 선택해주세요.");
+          return;
+        }
+        break;
+      case 2:
+        // 이름 검증 - 입력된 값이 있으면 그 값 사용, 아니면 저장된 값 사용
+        const nameToUse = patientName || savedName;
+        if (!nameToUse.trim()) {
+          alert("이름을 입력해주세요.");
+          return;
+        }
+
+        // 전화번호 검증 - 입력된 값이 있으면 그 값 사용, 아니면 저장된 값 사용
+        const phoneToUse = patientPhone || savedPhone;
+        if (!phoneToUse.trim()) {
+          alert("전화번호를 입력해주세요.");
+          return;
+        }
+
+        // 주민번호 검증 - 입력된 값이 있으면 그 값 사용, 아니면 저장된 값 사용
+        const ssnToUse = patientSsn || savedSsn;
+        const isValidSsn =
+          ssnToUse &&
+          ((ssnToUse.includes("-") && ssnToUse.length === 14) ||
+            (!ssnToUse.includes("-") && ssnToUse.length === 13));
+
+        if (!isValidSsn) {
+          alert("주민등록번호를 정확히 입력해주세요.");
+          return;
+        }
+
+        if (!agreeTerms) {
+          alert("개인정보 수집 및 이용에 동의해주세요.");
+          return;
+        }
+
+        // 이름 저장 (입력된 값이 있고 기존 값과 다른 경우에만)
+        if (patientName && patientName !== savedName) {
+          localStorage.setItem("patientName", patientName);
+          setSavedName(patientName);
+        }
+
+        // 전화번호 저장 (입력된 값이 있고 기존 값과 다른 경우에만)
+        if (patientPhone && patientPhone !== savedPhone) {
+          localStorage.setItem("patientPhone", patientPhone);
+          setSavedPhone(patientPhone);
+        }
+
+        // 주민번호 저장 (입력된 값이 있고 기존 값과 다른 경우에만)
+        if (patientSsn && patientSsn !== savedSsn) {
+          localStorage.setItem("patientSsn", patientSsn);
+          setSavedSsn(patientSsn);
+        }
+        break;
+      case 3:
+        // 예약 확인 단계에서는 추가 검증 없음
+        break;
+      case 4:
+        // 결제 단계 - 이 단계에서는 이 함수 사용하지 않음
+        return;
+    }
+
+    setStep(step + 1);
+    window.scrollTo(0, 0);
+  };
+
+  const handlePrevButtonClick = () => {
     if (step === 1) {
-      // Validate date and time selection
-      if (!selectedDate || !selectedTime) {
-        alert("날짜와 시간을 선택해주세요.");
-        return;
-      }
-      setStep(2);
-      window.scrollTo(0, 0);
-    } else if (step === 2) {
-      // Validate patient info
-      if (!patientName.trim() || !patientPhone.trim()) {
-        alert("이름과 전화번호는 필수 입력사항입니다.");
-        return;
-      }
-      if (!agreeTerms) {
-        alert("개인정보 수집 및 이용에 동의해주세요.");
-        return;
-      }
-      setStep(3);
-      window.scrollTo(0, 0);
-    } else if (step === 3) {
-      // Move to payment step
-      setStep(4);
+      navigate(-1);
+    } else {
+      setStep(step - 1);
       window.scrollTo(0, 0);
     }
   };
 
-  const handlePrevStep = () => {
-    if (step > 1) {
-      setStep(step - 1);
-      window.scrollTo(0, 0);
+  // 이전 버튼 비활성화 조건
+  const isPrevButtonDisabled = () => {
+    // 결제 처리 중일 때만 이전 버튼 비활성화
+    return step === 4 && isProcessingPayment;
+  };
+
+  // 다음 버튼 비활성화 조건
+  const isNextButtonDisabled = () => {
+    switch (step) {
+      case 1:
+        return !selectedDate || !selectedTime;
+      case 2:
+        // 이름과 전화번호 검증
+        const nameToCheck = patientName || savedName;
+        const phoneToCheck = patientPhone || savedPhone;
+
+        // 주민번호 형식 체크
+        const ssnToCheck = patientSsn || savedSsn;
+        const isValidSsn =
+          ssnToCheck &&
+          ((ssnToCheck.includes("-") && ssnToCheck.length === 14) ||
+            (!ssnToCheck.includes("-") && ssnToCheck.length === 13));
+
+        return (
+          !nameToCheck.trim() ||
+          !phoneToCheck.trim() ||
+          !isValidSsn ||
+          !agreeTerms
+        );
+      case 3:
+        return false; // 예약 확인 단계에서는 항상 활성화
+      default:
+        return false;
     }
+  };
+
+  // 결제 버튼 비활성화 조건
+  const isPaymentButtonDisabled = () => {
+    if (isProcessingPayment || !agreePaymentTerms) {
+      return true;
+    }
+
+    if (paymentMethod === "card") {
+      const currentCardNumber = cardNumber || savedCardNumber;
+      const currentCardExpiry = cardExpiry || savedCardExpiry;
+      const currentCardCVC = cardCVC || savedCardCVC;
+
+      // 카드 정보가 모두 입력되었는지 확인
+      if (
+        !currentCardNumber.replace(/\s/g, "").trim() ||
+        !currentCardExpiry.replace(/\//g, "").trim() ||
+        !currentCardCVC.trim()
+      ) {
+        return true;
+      }
+    }
+
+    return false;
   };
 
   // Format credit card number with spaces
@@ -317,18 +559,38 @@ const BookingPage = ({ currentLocation }) => {
   const handlePayment = () => {
     // Validate payment information
     if (paymentMethod === "card") {
+      const currentCardNumber = cardNumber || savedCardNumber;
+      const currentCardExpiry = cardExpiry || savedCardExpiry;
+      const currentCardCVC = cardCVC || savedCardCVC;
+
       if (
-        !cardNumber.replace(/\s/g, "").trim() ||
-        !cardExpiry.replace(/\//g, "").trim() ||
-        !cardCVC.trim()
+        !currentCardNumber.replace(/\s/g, "").trim() ||
+        !currentCardExpiry.replace(/\//g, "").trim() ||
+        !currentCardCVC.trim()
       ) {
         alert("카드 정보를 모두 입력해주세요.");
-        console.log("카드 정보 검증:", {
-          cardNumber: cardNumber.replace(/\s/g, "").trim(),
-          cardExpiry: cardExpiry.replace(/\//g, "").trim(),
-          cardCVC: cardCVC.trim(),
-        });
         return;
+      }
+
+      // 카드 정보 저장 (입력된 값이 있고 기존 값과 다른 경우에만)
+      if (cardNumber && cardNumber !== savedCardNumber) {
+        localStorage.setItem("cardNumber", cardNumber);
+        setSavedCardNumber(cardNumber);
+      }
+
+      if (cardExpiry && cardExpiry !== savedCardExpiry) {
+        localStorage.setItem("cardExpiry", cardExpiry);
+        setSavedCardExpiry(cardExpiry);
+      }
+
+      if (cardCVC && cardCVC !== savedCardCVC) {
+        localStorage.setItem("cardCVC", cardCVC);
+        setSavedCardCVC(cardCVC);
+      }
+
+      if (cardName && cardName !== savedCardName) {
+        localStorage.setItem("cardName", cardName);
+        setSavedCardName(cardName);
       }
     }
 
@@ -347,6 +609,30 @@ const BookingPage = ({ currentLocation }) => {
     }, 2000);
   };
 
+  // 마스킹된 카드번호 표시 함수
+  const getMaskedCardNumber = (cardNum) => {
+    if (!cardNum) return "";
+
+    const cleanNum = cardNum.replace(/\s/g, "");
+    if (cleanNum.length < 13) return cardNum;
+
+    // 앞 4자리와 마지막 4자리만 표시, 나머지는 '*'로 대체
+    const firstFour = cleanNum.substring(0, 4);
+    const lastFour = cleanNum.substring(cleanNum.length - 4);
+    const maskedPart = "*".repeat(cleanNum.length - 8);
+
+    // 4자리마다 공백 추가
+    return `${firstFour} ${maskedPart.substring(0, 4)} ${maskedPart.substring(
+      4,
+      8
+    )} ${lastFour}`;
+  };
+
+  // 마스킹된 CVC 표시 함수
+  const getMaskedCVC = () => {
+    return "***";
+  };
+
   const handleBookingComplete = () => {
     // In a real app, this would send the booking data to a server
     navigate(-1);
@@ -362,6 +648,20 @@ const BookingPage = ({ currentLocation }) => {
     const displayHour = hour % 12 || 12;
 
     return `${ampm} ${displayHour}:${minuteStr}`;
+  };
+
+  // 주민번호 마스킹 처리 함수
+  const getMaskedSsn = (ssn) => {
+    if (!ssn) return "";
+
+    // 주민번호 형식이 "123456-1234567"인 경우
+    if (ssn.includes("-")) {
+      const [prefix, suffix] = ssn.split("-");
+      return `${prefix}-${suffix.substring(0, 1)}******`;
+    }
+
+    // 주민번호 형식이 "1234561234567"인 경우
+    return `${ssn.substring(0, 6)}-${ssn.substring(6, 7)}******`;
   };
 
   // Calculate the total price (example)
@@ -397,6 +697,29 @@ const BookingPage = ({ currentLocation }) => {
     }
   };
 
+  // 개선된 취소 핸들러 함수
+  const handleCancelBooking = () => {
+    // 작성 중인 예약 정보가 있을 때만 확인 팝업 표시
+    if (
+      selectedDate ||
+      selectedTime ||
+      patientName ||
+      patientPhone ||
+      patientSsn ||
+      symptoms
+    ) {
+      const confirmed = window.confirm(
+        "예약을 취소하시겠습니까? 입력한 정보는 저장되지 않습니다."
+      );
+      if (!confirmed) {
+        return; // 사용자가 취소를 선택하면 함수 종료
+      }
+    }
+
+    // 사용자가 확인을 선택하거나 작성 중인 정보가 없으면 이전 페이지로 이동
+    navigate(-1);
+  };
+
   return (
     <div className="container">
       <div className="fixed-header">
@@ -405,6 +728,14 @@ const BookingPage = ({ currentLocation }) => {
           backButtonVisible={true}
           onBack={handleBackClick}
           title={getStepTitle()}
+          rightComponent={
+            <button
+              onClick={handleCancelBooking}
+              className="booking-cancel-button"
+            >
+              취소
+            </button>
+          }
         />
       </div>
 
@@ -478,22 +809,6 @@ const BookingPage = ({ currentLocation }) => {
                 )}
               </div>
             )}
-
-            <div className="button-group">
-              <button
-                className="booking-prev-button"
-                onClick={() => navigate(-1)}
-              >
-                이전
-              </button>
-              <button
-                className="booking-next-button"
-                onClick={handleNextStep}
-                disabled={!selectedDate || !selectedTime}
-              >
-                다음
-              </button>
-            </div>
           </div>
         )}
 
@@ -530,37 +845,114 @@ const BookingPage = ({ currentLocation }) => {
                 <User size={18} />
                 예약자 정보
               </h3>
+              {/* 이름 입력 부분 */}
               <div className="form-group">
                 <label className="form-label">이름 *</label>
-                <input
-                  type="text"
-                  className="form-input"
-                  value={patientName}
-                  onChange={(e) => setPatientName(e.target.value)}
-                  placeholder="실명을 입력해주세요"
-                  required
-                />
+                <div className="ssn-container">
+                  {savedName && !patientName ? (
+                    // 저장된 이름이 있고 현재 새로운 입력이 없는 경우
+                    <>
+                      <input
+                        type="text"
+                        className="form-input masked-input"
+                        value={savedName}
+                        readOnly
+                        style={{ flex: 1 }}
+                      />
+                      <button
+                        onClick={toggleNameEdit}
+                        className="ssn-edit-button"
+                        type="button"
+                      >
+                        <Edit2 size={16} />
+                      </button>
+                    </>
+                  ) : (
+                    // 저장된 이름이 없거나 새로운 입력이 있는 경우
+                    <input
+                      type="text"
+                      className="form-input"
+                      value={patientName}
+                      onChange={(e) => setPatientName(e.target.value)}
+                      placeholder="실명을 입력해주세요"
+                      required
+                    />
+                  )}
+                </div>
               </div>
+
+              {/* 전화번호 입력 부분 */}
               <div className="form-group">
                 <label className="form-label">전화번호 *</label>
-                <input
-                  type="tel"
-                  className="form-input"
-                  value={patientPhone}
-                  onChange={(e) => setPatientPhone(e.target.value)}
-                  placeholder="연락 가능한 번호를 입력해주세요"
-                  required
-                />
+                <div className="ssn-container">
+                  {savedPhone && !patientPhone ? (
+                    // 저장된 전화번호가 있고 현재 새로운 입력이 없는 경우
+                    <>
+                      <input
+                        type="text"
+                        className="form-input masked-input"
+                        value={savedPhone}
+                        readOnly
+                        style={{ flex: 1 }}
+                      />
+                      <button
+                        onClick={togglePhoneEdit}
+                        className="ssn-edit-button"
+                        type="button"
+                      >
+                        <Edit2 size={16} />
+                      </button>
+                    </>
+                  ) : (
+                    // 저장된 전화번호가 없거나 새로운 입력이 있는 경우
+                    <input
+                      type="tel"
+                      className="form-input"
+                      value={patientPhone}
+                      onChange={(e) => setPatientPhone(e.target.value)}
+                      placeholder="연락 가능한 번호를 입력해주세요"
+                      required
+                    />
+                  )}
+                </div>
               </div>
               <div className="form-group">
-                <label className="form-label">이메일</label>
-                <input
-                  type="email"
-                  className="form-input"
-                  value={patientEmail}
-                  onChange={(e) => setPatientEmail(e.target.value)}
-                  placeholder="예약 확인 메일을 받을 이메일 (선택)"
-                />
+                <label className="form-label">주민등록번호 *</label>
+                <div className="ssn-container">
+                  {savedSsn && !patientSsn ? (
+                    // 저장된 주민번호가 있고 현재 새로운 입력이 없는 경우
+                    <>
+                      <input
+                        type="text"
+                        className="form-input masked-input"
+                        value={getMaskedSsn(savedSsn)}
+                        readOnly
+                        style={{ flex: 1 }}
+                      />
+                      <button
+                        onClick={toggleSsnEdit}
+                        className="ssn-edit-button"
+                        type="button"
+                      >
+                        <Edit2 size={16} />
+                      </button>
+                    </>
+                  ) : (
+                    // 저장된 주민번호가 없거나 새로운 입력이 있는 경우
+                    <input
+                      type="text"
+                      className="form-input ssn-input"
+                      value={patientSsn}
+                      onChange={handleSsnChange}
+                      placeholder="주민등록번호를 입력해주세요 (예: 123456-1234567)"
+                      maxLength={14}
+                      required
+                    />
+                  )}
+                </div>
+                <span className="input-help-text">
+                  주민등록번호는 환자 식별 및 진료 기록 관리를 위해 필요합니다
+                </span>
               </div>
             </div>
 
@@ -633,19 +1025,6 @@ const BookingPage = ({ currentLocation }) => {
                 자세히 <ChevronRight size={14} />
               </button>
             </div>
-
-            <div className="button-group">
-              <button className="booking-prev-button" onClick={handlePrevStep}>
-                이전
-              </button>
-              <button
-                className="booking-next-button"
-                onClick={handleNextStep}
-                disabled={!patientName || !patientPhone || !agreeTerms}
-              >
-                다음
-              </button>
-            </div>
           </div>
         )}
 
@@ -680,18 +1059,16 @@ const BookingPage = ({ currentLocation }) => {
                 <h4 className="confirmation-section-title">예약자 정보</h4>
                 <div className="confirmation-info-item">
                   <User size={16} />
-                  <p>{patientName}</p>
+                  <p>{patientName || savedName}</p>
                 </div>
                 <div className="confirmation-info-item">
                   <Phone size={16} />
-                  <p>{patientPhone}</p>
+                  <p>{patientPhone || savedPhone}</p>
                 </div>
-                {patientEmail && (
-                  <div className="confirmation-info-item">
-                    <Mail size={16} />
-                    <p>{patientEmail}</p>
-                  </div>
-                )}
+                <div className="confirmation-info-item">
+                  <User size={16} />
+                  <p>주민등록번호: {getMaskedSsn(patientSsn || savedSsn)}</p>
+                </div>
               </div>
 
               {(symptoms || symptomImages.length > 0) && (
@@ -738,15 +1115,6 @@ const BookingPage = ({ currentLocation }) => {
                   <li>주차는 병원 주차장을 이용하실 수 있습니다.</li>
                 </ul>
               </div>
-            </div>
-
-            <div className="button-group">
-              <button className="booking-prev-button" onClick={handlePrevStep}>
-                이전
-              </button>
-              <button className="booking-next-button" onClick={handleNextStep}>
-                결제하기
-              </button>
             </div>
           </div>
         )}
@@ -851,58 +1219,155 @@ const BookingPage = ({ currentLocation }) => {
                 {paymentMethod === "card" && (
                   <div className="booking-section payment-card-info">
                     <h3 className="booking-section-title">카드 정보 입력</h3>
+                    {/* 카드번호 입력 부분 */}
                     <div className="form-group">
                       <label className="form-label">카드번호 *</label>
-                      <input
-                        type="text"
-                        className="form-input"
-                        value={cardNumber}
-                        onChange={handleCardNumberChange}
-                        placeholder="0000 0000 0000 0000"
-                        maxLength={19}
-                        required
-                      />
+                      <div className="ssn-container">
+                        {savedCardNumber && !cardNumber ? (
+                          // 저장된 카드번호가 있고 현재 새로운 입력이 없는 경우
+                          <>
+                            <input
+                              type="text"
+                              className="form-input masked-input"
+                              value={getMaskedCardNumber(savedCardNumber)}
+                              readOnly
+                              style={{ flex: 1 }}
+                            />
+                            <button
+                              onClick={toggleCardNumberEdit}
+                              className="ssn-edit-button"
+                              type="button"
+                            >
+                              <Edit2 size={16} />
+                            </button>
+                          </>
+                        ) : (
+                          // 저장된 카드번호가 없거나 새로운 입력이 있는 경우
+                          <input
+                            type="text"
+                            className="form-input"
+                            value={cardNumber}
+                            onChange={handleCardNumberChange}
+                            placeholder="0000 0000 0000 0000"
+                            maxLength={19}
+                            required
+                          />
+                        )}
+                      </div>
                       <span className="input-help-text">
                         16자리 숫자를 입력하세요 (공백 자동 추가)
                       </span>
                     </div>
+
+                    {/* 유효기간과 CVC 입력 부분 */}
                     <div className="form-row">
                       <div className="form-group half">
                         <label className="form-label">유효기간 *</label>
-                        <input
-                          type="text"
-                          className="form-input"
-                          value={cardExpiry}
-                          onChange={handleExpiryChange}
-                          placeholder="MM/YY"
-                          maxLength={5}
-                          required
-                        />
+                        <div className="ssn-container">
+                          {savedCardExpiry && !cardExpiry ? (
+                            // 저장된 유효기간이 있고 현재 새로운 입력이 없는 경우
+                            <>
+                              <input
+                                type="text"
+                                className="form-input masked-input"
+                                value={savedCardExpiry}
+                                readOnly
+                                style={{ flex: 1 }}
+                              />
+                              <button
+                                onClick={toggleCardExpiryEdit}
+                                className="ssn-edit-button"
+                                type="button"
+                              >
+                                <Edit2 size={14} />
+                              </button>
+                            </>
+                          ) : (
+                            // 저장된 유효기간이 없거나 새로운 입력이 있는 경우
+                            <input
+                              type="text"
+                              className="form-input"
+                              value={cardExpiry}
+                              onChange={handleExpiryChange}
+                              placeholder="MM/YY"
+                              maxLength={5}
+                              required
+                            />
+                          )}
+                        </div>
                         <span className="input-help-text">예: 01/26</span>
                       </div>
                       <div className="form-group half">
                         <label className="form-label">CVC *</label>
-                        <input
-                          type="text"
-                          className="form-input"
-                          value={cardCVC}
-                          onChange={handleCVCChange}
-                          placeholder="000"
-                          maxLength={3}
-                          required
-                        />
+                        <div className="ssn-container">
+                          {savedCardCVC && !cardCVC ? (
+                            // 저장된 CVC가 있고 현재 새로운 입력이 없는 경우
+                            <>
+                              <input
+                                type="text"
+                                className="form-input masked-input"
+                                value={getMaskedCVC()}
+                                readOnly
+                                style={{ flex: 1 }}
+                              />
+                              <button
+                                onClick={toggleCardCVCEdit}
+                                className="ssn-edit-button"
+                                type="button"
+                              >
+                                <Edit2 size={14} />
+                              </button>
+                            </>
+                          ) : (
+                            // 저장된 CVC가 없거나 새로운 입력이 있는 경우
+                            <input
+                              type="text"
+                              className="form-input"
+                              value={cardCVC}
+                              onChange={handleCVCChange}
+                              placeholder="000"
+                              maxLength={3}
+                              required
+                            />
+                          )}
+                        </div>
                         <span className="input-help-text">카드 뒷면 3자리</span>
                       </div>
                     </div>
+
+                    {/* 카드 소유자 이름 입력 부분 */}
                     <div className="form-group">
                       <label className="form-label">카드 소유자 이름</label>
-                      <input
-                        type="text"
-                        className="form-input"
-                        value={cardName}
-                        onChange={(e) => setCardName(e.target.value)}
-                        placeholder="카드에 표시된 이름"
-                      />
+                      <div className="ssn-container">
+                        {savedCardName && !cardName ? (
+                          // 저장된 카드 소유자 이름이 있고 현재 새로운 입력이 없는 경우
+                          <>
+                            <input
+                              type="text"
+                              className="form-input masked-input"
+                              value={savedCardName}
+                              readOnly
+                              style={{ flex: 1 }}
+                            />
+                            <button
+                              onClick={toggleCardNameEdit}
+                              className="ssn-edit-button"
+                              type="button"
+                            >
+                              <Edit2 size={16} />
+                            </button>
+                          </>
+                        ) : (
+                          // 저장된 카드 소유자 이름이 없거나 새로운 입력이 있는 경우
+                          <input
+                            type="text"
+                            className="form-input"
+                            value={cardName}
+                            onChange={(e) => setCardName(e.target.value)}
+                            placeholder="카드에 표시된 이름"
+                          />
+                        )}
+                      </div>
                     </div>
                   </div>
                 )}
@@ -957,32 +1422,6 @@ const BookingPage = ({ currentLocation }) => {
                     자세히 <ChevronRight size={14} />
                   </button>
                 </div>
-
-                <div className="button-group">
-                  <button
-                    className="booking-prev-button"
-                    onClick={handlePrevStep}
-                    disabled={isProcessingPayment}
-                  >
-                    이전
-                  </button>
-                  <button
-                    className={`payment-button ${
-                      isProcessingPayment ? "processing" : ""
-                    }`}
-                    onClick={handlePayment}
-                    disabled={isProcessingPayment || !agreePaymentTerms}
-                  >
-                    {isProcessingPayment ? (
-                      <span className="payment-processing">
-                        <span className="spinner"></span>
-                        결제 처리 중...
-                      </span>
-                    ) : (
-                      `${calculatePrice().toLocaleString()}원 결제하기`
-                    )}
-                  </button>
-                </div>
               </>
             ) : (
               <div className="payment-success">
@@ -1001,6 +1440,47 @@ const BookingPage = ({ currentLocation }) => {
                   확인
                 </button>
               </div>
+            )}
+          </div>
+        )}
+      </div>
+
+      <div className="detail-page-footer">
+        {step < 5 && !paymentSuccess && (
+          <div className="button-group">
+            <button
+              className="booking-prev-button"
+              onClick={handlePrevButtonClick}
+              disabled={isPrevButtonDisabled()}
+            >
+              이전
+            </button>
+
+            {step < 4 ? (
+              <button
+                className="primary-button"
+                onClick={handleNextButtonClick}
+                disabled={isNextButtonDisabled()}
+              >
+                {step === 3 ? "결제하기" : "다음"}
+              </button>
+            ) : (
+              <button
+                className={`payment-button ${
+                  isProcessingPayment ? "processing" : ""
+                }`}
+                onClick={handlePayment}
+                disabled={isPaymentButtonDisabled()}
+              >
+                {isProcessingPayment ? (
+                  <span className="payment-processing">
+                    <span className="spinner"></span>
+                    결제 처리 중...
+                  </span>
+                ) : (
+                  `${calculatePrice().toLocaleString()}원 결제하기`
+                )}
+              </button>
             )}
           </div>
         )}

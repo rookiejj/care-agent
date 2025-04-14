@@ -146,12 +146,10 @@
 .button-group {
   display: flex;
   gap: 0.75rem;
-  margin-top: 1rem;
 }
 
 .booking-prev-button {
-  flex: 1;
-  padding: 0.875rem;
+  width: 100%;
   border-radius: 0.5rem;
   border: 1px solid #3b82f6;
   background-color: white;
@@ -807,6 +805,63 @@
 
 .payment-complete-button:hover {
   background-color: #2563eb;
+}
+
+/* 주민번호 수정 버튼 스타일 */
+.ssn-edit-button {
+  background-color: transparent;
+  border: none;
+  color: #3b82f6;
+  padding: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.ssn-edit-button:hover {
+  background-color: #eff6ff;
+}
+
+.ssn-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.ssn-input {
+  flex: 1;
+}
+
+/* 주민번호 마스킹 스타일 */
+.masked-input {
+  background-color: #f9fafb;
+  color: #4b5563;
+}
+
+.booking-cancel-button {
+  background: none;
+  border: none;
+  color: #6b7280;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: color 0.2s;
+  background-color: #f3f4f6;
+  width: 4rem;
+  border: 1px solid #d0d3d9;
+}
+
+.booking-cancel-button:hover {
+  color: #ef4444; /* 붉은색으로 변경 */
+}
+
+.booking-cancel-button:active {
+  color: #dc2626;
 }
 
 /* Responsive adjustments */

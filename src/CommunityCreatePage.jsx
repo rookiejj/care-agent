@@ -256,11 +256,11 @@ const CommunityCreatePage = ({ currentLocation }) => {
       </div>
 
       <div className="community-create-footer">
-        <button className="cancel-button" onClick={handleCancel}>
+        <button className="community-cancel-button" onClick={handleCancel}>
           취소
         </button>
         <button
-          className="submit-button"
+          className="community-submit-button"
           onClick={handleSubmit}
           disabled={isSubmitDisabled}
         >
