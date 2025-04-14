@@ -136,7 +136,7 @@ const BookingPage = ({ currentLocation }) => {
   }, [selectedDate]);
 
   const handleBackClick = () => {
-    if (step == 1) {
+    if (step == 1 || paymentSuccess) {
       navigate(-1);
     }
 
@@ -691,7 +691,7 @@ const BookingPage = ({ currentLocation }) => {
       case 3:
         return "예약 확인";
       case 4:
-        return "결제하기";
+        return !paymentSuccess ? "결제하기" : "결제완료";
       default:
         return "예약하기";
     }
@@ -729,12 +729,14 @@ const BookingPage = ({ currentLocation }) => {
           onBack={handleBackClick}
           title={getStepTitle()}
           rightComponent={
-            <button
-              onClick={handleCancelBooking}
-              className="booking-cancel-button"
-            >
-              취소
-            </button>
+            !paymentSuccess ? (
+              <button
+                onClick={handleCancelBooking}
+                className="booking-cancel-button"
+              >
+                취소
+              </button>
+            ) : null
           }
         />
       </div>
