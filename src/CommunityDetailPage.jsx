@@ -253,7 +253,6 @@ const CommunityDetailPage = ({ currentLocation }) => {
       <div className="container">
         <div className="fixed-header">
           <PageHeader
-            title={"게시글 상세"}
             currentLocation={currentLocation}
             backButtonVisible={true}
             onBack={() => navigate(-1)}
@@ -272,7 +271,6 @@ const CommunityDetailPage = ({ currentLocation }) => {
     <div className="container">
       <div className="fixed-header">
         <PageHeader
-          title={"게시글 상세"}
           currentLocation={currentLocation}
           backButtonVisible={true}
           onBack={() => navigate(-1)}
