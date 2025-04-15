@@ -9,6 +9,7 @@
   background-color: rgba(59, 130, 246, 0.85); /* Semi-transparent blue */
   color: white;
   display: flex;
+  padding: 0;
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -16,7 +17,7 @@
   cursor: pointer;
   z-index: 30; /* Higher than bottom navigation (z-index: 20) */
   transition: all 0.3s ease;
-  bottom: 8rem; /* Increased to move it HIGHER above the bottom navigation */
+  bottom: 8rem;
 }
 
 .floating-action-button:hover {
@@ -27,7 +28,7 @@
     0.9
   ); /* Slightly darker and more opaque on hover */
   transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
 .floating-action-button:active {
