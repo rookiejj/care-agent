@@ -1213,7 +1213,7 @@ const CommunityDetailPage = ({ currentLocation }) => {
             value={comment}
             onChange={handleCommentChange}
             onKeyDown={handleKeyDown}
-            placeholder="댓글 추가..."
+            placeholder="댓글을 입력하세요"
             rows={1}
           />
 
