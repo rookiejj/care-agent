@@ -530,10 +530,13 @@
 
 /* 인스타그램 스타일 댓글 관련 CSS */
 
+/* 기존 CSS에서 추가 및 수정 */
+
 /* 댓글 입력 컨테이너 (인스타그램 스타일) */
 .comment-container {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: stretch;
   background-color: white;
   border-top: 1px solid #efefef;
   padding: 0.75rem 1rem;
@@ -545,17 +548,18 @@
   max-width: 100%;
   box-sizing: border-box;
   z-index: 30;
-
-  /* position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 30; */
 }
 
 @media (max-width: 480px) {
   .comment-container {
     width: 100%;
   }
+}
+
+.comment-input-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
 
 .comment-avatar {
@@ -581,7 +585,6 @@
   background-color: #f3f4f6;
   border-radius: 9999px;
   min-height: 40px;
-  border-radius: 1rem;
 }
 
 .comment-input {
@@ -591,13 +594,14 @@
   outline: none;
   font-size: 0.875rem;
   color: #262626;
-  padding: 0.5rem;
+  padding: 0.5rem 1rem;
   resize: none;
   min-height: 20px;
   max-height: 80px;
   line-height: 1.4;
   align-content: center;
-  border-radius: 0.1rem;
+  border-radius: 1rem;
+  padding: 0 1rem;
 }
 
 .comment-input::placeholder {
@@ -636,6 +640,35 @@
 
 .comment-submit-button.active {
   opacity: 1;
+}
+
+/* 답글 인디케이터 스타일 */
+.reply-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f8f9fa;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 0.5rem;
+  width: 100%;
+}
+
+.reply-to-text {
+  font-size: 0.75rem;
+  color: #0095f6;
+  font-weight: 500;
+}
+
+.cancel-reply-button {
+  background: none;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8e8e8e;
+  cursor: pointer;
 }
 
 /* 댓글 섹션 */
@@ -884,60 +917,13 @@
   margin-right: 0.5rem;
 }
 
-/* 답글 입력창 스타일 */
-.reply-form {
-  display: flex;
-  align-items: center;
-  margin-left: 2.5rem;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-  padding-top: 0.5rem;
-  border-top: 1px solid #f3f4f6;
-}
-
-.reply-input-wrapper {
-  position: relative;
-  flex: 1;
-  display: flex;
-  align-items: center;
-  background-color: #f3f4f6;
-  border-radius: 9999px;
-  padding: 0.5rem 0.75rem;
-  border-radius: 1rem;
-}
-
-.reply-input {
-  flex: 1;
-  border: none;
-  background: transparent;
-  outline: none;
-  font-size: 0.875rem;
-  color: #262626;
-  padding: 0;
-}
-
-.reply-submit {
-  background: none;
-  border: none;
-  color: #0095f6;
-  font-weight: 600;
-  padding: 0;
-  margin-left: 0.75rem;
-  cursor: pointer;
-  font-size: 0.875rem;
-  opacity: 0.5;
-}
-
-.reply-submit.active {
-  opacity: 1;
-}
-
 /* 멘션 스타일 */
 .mention {
   color: #0095f6;
   font-weight: 600;
 }
 
+/* 더보기 버튼 */
 /* 더보기 버튼 */
 .view-more-replies {
   margin-left: 2.5rem;
@@ -954,4 +940,101 @@
 
 .view-more-replies:hover {
   color: #262626;
+}
+
+/* 스크롤 조정을 위한 여백 */
+.community-detail-content {
+  padding-bottom: 70px; /* 댓글 입력창 높이보다 큰 값 */
+}
+
+/* 실제 컨텐츠 영역 스크롤 처리 */
+.container > div:nth-child(2) {
+  padding-bottom: 90px; /* 댓글 입력창 + 하단 네비게이션 */
+}
+
+/* 스크롤 처리 시 댓글이 보여질 수 있도록 하는 여백 */
+.community-detail-comments-list {
+  scroll-margin-bottom: 140px; /* 댓글 입력창 + 여유공간 */
+}
+
+/* 댓글이 선택된 상태임을 보여주는 하이라이트 효과 */
+.comment-item-highlighted {
+  background-color: rgba(0, 149, 246, 0.05);
+  border-radius: 0.5rem;
+  animation: highlight-fade 2s forwards;
+}
+
+@keyframes highlight-fade {
+  0% {
+    background-color: rgba(0, 149, 246, 0.1);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+/* 모바일 최적화 */
+@media (max-width: 480px) {
+  .comment-container {
+    bottom: 3.5rem; /* 네비게이션 바 높이 */
+  }
+
+  .emoji-picker-container {
+    bottom: 45px;
+    right: 5px;
+  }
+
+  .emoji-list {
+    grid-template-columns: repeat(6, 1fr);
+    padding: 0.5rem;
+  }
+
+  .emoji-item {
+    width: 28px;
+    height: 28px;
+    font-size: 1.125rem;
+  }
+
+  .reply-indicator {
+    padding: 0.375rem 0.75rem;
+  }
+}
+
+/* 댓글 입력 컨테이너가 고정되어 있을 때 화면 가려짐 방지 */
+.community-detail-comments {
+  padding-bottom: 65px; /* 댓글 입력창 높이 */
+}
+
+/* 댓글 작성 중인 대상 표시 스타일 */
+.reply-indicator {
+  background-color: #f0f8ff;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.reply-to-text {
+  font-size: 0.75rem;
+  color: #0095f6;
+  font-weight: 600;
+}
+
+.cancel-reply-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem;
+  border-radius: 50%;
+}
+
+.cancel-reply-button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
 }

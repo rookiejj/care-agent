@@ -66,7 +66,6 @@ const CommunityDetailPage = ({ currentLocation }) => {
   const [comments, setComments] = useState([]);
   const [visibleComments, setVisibleComments] = useState([]);
   const [replyingTo, setReplyingTo] = useState(null);
-  const [replyText, setReplyText] = useState("");
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
   const [showImagesModal, setShowImagesModal] = useState(false);
@@ -81,14 +80,17 @@ const CommunityDetailPage = ({ currentLocation }) => {
   const [heartAnimations, setHeartAnimations] = useState({});
   const [commentsToShow, setCommentsToShow] = useState(5); // 초기에 표시할 댓글 수
 
+  // 현재 댓글 입력 상태 (일반 댓글 or 답글)
+  const [inputMode, setInputMode] = useState("comment"); // "comment" 또는 "reply"
+
   const commentInputRef = useRef(null);
-  const replyInputRef = useRef(null);
   const emojiPickerRef = useRef(null);
   const mentionDropdownRef = useRef(null);
+  const contentRef = useRef(null); // 스크롤을 위한 컨텐츠 영역 ref
+  const commentRefs = useRef({}); // 각 댓글 요소에 대한 ref 객체
 
-  // 댓글 자동 높이 조절을 위한 refs
+  // 댓글 자동 높이 조절을 위한 ref
   const commentTextareaRef = useRef(null);
-  const replyTextareaRef = useRef(null);
 
   useEffect(() => {
     // URL에서 가져온 ID와 일치하는 게시글을 찾거나 location.state에서 게시글 정보를 가져옴
@@ -132,6 +134,12 @@ const CommunityDetailPage = ({ currentLocation }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [location.state, id, communityPosts]);
+
+  // 각 댓글에 ref 할당
+  useEffect(() => {
+    // 댓글 컴포넌트 마운트 시 ref 객체 초기화
+    commentRefs.current = {};
+  }, []);
 
   // 댓글을 부모-자식 관계로 구성
   const processComments = (commentsArray) => {
@@ -353,39 +361,67 @@ const CommunityDetailPage = ({ currentLocation }) => {
     }
   }, [comment]);
 
-  useEffect(() => {
-    if (replyTextareaRef.current) {
-      adjustTextareaHeight(replyTextareaRef.current);
+  // 댓글 영역으로 스크롤하는 함수
+  const scrollToComment = (commentId) => {
+    // 댓글 요소가 존재하는지 확인
+    if (commentRefs.current[commentId]) {
+      // 해당 댓글 요소의 위치 계산
+      const commentElement = commentRefs.current[commentId];
+      const commentRect = commentElement.getBoundingClientRect();
+
+      // 현재 스크롤 위치 가져오기
+      const contentElement = contentRef.current;
+
+      if (contentElement) {
+        // 댓글의 위치로 스크롤 (입력창 높이를 고려하여 일정 여백 추가)
+        const commentInputHeight = 65; // 댓글 입력창의 높이 (대략적인 값)
+        const scrollPosition =
+          contentElement.scrollTop +
+          commentRect.top -
+          window.innerHeight +
+          commentRect.height +
+          commentInputHeight +
+          30; // 추가 여백
+
+        // 부드러운 스크롤 애니메이션
+        contentElement.scrollTo({
+          top: scrollPosition,
+          behavior: "smooth",
+        });
+      }
     }
-  }, [replyText]);
+  };
+
+  // 댓글 입력모드 설정 및 스크롤 처리
+  const setReplyMode = (comment) => {
+    // 이미 선택된 댓글이면 취소
+    if (replyingTo && replyingTo.id === comment.id) {
+      setReplyingTo(null);
+      setInputMode("comment");
+      setComment("");
+    } else {
+      // 새로운 댓글에 답글 남기기
+      setReplyingTo(comment);
+      setInputMode("reply");
+
+      // 댓글 초기화 (멘션 추가)
+      setComment(`@${comment.author.nickname} `);
+
+      // 해당 댓글로 스크롤
+      setTimeout(() => {
+        scrollToComment(comment.id);
+
+        // 댓글 입력창에 포커스
+        if (commentTextareaRef.current) {
+          commentTextareaRef.current.focus();
+        }
+      }, 100);
+    }
+  };
 
   const handleCommentChange = (e) => {
     const value = e.target.value;
     setComment(value);
-
-    // @ 감지하여 멘션 드롭다운 표시
-    const lastAtIndex = value.lastIndexOf("@");
-    if (
-      lastAtIndex !== -1 &&
-      (lastAtIndex === 0 || value[lastAtIndex - 1] === " ")
-    ) {
-      const query = value.substring(lastAtIndex + 1).split(" ")[0];
-      if (query) {
-        setMentionQuery(query);
-        const suggestions = getSuggestedUsers(query);
-        setMentionSuggestions(suggestions);
-        setShowMentionDropdown(suggestions.length > 0);
-      } else {
-        setShowMentionDropdown(false);
-      }
-    } else {
-      setShowMentionDropdown(false);
-    }
-  };
-
-  const handleReplyChange = (e) => {
-    const value = e.target.value;
-    setReplyText(value);
 
     // @ 감지하여 멘션 드롭다운 표시
     const lastAtIndex = value.lastIndexOf("@");
@@ -462,7 +498,7 @@ const CommunityDetailPage = ({ currentLocation }) => {
 
   // 멘션 선택 처리
   const handleMentionSelect = (user) => {
-    const inputValue = replyingTo ? replyText : comment;
+    const inputValue = comment;
     const lastAtIndex = inputValue.lastIndexOf("@");
 
     if (lastAtIndex !== -1) {
@@ -471,123 +507,108 @@ const CommunityDetailPage = ({ currentLocation }) => {
       afterAt[0] = `@${user.nickname} `;
 
       const newValue = beforeAt + afterAt.join(" ");
-
-      if (replyingTo) {
-        setReplyText(newValue);
-      } else {
-        setComment(newValue);
-      }
+      setComment(newValue);
     }
 
     setShowMentionDropdown(false);
 
     // 포커스 돌려주기
     setTimeout(() => {
-      if (replyingTo && replyInputRef.current) {
-        replyInputRef.current.focus();
-      } else if (commentInputRef.current) {
-        commentInputRef.current.focus();
+      if (commentTextareaRef.current) {
+        commentTextareaRef.current.focus();
       }
     }, 0);
   };
 
   // 이모지 선택 처리
   const handleEmojiSelect = (emoji) => {
-    if (replyingTo) {
-      setReplyText((prev) => prev + emoji);
-      setTimeout(() => replyInputRef.current?.focus(), 0);
-    } else {
-      setComment((prev) => prev + emoji);
-      setTimeout(() => commentInputRef.current?.focus(), 0);
-    }
+    setComment((prev) => prev + emoji);
+    setTimeout(() => commentTextareaRef.current?.focus(), 0);
     setShowEmojiPicker(false);
   };
 
   const handleCommentSubmit = () => {
     if (comment.trim()) {
-      const newComment = {
-        id: `comment-${Date.now()}`,
-        author: {
-          id: "current-user",
-          nickname: "나",
-          profileImage: getProfileImage(),
-          level: 1,
-        },
-        content: comment,
-        createdAt: new Date().toISOString(),
-        likeCount: 0,
-        isLiked: false,
-        isReply: false,
-        replies: [],
-      };
+      if (inputMode === "comment") {
+        // 일반 댓글 추가
+        const newComment = {
+          id: `comment-${Date.now()}`,
+          author: {
+            id: "current-user",
+            nickname: "나",
+            profileImage: getProfileImage(),
+            level: 1,
+          },
+          content: comment,
+          createdAt: new Date().toISOString(),
+          likeCount: 0,
+          isLiked: false,
+          isReply: false,
+          replies: [],
+        };
 
-      // 댓글 목록 업데이트
-      const updatedComments = [newComment, ...comments];
-      setComments(updatedComments);
+        // 댓글 목록 업데이트
+        const updatedComments = [newComment, ...comments];
+        setComments(updatedComments);
 
-      // 새 댓글을 항상 표시하도록 표시 개수 증가
-      const newCommentsToShow = commentsToShow + 1;
-      setCommentsToShow(newCommentsToShow);
-      setVisibleComments(
-        getVisibleComments(updatedComments, newCommentsToShow)
-      );
+        // 새 댓글을 항상 표시하도록 표시 개수 증가
+        const newCommentsToShow = commentsToShow + 1;
+        setCommentsToShow(newCommentsToShow);
+        setVisibleComments(
+          getVisibleComments(updatedComments, newCommentsToShow)
+        );
+      } else if (inputMode === "reply" && replyingTo) {
+        // 답글 추가
+        // 항상 원래 부모 댓글 ID를 찾음 (대댓글에 답글 달더라도)
+        const parentCommentId = replyingTo.isReply
+          ? replyingTo.parentCommentId
+          : replyingTo.id;
 
+        const newReply = {
+          id: `reply-${Date.now()}`,
+          author: {
+            id: "current-user",
+            nickname: "나",
+            profileImage: getProfileImage(),
+            level: 1,
+          },
+          content: comment,
+          createdAt: new Date().toISOString(),
+          likeCount: 0,
+          isLiked: false,
+          isReply: true,
+          parentCommentId: parentCommentId,
+        };
+
+        // 댓글 목록 업데이트 - 항상 원래 부모 댓글에 답글 추가
+        const updatedComments = comments.map((comment) => {
+          if (comment.id === parentCommentId) {
+            return {
+              ...comment,
+              replies: [...comment.replies, newReply],
+            };
+          }
+          return comment;
+        });
+
+        setComments(updatedComments);
+
+        // 해당 스레드 자동 확장
+        setExpandedThreads((prev) => ({ ...prev, [parentCommentId]: true }));
+
+        setVisibleComments(getVisibleComments(updatedComments, commentsToShow));
+
+        // 답글 모드 종료
+        setReplyingTo(null);
+        setInputMode("comment");
+      }
+
+      // 공통 처리
       setComment("");
 
       // 텍스트 영역 높이 리셋
       if (commentTextareaRef.current) {
         commentTextareaRef.current.style.height = "auto";
-      }
-    }
-  };
-
-  // 답글 제출 처리
-  const handleReplySubmit = () => {
-    if (replyText.trim() && replyingTo) {
-      // 항상 원래 부모 댓글 ID를 찾음 (대댓글에 답글 달더라도)
-      const parentCommentId = replyingTo.isReply
-        ? replyingTo.parentCommentId
-        : replyingTo.id;
-
-      const newReply = {
-        id: `reply-${Date.now()}`,
-        author: {
-          id: "current-user",
-          nickname: "나",
-          profileImage: getProfileImage(),
-          level: 1,
-        },
-        content: replyText,
-        createdAt: new Date().toISOString(),
-        likeCount: 0,
-        isLiked: false,
-        isReply: true,
-        parentCommentId: parentCommentId,
-      };
-
-      // 댓글 목록 업데이트 - 항상 원래 부모 댓글에 답글 추가
-      const updatedComments = comments.map((comment) => {
-        if (comment.id === parentCommentId) {
-          return {
-            ...comment,
-            replies: [...comment.replies, newReply],
-          };
-        }
-        return comment;
-      });
-
-      setComments(updatedComments);
-
-      // 해당 스레드 자동 확장
-      setExpandedThreads((prev) => ({ ...prev, [parentCommentId]: true }));
-
-      setVisibleComments(getVisibleComments(updatedComments, commentsToShow));
-      setReplyText("");
-      setReplyingTo(null);
-
-      // 텍스트 영역 높이 리셋
-      if (replyTextareaRef.current) {
-        replyTextareaRef.current.style.height = "auto";
       }
     }
   };
@@ -599,16 +620,21 @@ const CommunityDetailPage = ({ currentLocation }) => {
     }
   };
 
-  const handleReplyKeyDown = (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      handleReplySubmit();
-    }
-  };
-
   const handleLikeToggle = () => {
     setIsLiked(!isLiked);
     setLikeCount((prev) => (isLiked ? prev - 1 : prev + 1));
+  };
+
+  // 답글 모드 취소
+  const cancelReplyMode = () => {
+    setReplyingTo(null);
+    setInputMode("comment");
+    setComment("");
+
+    // 텍스트 영역 높이 리셋
+    if (commentTextareaRef.current) {
+      commentTextareaRef.current.style.height = "auto";
+    }
   };
 
   // 댓글 좋아요 토글
@@ -655,7 +681,7 @@ const CommunityDetailPage = ({ currentLocation }) => {
     });
 
     setComments(updatedComments);
-    setVisibleComments(getVisibleComments(updatedComments));
+    setVisibleComments(getVisibleComments(updatedComments, commentsToShow));
   };
 
   // 답글 스레드 토글
@@ -666,27 +692,6 @@ const CommunityDetailPage = ({ currentLocation }) => {
       newState[commentId] = !prev[commentId];
       return newState;
     });
-  };
-
-  // 답글 폼 토글
-  const toggleReplyForm = (comment) => {
-    if (replyingTo && replyingTo.id === comment.id) {
-      // 이미 선택된 댓글이면 취소
-      setReplyingTo(null);
-      setReplyText("");
-    } else {
-      // 대댓글인 경우에도 원래 댓글과 동일하게 처리
-      setReplyingTo(comment);
-      // 멘션 추가
-      setReplyText(`@${comment.author.nickname} `);
-
-      // 포커스 주기
-      setTimeout(() => {
-        if (replyInputRef.current) {
-          replyInputRef.current.focus();
-        }
-      }, 0);
-    }
   };
 
   const handleShare = () => {
@@ -819,7 +824,7 @@ const CommunityDetailPage = ({ currentLocation }) => {
         )}
       </div>
 
-      <div className="community-detail-content">
+      <div className="community-detail-content" ref={contentRef}>
         {/* 게시글 헤더 */}
         <div className="community-detail-header">
           <div className="community-detail-tag-container">
@@ -995,7 +1000,10 @@ const CommunityDetailPage = ({ currentLocation }) => {
           <div className="community-detail-comments-list">
             {visibleComments.map((comment) => (
               <React.Fragment key={comment.id}>
-                <div className="community-comment-item">
+                <div
+                  className="community-comment-item"
+                  ref={(el) => (commentRefs.current[comment.id] = el)}
+                >
                   <div className="community-comment-avatar">
                     <img
                       src={comment.author.profileImage || getProfileImage()}
@@ -1037,41 +1045,14 @@ const CommunityDetailPage = ({ currentLocation }) => {
 
                       <button
                         className="community-comment-reply-button"
-                        onClick={() => toggleReplyForm(comment)}
+                        onClick={() => setReplyMode(comment)}
                       >
                         답글 달기
                       </button>
                     </div>
-
-                    {/* 답글 입력 폼 */}
-                    {replyingTo && replyingTo.id === comment.id && (
-                      <div className="reply-form">
-                        <div className="reply-input-wrapper">
-                          <textarea
-                            ref={replyTextareaRef}
-                            className="reply-input"
-                            value={replyText}
-                            onChange={handleReplyChange}
-                            onKeyDown={handleReplyKeyDown}
-                            placeholder="답글 작성..."
-                            rows={1}
-                          />
-                        </div>
-                        <button
-                          className={`reply-submit ${
-                            replyText.trim() ? "active" : ""
-                          }`}
-                          onClick={handleReplySubmit}
-                          disabled={!replyText.trim()}
-                        >
-                          게시
-                        </button>
-                      </div>
-                    )}
                   </div>
                 </div>
 
-                {/* 답글 표시 및 토글 */}
                 {/* 답글 표시 및 토글 */}
                 {comment.replies && comment.replies.length > 0 && (
                   <>
@@ -1097,6 +1078,7 @@ const CommunityDetailPage = ({ currentLocation }) => {
                       <div
                         key={reply.id}
                         className="community-comment-item comment-reply"
+                        ref={(el) => (commentRefs.current[reply.id] = el)}
                       >
                         <div className="community-comment-avatar">
                           <img
@@ -1141,37 +1123,11 @@ const CommunityDetailPage = ({ currentLocation }) => {
 
                             <button
                               className="community-comment-reply-button"
-                              onClick={() => toggleReplyForm(reply)}
+                              onClick={() => setReplyMode(reply)}
                             >
                               답글 달기
                             </button>
                           </div>
-
-                          {/* 여기에 대댓글의 답글 입력 폼 추가 */}
-                          {replyingTo && replyingTo.id === reply.id && (
-                            <div className="reply-form">
-                              <div className="reply-input-wrapper">
-                                <textarea
-                                  ref={replyTextareaRef}
-                                  className="reply-input"
-                                  value={replyText}
-                                  onChange={handleReplyChange}
-                                  onKeyDown={handleReplyKeyDown}
-                                  placeholder="답글 작성..."
-                                  rows={1}
-                                />
-                              </div>
-                              <button
-                                className={`reply-submit ${
-                                  replyText.trim() ? "active" : ""
-                                }`}
-                                onClick={handleReplySubmit}
-                                disabled={!replyText.trim()}
-                              >
-                                게시
-                              </button>
-                            </div>
-                          )}
                         </div>
                       </div>
                     ))}
@@ -1202,76 +1158,87 @@ const CommunityDetailPage = ({ currentLocation }) => {
 
       {/* 인스타그램 스타일 댓글 입력창 (하단 고정) */}
       <div className="comment-container">
-        <div className="comment-avatar">
-          <img src={getProfileImage()} alt="내 프로필" />
-        </div>
+        {/* 답글 모드일 때 표시되는 부분 */}
+        {inputMode === "reply" && replyingTo && (
+          <div className="reply-indicator">
+            <span className="reply-to-text">
+              {replyingTo.author.nickname}에게 답글 남기는 중
+            </span>
+            <button className="cancel-reply-button" onClick={cancelReplyMode}>
+              <X size={16} />
+            </button>
+          </div>
+        )}
 
-        <div className="comment-input-wrapper">
-          <textarea
-            ref={commentTextareaRef}
-            className="comment-input"
-            value={comment}
-            onChange={handleCommentChange}
-            onKeyDown={handleKeyDown}
-            placeholder="댓글을 입력하세요"
-            rows={1}
-          />
+        <div style={{ display: "flex", flexDirection: "row" }}>
+          <div className="comment-input-wrapper">
+            <textarea
+              ref={commentTextareaRef}
+              className="comment-input"
+              value={comment}
+              onChange={handleCommentChange}
+              onKeyDown={handleKeyDown}
+              placeholder={
+                inputMode === "reply" ? "답글 입력..." : "댓글을 입력하세요"
+              }
+              rows={1}
+            />
 
-          {/* 멘션 드롭다운 */}
-          {showMentionDropdown && (
-            <div className="mention-dropdown" ref={mentionDropdownRef}>
-              {mentionSuggestions.map((user) => (
-                <div
-                  key={user.id}
-                  className="mention-item"
-                  onClick={() => handleMentionSelect(user)}
-                >
-                  <img
-                    className="mention-avatar"
-                    src={user.profileImage || getProfileImage()}
-                    alt={user.nickname}
-                  />
-                  <span className="mention-name">{user.nickname}</span>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-
-        <div className="comment-actions">
-          <button
-            className="emoji-button"
-            onClick={() => setShowEmojiPicker(!showEmojiPicker)}
-          >
-            <Smile size={20} />
-          </button>
-
-          {/* 이모지 선택기 */}
-          {showEmojiPicker && (
-            <div className="emoji-picker-container" ref={emojiPickerRef}>
-              <div className="emoji-list">
-                {EMOJI_LIST.map((emoji, index) => (
+            {/* 멘션 드롭다운 */}
+            {showMentionDropdown && (
+              <div className="mention-dropdown" ref={mentionDropdownRef}>
+                {mentionSuggestions.map((user) => (
                   <div
-                    key={index}
-                    className="emoji-item"
-                    onClick={() => handleEmojiSelect(emoji)}
+                    key={user.id}
+                    className="mention-item"
+                    onClick={() => handleMentionSelect(user)}
                   >
-                    {emoji}
+                    <img
+                      className="mention-avatar"
+                      src={user.profileImage || getProfileImage()}
+                      alt={user.nickname}
+                    />
+                    <span className="mention-name">{user.nickname}</span>
                   </div>
                 ))}
               </div>
-            </div>
-          )}
+            )}
+          </div>
+          <div className="comment-actions">
+            <button
+              className="emoji-button"
+              onClick={() => setShowEmojiPicker(!showEmojiPicker)}
+            >
+              <Smile size={20} />
+            </button>
 
-          <button
-            className={`comment-submit-button ${
-              comment.trim() ? "active" : ""
-            }`}
-            onClick={handleCommentSubmit}
-            disabled={!comment.trim()}
-          >
-            게시
-          </button>
+            {/* 이모지 선택기 */}
+            {showEmojiPicker && (
+              <div className="emoji-picker-container" ref={emojiPickerRef}>
+                <div className="emoji-list">
+                  {EMOJI_LIST.map((emoji, index) => (
+                    <div
+                      key={index}
+                      className="emoji-item"
+                      onClick={() => handleEmojiSelect(emoji)}
+                    >
+                      {emoji}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <button
+              className={`comment-submit-button ${
+                comment.trim() ? "active" : ""
+              }`}
+              onClick={handleCommentSubmit}
+              disabled={!comment.trim()}
+            >
+              게시
+            </button>
+          </div>{" "}
         </div>
       </div>
     </div>
