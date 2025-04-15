@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import { PageHeader, getProfileImage } from "./App";
 import { useData } from "./DataContext";
@@ -12,10 +12,48 @@ import {
   Clock,
   AlertTriangle,
   Copy,
+  Smile,
+  ChevronDown,
+  ChevronUp,
+  X,
 } from "lucide-react";
 import { mainCommunityCategories } from "./communityCategoryData";
 import { getSubSpecialtyKoreanName } from "./medicalCategoryData";
 import "./CommunityDetailPage.css";
+
+// 자주 사용하는 이모지 리스트
+const EMOJI_LIST = [
+  "👍",
+  "❤️",
+  "😂",
+  "😍",
+  "😊",
+  "🙏",
+  "👏",
+  "🔥",
+  "💯",
+  "👌",
+  "😁",
+  "💕",
+  "🥰",
+  "😘",
+  "🤔",
+  "😔",
+  "😭",
+  "😢",
+  "😉",
+  "🤣",
+  "😎",
+  "👀",
+  "👇",
+  "🙄",
+  "💪",
+  "👋",
+  "🤩",
+  "😋",
+  "💓",
+  "🤭",
+];
 
 const CommunityDetailPage = ({ currentLocation }) => {
   const location = useLocation();
@@ -26,12 +64,31 @@ const CommunityDetailPage = ({ currentLocation }) => {
   const [comment, setComment] = useState("");
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
+  const [visibleComments, setVisibleComments] = useState([]);
+  const [replyingTo, setReplyingTo] = useState(null);
+  const [replyText, setReplyText] = useState("");
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
   const [showImagesModal, setShowImagesModal] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showActionsMenu, setShowActionsMenu] = useState(false);
   const [showShareTooltip, setShowShareTooltip] = useState(false);
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [showMentionDropdown, setShowMentionDropdown] = useState(false);
+  const [mentionQuery, setMentionQuery] = useState("");
+  const [mentionSuggestions, setMentionSuggestions] = useState([]);
+  const [expandedThreads, setExpandedThreads] = useState({});
+  const [heartAnimations, setHeartAnimations] = useState({});
+  const [commentsToShow, setCommentsToShow] = useState(5); // 초기에 표시할 댓글 수
+
+  const commentInputRef = useRef(null);
+  const replyInputRef = useRef(null);
+  const emojiPickerRef = useRef(null);
+  const mentionDropdownRef = useRef(null);
+
+  // 댓글 자동 높이 조절을 위한 refs
+  const commentTextareaRef = useRef(null);
+  const replyTextareaRef = useRef(null);
 
   useEffect(() => {
     // URL에서 가져온 ID와 일치하는 게시글을 찾거나 location.state에서 게시글 정보를 가져옴
@@ -49,43 +106,124 @@ const CommunityDetailPage = ({ currentLocation }) => {
 
       // 댓글 데이터 가져오기
       if (currentPost.comments && currentPost.comments.length > 0) {
-        setComments(currentPost.comments);
+        const processedComments = processComments(currentPost.comments);
+        setComments(processedComments);
+        // 처음 5개의 댓글만 표시하도록 설정
+        setCommentsToShow(5);
+        setVisibleComments(getVisibleComments(processedComments, 5));
       } else {
-        // 더미 댓글 데이터 생성
+        // 더미 댓글 데이터 생성 - 더 많은 댓글과 대댓글 생성
         const dummyComments = generateDummyComments(
           currentPost.id,
-          currentPost.commentCount || 3
+          currentPost.commentCount || 15 // 더 많은 댓글 생성
         );
-        setComments(dummyComments);
+        const processedComments = processComments(dummyComments);
+        setComments(processedComments);
+        // 처음 5개의 댓글만 표시하도록 설정
+        setCommentsToShow(5);
+        setVisibleComments(getVisibleComments(processedComments, 5));
       }
     }
+
+    // 클릭 이벤트 리스너 추가 (모달 외부 클릭 감지)
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, [location.state, id, communityPosts]);
 
+  // 댓글을 부모-자식 관계로 구성
+  const processComments = (commentsArray) => {
+    const parentComments = [];
+    const childComments = {};
+
+    // 먼저 부모 댓글과 자식 댓글을 분리
+    commentsArray.forEach((comment) => {
+      if (comment.isReply) {
+        if (!childComments[comment.parentCommentId]) {
+          childComments[comment.parentCommentId] = [];
+        }
+        childComments[comment.parentCommentId].push(comment);
+      } else {
+        parentComments.push({
+          ...comment,
+          replies: [],
+        });
+      }
+    });
+
+    // 부모 댓글에 자식 댓글 연결
+    parentComments.forEach((parent) => {
+      if (childComments[parent.id]) {
+        parent.replies = childComments[parent.id].sort(
+          (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+        );
+      }
+    });
+
+    // 최신순으로 정렬 (부모 댓글만)
+    return parentComments.sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
+  };
+
+  // 표시할 댓글 목록 가져오기 (스레드 확장 상태 반영)
+  const getVisibleComments = (processedComments, limit) => {
+    // 처음 limit개의 댓글만 표시
+    return processedComments.slice(0, limit);
+  };
+
+  const loadMoreComments = () => {
+    const newLimit = commentsToShow + 5; // 5개씩 더 로드
+    setCommentsToShow(newLimit);
+    setVisibleComments(getVisibleComments(comments, newLimit));
+  };
+
+  // 모달 외부 클릭 감지 처리
+  const handleClickOutside = (event) => {
+    if (
+      emojiPickerRef.current &&
+      !emojiPickerRef.current.contains(event.target)
+    ) {
+      setShowEmojiPicker(false);
+    }
+
+    if (
+      mentionDropdownRef.current &&
+      !mentionDropdownRef.current.contains(event.target)
+    ) {
+      setShowMentionDropdown(false);
+    }
+  };
+
   // 지정된 수의 더미 댓글을 생성하는 함수
-  const generateDummyComments = (postId, count = 3) => {
-    const userNames = ["사용자1", "슈퍼맨임", "미용왕", "성형고수", "피부좋아"];
+  const generateDummyComments = (postId, count = 5) => {
+    const userNames = [
+      "사용자1",
+      "슈퍼맨임",
+      "미용왕",
+      "성형고수",
+      "피부좋아",
+      "건강지킴이",
+      "의료인",
+      "뷰티퀸",
+    ];
     const profileImages = [getProfileImage()];
     const commentTexts = [
       "정말 좋은 정보 감사합니다! 저도 비슷한 경험이 있어요.",
       "어느 병원에서 받으셨어요? 저도 고민 중인데 추천해주실 수 있나요?",
-      "효과가 얼마나 지속되나요? 부작용은 없었는지 궁금해요.",
-      "가격대가 어떻게 되나요? 가능하면 알려주세요!",
-      "사진 좀 더 올려주실 수 있나요? 비포애프터가 궁금합니다.",
-      "선생님이 친절하셨나요? 상담은 어떻게 진행되었어요?",
-      "통증은 어느 정도였나요? 견딜만 했나요?",
-      "회복 기간은 얼마나 걸렸어요? 일상생활하는데 불편함은 없었나요?",
-      "저도 다음 주에 예약했어요! 팁 있으면 알려주세요.",
-      "혹시 다른 곳과 비교해보셨나요? 왜 그곳을 선택하셨어요?",
+      "효과가 얼마나 지속되나요? 부작용은 없었는지 궁금해요. 🤔",
+      "가격대가 어떻게 되나요? 가능하면 알려주세요! 💰",
+      "사진 좀 더 올려주실 수 있나요? 비포애프터가 궁금합니다. 👀",
+      "선생님이 친절하셨나요? 상담은 어떻게 진행되었어요? ☺️",
+      "통증은 어느 정도였나요? 견딜만 했나요? 😱",
+      "회복 기간은 얼마나 걸렸어요? 일상생활하는데 불편함은 없었나요? 🤕",
+      "저도 다음 주에 예약했어요! 팁 있으면 알려주세요. 🙏",
+      "혹시 다른 곳과 비교해보셨나요? 왜 그곳을 선택하셨어요? 🧐",
     ];
 
     const dummyComments = [];
-    const replyTexts = [
-      "네 감사합니다. 더 궁금한 점 있으시면 물어보세요!",
-      "안녕하세요, 제가 방문한 곳은 강남 미소성형외과에요. 의사선생님이 친절하고 시설도 깨끗했어요.",
-      "약 3개월 정도 효과가 지속되었고, 부작용은 특별히 없었어요.",
-      "가격은 시술 종류에 따라 다른데, 제가 받은 건 30만원 정도였어요.",
-      "네, 나중에 추가 사진 올려드릴게요!",
-    ];
 
     // 메인 댓글 생성
     for (let i = 0; i < count; i++) {
@@ -94,6 +232,7 @@ const CommunityDetailPage = ({ currentLocation }) => {
         Math.random() * commentTexts.length
       );
       const randomDaysAgo = Math.floor(Math.random() * 7) + 1;
+      const randomLikes = Math.floor(Math.random() * 15);
 
       const createdDate = new Date();
       createdDate.setDate(createdDate.getDate() - randomDaysAgo);
@@ -108,69 +247,348 @@ const CommunityDetailPage = ({ currentLocation }) => {
         },
         content: commentTexts[randomCommentIndex],
         createdAt: createdDate.toISOString(),
-        likeCount: Math.floor(Math.random() * 10),
+        likeCount: randomLikes,
         isLiked: Math.random() > 0.7,
         isReply: false,
       });
     }
 
-    // 랜덤하게 1-2개의 답글 추가
-    const replyCount = Math.floor(Math.random() * 2) + 1;
-    for (let i = 0; i < replyCount; i++) {
-      if (dummyComments.length > i) {
-        const randomReplyIndex = Math.floor(Math.random() * replyTexts.length);
-        const replyCreatedDate = new Date(dummyComments[i].createdAt);
-        replyCreatedDate.setHours(replyCreatedDate.getHours() + 2); // 원 댓글 2시간 후
+    // 답글 생성 (각 댓글마다 0-3개의 답글)
+    dummyComments.forEach((comment) => {
+      const replyCount = Math.floor(Math.random() * 4); // 0-3개 답글
 
-        dummyComments.push({
-          id: `reply-${postId}-${i}`,
-          author: {
-            id: "post-author",
-            nickname: post?.author?.nickname || "글쓴이",
-            profileImage: post?.author?.profileImage || profileImages[0],
-            level: post?.author?.level || 3,
-            isAuthor: true,
-          },
-          content: replyTexts[randomReplyIndex],
-          createdAt: replyCreatedDate.toISOString(),
-          likeCount: Math.floor(Math.random() * 5),
-          isLiked: Math.random() > 0.7,
-          isReply: true,
-          parentCommentId: dummyComments[i].id,
+      for (let i = 0; i < replyCount; i++) {
+        const randomUserIndex = Math.floor(Math.random() * userNames.length);
+        const hoursLater = Math.floor(Math.random() * 24) + 1;
+        const randomLikes = Math.floor(Math.random() * 8);
+
+        // 답글 내용
+        let replyContent;
+
+        if (i === 0 && Math.random() > 0.5) {
+          // 첫번째 답글은 종종 글쓴이가 작성
+          const replyTexts = [
+            `@${comment.author.nickname} 네 감사합니다. 더 궁금한 점 있으시면 물어보세요! 😊`,
+            `@${comment.author.nickname} 안녕하세요, 제가 방문한 곳은 강남 미소성형외과에요. 의사선생님이 친절하고 시설도 깨끗했어요. ✨`,
+            `@${comment.author.nickname} 약 3개월 정도 효과가 지속되었고, 부작용은 특별히 없었어요. 👍`,
+            `@${comment.author.nickname} 가격은 시술 종류에 따라 다른데, 제가 받은 건 30만원 정도였어요. 💸`,
+            `@${comment.author.nickname} 네, 나중에 추가 사진 올려드릴게요! 📸`,
+          ];
+
+          const randomReplyIndex = Math.floor(
+            Math.random() * replyTexts.length
+          );
+          replyContent = replyTexts[randomReplyIndex];
+
+          const replyCreatedDate = new Date(comment.createdAt);
+          replyCreatedDate.setHours(replyCreatedDate.getHours() + hoursLater);
+
+          dummyComments.push({
+            id: `reply-${comment.id}-${i}`,
+            author: {
+              id: "post-author",
+              nickname: post?.author?.nickname || "글쓴이",
+              profileImage: post?.author?.profileImage || profileImages[0],
+              level: post?.author?.level || 3,
+              isAuthor: true,
+            },
+            content: replyContent,
+            createdAt: replyCreatedDate.toISOString(),
+            likeCount: randomLikes,
+            isLiked: Math.random() > 0.7,
+            isReply: true,
+            parentCommentId: comment.id,
+          });
+        } else {
+          // 다른 사용자의 답글
+          const replyTexts = [
+            `@${comment.author.nickname} 저도 같은 경험이 있어요! 👍`,
+            `@${comment.author.nickname} 정말 유용한 정보네요, 감사합니다 🙏`,
+            `@${comment.author.nickname} 혹시 가격이 어떻게 되나요? 저도 고민 중이에요 🤔`,
+            `@${comment.author.nickname} 병원 이름이 어떻게 되나요? DM 부탁드려요 💌`,
+            `@${comment.author.nickname} 추천해주신 제품 저도 구매했어요! 정말 좋네요 ❤️`,
+          ];
+
+          const randomReplyIndex = Math.floor(
+            Math.random() * replyTexts.length
+          );
+          replyContent = replyTexts[randomReplyIndex];
+
+          const replyCreatedDate = new Date(comment.createdAt);
+          replyCreatedDate.setHours(replyCreatedDate.getHours() + hoursLater);
+
+          dummyComments.push({
+            id: `reply-${comment.id}-${i}`,
+            author: {
+              id: `user-${randomUserIndex}`,
+              nickname: userNames[randomUserIndex],
+              profileImage: profileImages[0],
+              level: Math.floor(Math.random() * 4) + 1,
+            },
+            content: replyContent,
+            createdAt: replyCreatedDate.toISOString(),
+            likeCount: randomLikes,
+            isLiked: Math.random() > 0.7,
+            isReply: true,
+            parentCommentId: comment.id,
+          });
+        }
+      }
+    });
+
+    return dummyComments;
+  };
+
+  // 댓글 텍스트 영역 높이 자동 조절
+  const adjustTextareaHeight = (textarea) => {
+    if (textarea) {
+      textarea.style.height = "auto";
+      textarea.style.height = `${Math.min(textarea.scrollHeight, 80)}px`;
+    }
+  };
+
+  useEffect(() => {
+    if (commentTextareaRef.current) {
+      adjustTextareaHeight(commentTextareaRef.current);
+    }
+  }, [comment]);
+
+  useEffect(() => {
+    if (replyTextareaRef.current) {
+      adjustTextareaHeight(replyTextareaRef.current);
+    }
+  }, [replyText]);
+
+  const handleCommentChange = (e) => {
+    const value = e.target.value;
+    setComment(value);
+
+    // @ 감지하여 멘션 드롭다운 표시
+    const lastAtIndex = value.lastIndexOf("@");
+    if (
+      lastAtIndex !== -1 &&
+      (lastAtIndex === 0 || value[lastAtIndex - 1] === " ")
+    ) {
+      const query = value.substring(lastAtIndex + 1).split(" ")[0];
+      if (query) {
+        setMentionQuery(query);
+        const suggestions = getSuggestedUsers(query);
+        setMentionSuggestions(suggestions);
+        setShowMentionDropdown(suggestions.length > 0);
+      } else {
+        setShowMentionDropdown(false);
+      }
+    } else {
+      setShowMentionDropdown(false);
+    }
+  };
+
+  const handleReplyChange = (e) => {
+    const value = e.target.value;
+    setReplyText(value);
+
+    // @ 감지하여 멘션 드롭다운 표시
+    const lastAtIndex = value.lastIndexOf("@");
+    if (
+      lastAtIndex !== -1 &&
+      (lastAtIndex === 0 || value[lastAtIndex - 1] === " ")
+    ) {
+      const query = value.substring(lastAtIndex + 1).split(" ")[0];
+      if (query) {
+        setMentionQuery(query);
+        const suggestions = getSuggestedUsers(query);
+        setMentionSuggestions(suggestions);
+        setShowMentionDropdown(suggestions.length > 0);
+      } else {
+        setShowMentionDropdown(false);
+      }
+    } else {
+      setShowMentionDropdown(false);
+    }
+  };
+
+  // 멘션 추천 사용자 검색
+  const getSuggestedUsers = (query) => {
+    const allUsers = [];
+    const seenUsers = new Set();
+
+    // 게시글 작성자 추가
+    if (post?.author?.nickname) {
+      allUsers.push({
+        id: post.author.id,
+        nickname: post.author.nickname,
+        profileImage: post.author.profileImage || getProfileImage(),
+        isAuthor: true,
+      });
+      seenUsers.add(post.author.id);
+    }
+
+    // 댓글 작성자들 추가
+    comments.forEach((comment) => {
+      if (!seenUsers.has(comment.author.id)) {
+        allUsers.push({
+          id: comment.author.id,
+          nickname: comment.author.nickname,
+          profileImage: comment.author.profileImage || getProfileImage(),
+          isAuthor: comment.author.isAuthor,
         });
+        seenUsers.add(comment.author.id);
+      }
+
+      // 답글 작성자들도 추가
+      if (comment.replies) {
+        comment.replies.forEach((reply) => {
+          if (!seenUsers.has(reply.author.id)) {
+            allUsers.push({
+              id: reply.author.id,
+              nickname: reply.author.nickname,
+              profileImage: reply.author.profileImage || getProfileImage(),
+              isAuthor: reply.author.isAuthor,
+            });
+            seenUsers.add(reply.author.id);
+          }
+        });
+      }
+    });
+
+    // 필터링
+    const filteredUsers = allUsers.filter((user) =>
+      user.nickname.toLowerCase().includes(query.toLowerCase())
+    );
+
+    // 최대 5명만 반환
+    return filteredUsers.slice(0, 5);
+  };
+
+  // 멘션 선택 처리
+  const handleMentionSelect = (user) => {
+    const inputValue = replyingTo ? replyText : comment;
+    const lastAtIndex = inputValue.lastIndexOf("@");
+
+    if (lastAtIndex !== -1) {
+      const beforeAt = inputValue.substring(0, lastAtIndex);
+      const afterAt = inputValue.substring(lastAtIndex).split(" ");
+      afterAt[0] = `@${user.nickname} `;
+
+      const newValue = beforeAt + afterAt.join(" ");
+
+      if (replyingTo) {
+        setReplyText(newValue);
+      } else {
+        setComment(newValue);
       }
     }
 
-    // 날짜순으로 정렬 (최신순)
-    return dummyComments.sort((a, b) => {
-      // 답글은 부모 댓글 바로 다음에 표시
-      if (a.parentCommentId === b.id) return 1;
-      if (b.parentCommentId === a.id) return -1;
+    setShowMentionDropdown(false);
 
-      return new Date(a.createdAt) - new Date(b.createdAt);
-    });
+    // 포커스 돌려주기
+    setTimeout(() => {
+      if (replyingTo && replyInputRef.current) {
+        replyInputRef.current.focus();
+      } else if (commentInputRef.current) {
+        commentInputRef.current.focus();
+      }
+    }, 0);
   };
 
-  const handleCommentChange = (e) => {
-    setComment(e.target.value);
+  // 이모지 선택 처리
+  const handleEmojiSelect = (emoji) => {
+    if (replyingTo) {
+      setReplyText((prev) => prev + emoji);
+      setTimeout(() => replyInputRef.current?.focus(), 0);
+    } else {
+      setComment((prev) => prev + emoji);
+      setTimeout(() => commentInputRef.current?.focus(), 0);
+    }
+    setShowEmojiPicker(false);
   };
 
   const handleCommentSubmit = () => {
     if (comment.trim()) {
       const newComment = {
-        id: `comment-${post.id}-${comments.length + 1}`,
+        id: `comment-${Date.now()}`,
         author: {
           id: "current-user",
           nickname: "나",
-          profileImage: "/images/profile.png",
+          profileImage: getProfileImage(),
+          level: 1,
         },
         content: comment,
         createdAt: new Date().toISOString(),
         likeCount: 0,
+        isLiked: false,
+        isReply: false,
+        replies: [],
       };
 
-      setComments([newComment, ...comments]);
+      // 댓글 목록 업데이트
+      const updatedComments = [newComment, ...comments];
+      setComments(updatedComments);
+
+      // 새 댓글을 항상 표시하도록 표시 개수 증가
+      const newCommentsToShow = commentsToShow + 1;
+      setCommentsToShow(newCommentsToShow);
+      setVisibleComments(
+        getVisibleComments(updatedComments, newCommentsToShow)
+      );
+
       setComment("");
+
+      // 텍스트 영역 높이 리셋
+      if (commentTextareaRef.current) {
+        commentTextareaRef.current.style.height = "auto";
+      }
+    }
+  };
+
+  // 답글 제출 처리
+  const handleReplySubmit = () => {
+    if (replyText.trim() && replyingTo) {
+      // 항상 원래 부모 댓글 ID를 찾음 (대댓글에 답글 달더라도)
+      const parentCommentId = replyingTo.isReply
+        ? replyingTo.parentCommentId
+        : replyingTo.id;
+
+      const newReply = {
+        id: `reply-${Date.now()}`,
+        author: {
+          id: "current-user",
+          nickname: "나",
+          profileImage: getProfileImage(),
+          level: 1,
+        },
+        content: replyText,
+        createdAt: new Date().toISOString(),
+        likeCount: 0,
+        isLiked: false,
+        isReply: true,
+        parentCommentId: parentCommentId,
+      };
+
+      // 댓글 목록 업데이트 - 항상 원래 부모 댓글에 답글 추가
+      const updatedComments = comments.map((comment) => {
+        if (comment.id === parentCommentId) {
+          return {
+            ...comment,
+            replies: [...comment.replies, newReply],
+          };
+        }
+        return comment;
+      });
+
+      setComments(updatedComments);
+
+      // 해당 스레드 자동 확장
+      setExpandedThreads((prev) => ({ ...prev, [parentCommentId]: true }));
+
+      setVisibleComments(getVisibleComments(updatedComments, commentsToShow));
+      setReplyText("");
+      setReplyingTo(null);
+
+      // 텍스트 영역 높이 리셋
+      if (replyTextareaRef.current) {
+        replyTextareaRef.current.style.height = "auto";
+      }
     }
   };
 
@@ -181,9 +599,94 @@ const CommunityDetailPage = ({ currentLocation }) => {
     }
   };
 
+  const handleReplyKeyDown = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleReplySubmit();
+    }
+  };
+
   const handleLikeToggle = () => {
     setIsLiked(!isLiked);
     setLikeCount((prev) => (isLiked ? prev - 1 : prev + 1));
+  };
+
+  // 댓글 좋아요 토글
+  const handleCommentLikeToggle = (commentId) => {
+    const updatedComments = comments.map((comment) => {
+      if (comment.id === commentId) {
+        // 좋아요 애니메이션 트리거
+        setHeartAnimations((prev) => ({ ...prev, [commentId]: true }));
+        setTimeout(() => {
+          setHeartAnimations((prev) => ({ ...prev, [commentId]: false }));
+        }, 500);
+
+        return {
+          ...comment,
+          isLiked: !comment.isLiked,
+          likeCount: comment.isLiked
+            ? comment.likeCount - 1
+            : comment.likeCount + 1,
+        };
+      } else if (comment.replies) {
+        // 답글에서 찾기
+        const updatedReplies = comment.replies.map((reply) => {
+          if (reply.id === commentId) {
+            // 좋아요 애니메이션 트리거
+            setHeartAnimations((prev) => ({ ...prev, [commentId]: true }));
+            setTimeout(() => {
+              setHeartAnimations((prev) => ({ ...prev, [commentId]: false }));
+            }, 500);
+
+            return {
+              ...reply,
+              isLiked: !reply.isLiked,
+              likeCount: reply.isLiked
+                ? reply.likeCount - 1
+                : reply.likeCount + 1,
+            };
+          }
+          return reply;
+        });
+
+        return { ...comment, replies: updatedReplies };
+      }
+      return comment;
+    });
+
+    setComments(updatedComments);
+    setVisibleComments(getVisibleComments(updatedComments));
+  };
+
+  // 답글 스레드 토글
+  const toggleReplyThread = (commentId) => {
+    // 현재 상태를 반전시킴
+    setExpandedThreads((prev) => {
+      const newState = { ...prev };
+      newState[commentId] = !prev[commentId];
+      return newState;
+    });
+  };
+
+  // 답글 폼 토글
+  const toggleReplyForm = (comment) => {
+    if (replyingTo && replyingTo.id === comment.id) {
+      // 이미 선택된 댓글이면 취소
+      setReplyingTo(null);
+      setReplyText("");
+    } else {
+      // 대댓글인 경우에도 원래 댓글과 동일하게 처리
+      setReplyingTo(comment);
+      // 멘션 추가
+      setReplyText(`@${comment.author.nickname} `);
+
+      // 포커스 주기
+      setTimeout(() => {
+        if (replyInputRef.current) {
+          replyInputRef.current.focus();
+        }
+      }, 0);
+    }
   };
 
   const handleShare = () => {
@@ -246,6 +749,27 @@ const CommunityDetailPage = ({ currentLocation }) => {
   const handleReport = () => {
     setShowActionsMenu(false);
     alert("게시글이 신고되었습니다.");
+  };
+
+  // 댓글 메시지에서 멘션을 하이라이트 처리
+  const renderCommentWithMentions = (content) => {
+    if (!content) return "";
+
+    // @사용자명 패턴 찾기
+    const parts = content.split(/(@[가-힣a-zA-Z0-9_]+)/g);
+
+    return parts.map((part, index) => {
+      if (part.startsWith("@")) {
+        // 멘션만 파란색으로
+        return (
+          <span key={index} className="mention">
+            {part}
+          </span>
+        );
+      }
+      // 나머지 텍스트는 일반 스타일로
+      return <span key={index}>{part}</span>;
+    });
   };
 
   if (!post) {
@@ -467,103 +991,287 @@ const CommunityDetailPage = ({ currentLocation }) => {
             <h3>댓글 {formatNumber(comments.length)}개</h3>
           </div>
 
-          {/* 댓글 목록 */}
+          {/* 댓글 목록 (인스타그램 스타일) */}
           <div className="community-detail-comments-list">
-            {comments.map((comment) => (
-              <div
-                key={comment.id}
-                className={`community-comment-item ${
-                  comment.isReply ? "comment-reply" : ""
-                }`}
-              >
-                <div className="community-comment-avatar">
-                  {comment.author?.profileImage ? (
+            {visibleComments.map((comment) => (
+              <React.Fragment key={comment.id}>
+                <div className="community-comment-item">
+                  <div className="community-comment-avatar">
                     <img
-                      src={comment.author.profileImage}
+                      src={comment.author.profileImage || getProfileImage()}
                       alt={comment.author.nickname}
                     />
-                  ) : (
-                    <img
-                      src={getProfileImage()}
-                      alt={comment.author.nickname}
-                    />
-                  )}
-                </div>
-
-                <div className="community-comment-content">
-                  <div className="community-comment-header">
-                    <div className="community-comment-author-info">
-                      <span className="community-comment-author">
-                        {comment.author.nickname}
-                      </span>
-                      {comment.author.level && (
-                        <span className="community-comment-author-level">
-                          Lv.{comment.author.level}
-                        </span>
-                      )}
-                    </div>
-                    <span className="community-comment-date">
-                      {formatTimeAgo(comment.createdAt)}
-                    </span>
                   </div>
 
-                  <p className="community-comment-text">{comment.content}</p>
+                  <div className="community-comment-content">
+                    <div className="community-comment-text-wrapper">
+                      <div className="community-comment-text">
+                        <strong>{comment.author.nickname}</strong>{" "}
+                        {renderCommentWithMentions(comment.content)}
+                      </div>
 
-                  <div className="community-comment-actions">
-                    <button className="community-comment-like">
-                      <Heart
-                        size={14}
-                        fill={comment.isLiked ? "#ff4757" : "none"}
-                        color={comment.isLiked ? "#ff4757" : "#9ca3af"}
-                      />
-                      <span>{comment.likeCount}</span>
-                    </button>
-
-                    {!comment.isReply && (
-                      <button className="community-comment-reply-button">
-                        <MessageCircle size={14} />
-                        <span>답글</span>
+                      <button
+                        className={`community-comment-like-button ${
+                          heartAnimations[comment.id] ? "heart-animation" : ""
+                        }`}
+                        onClick={() => handleCommentLikeToggle(comment.id)}
+                      >
+                        <Heart
+                          size={16}
+                          fill={comment.isLiked ? "#ff4757" : "none"}
+                          color={comment.isLiked ? "#ff4757" : "#8e8e8e"}
+                        />
                       </button>
+                    </div>
+
+                    <div className="community-comment-footer">
+                      <span className="community-comment-time">
+                        {formatTimeAgo(comment.createdAt)}
+                      </span>
+
+                      {comment.likeCount > 0 && (
+                        <span className="community-comment-like-count">
+                          좋아요 {comment.likeCount}개
+                        </span>
+                      )}
+
+                      <button
+                        className="community-comment-reply-button"
+                        onClick={() => toggleReplyForm(comment)}
+                      >
+                        답글 달기
+                      </button>
+                    </div>
+
+                    {/* 답글 입력 폼 */}
+                    {replyingTo && replyingTo.id === comment.id && (
+                      <div className="reply-form">
+                        <div className="reply-input-wrapper">
+                          <textarea
+                            ref={replyTextareaRef}
+                            className="reply-input"
+                            value={replyText}
+                            onChange={handleReplyChange}
+                            onKeyDown={handleReplyKeyDown}
+                            placeholder="답글 작성..."
+                            rows={1}
+                          />
+                        </div>
+                        <button
+                          className={`reply-submit ${
+                            replyText.trim() ? "active" : ""
+                          }`}
+                          onClick={handleReplySubmit}
+                          disabled={!replyText.trim()}
+                        >
+                          게시
+                        </button>
+                      </div>
                     )}
                   </div>
                 </div>
-              </div>
+
+                {/* 답글 표시 및 토글 */}
+                {/* 답글 표시 및 토글 */}
+                {comment.replies && comment.replies.length > 0 && (
+                  <>
+                    {/* 답글이 2개 이상이고 확장되지 않은 경우에만 "답글 더보기" 버튼 표시 */}
+                    {!expandedThreads[comment.id] &&
+                      comment.replies.length > 1 && (
+                        <div
+                          className="reply-thread-indicator"
+                          onClick={() => toggleReplyThread(comment.id)}
+                        >
+                          <div className="reply-thread-line"></div>
+                          <span>답글 {comment.replies.length}개 보기</span>
+                        </div>
+                      )}
+
+                    {/* 답글 목록 - 확장된 경우 모두 표시, 아니면 1개만 표시 */}
+                    {(expandedThreads[comment.id]
+                      ? comment.replies
+                      : comment.replies.length > 0
+                      ? [comment.replies[0]]
+                      : []
+                    ).map((reply) => (
+                      <div
+                        key={reply.id}
+                        className="community-comment-item comment-reply"
+                      >
+                        <div className="community-comment-avatar">
+                          <img
+                            src={reply.author.profileImage || getProfileImage()}
+                            alt={reply.author.nickname}
+                          />
+                        </div>
+
+                        <div className="community-comment-content">
+                          <div className="community-comment-text-wrapper">
+                            <div className="community-comment-text">
+                              <strong>{reply.author.nickname}</strong>{" "}
+                              {renderCommentWithMentions(reply.content)}
+                            </div>
+
+                            <button
+                              className={`community-comment-like-button ${
+                                heartAnimations[reply.id]
+                                  ? "heart-animation"
+                                  : ""
+                              }`}
+                              onClick={() => handleCommentLikeToggle(reply.id)}
+                            >
+                              <Heart
+                                size={16}
+                                fill={reply.isLiked ? "#ff4757" : "none"}
+                                color={reply.isLiked ? "#ff4757" : "#8e8e8e"}
+                              />
+                            </button>
+                          </div>
+
+                          <div className="community-comment-footer">
+                            <span className="community-comment-time">
+                              {formatTimeAgo(reply.createdAt)}
+                            </span>
+
+                            {reply.likeCount > 0 && (
+                              <span className="community-comment-like-count">
+                                좋아요 {reply.likeCount}개
+                              </span>
+                            )}
+
+                            <button
+                              className="community-comment-reply-button"
+                              onClick={() => toggleReplyForm(reply)}
+                            >
+                              답글 달기
+                            </button>
+                          </div>
+
+                          {/* 여기에 대댓글의 답글 입력 폼 추가 */}
+                          {replyingTo && replyingTo.id === reply.id && (
+                            <div className="reply-form">
+                              <div className="reply-input-wrapper">
+                                <textarea
+                                  ref={replyTextareaRef}
+                                  className="reply-input"
+                                  value={replyText}
+                                  onChange={handleReplyChange}
+                                  onKeyDown={handleReplyKeyDown}
+                                  placeholder="답글 작성..."
+                                  rows={1}
+                                />
+                              </div>
+                              <button
+                                className={`reply-submit ${
+                                  replyText.trim() ? "active" : ""
+                                }`}
+                                onClick={handleReplySubmit}
+                                disabled={!replyText.trim()}
+                              >
+                                게시
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+
+                    {/* 스레드 축소 버튼 - 확장된 상태일 때만 표시 */}
+                    {expandedThreads[comment.id] &&
+                      comment.replies.length > 1 && (
+                        <div
+                          className="view-more-replies"
+                          onClick={() => toggleReplyThread(comment.id)}
+                        >
+                          <span>답글 숨기기</span>
+                        </div>
+                      )}
+                  </>
+                )}
+              </React.Fragment>
             ))}
           </div>
+
+          {visibleComments.length < comments.length && (
+            <div className="view-more-comments" onClick={loadMoreComments}>
+              댓글 더보기 ({comments.length - visibleComments.length}개)
+            </div>
+          )}
         </div>
       </div>
 
-      {/* 댓글 입력창 (하단 고정) */}
-      <div className="detail-page-footer">
-        <div className="comment-container">
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleCommentSubmit();
-            }}
-            style={{ display: "flex", width: "100%" }}
+      {/* 인스타그램 스타일 댓글 입력창 (하단 고정) */}
+      <div className="comment-container">
+        <div className="comment-avatar">
+          <img src={getProfileImage()} alt="내 프로필" />
+        </div>
+
+        <div className="comment-input-wrapper">
+          <textarea
+            ref={commentTextareaRef}
+            className="comment-input"
+            value={comment}
+            onChange={handleCommentChange}
+            onKeyDown={handleKeyDown}
+            placeholder="댓글 추가..."
+            rows={1}
+          />
+
+          {/* 멘션 드롭다운 */}
+          {showMentionDropdown && (
+            <div className="mention-dropdown" ref={mentionDropdownRef}>
+              {mentionSuggestions.map((user) => (
+                <div
+                  key={user.id}
+                  className="mention-item"
+                  onClick={() => handleMentionSelect(user)}
+                >
+                  <img
+                    className="mention-avatar"
+                    src={user.profileImage || getProfileImage()}
+                    alt={user.nickname}
+                  />
+                  <span className="mention-name">{user.nickname}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="comment-actions">
+          <button
+            className="emoji-button"
+            onClick={() => setShowEmojiPicker(!showEmojiPicker)}
           >
-            <input
-              type="text"
-              value={comment}
-              onChange={handleCommentChange}
-              onKeyDown={handleKeyDown}
-              placeholder="댓글을 입력하세요..."
-              className="comment-input"
-            />
-            <button
-              type="submit"
-              className="comment-submit-button"
-              aria-label="댓글 작성"
-              disabled={!comment.trim()}
-            >
-              <Send
-                size={20}
-                strokeWidth={2}
-                color={comment.trim() ? "#2196f3" : "#9ca3af"}
-              />
-            </button>
-          </form>
+            <Smile size={20} />
+          </button>
+
+          {/* 이모지 선택기 */}
+          {showEmojiPicker && (
+            <div className="emoji-picker-container" ref={emojiPickerRef}>
+              <div className="emoji-list">
+                {EMOJI_LIST.map((emoji, index) => (
+                  <div
+                    key={index}
+                    className="emoji-item"
+                    onClick={() => handleEmojiSelect(emoji)}
+                  >
+                    {emoji}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <button
+            className={`comment-submit-button ${
+              comment.trim() ? "active" : ""
+            }`}
+            onClick={handleCommentSubmit}
+            disabled={!comment.trim()}
+          >
+            게시
+          </button>
         </div>
       </div>
     </div>
