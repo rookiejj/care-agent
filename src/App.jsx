@@ -50,6 +50,8 @@ import CommunityCreatePage from "./CommunityCreatePage";
 import AppointmentHistory from "./AppointmentHistory";
 import AppointmentDetail from "./AppointmentDetail";
 import MedicalRecordsPage from "./MedicalRecordsPage";
+import PrescriptionManagement from "./PrescriptionManagement";
+import HealthCheckupResults from "./HealthCheckupResults";
 
 const getSuperhumanIcon = () => {
   return `/images/${"super_human_icon.png"}`;
@@ -457,6 +459,7 @@ const AppContent = ({
             />
           }
         />
+        <Route path="/notifications" element={<NotificationPage />} />
         <Route path="/appointments" element={<AppointmentHistory />} />
         <Route path="/appointment-detail/:id" element={<AppointmentDetail />} />
         <Route path="/medical-records" element={<MedicalRecordsPage />} />
@@ -464,8 +467,8 @@ const AppContent = ({
           path="/medical-records/:appointmentId"
           element={<MedicalRecordsPage />}
         />
-
-        <Route path="/notifications" element={<NotificationPage />} />
+        <Route path="/prescriptions" element={<PrescriptionManagement />} />
+        <Route path="/checkups" element={<HealthCheckupResults />} />
       </Routes>
 
       {showBottomNav && <BottomNavigation currentPage={currentPage} />}

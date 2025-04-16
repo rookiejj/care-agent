@@ -32,13 +32,15 @@ const MyPage = ({ currentLocation, notificationCount }) => {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState("medical");
 
-  // 구현된 페이지 목록 (없는 페이지는 동작하지 않음)
+  // 구현된 페이지 목록
   const implementedPages = [
     "/favorites",
     "/notifications",
     "/mypage",
     "/appointments",
     "/medical-records",
+    "/prescriptions", // 새로 추가한 처방전 관리 페이지
+    "/checkups", // 새로 추가한 건강검진 결과 페이지
   ];
 
   const handleMenuClick = (path) => {
