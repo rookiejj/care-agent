@@ -405,15 +405,20 @@ const CommunityDetailPage = ({ currentLocation }) => {
       setInputMode("reply");
 
       // 댓글 초기화 (멘션 추가)
-      setComment(`@${comment.author.nickname} `);
+      const mentionText = `@${comment.author.nickname} `;
+      setComment(mentionText);
 
       // 해당 댓글로 스크롤
       setTimeout(() => {
         scrollToComment(comment.id);
 
-        // 댓글 입력창에 포커스
+        // 댓글 입력창에 포커스 + 커서 위치 맨 뒤로 설정
         if (commentTextareaRef.current) {
           commentTextareaRef.current.focus();
+
+          // 커서를 맨 뒤로 이동
+          const length = mentionText.length;
+          commentTextareaRef.current.setSelectionRange(length, length);
         }
       }, 100);
     }
@@ -446,7 +451,8 @@ const CommunityDetailPage = ({ currentLocation }) => {
   // 멘션 추천 사용자 검색
   const getSuggestedUsers = (query) => {
     const allUsers = [];
-    const seenUsers = new Set();
+    const seenUserIds = new Set(); // 이미 추가된 사용자 ID 추적
+    const seenNicknames = new Set(); // 이미 추가된 닉네임 추적
 
     // 게시글 작성자 추가
     if (post?.author?.nickname) {
@@ -456,32 +462,41 @@ const CommunityDetailPage = ({ currentLocation }) => {
         profileImage: post.author.profileImage || getProfileImage(),
         isAuthor: true,
       });
-      seenUsers.add(post.author.id);
+      seenUserIds.add(post.author.id);
+      seenNicknames.add(post.author.nickname.toLowerCase()); // 대소문자 구분 없이 비교하기 위해 소문자로 변환
     }
 
     // 댓글 작성자들 추가
     comments.forEach((comment) => {
-      if (!seenUsers.has(comment.author.id)) {
+      if (
+        !seenUserIds.has(comment.author.id) &&
+        !seenNicknames.has(comment.author.nickname.toLowerCase())
+      ) {
         allUsers.push({
           id: comment.author.id,
           nickname: comment.author.nickname,
           profileImage: comment.author.profileImage || getProfileImage(),
           isAuthor: comment.author.isAuthor,
         });
-        seenUsers.add(comment.author.id);
+        seenUserIds.add(comment.author.id);
+        seenNicknames.add(comment.author.nickname.toLowerCase());
       }
 
       // 답글 작성자들도 추가
       if (comment.replies) {
         comment.replies.forEach((reply) => {
-          if (!seenUsers.has(reply.author.id)) {
+          if (
+            !seenUserIds.has(reply.author.id) &&
+            !seenNicknames.has(reply.author.nickname.toLowerCase())
+          ) {
             allUsers.push({
               id: reply.author.id,
               nickname: reply.author.nickname,
               profileImage: reply.author.profileImage || getProfileImage(),
               isAuthor: reply.author.isAuthor,
             });
-            seenUsers.add(reply.author.id);
+            seenUserIds.add(reply.author.id);
+            seenNicknames.add(reply.author.nickname.toLowerCase());
           }
         });
       }
@@ -502,22 +517,35 @@ const CommunityDetailPage = ({ currentLocation }) => {
     const lastAtIndex = inputValue.lastIndexOf("@");
 
     if (lastAtIndex !== -1) {
+      // 멘션 전과 후 텍스트 분리
       const beforeAt = inputValue.substring(0, lastAtIndex);
       const afterAt = inputValue.substring(lastAtIndex).split(" ");
-      afterAt[0] = `@${user.nickname} `;
 
+      // @ 기호 다음부터 첫 번째 공백까지를 새 멘션으로 교체
+      const newMention = `@${user.nickname} `;
+      afterAt[0] = newMention;
+
+      // 전체 문자열 다시 조합
       const newValue = beforeAt + afterAt.join(" ");
       setComment(newValue);
+
+      // 드롭다운 닫기
+      setShowMentionDropdown(false);
+
+      // 포커스 돌려주고 커서 위치 조정
+      setTimeout(() => {
+        if (commentTextareaRef.current) {
+          commentTextareaRef.current.focus();
+
+          // 커서 위치 계산 - 새로 추가된 멘션 바로 뒤로 이동
+          const cursorPosition = beforeAt.length + newMention.length;
+          commentTextareaRef.current.setSelectionRange(
+            cursorPosition,
+            cursorPosition
+          );
+        }
+      }, 0);
     }
-
-    setShowMentionDropdown(false);
-
-    // 포커스 돌려주기
-    setTimeout(() => {
-      if (commentTextareaRef.current) {
-        commentTextareaRef.current.focus();
-      }
-    }, 0);
   };
 
   // 이모지 선택 처리
