@@ -1,7 +1,7 @@
 .categories-content {
   display: flex;
   flex-direction: column;
-  margin: 0 0.5rem 1rem;
+  margin: 0 0.5rem -4rem;
 }
 
 .filtered-results-container {
@@ -169,7 +169,7 @@
 
 /* 서브카테고리 선택기 위치 조정 */
 .subcategory-selector {
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .subcategory-selector.with-category-list {

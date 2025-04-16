@@ -47,6 +47,9 @@ import LocationHeader from "./LocationHeader";
 import DetailPageBridge from "./DetailPageBridge";
 import BookingPage from "./BookingPage";
 import CommunityCreatePage from "./CommunityCreatePage";
+import AppointmentHistory from "./AppointmentHistory";
+import AppointmentDetail from "./AppointmentDetail";
+import MedicalRecordsPage from "./MedicalRecordsPage";
 
 const getSuperhumanIcon = () => {
   return `/images/${"super_human_icon.png"}`;
@@ -454,49 +457,14 @@ const AppContent = ({
             />
           }
         />
-        {/* <Route
-          path="/location"
-          element={
-            <LocationPage
-              currentLocation={selectedLocation}
-              setSelectedLocation={setSelectedLocation}
-            />
-          }
-        />
-        
-        <Route path="/gymDetail/:id" element={<GymDetailPage />} />
+        <Route path="/appointments" element={<AppointmentHistory />} />
+        <Route path="/appointment-detail/:id" element={<AppointmentDetail />} />
+        <Route path="/medical-records" element={<MedicalRecordsPage />} />
         <Route
-          path="/trainers"
-          element={
-            <TrainerListPage
-              currentLocation={selectedLocation}
-              notificationCount={notificationCount}
-            />
-          }
+          path="/medical-records/:appointmentId"
+          element={<MedicalRecordsPage />}
         />
-        <Route path="/trainerDetail/:id" element={<TrainerDetailPage />} />
-        <Route
-          path="/community"
-          element={
-            <CommunityPage
-              currentLocation={selectedLocation}
-              notificationCount={notificationCount}
-            />
-          }
-        />
-        <Route path="/communityDetail/:id" element={<CommunityDetailPage />} />
-        <Route path="/communityCreate" element={<CommunityCreatePage />} />
-        <Route
-          path="/mypage"
-          element={<MyPage notificationCount={notificationCount} />}
-        />
-        <Route path="/payment" element={<PaymentPage />} />
-        <Route path="/consultation" element={<ConsultationPage />} />
-        <Route path="/reviewDetail/:reviewId" element={<ReviewDetailPage />} />
-        <Route path="/reviewWrite" element={<ReviewWritePage />} />
-        <Route path="/report" element={<ReportPage />} />
-        <Route path="/visitBooking" element={<VisitBookingPage />} />
-        <Route path="/notifications" element={<NotificationPage />} /> */}
+
         <Route path="/notifications" element={<NotificationPage />} />
       </Routes>
 

@@ -126,23 +126,8 @@ const HospitalDetailPage = ({ currentLocation }) => {
     setIsFavorite(!isFavorite);
   };
 
-  // const handleBookingClick = () => {
-  //   navigate(`/booking`, { state: { item, selectedDoctor } });
-  // };
-
   const handleBookingClick = () => {
     setActiveTab("doctors");
-    window.scrollTo(0, 0);
-  };
-
-  // 의사 옆의 예약 버튼
-  const handleDoctorBooking = (doctor) => {
-    setSelectedDoctor(doctor);
-    navigate(`/booking`, { state: { item, selectedDoctor: doctor } });
-  };
-
-  const handleReviewClick = () => {
-    setActiveTab("reviews");
     window.scrollTo(0, 0);
   };
 
@@ -417,75 +402,6 @@ const HospitalDetailPage = ({ currentLocation }) => {
                       showBooking={true}
                     />
                   ))}
-                  {/* <ul className="doctors-list">
-                    {displayedDoctors.map((doctor) => (
-                      <li
-                        key={doctor.id}
-                        className={`doctor-item ${
-                          selectedDoctor?.id === doctor.id ? "selected" : ""
-                        }`}
-                      >
-                        <div className="doctor-image-container">
-                          <img
-                            src={doctor.profileImage}
-                            alt={doctor.name}
-                            className="doctor-image"
-                          />
-                        </div>
-                        <div className="doctor-info">
-                          <div className="doctor-name-container">
-                            <h3 className="doctor-name">{doctor.name} 의사</h3>
-                            {doctor.awards && doctor.awards.length > 0 && (
-                              <span className="award-badge">
-                                <Award size={12} />
-                              </span>
-                            )}
-                          </div>
-                          <p className="doctor-specialty">
-                            {doctor.specialty === "neurology"
-                              ? "신경과"
-                              : doctor.specialty === "cardiology"
-                              ? "심장내과"
-                              : doctor.specialty === "dermatology"
-                              ? "피부과"
-                              : doctor.specialty === "orthopedics"
-                              ? "정형외과"
-                              : doctor.specialty === "gastroenterology"
-                              ? "소화기내과"
-                              : doctor.specialty === "ophthalmology"
-                              ? "안과"
-                              : doctor.specialty === "ent"
-                              ? "이비인후과"
-                              : doctor.specialty === "psychiatry"
-                              ? "정신건강의학과"
-                              : doctor.specialty === "pulmonology"
-                              ? "호흡기내과"
-                              : doctor.specialty}{" "}
-                            전문의
-                          </p>
-                          <p className="doctor-experience">
-                            경력 {doctor.experience}년
-                          </p>
-                          <div className="doctor-rating">
-                            <Star size={16} color="#fbbf24" fill="#fbbf24" />
-                            <span>{doctor.rating}</span>
-                            <span className="review-count">
-                              ({doctor.reviewCount})
-                            </span>
-                          </div>
-                        </div>
-                        <button
-                          className="select-doctor-button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleDoctorBooking(doctor);
-                          }}
-                        >
-                          예약하기
-                        </button>{" "}
-                      </li>
-                    ))}
-                  </ul> */}
 
                   {relevantDoctors.length > 3 && !showAllDoctors && (
                     <button

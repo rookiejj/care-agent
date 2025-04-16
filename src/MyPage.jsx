@@ -33,7 +33,13 @@ const MyPage = ({ currentLocation, notificationCount }) => {
   const [activeTab, setActiveTab] = useState("medical");
 
   // 구현된 페이지 목록 (없는 페이지는 동작하지 않음)
-  const implementedPages = ["/favorites", "/notifications", "/mypage"];
+  const implementedPages = [
+    "/favorites",
+    "/notifications",
+    "/mypage",
+    "/appointments",
+    "/medical-records",
+  ];
 
   const handleMenuClick = (path) => {
     // 구현된 페이지인 경우에만 이동
@@ -54,7 +60,7 @@ const MyPage = ({ currentLocation, notificationCount }) => {
       color: "#3b82f6",
     },
     {
-      id: "records",
+      id: "medical-records",
       icon: <ClipboardList size={20} />,
       label: t("mypage.medical.menu.medicalRecords"),
       color: "#8b5cf6",

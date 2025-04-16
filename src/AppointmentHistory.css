@@ -1,0 +1,298 @@
+.appointment-content {
+  padding: 0 0.5rem;
+  margin: 0 0.5rem;
+}
+
+/* 탭 스타일 */
+.appointment-tabs {
+  display: flex;
+  background-color: #f9fafb;
+  border-radius: 0.75rem;
+  padding: 0.25rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e5e7eb;
+}
+
+.appointment-tab {
+  flex: 1;
+  padding: 0.75rem 0.5rem;
+  text-align: center;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #6b7280;
+  background-color: transparent;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.appointment-tab.active {
+  background-color: white;
+  color: #4b5563;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* 예약 카드 스타일 */
+.appointment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.appointment-card {
+  background-color: white;
+  border-radius: 0.75rem;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.appointment-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.appointment-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #f3f4f6;
+  cursor: pointer;
+}
+
+.status-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.25rem 0.5rem;
+  border-radius: 1rem;
+}
+
+.status-badge.confirmed {
+  background-color: #ecfdf5;
+  color: #059669;
+}
+
+.status-badge.cancelled {
+  background-color: #fef2f2;
+  color: #dc2626;
+}
+
+.status-badge.completed {
+  background-color: #f0f9ff;
+  color: #0369a1;
+}
+
+.status-badge.pending {
+  background-color: #fffbeb;
+  color: #d97706;
+}
+
+.appointment-arrow {
+  color: #9ca3af;
+}
+
+.appointment-details {
+  padding: 1rem;
+}
+
+.appointment-hospital {
+  margin-bottom: 0.75rem;
+}
+
+.appointment-hospital h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 0.25rem 0;
+}
+
+.appointment-department {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.appointment-info-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.appointment-info-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: #4b5563;
+}
+
+.appointment-info-item svg {
+  color: #6b7280;
+  flex-shrink: 0;
+}
+
+.appointment-info-item.location {
+  width: 100%;
+}
+
+.appointment-reason {
+  background-color: #f9fafb;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.appointment-reason p {
+  font-size: 0.875rem;
+  color: #4b5563;
+  margin: 0.25rem 0;
+}
+
+.appointment-result {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px dashed #e5e7eb;
+}
+
+.cancellation-reason {
+  color: #dc2626;
+}
+
+.appointment-card-actions {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid #f3f4f6;
+  background-color: #f9fafb;
+}
+
+.action-button {
+  flex: 1;
+  padding: 0.625rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.375rem;
+  transition: all 0.2s ease;
+}
+
+.action-button.reschedule {
+  background-color: #eff6ff;
+  color: #2563eb;
+}
+
+.action-button.reschedule:hover {
+  background-color: #dbeafe;
+}
+
+.action-button.cancel {
+  background-color: #fff1f2;
+  color: #e11d48;
+}
+
+.action-button.cancel:hover {
+  background-color: #ffe4e6;
+}
+
+.action-button.view-record {
+  background-color: #f0f9ff;
+  color: #0369a1;
+}
+
+.action-button.view-record:hover {
+  background-color: #e0f2fe;
+}
+
+/* 로딩 및 데이터 없음 스타일 */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  color: #6b7280;
+}
+
+.loading-spinner {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 3px solid #e5e7eb;
+  border-radius: 50%;
+  border-top-color: #6366f1;
+  animation: spinner 0.8s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.no-appointments {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.no-data-icon {
+  width: 5rem;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f3f4f6;
+  border-radius: 50%;
+  margin-bottom: 1.5rem;
+  color: #9ca3af;
+}
+
+.no-data-message {
+  font-size: 1rem;
+  color: #6b7280;
+  margin-bottom: 1.5rem;
+}
+
+.make-appointment-button {
+  padding: 0.875rem 1.5rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  background-color: #7c3aed;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.make-appointment-button:hover {
+  background-color: #6d28d9;
+}
+
+/* 반응형 조정 */
+@media (max-width: 360px) {
+  .appointment-info-row {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .appointment-card-actions {
+    flex-direction: column;
+  }
+}

@@ -58,10 +58,26 @@ const BookingPage = ({ currentLocation }) => {
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const [agreePaymentTerms, setAgreePaymentTerms] = useState(false);
 
+  const [isRescheduling, setIsRescheduling] = useState(false);
+  const [originalAppointment, setOriginalAppointment] = useState(null);
+
   useEffect(() => {
     if (!item || Object.keys(item).length === 0) {
       navigate(-1);
       return;
+    }
+
+    // 일정 변경에서 넘어온 경우 처리
+    if (location.state?.fromReschedule && location.state?.originalAppointment) {
+      const appointment = location.state.originalAppointment;
+      setIsRescheduling(true);
+      setOriginalAppointment(appointment);
+      setBookingType("reschedule");
+
+      // 기존 예약 정보에서 증상 메모 가져오기
+      if (appointment.reason) {
+        setSymptoms(appointment.reason);
+      }
     }
 
     // Scroll to top when component mounts
@@ -117,7 +133,7 @@ const BookingPage = ({ currentLocation }) => {
     if (storedCardName) {
       setSavedCardName(storedCardName);
     }
-  }, [item]);
+  }, [item, location.state]);
 
   useEffect(() => {
     // Generate available time slots when date is selected
@@ -634,7 +650,12 @@ const BookingPage = ({ currentLocation }) => {
   };
 
   const handleBookingComplete = () => {
-    // In a real app, this would send the booking data to a server
+    if (isRescheduling && originalAppointment) {
+      // 실제 앱에서는 여기서 API 호출하여 기존 예약 취소 및 새 예약 생성
+      console.log("기존 예약 ID:", originalAppointment.id, "취소 처리됨");
+      console.log("새 예약 생성 완료:", selectedDate, selectedTime);
+    }
+
     navigate(-1);
   };
 
@@ -683,6 +704,22 @@ const BookingPage = ({ currentLocation }) => {
   };
 
   const getStepTitle = () => {
+    // 일정 변경인 경우 타이틀 변경
+    if (isRescheduling) {
+      switch (step) {
+        case 1:
+          return "일정 변경";
+        case 2:
+          return "예약자 정보";
+        case 3:
+          return "변경 예약 확인";
+        case 4:
+          return !paymentSuccess ? "결제하기" : "결제완료";
+        default:
+          return "일정 변경";
+      }
+    }
+
     switch (step) {
       case 1:
         return "예약하기";
@@ -757,7 +794,11 @@ const BookingPage = ({ currentLocation }) => {
               </div>
 
               <div className="booking-type-tag">
-                {bookingType === "medical" ? "진료 예약" : "시술 예약"}
+                {isRescheduling
+                  ? "일정 변경"
+                  : bookingType === "medical"
+                  ? "진료 예약"
+                  : "시술 예약"}
               </div>
             </div>
 
