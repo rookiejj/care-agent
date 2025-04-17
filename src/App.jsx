@@ -52,6 +52,9 @@ import AppointmentDetail from "./AppointmentDetail";
 import MedicalRecordsPage from "./MedicalRecordsPage";
 import PrescriptionManagement from "./PrescriptionManagement";
 import HealthCheckupResults from "./HealthCheckupResults";
+import PaymentHistory from "./PaymentHistory";
+import PaymentReceipt from "./PaymentReceipt";
+import PaymentStatement from "./PaymentStatement";
 
 const getSuperhumanIcon = () => {
   return `/images/${"super_human_icon.png"}`;
@@ -469,6 +472,17 @@ const AppContent = ({
         />
         <Route path="/prescriptions" element={<PrescriptionManagement />} />
         <Route path="/checkups" element={<HealthCheckupResults />} />
+        <Route path="/payments" element={<PaymentHistory />} />
+        <Route path="/payment-receipt" element={<PaymentReceipt />} />
+        <Route
+          path="/payment-receipt/:paymentId"
+          element={<PaymentReceipt />}
+        />
+        <Route path="/payment-statement" element={<PaymentStatement />} />
+        <Route
+          path="/payment-statement/:paymentId"
+          element={<PaymentStatement />}
+        />
       </Routes>
 
       {showBottomNav && <BottomNavigation currentPage={currentPage} />}

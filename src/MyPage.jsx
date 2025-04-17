@@ -41,6 +41,9 @@ const MyPage = ({ currentLocation, notificationCount }) => {
     "/medical-records",
     "/prescriptions", // 새로 추가한 처방전 관리 페이지
     "/checkups", // 새로 추가한 건강검진 결과 페이지
+    "/payments", // 결제 내역 페이지 추가
+    "/payment-receipt",
+    "/payment-statement",
   ];
 
   const handleMenuClick = (path) => {
@@ -89,18 +92,18 @@ const MyPage = ({ currentLocation, notificationCount }) => {
       label: t("mypage.medical.menu.paymentDetails"),
       color: "#f59e0b",
     },
-    {
-      id: "certificates",
-      icon: <Award size={20} />,
-      label: t("mypage.medical.menu.medicalCertificates"),
-      color: "#6366f1",
-    },
-    {
-      id: "reports",
-      icon: <FileText size={20} />,
-      label: t("mypage.medical.menu.medicalReports"),
-      color: "#0ea5e9",
-    },
+    // {
+    //   id: "payment-receipt",
+    //   icon: <Award size={20} />,
+    //   label: t("mypage.medical.menu.medicalCertificates"),
+    //   color: "#6366f1",
+    // },
+    // {
+    //   id: "payment-statement",
+    //   icon: <FileText size={20} />,
+    //   label: t("mypage.medical.menu.medicalReports"),
+    //   color: "#0ea5e9",
+    // },
   ];
 
   // 설정 메뉴 아이템

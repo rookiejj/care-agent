@@ -1,0 +1,598 @@
+.statement-content {
+  padding: 0 0.5rem;
+  margin: 0 0.5rem;
+}
+
+/* 정산서 종이 스타일 */
+.statement-paper {
+  background-color: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+}
+
+/* 정산서 배경 무늬 */
+.statement-paper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: linear-gradient(
+      rgba(200, 200, 200, 0.03) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, rgba(200, 200, 200, 0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 정산서 헤더 스타일 */
+.statement-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+  position: relative;
+  z-index: 1;
+}
+
+.statement-title-area {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.statement-icon {
+  color: #6366f1;
+}
+
+.statement-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.statement-number {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.statement-number-label {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-bottom: 0.25rem;
+}
+
+.statement-number-value {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #111827;
+}
+
+/* 정산서 알림 스타일 */
+.statement-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  padding: 0.75rem 1rem;
+  background-color: #eff6ff;
+  border-radius: 0.5rem;
+  margin-bottom: 1.25rem;
+  position: relative;
+  z-index: 1;
+}
+
+.statement-notice svg {
+  color: #3b82f6;
+  flex-shrink: 0;
+  margin-top: 0.125rem;
+}
+
+.statement-notice p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #1e40af;
+  line-height: 1.4;
+}
+
+/* 병원 정보 스타일 */
+.statement-hospital-info {
+  margin-bottom: 1.25rem;
+  position: relative;
+  z-index: 1;
+}
+
+.statement-hospital-name {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 0.375rem 0;
+}
+
+.statement-hospital-addr {
+  font-size: 0.875rem;
+  color: #4b5563;
+  margin: 0 0 0.25rem 0;
+}
+
+.statement-hospital-detail {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* 구분선 스타일 */
+.statement-divider {
+  height: 1px;
+  background-color: #e5e7eb;
+  margin: 1.25rem 0;
+  position: relative;
+  z-index: 1;
+}
+
+/* 정보 섹션 스타일 */
+.statement-info-section {
+  margin-bottom: 1.25rem;
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.statement-info-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.statement-info-label {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.statement-info-value {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #111827;
+}
+
+/* 요약 섹션 스타일 */
+.statement-summary-section {
+  margin-bottom: 1.25rem;
+  position: relative;
+  z-index: 1;
+}
+
+.statement-section-title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 0.75rem 0;
+}
+
+.statement-summary-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.statement-summary-card {
+  background-color: #f9fafb;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.summary-card-label {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.summary-card-value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.summary-card-value.coverage {
+  color: #8b5cf6;
+}
+
+.summary-card-value.insurance {
+  color: #3b82f6;
+}
+
+.summary-card-value.patient {
+  color: #ef4444;
+}
+
+/* 상세 내역 헤더 스타일 */
+.statement-details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+}
+
+.statement-details-toggle {
+  color: #6b7280;
+}
+
+/* 상세 내역 테이블 스타일 */
+.statement-details-content {
+  margin-top: 0.75rem;
+  margin-bottom: 1.25rem;
+  position: relative;
+  z-index: 1;
+}
+
+.statement-details-table {
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.statement-table-header {
+  display: grid;
+  grid-template-columns: 2fr repeat(4, 1fr);
+  background-color: #f3f4f6;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.statement-header-cell {
+  padding: 0.625rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #4b5563;
+  text-align: center;
+  border-right: 1px solid #e5e7eb;
+}
+
+.statement-header-cell:last-child {
+  border-right: none;
+}
+
+.statement-header-cell.item-name {
+  text-align: left;
+}
+
+.statement-table-row {
+  display: grid;
+  grid-template-columns: 2fr repeat(4, 1fr);
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.statement-table-row:last-child {
+  border-bottom: none;
+}
+
+.statement-cell {
+  padding: 0.625rem;
+  font-size: 0.8125rem;
+  color: #4b5563;
+  text-align: center;
+  border-right: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.statement-cell:last-child {
+  border-right: none;
+}
+
+.statement-cell.item-name {
+  text-align: left;
+  justify-content: flex-start;
+}
+
+.statement-table-footer {
+  display: grid;
+  grid-template-columns: 2fr repeat(4, 1fr);
+  background-color: #f9fafb;
+  border-top: 1px solid #e5e7eb;
+}
+
+.statement-footer-cell {
+  padding: 0.625rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #111827;
+  text-align: center;
+  border-right: 1px solid #e5e7eb;
+}
+
+.statement-footer-cell:last-child {
+  border-right: none;
+}
+
+.statement-footer-cell.item-name {
+  text-align: left;
+}
+
+/* 결제 정보 스타일 */
+.statement-payment-info {
+  margin-bottom: 1.25rem;
+  position: relative;
+  z-index: 1;
+}
+
+.statement-payment-details {
+  background-color: #f9fafb;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+}
+
+.statement-payment-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.statement-payment-row:last-child {
+  margin-bottom: 0;
+}
+
+.statement-payment-label {
+  font-size: 0.8125rem;
+  color: #6b7280;
+}
+
+.statement-payment-value {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #111827;
+}
+
+.statement-payment-status {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: #059669;
+}
+
+/* 정산서 푸터 스타일 */
+.statement-footer {
+  text-align: center;
+  padding-top: 1rem;
+  border-top: 1px dashed #e5e7eb;
+  position: relative;
+  z-index: 1;
+}
+
+.statement-footer-text {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin: 0 0 0.25rem 0;
+}
+
+.statement-footer-date {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin: 0;
+}
+
+/* 액션 버튼 스타일 */
+.statement-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.statement-action-button {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 0;
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  color: #4b5563;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.statement-action-button:hover {
+  background-color: #f9fafb;
+  border-color: #d1d5db;
+}
+
+/* 공유 옵션 스타일 */
+.share-options {
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.share-option-title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 1rem;
+}
+
+.share-options-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+}
+
+.share-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.share-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.share-icon.kakao {
+  background-color: #fee500;
+  color: #111827;
+}
+
+.share-icon.sms {
+  background-color: #34d399;
+  color: white;
+}
+
+.share-icon.email {
+  background-color: #60a5fa;
+  color: white;
+}
+
+.share-icon.link {
+  background-color: #a78bfa;
+  color: white;
+}
+
+.share-label {
+  font-size: 0.75rem;
+  color: #4b5563;
+}
+
+/* 로딩 및 데이터 없음 상태 스타일 */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  color: #6b7280;
+}
+
+.loading-spinner {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  border: 2px solid #e5e7eb;
+  border-top-color: #3b82f6;
+  animation: spinner 0.8s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.no-data-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  text-align: center;
+  color: #6b7280;
+}
+
+.no-data-message svg {
+  color: #9ca3af;
+  margin-bottom: 1rem;
+}
+
+.go-back-button {
+  margin-top: 1rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.5rem;
+  border: none;
+  background-color: #3b82f6;
+  color: white;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.go-back-button:hover {
+  background-color: #2563eb;
+}
+
+/* 반응형 스타일 */
+@media (max-width: 480px) {
+  .statement-info-section {
+    grid-template-columns: 1fr;
+  }
+
+  .statement-summary-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .statement-table-header,
+  .statement-table-row,
+  .statement-table-footer {
+    grid-template-columns: 2fr repeat(4, 1fr);
+    font-size: 0.75rem;
+  }
+
+  .statement-cell,
+  .statement-header-cell,
+  .statement-footer-cell {
+    padding: 0.5rem 0.25rem;
+  }
+
+  .statement-actions {
+    flex-direction: column;
+  }
+
+  .share-options-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* 프린트 시 스타일 */
+@media print {
+  .fixed-header,
+  .statement-actions,
+  .share-options {
+    display: none !important;
+  }
+
+  .statement-content {
+    padding: 0;
+    margin: 0;
+  }
+
+  .statement-paper {
+    box-shadow: none;
+    border: none;
+  }
+}
