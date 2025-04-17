@@ -59,9 +59,10 @@
   font-size: 0.75rem;
   color: #4b5563;
   flex-grow: 1;
+  margin: 0;
 }
 
-.filter-button {
+.payment-history-filter-button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -74,9 +75,10 @@
   flex-shrink: 0;
   cursor: pointer;
   transition: all 0.2s ease;
+  padding: 0;
 }
 
-.filter-button:hover {
+.payment-history-filter-button:hover {
   background-color: #f9fafb;
   color: #4b5563;
 }

@@ -327,7 +327,10 @@ const PaymentHistory = () => {
           </div>
 
           <div className="filter-container">
-            <div className="selected-filters">
+            <div
+              className="selected-filters"
+              onClick={() => setShowFilterOptions(!showFilterOptions)}
+            >
               <div className="filter-chip">
                 <Calendar size={14} />
                 <span>
@@ -338,10 +341,7 @@ const PaymentHistory = () => {
                 <Tag size={14} />
                 <span>{filterType === "all" ? "전체 유형" : filterType}</span>
               </div>
-              <button
-                className="filter-button"
-                onClick={() => setShowFilterOptions(!showFilterOptions)}
-              >
+              <button className="payment-history-filter-button">
                 <Filter size={16} />
               </button>
             </div>
