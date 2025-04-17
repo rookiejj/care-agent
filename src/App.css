@@ -274,6 +274,7 @@ button:active {
   border: none;
   border-radius: 0.5rem;
   cursor: pointer;
+  padding: 0.875rem;
 }
 
 .primary-button:disabled {
