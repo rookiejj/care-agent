@@ -55,6 +55,12 @@ import HealthCheckupResults from "./HealthCheckupResults";
 import PaymentHistory from "./PaymentHistory";
 import PaymentReceipt from "./PaymentReceipt";
 import PaymentStatement from "./PaymentStatement";
+import NotificationSettings from "./NotificationSettings";
+import PersonalInfoSettings from "./PersonalInfoSettings";
+import TermsOfUse from "./TermsOfUse";
+import NoticePage from "./NoticePage";
+import FAQPage from "./FAQPage";
+import CustomerService from "./CustomerService";
 
 const getSuperhumanIcon = () => {
   return `/images/${"super_human_icon.png"}`;
@@ -483,6 +489,15 @@ const AppContent = ({
           path="/payment-statement/:paymentId"
           element={<PaymentStatement />}
         />
+        <Route
+          path="/notification-settings"
+          element={<NotificationSettings />}
+        />
+        <Route path="/personal" element={<PersonalInfoSettings />} />
+        <Route path="/terms" element={<TermsOfUse />} />
+        <Route path="/notice" element={<NoticePage />} />
+        <Route path="/faq" element={<FAQPage />} />
+        <Route path="/service" element={<CustomerService />} />
       </Routes>
 
       {showBottomNav && <BottomNavigation currentPage={currentPage} />}

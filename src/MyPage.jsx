@@ -4,26 +4,21 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {
   ChevronRight,
-  Award,
-  MapPin,
   Calendar,
   MessageCircle,
   Heart,
-  Gift,
   Edit,
   Bell,
   CreditCard,
-  FileText,
   Settings,
   HelpCircle,
   LogOut,
-  Clock,
   ClipboardList,
   Pill,
   Activity,
   Shield,
   User,
-  Lock,
+  AlertCircle,
 } from "lucide-react";
 import "./MyPage.css";
 
@@ -44,6 +39,12 @@ const MyPage = ({ currentLocation, notificationCount }) => {
     "/payments", // 결제 내역 페이지 추가
     "/payment-receipt",
     "/payment-statement",
+    "/personal",
+    "/terms",
+    "/notice",
+    "/faq",
+    "/service",
+    "/notification-settings",
   ];
 
   const handleMenuClick = (path) => {
@@ -127,9 +128,9 @@ const MyPage = ({ currentLocation, notificationCount }) => {
       color: "#6366f1",
     },
     {
-      id: "privacy",
-      icon: <Lock size={20} />,
-      label: t("mypage.medical.menu.privacyPolicy"),
+      id: "notice",
+      icon: <AlertCircle size={20} />,
+      label: "공지사항", // 번역 키가 없을 경우 직접 문자열 사용
       color: "#0ea5e9",
     },
     {
