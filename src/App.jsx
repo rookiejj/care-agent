@@ -61,6 +61,7 @@ import TermsOfUse from "./TermsOfUse";
 import NoticePage from "./NoticePage";
 import FAQPage from "./FAQPage";
 import CustomerService from "./CustomerService";
+import ProfileEdit from "./ProfileEdit";
 
 const getSuperhumanIcon = () => {
   return `/images/${"super_human_icon.png"}`;
@@ -498,6 +499,7 @@ const AppContent = ({
         <Route path="/notice" element={<NoticePage />} />
         <Route path="/faq" element={<FAQPage />} />
         <Route path="/service" element={<CustomerService />} />
+        <Route path="/profile-edit" element={<ProfileEdit />} />
       </Routes>
 
       {showBottomNav && <BottomNavigation currentPage={currentPage} />}

@@ -1,5 +1,6 @@
 // StatusWidget.jsx
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 import "./StatusWidget.css";
 
@@ -40,6 +41,8 @@ const AppointmentItem = ({ title, date, progress, type }) => {
 
 // 상태 위젯 컴포넌트
 const StatusWidget = () => {
+  const navigate = useNavigate();
+
   // 예시 데이터 - 실제 구현시 props나 context로 받아오면 됩니다
   const appointments = [
     {
@@ -59,7 +62,11 @@ const StatusWidget = () => {
   ];
 
   return (
-    <div className="card">
+    <div
+      className="card"
+      style={{ cursor: "pointer" }}
+      onClick={() => navigate("/appointments")}
+    >
       <div className="status-widget">
         <h3 className="widget-title">진행 중인 예약</h3>
 

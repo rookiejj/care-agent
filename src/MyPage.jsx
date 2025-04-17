@@ -45,6 +45,7 @@ const MyPage = ({ currentLocation, notificationCount }) => {
     "/faq",
     "/service",
     "/notification-settings",
+    "/profile-edit",
   ];
 
   const handleMenuClick = (path) => {
