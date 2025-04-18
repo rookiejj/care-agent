@@ -1,0 +1,184 @@
+/* HealthCheckReminder.css */
+
+.health-check-container {
+  margin-bottom: 1.5rem;
+  background-color: #f9fafb;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+}
+
+.health-check-header {
+  background-color: #6366f1;
+  color: white;
+  padding: 0.75rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.health-check-title {
+  display: flex;
+  align-items: center;
+}
+
+.health-check-title h3 {
+  font-weight: bold;
+  margin: 0;
+}
+
+.health-check-title-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-right: 0.5rem;
+}
+
+.health-check-close-btn {
+  background: none;
+  border: none;
+  color: white;
+  padding: 0.25rem;
+  cursor: pointer;
+}
+
+.health-check-content {
+  padding: 1rem;
+}
+
+.health-check-item-list {
+  margin-bottom: 0.75rem;
+}
+
+.health-check-item {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid #f3f4f6;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  margin-bottom: 0.75rem;
+}
+
+.health-check-item:last-child {
+  margin-bottom: 0;
+}
+
+.check-button {
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 9999px;
+  margin-right: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+}
+
+.check-button-incomplete {
+  background-color: #f3f4f6;
+}
+
+.check-button-complete {
+  background-color: #ecfdf5;
+}
+
+.check-circle {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #10b981;
+}
+
+.check-circle-placeholder {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 9999px;
+  border: 2px solid #d1d5db;
+}
+
+.item-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.item-title {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.item-title-completed {
+  text-decoration: line-through;
+  color: #6b7280;
+}
+
+.item-status {
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+  margin-left: 0.5rem;
+}
+
+.status-overdue {
+  color: #ef4444;
+}
+
+.status-upcoming {
+  color: #f97316;
+}
+
+.status-future {
+  color: #3b82f6;
+}
+
+.status-completed {
+  color: #10b981;
+}
+
+.item-details {
+  display: flex;
+  align-items: center;
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.item-detail {
+  display: flex;
+  align-items: center;
+  margin-right: 0.5rem;
+}
+
+.item-detail-icon {
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-right: 0.25rem;
+}
+
+.add-item-button {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px dashed #d1d5db;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  color: #6b7280;
+  background: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.add-item-icon {
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.25rem;
+}

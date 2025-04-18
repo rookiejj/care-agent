@@ -1,0 +1,153 @@
+/* PopularHospitalsCarousel.css */
+
+.carousel-container {
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.carousel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.carousel-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.carousel-view-all {
+  font-size: 0.875rem;
+  color: #3b82f6;
+  cursor: pointer;
+}
+
+.carousel-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.carousel-slides {
+  position: relative;
+  height: 180px;
+}
+
+.carousel-slide {
+  position: absolute;
+  inset: 0;
+  transition: opacity 0.5s;
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.slide-image {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.slide-gradient {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+}
+
+.slide-content {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  color: white;
+  padding: 1rem;
+}
+
+.hospital-name {
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+.hospital-specialty {
+  font-size: 0.875rem;
+}
+
+.rating-container {
+  display: flex;
+  align-items: center;
+  margin-top: 0.25rem;
+}
+
+.star-icon {
+  color: #facc15;
+  width: 1rem;
+  height: 1rem;
+  fill: #facc15;
+}
+
+.rating-value {
+  margin-left: 0.25rem;
+  font-size: 0.875rem;
+}
+
+.review-count {
+  margin-left: 0.25rem;
+  font-size: 0.75rem;
+  color: #d1d5db;
+}
+
+.carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 9999px;
+  padding: 0.25rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.carousel-button:hover {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.prev-button {
+  left: 0.5rem;
+}
+
+.next-button {
+  right: 0.5rem;
+}
+
+.button-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: white;
+}
+
+.indicators {
+  position: absolute;
+  bottom: 4rem;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.indicator {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background-color: rgba(255, 255, 255, 0.5);
+  margin: 0 0.25rem;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.indicator-active {
+  background-color: rgba(255, 255, 255, 1);
+}

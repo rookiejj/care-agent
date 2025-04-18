@@ -5,6 +5,15 @@ import SearchBar from "./SearchBar";
 import MedicalCategories from "./MedicalCategories";
 import CosmeticCategories from "./CosmeticCategories";
 import SpecialtyCategories from "./SpecialtyCategories";
+import HealthCheckReminder from "./HealthCheckReminder";
+import PopularHospitalsCarousel from "./PopularHospitalsCarousel";
+import HealthTipsSection from "./HealthTipsSection";
+import TopDoctorsProfiles from "./TopDoctorsProfiles";
+import PromotionBanners from "./PromotionBanners";
+import TrendingCommunityPosts from "./TrendingCommunityPosts";
+import AppointmentStatusCard from "./AppointmentStatusCard";
+import SeasonalHealthCampaign from "./SeasonalHealthCampaign";
+import SymptomCheckerEntry from "./SymptomCheckerEntry";
 
 const MainPage = ({ currentLocation, notificationCount }) => {
   const handleExternalBack = () => {
@@ -52,6 +61,69 @@ const MainPage = ({ currentLocation, notificationCount }) => {
             <h3 className="section-title">진료과목</h3>
           </div>
           <SpecialtyCategories />
+        </div>
+
+        <div className="section-container" style={{ marginTop: "3rem" }}>
+          {/* <div className="section-header">
+            <h3 className="section-title">건강 체크 리마인더</h3>
+          </div> */}
+          <HealthCheckReminder />
+        </div>
+
+        <div className="section-container" style={{ marginTop: "3rem" }}>
+          {/* <div className="section-header">
+            <h3 className="section-title">진료과목</h3>
+          </div> */}
+          <PopularHospitalsCarousel />
+        </div>
+
+        <div className="section-container" style={{ marginTop: "3rem" }}>
+          {/* <div className="section-header">
+            <h3 className="section-title">진료과목</h3>
+          </div> */}
+          <HealthTipsSection />
+        </div>
+
+        <div className="section-container" style={{ marginTop: "3rem" }}>
+          {/* <div className="section-header">
+            <h3 className="section-title">진료과목</h3>
+          </div> */}
+          <TopDoctorsProfiles />
+        </div>
+
+        <div className="section-container" style={{ marginTop: "3rem" }}>
+          {/* <div className="section-header">
+            <h3 className="section-title">진료과목</h3>
+          </div> */}
+          <PromotionBanners />
+        </div>
+
+        <div className="section-container" style={{ marginTop: "3rem" }}>
+          {/* <div className="section-header">
+            <h3 className="section-title">진료과목</h3>
+          </div> */}
+          <TrendingCommunityPosts />
+        </div>
+
+        <div className="section-container" style={{ marginTop: "3rem" }}>
+          {/* <div className="section-header">
+            <h3 className="section-title">진료과목</h3>
+          </div> */}
+          <AppointmentStatusCard />
+        </div>
+
+        <div className="section-container" style={{ marginTop: "3rem" }}>
+          {/* <div className="section-header">
+            <h3 className="section-title">진료과목</h3>
+          </div> */}
+          <SeasonalHealthCampaign />
+        </div>
+
+        <div className="section-container" style={{ marginTop: "3rem" }}>
+          <div className="section-header">
+            <h3 className="section-title">증상 체커</h3>
+          </div>
+          <SymptomCheckerEntry />
         </div>
       </div>
     </div>

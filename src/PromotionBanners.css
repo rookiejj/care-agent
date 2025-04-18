@@ -1,0 +1,170 @@
+/* PromotionBanners.css */
+.promotion-container {
+  margin-bottom: 1.5rem;
+}
+
+.promotion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.promotion-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.promotion-view-all {
+  font-size: 0.875rem;
+  color: #3b82f6;
+  cursor: pointer;
+}
+
+.promotion-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.promotion-card {
+  border-radius: 0.5rem;
+  padding: 1rem;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.promo-blue {
+  background: linear-gradient(to right, #3b82f6, #4f46e5);
+}
+
+.promo-green {
+  background: linear-gradient(to right, #10b981, #0d9488);
+}
+
+.promo-decoration {
+  position: absolute;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.promo-decoration-top {
+  width: 8rem;
+  height: 8rem;
+  top: -2.5rem;
+  right: -2.5rem;
+}
+
+.promo-decoration-bottom {
+  width: 6rem;
+  height: 6rem;
+  bottom: -2.5rem;
+  left: -2.5rem;
+}
+
+.promotion-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  position: relative;
+  z-index: 1;
+}
+
+.promotion-info {
+  flex: 1;
+}
+
+.promotion-header-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+
+.promo-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.promotion-card-title {
+  font-weight: 700;
+  margin: 0 0 0 0.5rem;
+}
+
+.promotion-subtitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0.25rem 0;
+}
+
+.promotion-description {
+  font-size: 0.875rem;
+  opacity: 0.9;
+  margin: 0.25rem 0 0;
+}
+
+.promotion-action {
+  display: flex;
+  align-items: center;
+  margin-top: 0.75rem;
+}
+
+.promotion-button {
+  display: flex;
+  align-items: center;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0;
+  cursor: pointer;
+}
+
+.promotion-arrow-icon {
+  width: 1rem;
+  height: 1rem;
+  margin-left: 0.25rem;
+}
+
+.promotion-timer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.promotion-countdown {
+  display: flex;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: 500;
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+}
+
+.promotion-clock-icon {
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-right: 0.25rem;
+}
+
+/* 모바일 대응 */
+@media (max-width: 640px) {
+  .promotion-container {
+    margin-bottom: 1rem;
+  }
+
+  .promotion-title {
+    font-size: 1rem;
+  }
+
+  .promotion-card {
+    padding: 0.75rem;
+  }
+
+  .promotion-subtitle {
+    font-size: 1.125rem;
+  }
+}

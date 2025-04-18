@@ -1,0 +1,239 @@
+/* 예약 상태 카드 스타일 */
+.appointment-container {
+  margin-bottom: 1.5rem;
+}
+
+.appointment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.appointment-title {
+  font-size: 1.125rem;
+  font-weight: bold;
+}
+
+.appointment-view-all {
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+  color: #3b82f6;
+}
+
+.appointment-view-all-icon {
+  width: 1rem;
+  height: 1rem;
+  margin-left: 0.25rem;
+}
+
+/* 예약 없음 상태 스타일 */
+.no-appointment {
+  background-color: #f9fafb;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+  padding: 1rem;
+  text-align: center;
+}
+
+.no-appointment-icon-container {
+  width: 3rem;
+  height: 3rem;
+  margin: 0 auto;
+  background-color: #e5e7eb;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+
+.no-appointment-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: #6b7280;
+}
+
+.no-appointment-title {
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: #374151;
+  margin-bottom: 0.25rem;
+}
+
+.no-appointment-text {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-bottom: 0.75rem;
+}
+
+.book-appointment-button {
+  width: 100%;
+  padding: 0.5rem;
+  font-size: 0.875rem;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+/* 예약 있음 상태 스타일 */
+.appointment-card {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+}
+
+.appointment-card-content {
+  padding: 1rem;
+}
+
+.appointment-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.hospital-info {
+  flex: 1;
+}
+
+.hospital-name {
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.doctor-info {
+  font-size: 0.875rem;
+  color: #4b5563;
+}
+
+/* 상태 배지 스타일 */
+.status-badge {
+  display: flex;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.status-badge-icon {
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.25rem;
+}
+
+/* 상태별 스타일 */
+.status-upcoming {
+  background-color: #eff6ff;
+  color: #1e40af;
+}
+
+.status-upcoming .status-badge-icon {
+  color: #3b82f6;
+}
+
+.status-confirmed {
+  background-color: #ecfdf5;
+  color: #065f46;
+}
+
+.status-confirmed .status-badge-icon {
+  color: #10b981;
+}
+
+.status-completed {
+  background-color: #f5f3ff;
+  color: #5b21b6;
+}
+
+.status-completed .status-badge-icon {
+  color: #8b5cf6;
+}
+
+.status-canceled {
+  background-color: #fef2f2;
+  color: #b91c1c;
+}
+
+.status-canceled .status-badge-icon {
+  color: #ef4444;
+}
+
+.status-unknown {
+  background-color: #f3f4f6;
+  color: #4b5563;
+}
+
+.status-unknown .status-badge-icon {
+  color: #6b7280;
+}
+
+/* 예약 세부정보 스타일 */
+.appointment-details {
+  margin-top: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.appointment-detail-item {
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+  color: #4b5563;
+}
+
+.appointment-detail-icon {
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.5rem;
+  color: #6b7280;
+}
+
+/* 예약 액션 버튼 스타일 */
+.appointment-actions {
+  display: flex;
+  border-top: 1px solid #e5e7eb;
+  border-bottom: none;
+}
+
+.modify-button {
+  flex: 1;
+  padding: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #3b82f6;
+  background-color: #eff6ff;
+  border: none;
+  cursor: pointer;
+}
+
+.modify-button:hover {
+  background-color: #dbeafe;
+}
+
+.cancel-button {
+  flex: 1;
+  padding: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #ef4444;
+  background-color: #fef2f2;
+  border: none;
+  cursor: pointer;
+}
+
+.cancel-button:hover {
+  background-color: #fee2e2;
+}
+
+.divider {
+  width: 1px;
+  background-color: #e5e7eb;
+}
