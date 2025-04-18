@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useData } from "./DataContext";
 import { PageHeader } from "./App";
-import { Search } from "lucide-react";
 import EventCard from "./EventCard";
 import HospitalCard from "./HospitalCard";
 import SearchBar from "./SearchBar";
 import CategoryFilterButtons from "./CategoryFilterButtons";
-import MedicalCategories from "./MedicalCategories";
-import CosmeticCategories from "./CosmeticCategories";
 import RecentSearches from "./RecentSearches";
 import PopularSearches from "./PopularSearches";
+import PromotionBanners from "./PromotionBanners";
 
 import "./SearchPage.css";
 
@@ -161,6 +159,10 @@ const SearchPage = ({ currentLocation, notificationCount }) => {
               {showPopularSearches && (
                 <PopularSearches onSearchClick={handlePopularSearchClick} />
               )}
+
+              <div className="section-container" style={{ marginTop: "3rem" }}>
+                <PromotionBanners />
+              </div>
             </>
           ) : (
             <>
@@ -193,6 +195,10 @@ const SearchPage = ({ currentLocation, notificationCount }) => {
               {showPopularSearches && (
                 <PopularSearches onSearchClick={handlePopularSearchClick} />
               )}
+
+              <div className="section-container" style={{ marginTop: "0rem" }}>
+                <PromotionBanners />
+              </div>
             </>
           )
         ) : (

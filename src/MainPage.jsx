@@ -70,47 +70,47 @@ const MainPage = ({ currentLocation, notificationCount }) => {
           <HealthCheckReminder />
         </div>
 
-        <div className="section-container" style={{ marginTop: "3rem" }}>
-          {/* <div className="section-header">
+        {/* <div className="section-container" style={{ marginTop: "3rem" }}>
+          <div className="section-header">
             <h3 className="section-title">진료과목</h3>
-          </div> */}
+          </div>
           <PopularHospitalsCarousel />
-        </div>
+        </div> */}
 
-        <div className="section-container" style={{ marginTop: "3rem" }}>
+        <div className="section-container" style={{ marginTop: "0rem" }}>
           {/* <div className="section-header">
             <h3 className="section-title">진료과목</h3>
           </div> */}
           <HealthTipsSection />
         </div>
 
-        <div className="section-container" style={{ marginTop: "3rem" }}>
-          {/* <div className="section-header">
+        {/* <div className="section-container" style={{ marginTop: "3rem" }}>
+          <div className="section-header">
             <h3 className="section-title">진료과목</h3>
-          </div> */}
+          </div>
           <TopDoctorsProfiles />
-        </div>
+        </div> */}
 
-        <div className="section-container" style={{ marginTop: "3rem" }}>
-          {/* <div className="section-header">
+        {/* <div className="section-container" style={{ marginTop: "3rem" }}>
+          <div className="section-header">
             <h3 className="section-title">진료과목</h3>
-          </div> */}
+          </div>
           <PromotionBanners />
-        </div>
+        </div> */}
 
-        <div className="section-container" style={{ marginTop: "3rem" }}>
-          {/* <div className="section-header">
+        {/* <div className="section-container" style={{ marginTop: "3rem" }}>
+          <div className="section-header">
             <h3 className="section-title">진료과목</h3>
-          </div> */}
+          </div>
           <TrendingCommunityPosts />
-        </div>
+        </div> */}
 
-        <div className="section-container" style={{ marginTop: "3rem" }}>
-          {/* <div className="section-header">
+        {/* <div className="section-container" style={{ marginTop: "3rem" }}>
+          <div className="section-header">
             <h3 className="section-title">진료과목</h3>
-          </div> */}
+          </div>
           <AppointmentStatusCard />
-        </div>
+        </div> */}
 
         <div className="section-container" style={{ marginTop: "3rem" }}>
           {/* <div className="section-header">
