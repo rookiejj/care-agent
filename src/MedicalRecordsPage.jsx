@@ -8,7 +8,7 @@ const MedicalRecordsPage = () => {
   const { appointmentId } = useParams();
 
   // 페이지 제목 설정 - 특정 진료 기록을 보는 경우 제목 변경
-  const pageTitle = appointmentId ? "진료 상세 기록" : "진료 기록";
+  const pageTitle = appointmentId ? "진료/시술 상세 기록" : "진료/시술 기록";
 
   const handleBackClick = () => {
     navigate(-1); // 이전 페이지로 이동
@@ -18,7 +18,7 @@ const MedicalRecordsPage = () => {
     <div className="container">
       <div className="fixed-header">
         <PageHeader
-          title="진료 기록"
+          title="진료/시술 기록"
           backButtonVisible={true}
           onBack={handleBackClick}
         />

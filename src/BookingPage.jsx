@@ -994,7 +994,8 @@ const BookingPage = ({ currentLocation }) => {
                   )}
                 </div>
                 <span className="input-help-text">
-                  주민등록번호는 환자 식별 및 진료 기록 관리를 위해 필요합니다
+                  주민등록번호는 환자 식별 및 진료/시술 기록 관리를 위해
+                  필요합니다
                 </span>
               </div>
             </div>

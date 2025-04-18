@@ -267,67 +267,6 @@
 }
 
 /* 모달 스타일 */
-.modal-backdrop {
-  position: fixed;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 50;
-}
-
-.modal-content {
-  background-color: white;
-  width: 100%;
-  max-width: 32rem;
-  border-radius: 0.75rem;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
-    0 10px 10px -5px rgba(0, 0, 0, 0.04);
-}
-
-.modal-header {
-  position: sticky;
-  top: 0;
-  background-color: white;
-  padding: 1rem;
-  border-bottom: 1px solid #e5e7eb;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 10;
-}
-
-.modal-title {
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: #111827;
-  margin: 0;
-}
-
-.modal-close-button {
-  background: none;
-  border: none;
-  padding: 0.25rem;
-  width: 2rem;
-  height: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 9999px;
-  cursor: pointer;
-  color: #6b7280;
-}
-
-.modal-close-button:hover {
-  background-color: #f3f4f6;
-}
-
-.modal-body {
-  padding: 1rem;
-}
 
 .modal-prescription-header {
   display: flex;

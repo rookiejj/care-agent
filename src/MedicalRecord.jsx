@@ -241,7 +241,7 @@ const MedicalRecord = ({ selectedAppointmentId = null }) => {
       <div className="modal-backdrop">
         <div className="modal-content">
           <div className="modal-header">
-            <h2 className="modal-title">진료 상세 기록</h2>
+            <h2 className="modal-title">진료/시술 상세 기록</h2>
             <button
               onClick={() => setShowDetail(false)}
               className="modal-close-button"
@@ -381,12 +381,14 @@ const MedicalRecord = ({ selectedAppointmentId = null }) => {
       {isLoading ? (
         <div className="loading-container">
           <div className="loading-spinner"></div>
-          <p>진료 기록을 불러오는 중...</p>
+          <p>진료/시술 기록을 불러오는 중...</p>
         </div>
       ) : filteredRecords.length === 0 ? (
         <div className="empty-container">
           <FileText size={40} className="empty-icon" />
-          <p className="empty-text">진료 기록이 없거나 검색 결과가 없습니다.</p>
+          <p className="empty-text">
+            진료/시술 기록이 없거나 검색 결과가 없습니다.
+          </p>
         </div>
       ) : (
         <div className="record-list">

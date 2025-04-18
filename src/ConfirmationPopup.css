@@ -17,7 +17,7 @@
   border-radius: 1rem;
   padding: 1.5rem;
   width: 85%;
-  max-width: 400px;
+  max-width: 300px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
   animation: slideUp 0.3s ease-out;
 }

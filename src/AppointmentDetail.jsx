@@ -449,7 +449,7 @@ const AppointmentDetail = ({ currentLocation }) => {
                 onClick={() => navigate(`/medical-records/${appointment.id}`)}
               >
                 <FileText size={18} />
-                진료 기록 확인하기
+                진료/시술 기록 확인하기
                 <ArrowRight size={16} />
               </button>
             </div>

@@ -1084,9 +1084,9 @@ export default {
         edit: "프로필 수정",
       },
       menu: {
-        treatmentManagement: "진료 관리",
-        appointmentHistory: "진료 예약 내역",
-        medicalRecords: "진료 기록",
+        treatmentManagement: "진료/시술 관리",
+        appointmentHistory: "진료/시술 예약 내역",
+        medicalRecords: "진료/시술 기록",
         prescriptionManagement: "처방전 관리",
         healthCheckupResults: "건강검진 결과",
 

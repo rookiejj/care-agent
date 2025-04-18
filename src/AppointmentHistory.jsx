@@ -496,7 +496,7 @@ const AppointmentHistory = ({ currentLocation }) => {
                       }
                     >
                       <ClipboardList size={14} />
-                      진료 기록 보기
+                      진료/시술 기록 보기
                     </button>
                   )}
                 </div>
