@@ -62,6 +62,7 @@ import NoticePage from "./NoticePage";
 import FAQPage from "./FAQPage";
 import CustomerService from "./CustomerService";
 import ProfileEdit from "./ProfileEdit";
+import AdminPage from "./AdminPage";
 
 const getSuperhumanIcon = () => {
   return `/images/${"super_human_icon.png"}`;
@@ -361,12 +362,23 @@ const App = () => {
   return (
     <DataProvider>
       <BrowserRouter>
-        <AppContent
-          selectedLocation={selectedLocation}
-          setSelectedLocation={setSelectedLocation}
-          notificationCount={notificationCount}
-          setNotificationCount={setNotificationCount}
-        />
+        <Routes>
+          {/* 관리자 페이지를 별도 라우트로 분리 */}
+          <Route path="/admin" element={<AdminPage />} />
+
+          {/* 나머지 모든 앱 라우트는 AppContent로 감싸기 */}
+          <Route
+            path="*"
+            element={
+              <AppContent
+                selectedLocation={selectedLocation}
+                setSelectedLocation={setSelectedLocation}
+                notificationCount={notificationCount}
+                setNotificationCount={setNotificationCount}
+              />
+            }
+          />
+        </Routes>
       </BrowserRouter>
     </DataProvider>
   );

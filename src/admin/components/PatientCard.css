@@ -1,0 +1,148 @@
+.patient-card {
+  background-color: white;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.patient-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.patient-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.patient-basic-info {
+  display: flex;
+  align-items: center;
+}
+
+.patient-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #f3f4f6;
+  margin-right: 0.75rem;
+  color: #6b7280;
+}
+
+.patient-name-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.patient-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 0.25rem 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.patient-attributes {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.patient-attribute {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.patient-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.patient-badge-regular {
+  background-color: #dbeafe;
+  color: #2563eb;
+}
+
+.patient-badge-new {
+  background-color: #dcfce7;
+  color: #16a34a;
+}
+
+.patient-badge-inactive {
+  background-color: #fef2f2;
+  color: #dc2626;
+}
+
+.patient-card-content {
+  padding: 1rem;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.patient-info-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: #4b5563;
+  margin-bottom: 0.625rem;
+}
+
+.patient-info-item:last-child {
+  margin-bottom: 0;
+}
+
+.patient-info-item svg {
+  color: #6b7280;
+}
+
+.patient-info-item.upcoming {
+  color: #3b82f6;
+  font-weight: 500;
+}
+
+.patient-info-item.upcoming svg {
+  color: #3b82f6;
+}
+
+.patient-card-footer {
+  padding: 0.75rem 1rem;
+  background-color: #f9fafb;
+}
+
+.patient-detail-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  background-color: white;
+  color: #6b7280;
+  font-size: 0.875rem;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.patient-detail-button:hover {
+  background-color: #f3f4f6;
+  border-color: #d1d5db;
+}
+
+.patient-detail-button span {
+  flex: 1;
+  text-align: center;
+  margin: 0 0.5rem;
+}

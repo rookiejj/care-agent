@@ -24,12 +24,12 @@ const ProgressBar = ({ progress, type }) => {
 // 예약 항목 컴포넌트
 const AppointmentItem = ({ title, date, progress, type }) => {
   return (
-    <div className="appointment-item">
+    <div className="status-widget-appointment-item">
       <div className="appointment-header">
         <p>
           <span className={`tag-${type}`}>
             {type === "medical" ? "진료" : "시술"}
-          </span>{" "}
+          </span>
           {title}
         </p>
         <p className="text-sm">{date}</p>

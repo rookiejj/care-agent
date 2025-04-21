@@ -1,0 +1,101 @@
+.stat-card {
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 0.5rem;
+  margin-right: 1rem;
+  flex-shrink: 0;
+}
+
+.stat-card-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.stat-card-title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #6b7280;
+  margin: 0 0 0.5rem 0;
+}
+
+.stat-card-value-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+
+.stat-card-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0.5rem 0 0;
+}
+
+.stat-card-change {
+  display: flex;
+  align-items: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.375rem;
+  border-radius: 9999px;
+}
+
+.stat-card-change.increase {
+  background-color: #ecfdf5;
+  color: #10b981;
+}
+
+.stat-card-change.decrease {
+  background-color: #fef2f2;
+  color: #ef4444;
+}
+
+.stat-card-subtitle {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* 색상 변형 */
+.stat-card-blue .stat-card-icon {
+  background-color: #eff6ff;
+  color: #3b82f6;
+}
+
+.stat-card-green .stat-card-icon {
+  background-color: #ecfdf5;
+  color: #10b981;
+}
+
+.stat-card-purple .stat-card-icon {
+  background-color: #f5f3ff;
+  color: #8b5cf6;
+}
+
+.stat-card-orange .stat-card-icon {
+  background-color: #fff7ed;
+  color: #f97316;
+}
+
+.stat-card-red .stat-card-icon {
+  background-color: #fef2f2;
+  color: #ef4444;
+}

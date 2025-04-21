@@ -74,7 +74,7 @@ const AppointmentStatusCard = () => {
 
   return (
     <div className="section-container appointment-container">
-      <div className="appointment-header">
+      <div className="appointment-status-card-header">
         <h3 className="section-title appointment-title">내 예약</h3>
         <span className="appointment-view-all">
           모든 예약 보기

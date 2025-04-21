@@ -10,6 +10,7 @@
   box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
   position: relative;
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 .profile-card::before {
@@ -31,7 +32,7 @@
   position: relative;
   z-index: 1;
   margin-bottom: 0;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
 }
 
 .profile-avatar-container {

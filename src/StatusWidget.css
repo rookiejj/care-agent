@@ -12,11 +12,11 @@
 }
 
 /* 예약 항목 스타일 */
-.appointment-item {
+.status-widget-appointment-item {
   margin-bottom: 0;
 }
 
-.appointment-item:last-child {
+.status-widget-appointment-item:last-child {
   margin-bottom: 0;
 }
 
