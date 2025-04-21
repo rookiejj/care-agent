@@ -296,15 +296,15 @@ const PatientManagement = () => {
       </div>
 
       <div className="patient-management-actions">
-        <div className="search-filter-container">
-          <div className="admin-search-bar">
-            <Search size={18} className="search-icon" />
+        <div className="patient-management-search-filter-container">
+          <div className="patient-management-admin-search-bar">
+            <Search size={18} className="patient-management-search-icon" />
             <input
               type="text"
               placeholder="환자 이름, 전화번호 검색..."
               value={searchTerm}
               onChange={handleSearchChange}
-              className="admin-search-input"
+              className="patient-management-admin-search-input"
             />
           </div>
 

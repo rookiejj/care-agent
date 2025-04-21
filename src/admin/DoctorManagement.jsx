@@ -355,15 +355,15 @@ const DoctorManagement = () => {
       </div>
 
       <div className="doctor-management-actions">
-        <div className="search-filter-container">
-          <div className="admin-search-bar">
-            <Search size={18} className="search-icon" />
+        <div className="doctor-management-search-filter-container">
+          <div className="doctor-management-admin-search-bar">
+            <Search size={18} className="doctor-management-search-icon" />
             <input
               type="text"
               placeholder="의사 이름, 진료과, 전화번호 검색..."
               value={searchTerm}
               onChange={handleSearchChange}
-              className="admin-search-input"
+              className="doctor-management-admin-search-input"
             />
           </div>
 

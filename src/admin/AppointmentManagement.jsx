@@ -455,15 +455,15 @@ const AppointmentManagement = () => {
       </div>
 
       <div className="appointment-management-actions">
-        <div className="search-filter-container">
-          <div className="admin-search-bar">
-            <Search size={18} className="search-icon" />
+        <div className="appointment-management-search-filter-container">
+          <div className="appointment-management-admin-search-bar">
+            <Search size={18} className="appointment-management-search-icon" />
             <input
               type="text"
               placeholder="환자 이름, 전화번호, 의사 검색..."
               value={searchTerm}
               onChange={handleSearchChange}
-              className="admin-search-input"
+              className="appointment-management-admin-search-input"
             />
           </div>
 
@@ -714,7 +714,7 @@ const AppointmentManagement = () => {
                         <td>{appointment.reason}</td>
                         <td>
                           <div
-                            className="appointment-actions"
+                            className="appointment-management-table-actions"
                             onClick={(e) => e.stopPropagation()}
                           >
                             <button
