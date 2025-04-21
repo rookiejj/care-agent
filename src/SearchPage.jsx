@@ -160,7 +160,7 @@ const SearchPage = ({ currentLocation, notificationCount }) => {
                 <PopularSearches onSearchClick={handlePopularSearchClick} />
               )}
 
-              <div className="section-container" style={{ marginTop: "3rem" }}>
+              <div className="section-container">
                 <PromotionBanners />
               </div>
             </>
@@ -196,7 +196,7 @@ const SearchPage = ({ currentLocation, notificationCount }) => {
                 <PopularSearches onSearchClick={handlePopularSearchClick} />
               )}
 
-              <div className="section-container" style={{ marginTop: "0rem" }}>
+              <div className="section-container">
                 <PromotionBanners />
               </div>
             </>

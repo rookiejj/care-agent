@@ -19,6 +19,7 @@ import {
   Shield,
   User,
   AlertCircle,
+  KeyRound,
 } from "lucide-react";
 import "./MyPage.css";
 
@@ -144,6 +145,12 @@ const MyPage = ({ currentLocation, notificationCount }) => {
       id: "service",
       icon: <MessageCircle size={20} />,
       label: t("mypage.medical.menu.customerService"),
+      color: "#f59e0b",
+    },
+    {
+      id: "admin",
+      icon: <KeyRound size={20} />,
+      label: "관리자 페이지",
       color: "#f59e0b",
     },
   ];
