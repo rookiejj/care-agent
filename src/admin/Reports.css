@@ -117,6 +117,7 @@
   color: #6b7280;
   cursor: pointer;
   transition: all 0.2s;
+  padding: 0;
 }
 
 .report-card-action:hover {
