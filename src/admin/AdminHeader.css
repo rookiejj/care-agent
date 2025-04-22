@@ -71,6 +71,7 @@
   font-size: 0.875rem;
   background-color: #f9fafb;
   transition: all 0.2s;
+  color: #111827;
 }
 
 .admin-search-input:focus {
