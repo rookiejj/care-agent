@@ -32,6 +32,7 @@
   background-color: #f9fafb;
   transition: all 0.2s;
   box-sizing: border-box;
+  color: #111827;
 }
 
 .appointment-management-admin-search-input:focus {
@@ -144,6 +145,10 @@
 }
 
 .appointment-count {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   font-size: 0.875rem;
   color: #6b7280;
 }
@@ -172,6 +177,7 @@
 .appointment-datetime {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .appointment-date {

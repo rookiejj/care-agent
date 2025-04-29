@@ -8,18 +8,10 @@ import {
   ChevronRight,
   Edit,
   Trash2,
-  User,
-  Calendar,
   Clock,
-  DollarSign,
-  FileText,
   Scissors,
   Star,
   Camera,
-  Image,
-  Info,
-  AlertCircle,
-  Bookmark,
   Tag,
 } from "lucide-react";
 import "./CosmeticProcedureManagement.css";
@@ -866,6 +858,17 @@ const CosmeticProcedureManagement = () => {
         <>
           <div className="admin-table-container">
             <table className="admin-table">
+              <colgroup>
+                <col style={{ minWidth: "180px" }} />
+                <col style={{ minWidth: "100px" }} />
+                <col style={{ minWidth: "180px" }} />
+                <col style={{ minWidth: "100px" }} />
+                <col style={{ minWidth: "100px" }} />
+                <col style={{ minWidth: "100px" }} />
+                <col style={{ minWidth: "130px" }} />
+                <col style={{ minWidth: "100px" }} />
+                <col style={{ minWidth: "80px" }} />
+              </colgroup>
               <thead>
                 <tr>
                   <th>시술명</th>
@@ -934,10 +937,12 @@ const CosmeticProcedureManagement = () => {
                         {procedure.hasBeforeAfterImages ? (
                           <>
                             <Camera size={14} />
-                            <span>{procedure.imagesCount}장</span>
+                            <div>{procedure.imagesCount}장</div>
                           </>
                         ) : (
-                          <span className="no-images">없음</span>
+                          <div className="cosmic-procedure-management-no-images">
+                            없음
+                          </div>
                         )}
                       </div>
                     </td>

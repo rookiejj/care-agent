@@ -208,6 +208,7 @@
   background-color: #f9fafb;
   transition: all 0.2s;
   box-sizing: border-box;
+  color: #111827;
 }
 
 .before-after-management-search-input:focus {

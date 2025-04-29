@@ -660,6 +660,17 @@ const DoctorManagement = () => {
         <>
           <div className="admin-table-container">
             <table className="admin-table">
+              <colgroup>
+                <col style={{ minWidth: "130px" }} />
+                <col style={{ minWidth: "100px" }} />
+                <col style={{ minWidth: "100px" }} />
+                <col style={{ minWidth: "130px" }} />
+                <col style={{ minWidth: "180px" }} />
+                <col style={{ minWidth: "180px" }} />
+                <col style={{ minWidth: "100px" }} />
+                <col style={{ minWidth: "100px" }} />
+                <col style={{ minWidth: "80px" }} />
+              </colgroup>
               <thead>
                 <tr>
                   <th>이름</th>
@@ -676,7 +687,7 @@ const DoctorManagement = () => {
               <tbody>
                 {currentDoctors.map((doctor) => (
                   <tr key={doctor.id} onClick={() => handleDoctorClick(doctor)}>
-                    <td style={{ minWidth: "130px" }}>
+                    <td>
                       <div className="doctor-management-doctor-name">
                         {doctor.name}
                       </div>
@@ -686,10 +697,8 @@ const DoctorManagement = () => {
                         </div>
                       )}
                     </td>
-                    <td style={{ minWidth: "100px" }}>{doctor.department}</td>
-                    <td style={{ minWidth: "100px" }}>
-                      {renderDoctorTypeBadge(doctor.doctorType)}
-                    </td>
+                    <td>{doctor.department}</td>
+                    <td>{renderDoctorTypeBadge(doctor.doctorType)}</td>
                     <td>
                       <div className="specialties-tags">
                         {doctor.specialties.map((specialty, index) => (
@@ -699,7 +708,7 @@ const DoctorManagement = () => {
                         ))}
                       </div>
                     </td>
-                    <td style={{ minWidth: "180px" }}>
+                    <td>
                       <div className="doctor-contact">
                         <div className="doctor-phone">
                           <Phone size={14} />
@@ -712,15 +721,13 @@ const DoctorManagement = () => {
                       </div>
                     </td>
                     <td>{renderStatusBadge(doctor.status)}</td>
-                    <td style={{ minWidth: "80px" }}>
+                    <td>
                       <div className="appointment-count">
                         <Calendar size={14} />
                         {doctor.todayAppointments}건
                       </div>
                     </td>
-                    <td style={{ minWidth: "80px" }}>
-                      {renderGalleryInfo(doctor)}
-                    </td>
+                    <td>{renderGalleryInfo(doctor)}</td>
                     <td>
                       <div
                         className="doctor-actions"

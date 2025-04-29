@@ -32,6 +32,7 @@
   background-color: #f9fafb;
   transition: all 0.2s;
   box-sizing: border-box;
+  color: #111827;
 }
 
 .doctor-management-admin-search-input:focus {
@@ -158,13 +159,6 @@
   color: #6b7280;
 }
 
-.appointment-count {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: #4b5563;
-}
-
 .appointment-count svg {
   color: #3b82f6;
 }
@@ -173,6 +167,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 0.5rem;
 }
 
 .doctor-actions {

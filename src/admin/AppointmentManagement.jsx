@@ -683,8 +683,8 @@ const AppointmentManagement = () => {
                     </colgroup>
                     <thead>
                       <tr>
-                        <th style={{ textAlign: "start" }}>환자 정보</th>
-                        <th style={{ textAlign: "start" }}>일시</th>
+                        <th>환자 정보</th>
+                        <th>일시</th>
                         <th>진료과</th>
                         <th>담당 의사</th>
                         <th>상태</th>
@@ -718,18 +718,10 @@ const AppointmentManagement = () => {
                               </div>
                             </div>
                           </td>
-                          <td style={{ textAlign: "center" }}>
-                            {appointment.department}
-                          </td>
-                          <td style={{ textAlign: "center" }}>
-                            {appointment.doctor}
-                          </td>
-                          <td style={{ textAlign: "center" }}>
-                            {renderStatusBadge(appointment.status)}
-                          </td>
-                          <td style={{ textAlign: "center" }}>
-                            {appointment.reason}
-                          </td>
+                          <td> {appointment.department}</td>
+                          <td> {appointment.doctor}</td>
+                          <td> {renderStatusBadge(appointment.status)}</td>
+                          <td> {appointment.reason}</td>
                           <td>
                             <div
                               className="appointment-management-table-actions"

@@ -32,6 +32,7 @@
   background-color: #f9fafb;
   transition: all 0.2s;
   box-sizing: border-box;
+  color: #111827;
 }
 
 .procedure-management-admin-search-input:focus {
@@ -121,9 +122,12 @@
 }
 
 .discount-rate {
-  font-size: 0.75rem;
-  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
   color: #ef4444;
+  font-weight: 500;
 }
 
 .procedure-duration {
@@ -155,7 +159,7 @@
   color: #4b5563;
 }
 
-.no-images {
+.cosmic-procedure-management-no-images {
   color: #9ca3af;
   font-size: 0.75rem;
 }

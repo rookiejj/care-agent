@@ -32,6 +32,7 @@
   background-color: #f9fafb;
   transition: all 0.2s;
   box-sizing: border-box;
+  color: #111827;
 }
 
 .package-management-search-input:focus {
@@ -233,6 +234,7 @@
 .discount-rate {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.25rem;
   color: #ef4444;
   font-weight: 500;

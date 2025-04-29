@@ -181,7 +181,7 @@ body:has(.admin-page) #root {
 .admin-table th {
   background-color: #f9fafb;
   padding: 0.75rem 1rem;
-  text-align: left;
+  text-align: center;
   font-weight: 600;
   color: #374151;
   border-bottom: 1px solid #e5e7eb;
@@ -189,6 +189,7 @@ body:has(.admin-page) #root {
 
 .admin-table td {
   padding: 0.75rem 1rem;
+  text-align: center;
   border-bottom: 1px solid #e5e7eb;
   color: #4b5563;
 }
