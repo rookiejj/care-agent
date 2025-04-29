@@ -6,6 +6,10 @@ import Dashboard from "./admin/Dashboard";
 import PatientManagement from "./admin/PatientManagement";
 import AppointmentManagement from "./admin/AppointmentManagement";
 import DoctorManagement from "./admin/DoctorManagement";
+import CosmeticProcedureManagement from "./admin/CosmeticProcedureManagement";
+import ConsultationManagement from "./admin/ConsultationManagement";
+import BeforeAfterManagement from "./admin/BeforeAfterManagement";
+import PackageManagement from "./admin/PackageManagement";
 import Settings from "./admin/Settings";
 import HospitalProfile from "./admin/HospitalProfile";
 import Reports from "./admin/Reports";
@@ -23,17 +27,27 @@ const AdminPage = () => {
     // 여기서는 목업 데이터 사용
     const mockHospitalData = {
       id: 1,
-      name: "서울 중앙 의원",
+      name: "서울 뷰티메디 센터",
       address: "서울시 강남구 테헤란로 123",
       phone: "02-123-4567",
-      departments: ["내과", "소아과", "정형외과", "피부과"],
-      doctors: 12,
+      departments: [
+        "내과",
+        "소아과",
+        "정형외과",
+        "피부과",
+        "성형외과",
+        "미용성형",
+        "피부미용",
+      ],
+      facilityType: "의료/성형 시설",
+      doctors: 15,
       patients: 1458,
       appointments: {
         today: 32,
         pending: 5,
         thisWeek: 187,
       },
+      hasCosmeticServices: true,
     };
 
     // 데이터 로딩 시뮬레이션
@@ -62,6 +76,14 @@ const AdminPage = () => {
         return <AppointmentManagement />;
       case "doctors":
         return <DoctorManagement />;
+      case "cosmetic":
+        return <CosmeticProcedureManagement />;
+      case "consultations":
+        return <ConsultationManagement />;
+      case "beforeafter":
+        return <BeforeAfterManagement />;
+      case "packages":
+        return <PackageManagement />;
       case "profile":
         return <HospitalProfile />;
       case "reports":

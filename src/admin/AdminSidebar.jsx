@@ -11,6 +11,10 @@ import {
   ChevronRight,
   Building,
   User,
+  Scissors, // 성형 관련 아이콘 추가
+  Camera, // 사진 관리 아이콘 추가
+  Package, // 패키지 아이콘 추가
+  MessageSquare, // 상담 아이콘 추가
 } from "lucide-react";
 import "./AdminSidebar.css";
 
@@ -28,7 +32,7 @@ const AdminSidebar = ({
     },
     {
       id: "patients",
-      label: "환자 관리",
+      label: "환자/고객 관리",
       icon: <Users size={20} />,
     },
     {
@@ -38,12 +42,32 @@ const AdminSidebar = ({
     },
     {
       id: "doctors",
-      label: "의사 관리",
+      label: "의료진 관리",
       icon: <Stethoscope size={20} />,
     },
     {
+      id: "cosmetic",
+      label: "성형 시술 관리",
+      icon: <Scissors size={20} />,
+    },
+    {
+      id: "consultations",
+      label: "상담 관리",
+      icon: <MessageSquare size={20} />,
+    },
+    {
+      id: "beforeafter",
+      label: "전후사진 관리",
+      icon: <Camera size={20} />,
+    },
+    {
+      id: "packages",
+      label: "패키지 관리",
+      icon: <Package size={20} />,
+    },
+    {
       id: "profile",
-      label: "병원 프로필",
+      label: "시설 프로필",
       icon: <Building size={20} />,
     },
     {
@@ -63,7 +87,7 @@ const AdminSidebar = ({
       <div className="admin-sidebar-header">
         {!collapsed && (
           <div className="admin-sidebar-title">
-            <h1>의료 관리 시스템</h1>
+            <h1>의료/성형 관리 시스템</h1>
           </div>
         )}
       </div>
@@ -75,7 +99,9 @@ const AdminSidebar = ({
           </div>
           <div className="admin-hospital-details">
             <h2 className="admin-hospital-name">{hospitalData.name}</h2>
-            <p className="admin-hospital-type">의료기관 관리자</p>
+            <p className="admin-hospital-type">
+              {hospitalData.facilityType || "의료기관"} 관리자
+            </p>
           </div>
         </div>
       )}

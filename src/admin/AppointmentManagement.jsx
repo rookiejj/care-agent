@@ -141,17 +141,17 @@ const AppointmentManagement = () => {
               "임",
             ][Math.floor(Math.random() * 10)];
             const lastName = [
-              "준",
-              "민",
-              "서",
-              "지",
-              "현",
-              "우",
-              "영",
-              "수",
-              "은",
-              "연",
-              "호",
+              "준서",
+              "민서",
+              "서준",
+              "지영",
+              "현우",
+              "우식",
+              "영호",
+              "수진",
+              "은비",
+              "연수",
+              "호영",
             ][Math.floor(Math.random() * 11)];
             const patientName = firstName + lastName;
             const phoneNumber = `010-${
@@ -670,79 +670,98 @@ const AppointmentManagement = () => {
           ) : (
             <>
               <div className="admin-table-container">
-                <table className="admin-table">
-                  <thead>
-                    <tr>
-                      <th>환자 정보</th>
-                      <th>일시</th>
-                      <th>진료과</th>
-                      <th>담당 의사</th>
-                      <th>상태</th>
-                      <th>방문 이유</th>
-                      <th>작업</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {currentAppointments.map((appointment) => (
-                      <tr
-                        key={appointment.id}
-                        onClick={() => handleAppointmentClick(appointment)}
-                      >
-                        <td>
-                          <div className="patient-info">
-                            <span className="patient-name">
-                              {appointment.patientName}
-                            </span>
-                            <span className="patient-phone">
-                              {appointment.phoneNumber}
-                            </span>
-                          </div>
-                        </td>
-                        <td>
-                          <div className="appointment-datetime">
-                            <div className="appointment-date">
-                              {formatDate(appointment.date)}
+                <div className="admin-table-wrapper">
+                  <table className="admin-table">
+                    <colgroup>
+                      <col style={{ width: "150px" }} />
+                      <col style={{ width: "120px" }} />
+                      <col style={{ width: "100px" }} />
+                      <col style={{ width: "100px" }} />
+                      <col style={{ width: "120px" }} />
+                      <col style={{ width: "120px" }} />
+                      <col style={{ width: "80px" }} />
+                    </colgroup>
+                    <thead>
+                      <tr>
+                        <th style={{ textAlign: "start" }}>환자 정보</th>
+                        <th style={{ textAlign: "start" }}>일시</th>
+                        <th>진료과</th>
+                        <th>담당 의사</th>
+                        <th>상태</th>
+                        <th>방문 이유</th>
+                        <th>작업</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {currentAppointments.map((appointment) => (
+                        <tr
+                          key={appointment.id}
+                          onClick={() => handleAppointmentClick(appointment)}
+                        >
+                          <td>
+                            <div className="patient-info">
+                              <span className="patient-name">
+                                {appointment.patientName}
+                              </span>
+                              <span className="patient-phone">
+                                {appointment.phoneNumber}
+                              </span>
                             </div>
-                            <div className="appointment-time">
-                              {formatTime(appointment.date)}
+                          </td>
+                          <td>
+                            <div className="appointment-datetime">
+                              <div className="appointment-date">
+                                {formatDate(appointment.date)}
+                              </div>
+                              <div className="appointment-time">
+                                {formatTime(appointment.date)}
+                              </div>
                             </div>
-                          </div>
-                        </td>
-                        <td>{appointment.department}</td>
-                        <td>{appointment.doctor}</td>
-                        <td>{renderStatusBadge(appointment.status)}</td>
-                        <td>{appointment.reason}</td>
-                        <td>
-                          <div
-                            className="appointment-management-table-actions"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            <button
-                              className="action-button edit"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleAppointmentClick(appointment);
-                              }}
+                          </td>
+                          <td style={{ textAlign: "center" }}>
+                            {appointment.department}
+                          </td>
+                          <td style={{ textAlign: "center" }}>
+                            {appointment.doctor}
+                          </td>
+                          <td style={{ textAlign: "center" }}>
+                            {renderStatusBadge(appointment.status)}
+                          </td>
+                          <td style={{ textAlign: "center" }}>
+                            {appointment.reason}
+                          </td>
+                          <td>
+                            <div
+                              className="appointment-management-table-actions"
+                              onClick={(e) => e.stopPropagation()}
                             >
-                              <Edit size={16} />
-                            </button>
-                            {appointment.status === "confirmed" && (
                               <button
-                                className="action-button cancel"
+                                className="action-button edit"
                                 onClick={(e) => {
                                   e.stopPropagation();
-                                  handleCancelAppointment(appointment.id);
+                                  handleAppointmentClick(appointment);
                                 }}
                               >
-                                <XCircle size={16} />
+                                <Edit size={16} />
                               </button>
-                            )}
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+                              {appointment.status === "confirmed" && (
+                                <button
+                                  className="action-button cancel"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleCancelAppointment(appointment.id);
+                                  }}
+                                >
+                                  <XCircle size={16} />
+                                </button>
+                              )}
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
 
               {totalPages > 1 && (

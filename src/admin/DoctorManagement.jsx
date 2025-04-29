@@ -16,6 +16,8 @@ import {
   Clock,
   CheckCircle,
   XCircle,
+  Camera,
+  Scissors,
 } from "lucide-react";
 import "./DoctorManagement.css";
 import DoctorModal from "./components/DoctorModal";
@@ -32,6 +34,7 @@ const DoctorManagement = () => {
   const [filterOptions, setFilterOptions] = useState({
     department: "all",
     status: "all",
+    doctorType: "all", // 의사 타입 필터 추가 (일반/성형)
   });
 
   // 페이지네이션 설정
@@ -51,8 +54,31 @@ const DoctorManagement = () => {
         "치과",
         "신경과",
         "산부인과",
+        "성형외과", // 성형 관련 과 추가
+        "미용성형과", // 성형 관련 과 추가
+        "피부미용과", // 성형 관련 과 추가
       ];
       const statuses = ["active", "vacation", "leave", "inactive"];
+      const doctorTypes = ["일반 의사", "성형 전문의", "복합 진료"]; // 의사 타입 추가
+
+      // 성형 관련 세부 전문 분야 추가
+      const cosmeticSpecialties = [
+        "안면 성형",
+        "코 성형",
+        "눈 성형",
+        "지방 이식",
+        "지방 흡입",
+        "가슴 성형",
+        "안티에이징",
+        "보톡스/필러",
+        "레이저 시술",
+        "윤곽 성형",
+        "모발 이식",
+        "주름 개선",
+        "리프팅",
+        "쁘띠 성형",
+        "메디컬 스킨케어",
+      ];
 
       for (let i = 1; i <= 20; i++) {
         const firstName = [
@@ -68,22 +94,41 @@ const DoctorManagement = () => {
           "임",
         ][Math.floor(Math.random() * 10)];
         const lastName = [
-          "준",
-          "민",
-          "서",
-          "지",
-          "현",
-          "우",
-          "영",
-          "수",
-          "은",
-          "연",
-          "호",
+          "준호",
+          "민규",
+          "서민",
+          "지우",
+          "현성",
+          "우현",
+          "영교",
+          "수일",
+          "은희",
+          "연성",
+          "호현",
         ][Math.floor(Math.random() * 11)];
         const name = firstName + lastName + " 의사";
 
-        const department =
-          departments[Math.floor(Math.random() * departments.length)];
+        const doctorType =
+          doctorTypes[Math.floor(Math.random() * doctorTypes.length)];
+
+        // 의사 타입에 따라 부서 배정 확률 조정
+        let department;
+        if (doctorType === "성형 전문의") {
+          // 성형 전문의는 성형 관련 과에 배정될 확률이 높음
+          department = ["성형외과", "미용성형과", "피부미용과", "피부과"][
+            Math.floor(Math.random() * 4)
+          ];
+        } else if (doctorType === "복합 진료") {
+          // 복합 진료는 모든 과에 배정 가능
+          department =
+            departments[Math.floor(Math.random() * departments.length)];
+        } else {
+          // 일반 의사는 비성형 과에 배정될 확률이 높음
+          department = departments.filter(
+            (d) => !["성형외과", "미용성형과", "피부미용과"].includes(d)
+          )[Math.floor(Math.random() * (departments.length - 3))];
+        }
+
         const status = statuses[Math.floor(Math.random() * statuses.length)];
         const gender = ["남성", "여성"][Math.floor(Math.random() * 2)];
         const phoneNumber = `010-${1000 + Math.floor(Math.random() * 9000)}-${
@@ -126,6 +171,26 @@ const DoctorManagement = () => {
 
         const doctorSpecialties = [];
         const specialtyCount = Math.floor(Math.random() * 3) + 1;
+
+        // 의사 타입에 따라 전문 분야 선택
+        if (
+          doctorType === "성형 전문의" ||
+          (doctorType === "복합 진료" && Math.random() > 0.5)
+        ) {
+          // 성형 전문 분야 추가
+          const cosmeticSpecialtyCount = Math.floor(Math.random() * 3) + 1;
+          for (let j = 0; j < cosmeticSpecialtyCount; j++) {
+            const specialty =
+              cosmeticSpecialties[
+                Math.floor(Math.random() * cosmeticSpecialties.length)
+              ];
+            if (!doctorSpecialties.includes(specialty)) {
+              doctorSpecialties.push(specialty);
+            }
+          }
+        }
+
+        // 일반 전문 분야 추가 (성형 전문의도 일부는 일반 전문 분야 가질 수 있음)
         for (let j = 0; j < specialtyCount; j++) {
           const specialty =
             specialties[Math.floor(Math.random() * specialties.length)];
@@ -148,6 +213,22 @@ const DoctorManagement = () => {
         // 오늘 예약 수
         const todayAppointments = Math.floor(Math.random() * 15);
 
+        // 성형 관련 추가 정보
+        const hasCosmeticCertifications =
+          (doctorType === "성형 전문의" || doctorType === "복합 진료") &&
+          Math.random() > 0.3;
+        const certifications = hasCosmeticCertifications
+          ? ["미용성형 전문의", "국제성형외과학회 회원", "레이저 시술 인증"][
+              Math.floor(Math.random() * 3)
+            ]
+          : "";
+
+        const hasBeforeAfterGallery =
+          doctorType === "성형 전문의" && Math.random() > 0.5;
+        const galleryItemCount = hasBeforeAfterGallery
+          ? Math.floor(Math.random() * 10) + 5
+          : 0;
+
         mockDoctors.push({
           id: i,
           name,
@@ -160,6 +241,10 @@ const DoctorManagement = () => {
           experienceYears,
           schedule,
           todayAppointments,
+          doctorType, // 의사 타입 (일반/성형/복합)
+          certifications, // 성형 관련 자격증
+          hasBeforeAfterGallery, // 전후 사진 갤러리 보유 여부
+          galleryItemCount, // 갤러리 항목 수
           totalPatients: Math.floor(Math.random() * 1000),
           joinDate: new Date(
             new Date().getFullYear() - Math.floor(Math.random() * 10),
@@ -193,7 +278,10 @@ const DoctorManagement = () => {
           doctor.department.toLowerCase().includes(searchTerm.toLowerCase()) ||
           doctor.phoneNumber.includes(searchTerm) ||
           (doctor.email &&
-            doctor.email.toLowerCase().includes(searchTerm.toLowerCase()))
+            doctor.email.toLowerCase().includes(searchTerm.toLowerCase())) ||
+          doctor.specialties.some((specialty) =>
+            specialty.toLowerCase().includes(searchTerm.toLowerCase())
+          )
       );
     }
 
@@ -208,6 +296,13 @@ const DoctorManagement = () => {
     if (filterOptions.status !== "all") {
       results = results.filter(
         (doctor) => doctor.status === filterOptions.status
+      );
+    }
+
+    // 의사 타입 필터링
+    if (filterOptions.doctorType !== "all") {
+      results = results.filter(
+        (doctor) => doctor.doctorType === filterOptions.doctorType
       );
     }
 
@@ -336,6 +431,44 @@ const DoctorManagement = () => {
     }
   };
 
+  // 의사 타입에 따른 배지 렌더링
+  const renderDoctorTypeBadge = (doctorType) => {
+    switch (doctorType) {
+      case "성형 전문의":
+        return (
+          <span className="doctor-type-badge cosmetic">
+            <Scissors size={14} /> 성형 전문
+          </span>
+        );
+      case "복합 진료":
+        return (
+          <span className="doctor-type-badge combined">
+            <User size={14} /> 복합 진료
+          </span>
+        );
+      case "일반 의사":
+      default:
+        return (
+          <span className="doctor-type-badge regular">
+            <User size={14} /> 일반 진료
+          </span>
+        );
+    }
+  };
+
+  // 갤러리 정보 렌더링
+  const renderGalleryInfo = (doctor) => {
+    if (doctor.hasBeforeAfterGallery) {
+      return (
+        <div className="gallery-info">
+          <Camera size={14} />
+          <span>{doctor.galleryItemCount}장</span>
+        </div>
+      );
+    }
+    return null;
+  };
+
   if (isLoading) {
     return (
       <div className="admin-loading-container">
@@ -348,9 +481,10 @@ const DoctorManagement = () => {
   return (
     <div className="doctor-management">
       <div className="admin-section-header">
-        <h2 className="admin-section-title">의사 관리</h2>
+        <h2 className="admin-section-title">의료진 관리</h2>
         <p className="admin-section-description">
-          병원에 소속된 의사 정보를 관리하고 일정을 확인할 수 있습니다.
+          병원/성형 시설에 소속된 의사 정보를 관리하고 일정을 확인할 수
+          있습니다.
         </p>
       </div>
 
@@ -360,7 +494,7 @@ const DoctorManagement = () => {
             <Search size={18} className="doctor-management-search-icon" />
             <input
               type="text"
-              placeholder="의사 이름, 진료과, 전화번호 검색..."
+              placeholder="의사 이름, 진료과, 전문분야 검색..."
               value={searchTerm}
               onChange={handleSearchChange}
               className="doctor-management-admin-search-input"
@@ -463,6 +597,45 @@ const DoctorManagement = () => {
               </button>
             </div>
           </div>
+
+          {/* 의사 타입 필터 추가 */}
+          <div className="filter-group">
+            <label className="filter-label">의사 타입</label>
+            <div className="filter-options">
+              <button
+                className={`filter-option ${
+                  filterOptions.doctorType === "all" ? "active" : ""
+                }`}
+                onClick={() => handleFilterChange("doctorType", "all")}
+              >
+                전체
+              </button>
+              <button
+                className={`filter-option ${
+                  filterOptions.doctorType === "일반 의사" ? "active" : ""
+                }`}
+                onClick={() => handleFilterChange("doctorType", "일반 의사")}
+              >
+                일반 의사
+              </button>
+              <button
+                className={`filter-option ${
+                  filterOptions.doctorType === "성형 전문의" ? "active" : ""
+                }`}
+                onClick={() => handleFilterChange("doctorType", "성형 전문의")}
+              >
+                성형 전문의
+              </button>
+              <button
+                className={`filter-option ${
+                  filterOptions.doctorType === "복합 진료" ? "active" : ""
+                }`}
+                onClick={() => handleFilterChange("doctorType", "복합 진료")}
+              >
+                복합 진료
+              </button>
+            </div>
+          </div>
         </div>
       )}
 
@@ -491,21 +664,32 @@ const DoctorManagement = () => {
                 <tr>
                   <th>이름</th>
                   <th>진료과</th>
+                  <th>의사 타입</th>
                   <th>전문 분야</th>
                   <th>연락처</th>
                   <th>상태</th>
                   <th>오늘 예약</th>
-                  <th>경력</th>
+                  <th>갤러리</th>
                   <th>작업</th>
                 </tr>
               </thead>
               <tbody>
                 {currentDoctors.map((doctor) => (
                   <tr key={doctor.id} onClick={() => handleDoctorClick(doctor)}>
-                    <td>
-                      <div className="doctor-name">{doctor.name}</div>
+                    <td style={{ minWidth: "130px" }}>
+                      <div className="doctor-management-doctor-name">
+                        {doctor.name}
+                      </div>
+                      {doctor.certifications && (
+                        <div className="doctor-certification">
+                          {doctor.certifications}
+                        </div>
+                      )}
                     </td>
-                    <td>{doctor.department}</td>
+                    <td style={{ minWidth: "100px" }}>{doctor.department}</td>
+                    <td style={{ minWidth: "100px" }}>
+                      {renderDoctorTypeBadge(doctor.doctorType)}
+                    </td>
                     <td>
                       <div className="specialties-tags">
                         {doctor.specialties.map((specialty, index) => (
@@ -515,7 +699,7 @@ const DoctorManagement = () => {
                         ))}
                       </div>
                     </td>
-                    <td>
+                    <td style={{ minWidth: "180px" }}>
                       <div className="doctor-contact">
                         <div className="doctor-phone">
                           <Phone size={14} />
@@ -528,13 +712,15 @@ const DoctorManagement = () => {
                       </div>
                     </td>
                     <td>{renderStatusBadge(doctor.status)}</td>
-                    <td>
+                    <td style={{ minWidth: "80px" }}>
                       <div className="appointment-count">
                         <Calendar size={14} />
                         {doctor.todayAppointments}건
                       </div>
                     </td>
-                    <td>{doctor.experienceYears}년</td>
+                    <td style={{ minWidth: "80px" }}>
+                      {renderGalleryInfo(doctor)}
+                    </td>
                     <td>
                       <div
                         className="doctor-actions"
@@ -635,6 +821,24 @@ const DoctorManagement = () => {
           onClose={handleCloseModal}
           onSave={handleSaveDoctor}
           departments={departmentsList}
+          doctorTypes={["일반 의사", "성형 전문의", "복합 진료"]}
+          cosmeticSpecialties={[
+            "안면 성형",
+            "코 성형",
+            "눈 성형",
+            "지방 이식",
+            "지방 흡입",
+            "가슴 성형",
+            "안티에이징",
+            "보톡스/필러",
+            "레이저 시술",
+            "윤곽 성형",
+            "모발 이식",
+            "주름 개선",
+            "리프팅",
+            "쁘띠 성형",
+            "메디컬 스킨케어",
+          ]}
         />
       )}
     </div>

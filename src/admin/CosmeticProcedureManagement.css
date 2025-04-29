@@ -1,8 +1,8 @@
-.doctor-management {
+.cosmetic-procedure-management {
   padding-bottom: 2rem;
 }
 
-.doctor-management-actions {
+.procedure-management-actions {
   display: flex;
   justify-content: space-between;
   margin-bottom: 1.5rem;
@@ -10,20 +10,20 @@
   gap: 1rem;
 }
 
-.doctor-management-search-filter-container {
+.procedure-management-search-filter-container {
   display: flex;
   gap: 0.75rem;
   flex: 1;
   min-width: 300px;
 }
 
-.doctor-management-admin-search-bar {
+.procedure-management-admin-search-bar {
   position: relative;
   flex: 1;
   max-width: 500px;
 }
 
-.doctor-management-admin-search-input {
+.procedure-management-admin-search-input {
   width: 100%;
   padding: 0.625rem 0.75rem 0.625rem 2.5rem;
   border: 1px solid #e5e7eb;
@@ -34,13 +34,13 @@
   box-sizing: border-box;
 }
 
-.doctor-management-admin-search-input:focus {
+.procedure-management-admin-search-input:focus {
   outline: none;
   border-color: #3b82f6;
   box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
 }
 
-.doctor-management-search-icon {
+.procedure-management-search-icon {
   position: absolute;
   left: 0.75rem;
   top: 50%;
@@ -48,12 +48,12 @@
   color: #9ca3af;
 }
 
-.doctor-action-buttons {
+.procedure-action-buttons {
   display: flex;
   gap: 0.75rem;
 }
 
-.doctor-filters {
+.procedure-filters {
   background-color: #f9fafb;
   border: 1px solid #e5e7eb;
   border-radius: 0.5rem;
@@ -64,21 +64,21 @@
   gap: 1.5rem;
 }
 
-.doctor-list-header {
+.procedure-list-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
 }
 
-.doctor-list-title {
+.procedure-list-title {
   font-size: 1.25rem;
   font-weight: 600;
   color: #111827;
   margin: 0;
 }
 
-.doctor-count {
+.procedure-count {
   font-size: 0.875rem;
   color: #6b7280;
 }
@@ -88,95 +88,114 @@
   color: #3b82f6;
 }
 
-.doctor-management-doctor-name {
+.procedure-name {
   font-weight: 500;
   color: #111827;
 }
 
-.specialties-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.375rem;
-}
-
-.specialty-tag {
+.category-badge {
+  display: inline-block;
   padding: 0.25rem 0.5rem;
   background-color: #f3f4f6;
   color: #4b5563;
-  border-radius: 9999px;
-  font-size: 0.75rem;
-  white-space: nowrap;
-}
-
-.doctor-contact {
-  display: flex;
-  flex-direction: column;
-  gap: 0.375rem;
-}
-
-.doctor-phone,
-.doctor-email {
-  display: flex;
-  align-items: center;
-  gap: 0.375rem;
-  font-size: 0.875rem;
-  color: #4b5563;
-}
-
-.doctor-phone svg,
-.doctor-email svg {
-  color: #6b7280;
-}
-
-.status-badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.25rem 0.5rem;
-  border-radius: 9999px;
+  border-radius: 0.375rem;
   font-size: 0.75rem;
   font-weight: 500;
+}
+
+.procedure-price {
+  display: flex;
+  flex-direction: column;
   gap: 0.25rem;
 }
 
-.status-badge.active {
-  background-color: #ecfdf5;
-  color: #10b981;
+.original-price {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  text-decoration: line-through;
 }
 
-.status-badge.vacation {
-  background-color: #eff6ff;
-  color: #3b82f6;
+.discounted-price {
+  font-weight: 500;
+  color: #ef4444;
 }
 
-.status-badge.leave {
-  background-color: #fffbeb;
-  color: #f59e0b;
+.discount-rate {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #ef4444;
 }
 
-.status-badge.inactive {
-  background-color: #f3f4f6;
-  color: #6b7280;
-}
-
-.appointment-count {
+.procedure-duration {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   color: #4b5563;
 }
 
-.appointment-count svg {
-  color: #3b82f6;
-}
-
-.gallery-info {
+.procedure-popularity {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 0.25rem;
 }
 
-.doctor-actions {
+.star-icon {
+  color: #f59e0b;
+}
+
+.review-count {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.procedure-images {
   display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #4b5563;
+}
+
+.no-images {
+  color: #9ca3af;
+  font-size: 0.75rem;
+}
+
+.promotion-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.promotion-status.active {
+  color: #ef4444;
+}
+
+.promotion-status.inactive {
+  color: #9ca3af;
+}
+
+.procedure-status {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.procedure-status.active {
+  background-color: #ecfdf5;
+  color: #10b981;
+}
+
+.procedure-status.inactive {
+  background-color: #f3f4f6;
+  color: #6b7280;
+}
+
+.procedure-actions {
+  display: flex;
+  justify-content: center;
   gap: 0.5rem;
 }
 
@@ -191,7 +210,6 @@
   border: none;
   cursor: pointer;
   transition: all 0.2s;
-  padding: 0;
 }
 
 .action-button.edit {
@@ -211,6 +229,23 @@
   background-color: #fef2f2;
 }
 
+.promotion-filter {
+  display: flex;
+  align-items: center;
+}
+
+.promotion-filter-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.promotion-filter-checkbox {
+  width: 1rem;
+  height: 1rem;
+}
+
 /* 반응형 조정 */
 @media (max-width: 1024px) {
   .admin-table th:nth-child(3),
@@ -222,15 +257,15 @@
 }
 
 @media (max-width: 768px) {
-  .doctor-management-actions {
+  .procedure-management-actions {
     flex-direction: column;
   }
 
-  .doctor-management-search-filter-container {
+  .procedure-management-search-filter-container {
     width: 100%;
   }
 
-  .doctor-action-buttons {
+  .procedure-action-buttons {
     width: 100%;
     justify-content: space-between;
   }

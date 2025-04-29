@@ -302,3 +302,102 @@ body:has(.admin-page) #root {
   cursor: not-allowed;
   opacity: 0.5;
 }
+
+/* 테이블 관련 스타일 덮어쓰기 - 기존 AdminPage.css와 충돌 방지 */
+.appointment-management .admin-table-container {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.appointment-management .admin-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.appointment-management .admin-table {
+  width: 100%;
+  min-width: 790px; /* 모든 컬럼 너비의 합 */
+  table-layout: fixed !important;
+  border-collapse: collapse;
+  background-color: white;
+}
+
+/* 컬럼별 너비를 명시적으로 지정 */
+.appointment-management .admin-table th:nth-child(1),
+.appointment-management .admin-table td:nth-child(1) {
+  width: 150px;
+  min-width: 150px;
+}
+
+.appointment-management .admin-table th:nth-child(2),
+.appointment-management .admin-table td:nth-child(2) {
+  width: 120px;
+  min-width: 120px;
+}
+
+.appointment-management .admin-table th:nth-child(3),
+.appointment-management .admin-table td:nth-child(3),
+.appointment-management .admin-table th:nth-child(4),
+.appointment-management .admin-table td:nth-child(4) {
+  width: 100px;
+  min-width: 100px;
+}
+
+.appointment-management .admin-table th:nth-child(5),
+.appointment-management .admin-table td:nth-child(5),
+.appointment-management .admin-table th:nth-child(6),
+.appointment-management .admin-table td:nth-child(6) {
+  width: 120px;
+  min-width: 120px;
+}
+
+.appointment-management .admin-table th:nth-child(7),
+.appointment-management .admin-table td:nth-child(7) {
+  width: 80px;
+  min-width: 80px;
+}
+
+/* 스크롤바 스타일 개선 */
+.appointment-management .admin-table-wrapper::-webkit-scrollbar {
+  height: 8px;
+}
+
+.appointment-management .admin-table-wrapper::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.appointment-management .admin-table-wrapper::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.appointment-management .admin-table-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* 스크롤 힌트 표시 */
+@media (max-width: 992px) {
+  .appointment-management .admin-table-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 20px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      rgba(255, 255, 255, 0.8)
+    );
+    pointer-events: none;
+    opacity: 0.7;
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+  }
+}

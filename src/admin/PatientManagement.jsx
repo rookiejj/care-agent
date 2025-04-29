@@ -12,6 +12,8 @@ import {
   Mail,
   FileText,
   Activity,
+  Scissors,
+  Camera,
 } from "lucide-react";
 import "./PatientManagement.css";
 import PatientCard from "./components/PatientCard";
@@ -30,6 +32,8 @@ const PatientManagement = () => {
     gender: "all",
     ageGroup: "all",
     visitStatus: "all",
+    patientType: "all", // 환자 타입 필터 추가 (일반/성형)
+    serviceInterest: "all", // 관심 서비스 필터 추가
   });
 
   const patientsPerPage = 10;
@@ -42,6 +46,25 @@ const PatientManagement = () => {
       const genders = ["남성", "여성"];
       const bloodTypes = ["A+", "B+", "O+", "AB+", "A-", "B-", "O-", "AB-"];
       const statuses = ["정기 방문", "신규 환자", "장기 미방문"];
+      const patientTypes = ["일반 환자", "성형 고객", "복합 서비스"]; // 환자 타입 추가
+
+      // 성형 관련 관심사/서비스
+      const cosmeticInterests = [
+        "안면 성형",
+        "코 성형",
+        "눈 성형",
+        "지방 이식",
+        "지방 흡입",
+        "가슴 성형",
+        "안티에이징",
+        "보톡스",
+        "필러",
+        "레이저 시술",
+        "피부 관리",
+        "모발 이식",
+        "리프팅",
+        "윤곽 성형",
+      ];
 
       for (let i = 1; i <= 50; i++) {
         const firstName = [
@@ -104,6 +127,33 @@ const PatientManagement = () => {
         );
         const visitCount = Math.floor(Math.random() * 20) + 1;
         const status = statuses[Math.floor(Math.random() * statuses.length)];
+        const patientType =
+          patientTypes[Math.floor(Math.random() * patientTypes.length)];
+
+        // 성형 관련 정보 추가
+        const cosmeticInterestsCount = Math.floor(Math.random() * 4);
+        const selectedInterests = [];
+        for (let j = 0; j < cosmeticInterestsCount; j++) {
+          const interest =
+            cosmeticInterests[
+              Math.floor(Math.random() * cosmeticInterests.length)
+            ];
+          if (!selectedInterests.includes(interest)) {
+            selectedInterests.push(interest);
+          }
+        }
+
+        const hasPreviousCosmeticProcedures = Math.random() > 0.7;
+        const previousProcedures = hasPreviousCosmeticProcedures
+          ? [
+              cosmeticInterests[
+                Math.floor(Math.random() * cosmeticInterests.length)
+              ],
+            ]
+          : [];
+
+        const hasBeforeAfterPhotos =
+          patientType !== "일반 환자" && Math.random() > 0.5;
 
         mockPatients.push({
           id: i,
@@ -117,6 +167,10 @@ const PatientManagement = () => {
           lastVisit,
           visitCount,
           status,
+          patientType, // 환자 타입 (일반/성형/복합)
+          cosmeticInterests: selectedInterests, // 성형 관심 분야
+          previousProcedures, // 이전 시술 이력
+          hasBeforeAfterPhotos, // 전후 사진 여부
           address: `서울시 ${
             ["강남구", "서초구", "종로구", "마포구", "송파구"][
               Math.floor(Math.random() * 5)
@@ -124,12 +178,18 @@ const PatientManagement = () => {
           } ${Math.floor(Math.random() * 100) + 1}번길 ${
             Math.floor(Math.random() * 100) + 1
           }`,
-          insuranceType: ["국민건강보험", "의료급여", "자동차보험", "산재보험"][
-            Math.floor(Math.random() * 4)
-          ],
+          insuranceType: [
+            "국민건강보험",
+            "의료급여",
+            "자동차보험",
+            "산재보험",
+            "자비부담",
+          ][Math.floor(Math.random() * 5)],
           medicalHistory:
             Math.random() > 0.7
-              ? ["고혈압", "당뇨", "천식"][Math.floor(Math.random() * 3)]
+              ? ["고혈압", "당뇨", "천식", "알레르기"][
+                  Math.floor(Math.random() * 4)
+                ]
               : "",
           upcomingAppointment:
             Math.random() > 0.7
@@ -137,6 +197,10 @@ const PatientManagement = () => {
                   new Date().getTime() +
                     Math.floor(Math.random() * 14 * 24 * 60 * 60 * 1000)
                 )
+              : null,
+          recommendedBy:
+            Math.random() > 0.6
+              ? ["지인", "인터넷", "광고", "SNS"][Math.floor(Math.random() * 4)]
               : null,
         });
       }
@@ -166,7 +230,11 @@ const PatientManagement = () => {
             .replace(/-/g, "")
             .includes(searchTerm.replace(/-/g, "")) ||
           (patient.email &&
-            patient.email.toLowerCase().includes(searchTerm.toLowerCase()))
+            patient.email.toLowerCase().includes(searchTerm.toLowerCase())) ||
+          (patient.cosmeticInterests &&
+            patient.cosmeticInterests.some((interest) =>
+              interest.toLowerCase().includes(searchTerm.toLowerCase())
+            ))
       );
     }
 
@@ -195,6 +263,22 @@ const PatientManagement = () => {
     if (filterOptions.visitStatus !== "all") {
       results = results.filter(
         (patient) => patient.status === filterOptions.visitStatus
+      );
+    }
+
+    // 환자 타입 필터링
+    if (filterOptions.patientType !== "all") {
+      results = results.filter(
+        (patient) => patient.patientType === filterOptions.patientType
+      );
+    }
+
+    // 관심 서비스 필터링
+    if (filterOptions.serviceInterest !== "all") {
+      results = results.filter(
+        (patient) =>
+          patient.cosmeticInterests &&
+          patient.cosmeticInterests.includes(filterOptions.serviceInterest)
       );
     }
 
@@ -277,6 +361,24 @@ const PatientManagement = () => {
     return `${year}-${month}-${day}`;
   };
 
+  // 성형 관심 분야 목록 추출
+  const cosmeticInterestsList = [
+    "안면 성형",
+    "코 성형",
+    "눈 성형",
+    "지방 이식",
+    "지방 흡입",
+    "가슴 성형",
+    "안티에이징",
+    "보톡스",
+    "필러",
+    "레이저 시술",
+    "피부 관리",
+    "모발 이식",
+    "리프팅",
+    "윤곽 성형",
+  ];
+
   if (isLoading) {
     return (
       <div className="admin-loading-container">
@@ -289,9 +391,9 @@ const PatientManagement = () => {
   return (
     <div className="patient-management">
       <div className="admin-section-header">
-        <h2 className="admin-section-title">환자 관리</h2>
+        <h2 className="admin-section-title">환자/고객 관리</h2>
         <p className="admin-section-description">
-          모든 환자 정보를 조회하고 관리할 수 있습니다.
+          모든 환자 및 성형 고객 정보를 조회하고 관리할 수 있습니다.
         </p>
       </div>
 
@@ -301,7 +403,7 @@ const PatientManagement = () => {
             <Search size={18} className="patient-management-search-icon" />
             <input
               type="text"
-              placeholder="환자 이름, 전화번호 검색..."
+              placeholder="환자/고객 이름, 전화번호, 관심 시술 검색..."
               value={searchTerm}
               onChange={handleSearchChange}
               className="patient-management-admin-search-input"
@@ -327,7 +429,7 @@ const PatientManagement = () => {
             onClick={handleAddPatient}
           >
             <Plus size={16} />
-            환자 등록
+            고객 등록
           </button>
         </div>
       </div>
@@ -435,7 +537,7 @@ const PatientManagement = () => {
                 }`}
                 onClick={() => handleFilterChange("visitStatus", "신규 환자")}
               >
-                신규 환자
+                신규 고객
               </button>
               <button
                 className={`filter-option ${
@@ -447,11 +549,78 @@ const PatientManagement = () => {
               </button>
             </div>
           </div>
+
+          {/* 고객 유형 필터 추가 */}
+          <div className="filter-group">
+            <label className="filter-label">고객 유형</label>
+            <div className="filter-options">
+              <button
+                className={`filter-option ${
+                  filterOptions.patientType === "all" ? "active" : ""
+                }`}
+                onClick={() => handleFilterChange("patientType", "all")}
+              >
+                전체
+              </button>
+              <button
+                className={`filter-option ${
+                  filterOptions.patientType === "일반 환자" ? "active" : ""
+                }`}
+                onClick={() => handleFilterChange("patientType", "일반 환자")}
+              >
+                일반 환자
+              </button>
+              <button
+                className={`filter-option ${
+                  filterOptions.patientType === "성형 고객" ? "active" : ""
+                }`}
+                onClick={() => handleFilterChange("patientType", "성형 고객")}
+              >
+                성형 고객
+              </button>
+              <button
+                className={`filter-option ${
+                  filterOptions.patientType === "복합 서비스" ? "active" : ""
+                }`}
+                onClick={() => handleFilterChange("patientType", "복합 서비스")}
+              >
+                복합 서비스
+              </button>
+            </div>
+          </div>
+
+          {/* 관심 시술 필터 추가 */}
+          <div className="filter-group">
+            <label className="filter-label">관심 시술</label>
+            <div className="filter-options">
+              <button
+                className={`filter-option ${
+                  filterOptions.serviceInterest === "all" ? "active" : ""
+                }`}
+                onClick={() => handleFilterChange("serviceInterest", "all")}
+              >
+                전체
+              </button>
+              {cosmeticInterestsList.map((interest, index) => (
+                <button
+                  key={index}
+                  className={`filter-option ${
+                    filterOptions.serviceInterest === interest ? "active" : ""
+                  }`}
+                  onClick={() =>
+                    handleFilterChange("serviceInterest", interest)
+                  }
+                >
+                  {interest}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
       )}
 
       <div className="patient-list-header">
-        <h3 className="patient-list-title">환자 목록</h3>
+        <h3 className="patient-list-title">환자/고객 목록</h3>
         <div className="patient-count">
           총 <span className="count-highlight">{filteredPatients.length}</span>
           명
@@ -463,9 +632,10 @@ const PatientManagement = () => {
           <div className="admin-empty-icon">
             <User size={32} />
           </div>
-          <h3 className="admin-empty-title">환자가 없습니다</h3>
+          <h3 className="admin-empty-title">환자/고객이 없습니다</h3>
           <p className="admin-empty-description">
-            검색 조건에 맞는 환자가 없습니다. 다른 검색어나 필터를 사용해보세요.
+            검색 조건에 맞는 환자나 고객이 없습니다. 다른 검색어나 필터를
+            사용해보세요.
           </p>
         </div>
       ) : (
@@ -548,6 +718,7 @@ const PatientManagement = () => {
           patient={selectedPatient}
           onClose={handleCloseModal}
           onSave={handleSavePatient}
+          cosmeticInterestsList={cosmeticInterestsList}
         />
       )}
     </div>

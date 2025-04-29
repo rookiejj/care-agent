@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // useNavigate 추가
+import { useNavigate } from "react-router-dom";
 import {
   Menu,
   Bell,
@@ -9,7 +9,11 @@ import {
   LogOut,
   Settings,
   HelpCircle,
-  Home, // Home 아이콘 추가
+  Home,
+  Scissors, // 성형 아이콘 추가
+  Camera, // 사진 아이콘 추가
+  MessageSquare, // 상담 아이콘 추가
+  Package, // 패키지 아이콘 추가
 } from "lucide-react";
 import { getProfileImage } from "../App";
 import "./AdminHeader.css";
@@ -20,7 +24,7 @@ const AdminHeader = ({
   hospitalData,
   activeSection,
 }) => {
-  const navigate = useNavigate(); // useNavigate 훅 추가
+  const navigate = useNavigate();
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [notifications, setNotifications] = useState([
     {
@@ -37,6 +41,12 @@ const AdminHeader = ({
     },
     {
       id: 3,
+      message: "성형 상담 요청이 2건 접수되었습니다.",
+      time: "4시간 전",
+      read: false,
+    },
+    {
+      id: 4,
       message: "의사 정보가 업데이트되었습니다.",
       time: "어제",
       read: true,
@@ -44,7 +54,6 @@ const AdminHeader = ({
   ]);
   const [showNotifications, setShowNotifications] = useState(false);
 
-  // 메인 페이지로 이동하는 함수 추가
   const handleBackToMain = () => {
     navigate("/");
   };
@@ -54,19 +63,48 @@ const AdminHeader = ({
       case "dashboard":
         return "대시보드";
       case "patients":
-        return "환자 관리";
+        return "환자/고객 관리";
       case "appointments":
         return "예약 관리";
       case "doctors":
-        return "의사 관리";
+        return "의료진 관리";
+      case "cosmetic":
+        return "성형 시술 관리";
+      case "consultations":
+        return "상담 관리";
+      case "beforeafter":
+        return "전후사진 관리";
+      case "packages":
+        return "패키지 관리";
       case "profile":
-        return "병원 프로필";
+        return "시설 프로필";
       case "reports":
         return "통계 및 보고서";
       case "settings":
         return "설정";
       default:
         return "대시보드";
+    }
+  };
+
+  const getSearchPlaceholder = () => {
+    switch (activeSection) {
+      case "patients":
+        return "환자/고객 이름, 전화번호 검색...";
+      case "appointments":
+        return "예약자, 진료/시술 검색...";
+      case "doctors":
+        return "의료진, 전문분야 검색...";
+      case "cosmetic":
+        return "시술명, 카테고리 검색...";
+      case "consultations":
+        return "상담 고객, 시술 검색...";
+      case "beforeafter":
+        return "시술명, 고객 검색...";
+      case "packages":
+        return "패키지명, 시술 검색...";
+      default:
+        return "환자, 의사, 시술 또는 예약 검색...";
     }
   };
 
@@ -100,14 +138,13 @@ const AdminHeader = ({
           <Search size={18} className="admin-search-icon" />
           <input
             type="text"
-            placeholder="환자, 의사 또는 예약 검색..."
+            placeholder={getSearchPlaceholder()}
             className="admin-search-input"
           />
         </div>
       </div>
 
       <div className="admin-header-right">
-        {/* 홈으로 돌아가는 버튼 추가 - 헤더 오른쪽으로 이동 */}
         <div className="admin-header-item">
           <button
             className="admin-home-button"
