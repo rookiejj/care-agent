@@ -5,17 +5,18 @@ import {
   Calendar,
   Stethoscope,
   FileText,
+  FilePlus,
   Settings,
   LogOut,
   ChevronLeft,
   ChevronRight,
   Building,
   User,
-  Scissors, // 성형 관련 아이콘 추가
-  Camera, // 사진 관리 아이콘 추가
-  Package, // 패키지 아이콘 추가
-  MessageSquare, // 상담 아이콘 추가
-  Bell, // 알림 아이콘 추가
+  Scissors,
+  Camera,
+  Package,
+  MessageSquare,
+  Bell,
 } from "lucide-react";
 import "./AdminSidebar.css";
 
@@ -45,6 +46,11 @@ const AdminSidebar = ({
       id: "doctors",
       label: "의료진 관리",
       icon: <Stethoscope size={20} />,
+    },
+    {
+      id: "medical-records",
+      label: "진료 기록 관리",
+      icon: <FilePlus size={20} />,
     },
     {
       id: "cosmetic",

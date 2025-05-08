@@ -15,6 +15,7 @@ import HospitalProfile from "./admin/HospitalProfile";
 import Reports from "./admin/Reports";
 import PatientAnalyticsDetail from "./admin/PatientAnalyticsDetail";
 import NotificationManagement from "./admin/NotificationManagement";
+import MedicalRecordsManagement from "./admin/MedicalRecordsManagement";
 
 import "./AdminPage.css";
 
@@ -131,6 +132,8 @@ const AdminPage = () => {
         return <Settings />;
       case "notifications":
         return <NotificationManagement />;
+      case "medical-records":
+        return <MedicalRecordsManagement />;
       default:
         return (
           <Dashboard

@@ -10,10 +10,11 @@ import {
   Settings,
   HelpCircle,
   Home,
-  Scissors, // 성형 아이콘 추가
-  Camera, // 사진 아이콘 추가
-  MessageSquare, // 상담 아이콘 추가
-  Package, // 패키지 아이콘 추가
+  Scissors,
+  Camera,
+  MessageSquare,
+  Package,
+  FilePlus,
 } from "lucide-react";
 import { getProfileImage } from "../App";
 import "./AdminHeader.css";
@@ -68,6 +69,8 @@ const AdminHeader = ({
         return "예약 관리";
       case "doctors":
         return "의료진 관리";
+      case "medical-records":
+        return "진료 기록 관리";
       case "cosmetic":
         return "성형 시술 관리";
       case "consultations":
@@ -97,6 +100,8 @@ const AdminHeader = ({
         return "예약자, 진료/시술 검색...";
       case "doctors":
         return "의료진, 전문분야 검색...";
+      case "medical-records":
+        return "환자 이름, 진단명, 증상 검색...";
       case "cosmetic":
         return "시술명, 카테고리 검색...";
       case "consultations":

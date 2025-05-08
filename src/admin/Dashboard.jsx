@@ -12,6 +12,7 @@ import {
   ArrowUp,
   ArrowDown,
   ChevronRight,
+  FilePlus,
 } from "lucide-react";
 import "./Dashboard.css";
 import StatCard from "./components/StatCard";
@@ -171,6 +172,12 @@ const Dashboard = ({
     onSectionChange && onSectionChange("notifications");
   };
 
+  // 진료 기록 작성 버튼 클릭 핸들러
+  const handleCreateMedicalRecord = () => {
+    // 진료 기록 관리 섹션으로 이동
+    onSectionChange && onSectionChange("medical-records");
+  };
+
   if (isLoading) {
     return (
       <div className="admin-loading-container">
@@ -310,8 +317,11 @@ const Dashboard = ({
                 <Users size={18} />
                 환자 등록
               </button>
-              <button className="quick-action-button">
-                <Activity size={18} />
+              <button
+                className="quick-action-button"
+                onClick={handleCreateMedicalRecord}
+              >
+                <FilePlus size={18} />
                 진료 기록 작성
               </button>
               <button
