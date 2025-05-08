@@ -13,6 +13,8 @@ import PackageManagement from "./admin/PackageManagement";
 import Settings from "./admin/Settings";
 import HospitalProfile from "./admin/HospitalProfile";
 import Reports from "./admin/Reports";
+import PatientAnalyticsDetail from "./admin/PatientAnalyticsDetail";
+
 import "./AdminPage.css";
 
 const AdminPage = () => {
@@ -21,6 +23,7 @@ const AdminPage = () => {
   const { userData } = useData();
   const [hospitalData, setHospitalData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [selectedDetailView, setSelectedDetailView] = useState(null);
 
   useEffect(() => {
     // 실제 앱에서는 API 호출을 통해 병원 데이터를 가져옴
@@ -59,6 +62,10 @@ const AdminPage = () => {
 
   const handleSectionChange = (section) => {
     setActiveSection(section);
+    // 상세 보기가 열려있다면 닫기
+    if (selectedDetailView) {
+      setSelectedDetailView(null);
+    }
   };
 
   const toggleSidebar = () => {
@@ -67,9 +74,40 @@ const AdminPage = () => {
 
   // 현재 활성화된 섹션에 따라 컴포넌트 렌더링
   const renderActiveSection = () => {
+    // 상세 페이지가 선택되었을 경우 해당 컴포넌트를 렌더링
+    if (selectedDetailView) {
+      switch (selectedDetailView) {
+        case "patient-analytics":
+          return (
+            <PatientAnalyticsDetail
+              hospitalData={hospitalData}
+              onBack={() => setSelectedDetailView(null)}
+            />
+          );
+        default:
+          return (
+            <Dashboard
+              hospitalData={hospitalData}
+              onViewPatientAnalytics={() =>
+                setSelectedDetailView("patient-analytics")
+              }
+              onSectionChange={handleSectionChange}
+            />
+          );
+      }
+    }
+
     switch (activeSection) {
       case "dashboard":
-        return <Dashboard hospitalData={hospitalData} />;
+        return (
+          <Dashboard
+            hospitalData={hospitalData}
+            onViewPatientAnalytics={() =>
+              setSelectedDetailView("patient-analytics")
+            }
+            onSectionChange={handleSectionChange}
+          />
+        );
       case "patients":
         return <PatientManagement />;
       case "appointments":
@@ -91,7 +129,15 @@ const AdminPage = () => {
       case "settings":
         return <Settings />;
       default:
-        return <Dashboard hospitalData={hospitalData} />;
+        return (
+          <Dashboard
+            hospitalData={hospitalData}
+            onViewPatientAnalytics={() =>
+              setSelectedDetailView("patient-analytics")
+            }
+            onSectionChange={handleSectionChange}
+          />
+        );
     }
   };
 

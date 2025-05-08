@@ -19,7 +19,11 @@ import AppointmentItem from "./components/AppointmentItem";
 import CustomLineChart from "./components/CustomLineChart";
 import PieChartComponent from "./components/PieChartComponent";
 
-const Dashboard = ({ hospitalData }) => {
+const Dashboard = ({
+  hospitalData,
+  onViewPatientAnalytics,
+  onSectionChange,
+}) => {
   const [upcomingAppointments, setUpcomingAppointments] = useState([]);
   const [patientVisitsData, setPatientVisitsData] = useState([]);
   const [departmentDistribution, setDepartmentDistribution] = useState([]);
@@ -149,6 +153,18 @@ const Dashboard = ({ hospitalData }) => {
     }, 1000);
   }, [hospitalData]);
 
+  // 진료과별 환자 분포 위젯의 "자세히 보기" 버튼 클릭 핸들러
+  const handleViewPatientsByDepartment = () => {
+    // 환자/고객 관리 섹션으로 이동
+    onSectionChange && onSectionChange("patients");
+  };
+
+  // 오늘의 예약 위젯의 "전체 보기" 버튼 클릭 핸들러
+  const handleViewAllAppointments = () => {
+    // 예약 관리 섹션으로 이동
+    onSectionChange && onSectionChange("appointments");
+  };
+
   if (isLoading) {
     return (
       <div className="admin-loading-container">
@@ -213,7 +229,10 @@ const Dashboard = ({ hospitalData }) => {
             <div className="admin-card-header">
               <h3 className="admin-card-title">월별 환자 방문 추이</h3>
               <div className="admin-card-actions">
-                <button className="admin-button admin-button-secondary">
+                <button
+                  className="admin-button admin-button-secondary"
+                  onClick={onViewPatientAnalytics}
+                >
                   <BarChart4 size={16} />
                   자세히 보기
                 </button>
@@ -226,7 +245,10 @@ const Dashboard = ({ hospitalData }) => {
             <div className="admin-card-header">
               <h3 className="admin-card-title">오늘의 예약</h3>
               <div className="admin-card-actions">
-                <button className="admin-button admin-button-secondary">
+                <button
+                  className="admin-button admin-button-secondary"
+                  onClick={handleViewAllAppointments}
+                >
                   <Calendar size={16} />
                   전체 보기
                 </button>
@@ -248,7 +270,10 @@ const Dashboard = ({ hospitalData }) => {
             <div className="admin-card-header">
               <h3 className="admin-card-title">진료과별 환자 분포</h3>
               <div className="admin-card-actions">
-                <button className="admin-button admin-button-secondary">
+                <button
+                  className="admin-button admin-button-secondary"
+                  onClick={handleViewPatientsByDepartment}
+                >
                   <PieChart size={16} />
                   자세히 보기
                 </button>
@@ -264,10 +289,18 @@ const Dashboard = ({ hospitalData }) => {
               <h3 className="admin-card-title">빠른 작업</h3>
             </div>
             <div className="quick-actions">
-              <button className="quick-action-button">
+              <button
+                className="quick-action-button"
+                onClick={() =>
+                  onSectionChange && onSectionChange("appointments")
+                }
+              >
                 <Calendar size={18} />새 예약 등록
               </button>
-              <button className="quick-action-button">
+              <button
+                className="quick-action-button"
+                onClick={() => onSectionChange && onSectionChange("patients")}
+              >
                 <Users size={18} />
                 환자 등록
               </button>
@@ -275,7 +308,10 @@ const Dashboard = ({ hospitalData }) => {
                 <Activity size={18} />
                 진료 기록 작성
               </button>
-              <button className="quick-action-button">
+              <button
+                className="quick-action-button"
+                onClick={() => onSectionChange && onSectionChange("reports")}
+              >
                 <TrendingUp size={18} />
                 매출 보고서
               </button>
