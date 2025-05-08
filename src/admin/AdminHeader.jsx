@@ -76,6 +76,8 @@ const AdminHeader = ({
         return "전후사진 관리";
       case "packages":
         return "패키지 관리";
+      case "notifications":
+        return "알림 관리";
       case "profile":
         return "시설 프로필";
       case "reports":
@@ -103,6 +105,8 @@ const AdminHeader = ({
         return "시술명, 고객 검색...";
       case "packages":
         return "패키지명, 시술 검색...";
+      case "notifications":
+        return "알림 내용, 유형 검색...";
       default:
         return "환자, 의사, 시술 또는 예약 검색...";
     }

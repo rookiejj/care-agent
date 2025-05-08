@@ -165,6 +165,12 @@ const Dashboard = ({
     onSectionChange && onSectionChange("appointments");
   };
 
+  // 알림 "모두 보기" 버튼 클릭 핸들러
+  const handleViewAllNotifications = () => {
+    // 알림 관리 섹션으로 이동
+    onSectionChange && onSectionChange("notifications");
+  };
+
   if (isLoading) {
     return (
       <div className="admin-loading-container">
@@ -321,9 +327,15 @@ const Dashboard = ({
           <div className="admin-card">
             <div className="admin-card-header">
               <h3 className="admin-card-title">알림</h3>
-              <a href="#" className="admin-card-link">
-                모두 보기 <ChevronRight size={16} />
-              </a>
+              <div className="admin-card-actions">
+                <button
+                  className="admin-button admin-button-secondary"
+                  onClick={handleViewAllNotifications}
+                >
+                  <ChevronRight size={16} />
+                  모두 보기
+                </button>
+              </div>
             </div>
             <div className="notification-list">
               <div className="notification-item">

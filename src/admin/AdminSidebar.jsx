@@ -15,6 +15,7 @@ import {
   Camera, // 사진 관리 아이콘 추가
   Package, // 패키지 아이콘 추가
   MessageSquare, // 상담 아이콘 추가
+  Bell, // 알림 아이콘 추가
 } from "lucide-react";
 import "./AdminSidebar.css";
 
@@ -64,6 +65,11 @@ const AdminSidebar = ({
       id: "packages",
       label: "패키지 관리",
       icon: <Package size={20} />,
+    },
+    {
+      id: "notifications",
+      label: "알림 관리",
+      icon: <Bell size={20} />,
     },
     {
       id: "profile",
