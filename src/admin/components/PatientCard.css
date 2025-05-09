@@ -62,6 +62,14 @@
   color: #6b7280;
 }
 
+/* 배지 관련 스타일 */
+.patient-badges {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  align-items: flex-end;
+}
+
 .patient-badge {
   padding: 0.25rem 0.5rem;
   border-radius: 9999px;
@@ -85,9 +93,24 @@
   color: #dc2626;
 }
 
+/* 환자 유형 배지 스타일 */
+.patient-type-general {
+  background-color: #e0f2fe;
+  color: #0284c7;
+}
+
+.patient-type-cosmetic {
+  background-color: #fae8ff;
+  color: #a21caf;
+}
+
+.patient-type-complex {
+  background-color: #f0fdf4;
+  color: #15803d;
+}
+
 .patient-card-content {
   padding: 1rem;
-  border-bottom: 1px solid #f3f4f6;
 }
 
 .patient-info-item {
@@ -114,6 +137,31 @@
 
 .patient-info-item.upcoming svg {
   color: #3b82f6;
+}
+
+/* 성형 관련 정보 스타일 */
+.patient-info-item.cosmetic {
+  color: #a21caf;
+}
+
+.patient-info-item.cosmetic svg {
+  color: #a21caf;
+}
+
+.patient-info-item.procedures {
+  color: #ea580c;
+}
+
+.patient-info-item.procedures svg {
+  color: #ea580c;
+}
+
+.patient-info-item.photos {
+  color: #0891b2;
+}
+
+.patient-info-item.photos svg {
+  color: #0891b2;
 }
 
 .patient-card-footer {

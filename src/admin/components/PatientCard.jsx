@@ -7,6 +7,9 @@ import {
   Activity,
   Info,
   ChevronRight,
+  Scissors,
+  Heart,
+  Camera,
 } from "lucide-react";
 import "./PatientCard.css";
 
@@ -20,10 +23,14 @@ const PatientCard = ({ patient, onClick }) => {
     visitCount,
     status,
     upcomingAppointment,
+    patientType,
+    cosmeticInterests,
+    hasBeforeAfterPhotos,
+    previousProcedures,
   } = patient;
 
   // 상태에 따른 배지 스타일 및 텍스트 설정
-  const getBadgeClass = () => {
+  const getStatusBadgeClass = () => {
     switch (status) {
       case "정기 방문":
         return "patient-badge-regular";
@@ -33,6 +40,20 @@ const PatientCard = ({ patient, onClick }) => {
         return "patient-badge-inactive";
       default:
         return "patient-badge-regular";
+    }
+  };
+
+  // 환자 유형에 따른 배지 스타일 설정
+  const getTypeBadgeClass = () => {
+    switch (patientType) {
+      case "일반 환자":
+        return "patient-type-general";
+      case "성형 고객":
+        return "patient-type-cosmetic";
+      case "복합 서비스":
+        return "patient-type-complex";
+      default:
+        return "patient-type-general";
     }
   };
 
@@ -96,7 +117,14 @@ const PatientCard = ({ patient, onClick }) => {
             </div>
           </div>
         </div>
-        <div className={`patient-badge ${getBadgeClass()}`}>{status}</div>
+        <div className="patient-badges">
+          <div className={`patient-badge ${getStatusBadgeClass()}`}>
+            {status}
+          </div>
+          <div className={`patient-badge ${getTypeBadgeClass()}`}>
+            {patientType}
+          </div>
+        </div>
       </div>
 
       <div className="patient-card-content">
@@ -121,14 +149,37 @@ const PatientCard = ({ patient, onClick }) => {
             <span>예정된 예약: {formatUpcomingDate(upcomingAppointment)}</span>
           </div>
         )}
-      </div>
 
-      <div className="patient-card-footer">
-        <button className="patient-detail-button">
-          <Info size={14} />
-          <span>상세 정보</span>
-          <ChevronRight size={14} />
-        </button>
+        {/* 성형 관련 정보 추가 */}
+        {patientType !== "일반 환자" &&
+          cosmeticInterests &&
+          cosmeticInterests.length > 0 && (
+            <div className="patient-info-item cosmetic">
+              <Heart size={14} />
+              <span>
+                관심 시술: {cosmeticInterests.slice(0, 2).join(", ")}
+                {cosmeticInterests.length > 2
+                  ? ` 외 ${cosmeticInterests.length - 2}개`
+                  : ""}
+              </span>
+            </div>
+          )}
+
+        {/* 이전 시술 정보 추가 */}
+        {previousProcedures && previousProcedures.length > 0 && (
+          <div className="patient-info-item procedures">
+            <Scissors size={14} />
+            <span>이전 시술: {previousProcedures.join(", ")}</span>
+          </div>
+        )}
+
+        {/* 전후 사진 여부 표시 */}
+        {hasBeforeAfterPhotos && (
+          <div className="patient-info-item photos">
+            <Camera size={14} />
+            <span>전후 사진 있음</span>
+          </div>
+        )}
       </div>
     </div>
   );

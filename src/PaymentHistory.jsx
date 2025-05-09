@@ -347,7 +347,7 @@ const PaymentHistory = () => {
             </div>
 
             {showFilterOptions && (
-              <div className="filter-options">
+              <div className="payment-history-filter-options">
                 <div className="filter-option-group">
                   <h4 className="filter-option-title">기간</h4>
                   <div className="filter-option-items">

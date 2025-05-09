@@ -84,7 +84,7 @@
 }
 
 /* 필터 옵션 패널 */
-.filter-options {
+.payment-history-filter-options {
   position: absolute;
   top: calc(100% + 0.5rem);
   left: 0;

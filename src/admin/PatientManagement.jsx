@@ -7,13 +7,6 @@ import {
   ChevronLeft,
   ChevronRight,
   User,
-  Phone,
-  Calendar,
-  Mail,
-  FileText,
-  Activity,
-  Scissors,
-  Camera,
 } from "lucide-react";
 import "./PatientManagement.css";
 import PatientCard from "./components/PatientCard";
@@ -32,21 +25,20 @@ const PatientManagement = () => {
     gender: "all",
     ageGroup: "all",
     visitStatus: "all",
-    patientType: "all", // 환자 타입 필터 추가 (일반/성형)
-    serviceInterest: "all", // 관심 서비스 필터 추가
+    patientType: "all",
+    serviceInterest: "all",
   });
 
   const patientsPerPage = 10;
 
   useEffect(() => {
-    // 실제 앱에서는 API 호출을 통해 환자 데이터를 가져옴
-    // 여기서는 목업 데이터 사용
+    // 목업 데이터 생성 함수
     const generateMockPatients = () => {
       const mockPatients = [];
       const genders = ["남성", "여성"];
       const bloodTypes = ["A+", "B+", "O+", "AB+", "A-", "B-", "O-", "AB-"];
       const statuses = ["정기 방문", "신규 환자", "장기 미방문"];
-      const patientTypes = ["일반 환자", "성형 고객", "복합 서비스"]; // 환자 타입 추가
+      const patientTypes = ["일반 환자", "성형 고객", "복합 서비스"];
 
       // 성형 관련 관심사/서비스
       const cosmeticInterests = [
@@ -167,10 +159,10 @@ const PatientManagement = () => {
           lastVisit,
           visitCount,
           status,
-          patientType, // 환자 타입 (일반/성형/복합)
-          cosmeticInterests: selectedInterests, // 성형 관심 분야
-          previousProcedures, // 이전 시술 이력
-          hasBeforeAfterPhotos, // 전후 사진 여부
+          patientType,
+          cosmeticInterests: selectedInterests,
+          previousProcedures,
+          hasBeforeAfterPhotos,
           address: `서울시 ${
             ["강남구", "서초구", "종로구", "마포구", "송파구"][
               Math.floor(Math.random() * 5)
@@ -214,11 +206,11 @@ const PatientManagement = () => {
       setPatients(mockPatients);
       setFilteredPatients(mockPatients);
       setIsLoading(false);
-    }, 1000);
+    }, 500);
   }, []);
 
-  useEffect(() => {
-    // 검색어와 필터 적용
+  // 필터링 함수
+  const applyFilters = () => {
     let results = [...patients];
 
     // 검색어 필터링
@@ -282,8 +274,16 @@ const PatientManagement = () => {
       );
     }
 
-    setFilteredPatients(results);
-    setCurrentPage(1);
+    return results;
+  };
+
+  // 필터와 검색어 변경 시 필터링 적용
+  useEffect(() => {
+    if (patients.length > 0) {
+      const filteredResults = applyFilters();
+      setFilteredPatients(filteredResults);
+      setCurrentPage(1);
+    }
   }, [searchTerm, filterOptions, patients]);
 
   const handleSearchChange = (e) => {
@@ -294,11 +294,12 @@ const PatientManagement = () => {
     setShowFilters(!showFilters);
   };
 
+  // 필터 변경 핸들러
   const handleFilterChange = (filter, value) => {
-    setFilterOptions({
-      ...filterOptions,
+    setFilterOptions((prev) => ({
+      ...prev,
       [filter]: value,
-    });
+    }));
   };
 
   const handleAddPatient = () => {
@@ -352,16 +353,7 @@ const PatientManagement = () => {
   );
   const totalPages = Math.ceil(filteredPatients.length / patientsPerPage);
 
-  // 날짜 포맷 함수
-  const formatDate = (date) => {
-    if (!(date instanceof Date)) return "";
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const day = String(date.getDate()).padStart(2, "0");
-    return `${year}-${month}-${day}`;
-  };
-
-  // 성형 관심 분야 목록 추출
+  // 성형 관심 분야 목록
   const cosmeticInterestsList = [
     "안면 성형",
     "코 성형",
@@ -378,6 +370,18 @@ const PatientManagement = () => {
     "리프팅",
     "윤곽 성형",
   ];
+
+  // 필터 초기화 함수
+  const resetFilters = () => {
+    setFilterOptions({
+      gender: "all",
+      ageGroup: "all",
+      visitStatus: "all",
+      patientType: "all",
+      serviceInterest: "all",
+    });
+    setSearchTerm("");
+  };
 
   if (isLoading) {
     return (
@@ -411,22 +415,26 @@ const PatientManagement = () => {
           </div>
 
           <button
-            className="admin-button admin-button-secondary"
+            className={`admin-button admin-button-secondary ${
+              showFilters ? "active-filter-button" : ""
+            }`}
             onClick={toggleFilters}
+            type="button"
           >
             <Filter size={16} />
-            필터
+            필터 {showFilters ? "닫기" : "열기"}
           </button>
         </div>
 
         <div className="patient-action-buttons">
-          <button className="admin-button admin-button-secondary">
+          <button className="admin-button admin-button-secondary" type="button">
             <Download size={16} />
             내보내기
           </button>
           <button
             className="admin-button admin-button-primary"
             onClick={handleAddPatient}
+            type="button"
           >
             <Plus size={16} />
             고객 등록
@@ -440,6 +448,7 @@ const PatientManagement = () => {
             <label className="filter-label">성별</label>
             <div className="filter-options">
               <button
+                type="button"
                 className={`filter-option ${
                   filterOptions.gender === "all" ? "active" : ""
                 }`}
@@ -448,6 +457,7 @@ const PatientManagement = () => {
                 전체
               </button>
               <button
+                type="button"
                 className={`filter-option ${
                   filterOptions.gender === "남성" ? "active" : ""
                 }`}
@@ -456,6 +466,7 @@ const PatientManagement = () => {
                 남성
               </button>
               <button
+                type="button"
                 className={`filter-option ${
                   filterOptions.gender === "여성" ? "active" : ""
                 }`}
@@ -470,6 +481,7 @@ const PatientManagement = () => {
             <label className="filter-label">연령대</label>
             <div className="filter-options">
               <button
+                type="button"
                 className={`filter-option ${
                   filterOptions.ageGroup === "all" ? "active" : ""
                 }`}
@@ -478,6 +490,7 @@ const PatientManagement = () => {
                 전체
               </button>
               <button
+                type="button"
                 className={`filter-option ${
                   filterOptions.ageGroup === "0-19" ? "active" : ""
                 }`}
@@ -486,6 +499,7 @@ const PatientManagement = () => {
                 ~19세
               </button>
               <button
+                type="button"
                 className={`filter-option ${
                   filterOptions.ageGroup === "20-39" ? "active" : ""
                 }`}
@@ -494,6 +508,7 @@ const PatientManagement = () => {
                 20~39세
               </button>
               <button
+                type="button"
                 className={`filter-option ${
                   filterOptions.ageGroup === "40-59" ? "active" : ""
                 }`}
@@ -502,6 +517,7 @@ const PatientManagement = () => {
                 40~59세
               </button>
               <button
+                type="button"
                 className={`filter-option ${
                   filterOptions.ageGroup === "60+" ? "active" : ""
                 }`}
@@ -516,6 +532,7 @@ const PatientManagement = () => {
             <label className="filter-label">방문 상태</label>
             <div className="filter-options">
               <button
+                type="button"
                 className={`filter-option ${
                   filterOptions.visitStatus === "all" ? "active" : ""
                 }`}
@@ -524,6 +541,7 @@ const PatientManagement = () => {
                 전체
               </button>
               <button
+                type="button"
                 className={`filter-option ${
                   filterOptions.visitStatus === "정기 방문" ? "active" : ""
                 }`}
@@ -532,6 +550,7 @@ const PatientManagement = () => {
                 정기 방문
               </button>
               <button
+                type="button"
                 className={`filter-option ${
                   filterOptions.visitStatus === "신규 환자" ? "active" : ""
                 }`}
@@ -540,6 +559,7 @@ const PatientManagement = () => {
                 신규 고객
               </button>
               <button
+                type="button"
                 className={`filter-option ${
                   filterOptions.visitStatus === "장기 미방문" ? "active" : ""
                 }`}
@@ -555,6 +575,7 @@ const PatientManagement = () => {
             <label className="filter-label">고객 유형</label>
             <div className="filter-options">
               <button
+                type="button"
                 className={`filter-option ${
                   filterOptions.patientType === "all" ? "active" : ""
                 }`}
@@ -563,6 +584,7 @@ const PatientManagement = () => {
                 전체
               </button>
               <button
+                type="button"
                 className={`filter-option ${
                   filterOptions.patientType === "일반 환자" ? "active" : ""
                 }`}
@@ -571,6 +593,7 @@ const PatientManagement = () => {
                 일반 환자
               </button>
               <button
+                type="button"
                 className={`filter-option ${
                   filterOptions.patientType === "성형 고객" ? "active" : ""
                 }`}
@@ -579,6 +602,7 @@ const PatientManagement = () => {
                 성형 고객
               </button>
               <button
+                type="button"
                 className={`filter-option ${
                   filterOptions.patientType === "복합 서비스" ? "active" : ""
                 }`}
@@ -594,6 +618,7 @@ const PatientManagement = () => {
             <label className="filter-label">관심 시술</label>
             <div className="filter-options">
               <button
+                type="button"
                 className={`filter-option ${
                   filterOptions.serviceInterest === "all" ? "active" : ""
                 }`}
@@ -603,6 +628,7 @@ const PatientManagement = () => {
               </button>
               {cosmeticInterestsList.map((interest, index) => (
                 <button
+                  type="button"
                   key={index}
                   className={`filter-option ${
                     filterOptions.serviceInterest === interest ? "active" : ""
@@ -615,6 +641,17 @@ const PatientManagement = () => {
                 </button>
               ))}
             </div>
+          </div>
+
+          {/* 필터 초기화 버튼 추가 */}
+          <div className="filter-actions">
+            <button
+              type="button"
+              className="admin-button admin-button-secondary"
+              onClick={resetFilters}
+            >
+              필터 초기화
+            </button>
           </div>
         </div>
       )}
@@ -658,6 +695,7 @@ const PatientManagement = () => {
                 }`}
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
+                type="button"
               >
                 <ChevronLeft size={16} />
               </button>
@@ -679,6 +717,7 @@ const PatientManagement = () => {
                         pageNumber === currentPage ? "active" : ""
                       }`}
                       onClick={() => handlePageChange(pageNumber)}
+                      type="button"
                     >
                       {pageNumber}
                     </button>
@@ -705,6 +744,7 @@ const PatientManagement = () => {
                 }`}
                 onClick={() => handlePageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
+                type="button"
               >
                 <ChevronRight size={16} />
               </button>
