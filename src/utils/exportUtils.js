@@ -120,14 +120,14 @@ export const formatAppointmentDataForExport = (appointments) => {
   return appointments.map((appointment) => ({
     "예약 ID": appointment.id,
     "환자 이름": appointment.patientName,
-    "의사/담당자": appointment.doctorName || "",
-    "예약 일시": appointment.dateTime
+    "의사/담당자": appointment.doctor || "",
+    "예약 일시": appointment.date
       ? new Date(appointment.dateTime).toLocaleString()
       : "",
-    "예약 유형": appointment.type,
-    "시술/진료": appointment.serviceName || "",
+    "예약 유형": appointment.department,
+    "시술/진료": appointment.reason || "",
     상태: appointment.status,
-    메모: appointment.notes || "",
+    메모: appointment.note || "",
   }));
 };
 

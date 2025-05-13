@@ -16,6 +16,8 @@ import {
 } from "lucide-react";
 import "./AppointmentManagement.css";
 import AppointmentModal from "./components/AppointmentModal";
+import ExportButton from "./components/ExportButton";
+import { formatAppointmentDataForExport } from "../utils/exportUtils";
 
 const AppointmentManagement = () => {
   const [appointments, setAppointments] = useState([]);
@@ -495,7 +497,7 @@ const AppointmentManagement = () => {
           </button>
         </div>
 
-        <div className="appointment-action-buttons">
+        {/* <div className="appointment-action-buttons">
           <button className="admin-button admin-button-secondary">
             <Download size={16} />
             내보내기
@@ -503,6 +505,21 @@ const AppointmentManagement = () => {
           <button
             className="admin-button admin-button-primary"
             onClick={handleAddAppointment}
+          >
+            <Plus size={16} />
+            예약 등록
+          </button>
+        </div> */}
+        <div className="appointment-action-buttons">
+          <ExportButton
+            data={formatAppointmentDataForExport(filteredAppointments)}
+            filename="예약_목록"
+            sheetName="예약 목록"
+          />
+          <button
+            className="admin-button admin-button-primary"
+            onClick={handleAddAppointment}
+            type="button"
           >
             <Plus size={16} />
             예약 등록
