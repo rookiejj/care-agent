@@ -312,7 +312,11 @@ const PatientModal = ({ patient, onClose, onSave }) => {
               </button>
             )}
             <div className="action-buttons">
-              <button type="button" className="cancel-button" onClick={onClose}>
+              <button
+                type="button"
+                className="patient-modal-cancel-button"
+                onClick={onClose}
+              >
                 취소
               </button>
               <button type="submit" className="save-button">

@@ -2,31 +2,20 @@
   padding-bottom: 2rem;
 }
 
-.report-filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-  padding: 1rem;
-  background-color: #f9fafb;
-  border: 1px solid #e5e7eb;
-  border-radius: 0.5rem;
-}
-
-.filter-group {
+.reports-filter-group {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-.filter-label {
+.reports-filter-label {
   font-size: 0.875rem;
   font-weight: 500;
   color: #4b5563;
   white-space: nowrap;
 }
 
-.filter-select {
+.reports-filter-select {
   padding: 0.5rem 0.75rem;
   border: 1px solid #e5e7eb;
   border-radius: 0.375rem;
@@ -36,7 +25,7 @@
   cursor: pointer;
 }
 
-.filter-datepicker {
+.reports-filter-datepicker {
   padding: 0.5rem 0.75rem;
   border: 1px solid #e5e7eb;
   border-radius: 0.375rem;

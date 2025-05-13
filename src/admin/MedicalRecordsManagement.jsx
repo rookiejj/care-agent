@@ -446,12 +446,12 @@ const MedicalRecordsManagement = () => {
       </div>
 
       {showFilters && (
-        <div className="records-filters">
-          <div className="filter-group">
-            <label className="filter-label">진료과</label>
-            <div className="filter-options">
+        <div className="admin-filters">
+          <div className="admin-filter-group">
+            <label className="admin-filter-label">진료과</label>
+            <div className="admin-filter-options">
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.department === "all" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("department", "all")}
@@ -461,7 +461,7 @@ const MedicalRecordsManagement = () => {
               {departmentsList.map((department, index) => (
                 <button
                   key={index}
-                  className={`filter-option ${
+                  className={`admin-filter-option ${
                     filterOptions.department === department ? "active" : ""
                   }`}
                   onClick={() => handleFilterChange("department", department)}
@@ -472,11 +472,11 @@ const MedicalRecordsManagement = () => {
             </div>
           </div>
 
-          <div className="filter-group">
-            <label className="filter-label">의사</label>
-            <div className="filter-options">
+          <div className="admin-filter-group">
+            <label className="admin-filter-label">의사</label>
+            <div className="admin-filter-options">
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.doctor === "all" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("doctor", "all")}
@@ -486,7 +486,7 @@ const MedicalRecordsManagement = () => {
               {doctorsList.map((doctor, index) => (
                 <button
                   key={index}
-                  className={`filter-option ${
+                  className={`admin-filter-option ${
                     filterOptions.doctor === doctor ? "active" : ""
                   }`}
                   onClick={() => handleFilterChange("doctor", doctor)}
@@ -497,11 +497,11 @@ const MedicalRecordsManagement = () => {
             </div>
           </div>
 
-          <div className="filter-group">
-            <label className="filter-label">기간</label>
-            <div className="filter-options">
+          <div className="admin-filter-group">
+            <label className="admin-filter-label">기간</label>
+            <div className="admin-filter-options">
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.dateRange === "all" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("dateRange", "all")}
@@ -509,7 +509,7 @@ const MedicalRecordsManagement = () => {
                 전체 기간
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.dateRange === "today" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("dateRange", "today")}
@@ -517,7 +517,7 @@ const MedicalRecordsManagement = () => {
                 오늘
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.dateRange === "week" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("dateRange", "week")}
@@ -525,7 +525,7 @@ const MedicalRecordsManagement = () => {
                 최근 1주
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.dateRange === "month" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("dateRange", "month")}
@@ -533,7 +533,7 @@ const MedicalRecordsManagement = () => {
                 최근 1개월
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.dateRange === "threemonths" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("dateRange", "threemonths")}

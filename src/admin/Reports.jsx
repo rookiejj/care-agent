@@ -332,11 +332,11 @@ const Reports = () => {
         </p>
       </div>
 
-      <div className="report-filters">
-        <div className="filter-group">
-          <span className="filter-label">기간:</span>
+      <div className="admin-filters">
+        <div className="reports-filter-group">
+          <span className="reports-filter-label">기간:</span>
           <select
-            className="filter-select"
+            className="reports-filter-select"
             value={reportPeriod}
             onChange={handlePeriodChange}
           >
@@ -347,29 +347,29 @@ const Reports = () => {
           </select>
         </div>
 
-        <div className="filter-group">
-          <span className="filter-label">시작일:</span>
+        <div className="reports-filter-group">
+          <span className="reports-filter-label">시작일:</span>
           <input
             type="date"
             id="start-date"
-            className="filter-datepicker"
+            className="reports-filter-datepicker"
             value={startDate}
             onChange={handleDateChange}
           />
         </div>
 
-        <div className="filter-group">
-          <span className="filter-label">종료일:</span>
+        <div className="reports-filter-group">
+          <span className="reports-filter-label">종료일:</span>
           <input
             type="date"
             id="end-date"
-            className="filter-datepicker"
+            className="reports-filter-datepicker"
             value={endDate}
             onChange={handleDateChange}
           />
         </div>
 
-        <div className="filter-group">
+        <div className="reports-filter-group">
           <button className="reports-filter-button" onClick={handleFilterApply}>
             <Filter size={16} />
             <span>필터 적용</span>

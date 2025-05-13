@@ -422,12 +422,12 @@ const BeforeAfterManagement = () => {
       </div>
 
       {showFilters && (
-        <div className="before-after-filters">
-          <div className="filter-group">
-            <label className="filter-label">시술 카테고리</label>
-            <div className="filter-options">
+        <div className="admin-filters">
+          <div className="admin-filter-group">
+            <label className="admin-filter-label">시술 카테고리</label>
+            <div className="admin-filter-options">
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.procedureCategory === "all" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("procedureCategory", "all")}
@@ -437,7 +437,7 @@ const BeforeAfterManagement = () => {
               {categories.map((category, index) => (
                 <button
                   key={index}
-                  className={`filter-option ${
+                  className={`admin-filter-option ${
                     filterOptions.procedureCategory === category ? "active" : ""
                   }`}
                   onClick={() =>
@@ -450,11 +450,11 @@ const BeforeAfterManagement = () => {
             </div>
           </div>
 
-          <div className="filter-group">
-            <label className="filter-label">공개 여부</label>
-            <div className="filter-options">
+          <div className="admin-filter-group">
+            <label className="admin-filter-label">공개 여부</label>
+            <div className="admin-filter-options">
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.visibility === "all" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("visibility", "all")}
@@ -462,7 +462,7 @@ const BeforeAfterManagement = () => {
                 전체
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.visibility === "public" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("visibility", "public")}
@@ -470,7 +470,7 @@ const BeforeAfterManagement = () => {
                 공개
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.visibility === "private" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("visibility", "private")}
@@ -480,11 +480,11 @@ const BeforeAfterManagement = () => {
             </div>
           </div>
 
-          <div className="filter-group">
-            <label className="filter-label">등록일</label>
-            <div className="filter-options">
+          <div className="admin-filter-group">
+            <label className="admin-filter-label">등록일</label>
+            <div className="admin-filter-options">
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.dateRange === "all" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("dateRange", "all")}
@@ -492,7 +492,7 @@ const BeforeAfterManagement = () => {
                 전체 기간
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.dateRange === "week" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("dateRange", "week")}
@@ -500,7 +500,7 @@ const BeforeAfterManagement = () => {
                 최근 1주일
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.dateRange === "month" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("dateRange", "month")}
@@ -508,7 +508,7 @@ const BeforeAfterManagement = () => {
                 최근 1개월
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.dateRange === "year" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("dateRange", "year")}

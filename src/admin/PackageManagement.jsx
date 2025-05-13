@@ -505,12 +505,12 @@ const PackageManagement = () => {
       </div>
 
       {showFilters && (
-        <div className="package-filters">
-          <div className="filter-group">
-            <label className="filter-label">패키지 카테고리</label>
-            <div className="filter-options">
+        <div className="admin-filters">
+          <div className="admin-filter-group">
+            <label className="admin-filter-label">패키지 카테고리</label>
+            <div className="admin-filter-options">
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.category === "all" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("category", "all")}
@@ -520,7 +520,7 @@ const PackageManagement = () => {
               {categories.map((category, index) => (
                 <button
                   key={index}
-                  className={`filter-option ${
+                  className={`admin-filter-option ${
                     filterOptions.category === category ? "active" : ""
                   }`}
                   onClick={() => handleFilterChange("category", category)}
@@ -531,11 +531,11 @@ const PackageManagement = () => {
             </div>
           </div>
 
-          <div className="filter-group">
-            <label className="filter-label">판매 상태</label>
-            <div className="filter-options">
+          <div className="admin-filter-group">
+            <label className="admin-filter-label">판매 상태</label>
+            <div className="admin-filter-options">
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.status === "all" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("status", "all")}
@@ -543,7 +543,7 @@ const PackageManagement = () => {
                 전체
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.status === "active" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("status", "active")}
@@ -551,7 +551,7 @@ const PackageManagement = () => {
                 판매중
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.status === "inactive" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("status", "inactive")}
@@ -559,7 +559,7 @@ const PackageManagement = () => {
                 판매중지
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.status === "comingSoon" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("status", "comingSoon")}
@@ -569,11 +569,11 @@ const PackageManagement = () => {
             </div>
           </div>
 
-          <div className="filter-group">
-            <label className="filter-label">가격 범위</label>
-            <div className="filter-options">
+          <div className="admin-filter-group">
+            <label className="admin-filter-label">가격 범위</label>
+            <div className="admin-filter-options">
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.priceRange === "all" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("priceRange", "all")}
@@ -581,7 +581,7 @@ const PackageManagement = () => {
                 전체
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.priceRange === "under1m" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("priceRange", "under1m")}
@@ -589,7 +589,7 @@ const PackageManagement = () => {
                 100만원 미만
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.priceRange === "1m-3m" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("priceRange", "1m-3m")}
@@ -597,7 +597,7 @@ const PackageManagement = () => {
                 100만원 ~ 300만원
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.priceRange === "3m-5m" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("priceRange", "3m-5m")}
@@ -605,7 +605,7 @@ const PackageManagement = () => {
                 300만원 ~ 500만원
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.priceRange === "over5m" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("priceRange", "over5m")}

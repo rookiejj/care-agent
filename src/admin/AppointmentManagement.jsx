@@ -511,12 +511,12 @@ const AppointmentManagement = () => {
       </div>
 
       {showFilters && (
-        <div className="appointment-filters">
-          <div className="filter-group">
-            <label className="filter-label">상태</label>
-            <div className="filter-options">
+        <div className="admin-filters">
+          <div className="admin-filter-group">
+            <label className="admin-filter-label">상태</label>
+            <div className="admin-filter-options">
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.status === "all" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("status", "all")}
@@ -524,7 +524,7 @@ const AppointmentManagement = () => {
                 전체
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.status === "confirmed" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("status", "confirmed")}
@@ -532,7 +532,7 @@ const AppointmentManagement = () => {
                 확정
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.status === "completed" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("status", "completed")}
@@ -540,7 +540,7 @@ const AppointmentManagement = () => {
                 완료
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.status === "cancelled" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("status", "cancelled")}
@@ -548,7 +548,7 @@ const AppointmentManagement = () => {
                 취소
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.status === "rescheduled" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("status", "rescheduled")}
@@ -556,7 +556,7 @@ const AppointmentManagement = () => {
                 일정변경
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.status === "noshow" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("status", "noshow")}
@@ -566,11 +566,11 @@ const AppointmentManagement = () => {
             </div>
           </div>
 
-          <div className="filter-group">
-            <label className="filter-label">날짜</label>
-            <div className="filter-options">
+          <div className="admin-filter-group">
+            <label className="admin-filter-label">날짜</label>
+            <div className="admin-filter-options">
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.dateRange === "all" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("dateRange", "all")}
@@ -578,7 +578,7 @@ const AppointmentManagement = () => {
                 전체
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.dateRange === "today" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("dateRange", "today")}
@@ -586,7 +586,7 @@ const AppointmentManagement = () => {
                 오늘
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.dateRange === "tomorrow" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("dateRange", "tomorrow")}
@@ -594,7 +594,7 @@ const AppointmentManagement = () => {
                 내일
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.dateRange === "thisWeek" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("dateRange", "thisWeek")}
@@ -602,7 +602,7 @@ const AppointmentManagement = () => {
                 이번 주
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.dateRange === "lastWeek" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("dateRange", "lastWeek")}
@@ -612,11 +612,11 @@ const AppointmentManagement = () => {
             </div>
           </div>
 
-          <div className="filter-group">
-            <label className="filter-label">담당 의사</label>
-            <div className="filter-options">
+          <div className="admin-filter-group">
+            <label className="admin-filter-label">담당 의사</label>
+            <div className="admin-filter-options">
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.doctor === "all" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("doctor", "all")}
@@ -626,7 +626,7 @@ const AppointmentManagement = () => {
               {doctorsList.map((doctor, index) => (
                 <button
                   key={index}
-                  className={`filter-option ${
+                  className={`admin-filter-option ${
                     filterOptions.doctor === doctor ? "active" : ""
                   }`}
                   onClick={() => handleFilterChange("doctor", doctor)}

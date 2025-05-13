@@ -370,12 +370,12 @@ const NotificationManagement = () => {
       </div>
 
       {showFilters && (
-        <div className="notification-filters">
-          <div className="filter-group">
-            <label className="filter-label">유형</label>
-            <div className="filter-options">
+        <div className="admin-filters">
+          <div className="admin-filter-group">
+            <label className="admin-filter-label">유형</label>
+            <div className="admin-filter-options">
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.type === "all" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("type", "all")}
@@ -383,7 +383,7 @@ const NotificationManagement = () => {
                 전체
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.type === "info" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("type", "info")}
@@ -391,7 +391,7 @@ const NotificationManagement = () => {
                 정보
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.type === "success" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("type", "success")}
@@ -399,7 +399,7 @@ const NotificationManagement = () => {
                 완료
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.type === "warning" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("type", "warning")}
@@ -407,7 +407,7 @@ const NotificationManagement = () => {
                 경고
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.type === "error" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("type", "error")}
@@ -417,11 +417,11 @@ const NotificationManagement = () => {
             </div>
           </div>
 
-          <div className="filter-group">
-            <label className="filter-label">읽음 상태</label>
-            <div className="filter-options">
+          <div className="admin-filter-group">
+            <label className="admin-filter-label">읽음 상태</label>
+            <div className="admin-filter-options">
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.read === "all" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("read", "all")}
@@ -429,7 +429,7 @@ const NotificationManagement = () => {
                 전체
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.read === "read" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("read", "read")}
@@ -437,7 +437,7 @@ const NotificationManagement = () => {
                 읽음
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.read === "unread" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("read", "unread")}
@@ -447,11 +447,11 @@ const NotificationManagement = () => {
             </div>
           </div>
 
-          <div className="filter-group">
-            <label className="filter-label">기간</label>
-            <div className="filter-options">
+          <div className="admin-filter-group">
+            <label className="admin-filter-label">기간</label>
+            <div className="admin-filter-options">
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.dateRange === "all" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("dateRange", "all")}
@@ -459,7 +459,7 @@ const NotificationManagement = () => {
                 전체 기간
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.dateRange === "today" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("dateRange", "today")}
@@ -467,7 +467,7 @@ const NotificationManagement = () => {
                 오늘
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.dateRange === "yesterday" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("dateRange", "yesterday")}
@@ -475,7 +475,7 @@ const NotificationManagement = () => {
                 어제
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.dateRange === "week" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("dateRange", "week")}

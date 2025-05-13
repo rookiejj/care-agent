@@ -526,12 +526,12 @@ const DoctorManagement = () => {
       </div>
 
       {showFilters && (
-        <div className="doctor-filters">
-          <div className="filter-group">
-            <label className="filter-label">진료과</label>
-            <div className="filter-options">
+        <div className="admin-filters">
+          <div className="admin-filter-group">
+            <label className="admin-filter-label">진료과</label>
+            <div className="admin-filter-options">
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.department === "all" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("department", "all")}
@@ -541,7 +541,7 @@ const DoctorManagement = () => {
               {departmentsList.map((department, index) => (
                 <button
                   key={index}
-                  className={`filter-option ${
+                  className={`admin-filter-option ${
                     filterOptions.department === department ? "active" : ""
                   }`}
                   onClick={() => handleFilterChange("department", department)}
@@ -552,11 +552,11 @@ const DoctorManagement = () => {
             </div>
           </div>
 
-          <div className="filter-group">
-            <label className="filter-label">상태</label>
-            <div className="filter-options">
+          <div className="admin-filter-group">
+            <label className="admin-filter-label">상태</label>
+            <div className="admin-filter-options">
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.status === "all" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("status", "all")}
@@ -564,7 +564,7 @@ const DoctorManagement = () => {
                 전체
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.status === "active" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("status", "active")}
@@ -572,7 +572,7 @@ const DoctorManagement = () => {
                 근무중
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.status === "vacation" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("status", "vacation")}
@@ -580,7 +580,7 @@ const DoctorManagement = () => {
                 휴가
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.status === "leave" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("status", "leave")}
@@ -588,7 +588,7 @@ const DoctorManagement = () => {
                 휴직
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.status === "inactive" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("status", "inactive")}
@@ -599,11 +599,11 @@ const DoctorManagement = () => {
           </div>
 
           {/* 의사 타입 필터 추가 */}
-          <div className="filter-group">
-            <label className="filter-label">의사 타입</label>
-            <div className="filter-options">
+          <div className="admin-filter-group">
+            <label className="admin-filter-label">의사 타입</label>
+            <div className="admin-filter-options">
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.doctorType === "all" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("doctorType", "all")}
@@ -611,7 +611,7 @@ const DoctorManagement = () => {
                 전체
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.doctorType === "일반 의사" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("doctorType", "일반 의사")}
@@ -619,7 +619,7 @@ const DoctorManagement = () => {
                 일반 의사
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.doctorType === "성형 전문의" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("doctorType", "성형 전문의")}
@@ -627,7 +627,7 @@ const DoctorManagement = () => {
                 성형 전문의
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.doctorType === "복합 진료" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("doctorType", "복합 진료")}

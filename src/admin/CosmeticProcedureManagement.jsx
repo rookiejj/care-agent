@@ -698,12 +698,12 @@ const CosmeticProcedureManagement = () => {
       </div>
 
       {showFilters && (
-        <div className="procedure-filters">
-          <div className="filter-group">
-            <label className="filter-label">카테고리</label>
-            <div className="filter-options">
+        <div className="admin-filters">
+          <div className="admin-filter-group">
+            <label className="admin-filter-label">카테고리</label>
+            <div className="admin-filter-options">
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.category === "all" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("category", "all")}
@@ -713,7 +713,7 @@ const CosmeticProcedureManagement = () => {
               {categories.map((category) => (
                 <button
                   key={category.id}
-                  className={`filter-option ${
+                  className={`admin-filter-option ${
                     filterOptions.category === category.id ? "active" : ""
                   }`}
                   onClick={() => handleFilterChange("category", category.id)}
@@ -724,11 +724,11 @@ const CosmeticProcedureManagement = () => {
             </div>
           </div>
 
-          <div className="filter-group">
-            <label className="filter-label">가격 범위</label>
-            <div className="filter-options">
+          <div className="admin-filter-group">
+            <label className="admin-filter-label">가격 범위</label>
+            <div className="admin-filter-options">
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.priceRange === "all" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("priceRange", "all")}
@@ -736,7 +736,7 @@ const CosmeticProcedureManagement = () => {
                 전체
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.priceRange === "0-500000" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("priceRange", "0-500000")}
@@ -744,7 +744,7 @@ const CosmeticProcedureManagement = () => {
                 ~50만원
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.priceRange === "500000-1000000" ? "active" : ""
                 }`}
                 onClick={() =>
@@ -754,7 +754,7 @@ const CosmeticProcedureManagement = () => {
                 50만원~100만원
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.priceRange === "1000000-3000000" ? "active" : ""
                 }`}
                 onClick={() =>
@@ -764,7 +764,7 @@ const CosmeticProcedureManagement = () => {
                 100만원~300만원
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.priceRange === "3000000-5000000" ? "active" : ""
                 }`}
                 onClick={() =>
@@ -774,7 +774,7 @@ const CosmeticProcedureManagement = () => {
                 300만원~500만원
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.priceRange === "5000000+" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("priceRange", "5000000+")}
@@ -784,11 +784,11 @@ const CosmeticProcedureManagement = () => {
             </div>
           </div>
 
-          <div className="filter-group">
-            <label className="filter-label">인기도</label>
-            <div className="filter-options">
+          <div className="admin-filter-group">
+            <label className="admin-filter-label">인기도</label>
+            <div className="admin-filter-options">
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.popularity === "all" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("popularity", "all")}
@@ -796,7 +796,7 @@ const CosmeticProcedureManagement = () => {
                 전체
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.popularity === "high" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("popularity", "high")}
@@ -804,7 +804,7 @@ const CosmeticProcedureManagement = () => {
                 높음 (4.5 이상)
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.popularity === "medium" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("popularity", "medium")}
@@ -812,7 +812,7 @@ const CosmeticProcedureManagement = () => {
                 중간 (4.0-4.5)
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.popularity === "low" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("popularity", "low")}
@@ -822,7 +822,7 @@ const CosmeticProcedureManagement = () => {
             </div>
           </div>
 
-          <div className="filter-group promotion-filter">
+          <div className="admin-filter-group promotion-filter">
             <label className="promotion-filter-label">
               <input
                 type="checkbox"

@@ -495,12 +495,12 @@ const ConsultationManagement = () => {
       </div>
 
       {showFilters && (
-        <div className="consultation-filters">
-          <div className="filter-group">
-            <label className="filter-label">상태</label>
-            <div className="filter-options">
+        <div className="admin-filters">
+          <div className="admin-filter-group">
+            <label className="admin-filter-label">상태</label>
+            <div className="admin-filter-options">
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.status === "all" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("status", "all")}
@@ -508,7 +508,7 @@ const ConsultationManagement = () => {
                 전체
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.status === "pending" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("status", "pending")}
@@ -516,7 +516,7 @@ const ConsultationManagement = () => {
                 대기중
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.status === "scheduled" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("status", "scheduled")}
@@ -524,7 +524,7 @@ const ConsultationManagement = () => {
                 예약됨
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.status === "completed" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("status", "completed")}
@@ -532,7 +532,7 @@ const ConsultationManagement = () => {
                 완료
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.status === "canceled" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("status", "canceled")}
@@ -542,11 +542,11 @@ const ConsultationManagement = () => {
             </div>
           </div>
 
-          <div className="filter-group">
-            <label className="filter-label">상담 유형</label>
-            <div className="filter-options">
+          <div className="admin-filter-group">
+            <label className="admin-filter-label">상담 유형</label>
+            <div className="admin-filter-options">
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.consultationType === "all" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("consultationType", "all")}
@@ -554,7 +554,7 @@ const ConsultationManagement = () => {
                 전체
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.consultationType === "initial" ? "active" : ""
                 }`}
                 onClick={() =>
@@ -564,7 +564,7 @@ const ConsultationManagement = () => {
                 초기 상담
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.consultationType === "followup" ? "active" : ""
                 }`}
                 onClick={() =>
@@ -574,7 +574,7 @@ const ConsultationManagement = () => {
                 후속 상담
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.consultationType === "online" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("consultationType", "online")}
@@ -582,7 +582,7 @@ const ConsultationManagement = () => {
                 온라인 상담
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.consultationType === "procedure-specific"
                     ? "active"
                     : ""
@@ -596,11 +596,11 @@ const ConsultationManagement = () => {
             </div>
           </div>
 
-          <div className="filter-group">
-            <label className="filter-label">날짜</label>
-            <div className="filter-options">
+          <div className="admin-filter-group">
+            <label className="admin-filter-label">날짜</label>
+            <div className="admin-filter-options">
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.dateRange === "all" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("dateRange", "all")}
@@ -608,7 +608,7 @@ const ConsultationManagement = () => {
                 전체
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.dateRange === "today" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("dateRange", "today")}
@@ -616,7 +616,7 @@ const ConsultationManagement = () => {
                 오늘
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.dateRange === "tomorrow" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("dateRange", "tomorrow")}
@@ -624,7 +624,7 @@ const ConsultationManagement = () => {
                 내일
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.dateRange === "thisWeek" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("dateRange", "thisWeek")}
@@ -632,7 +632,7 @@ const ConsultationManagement = () => {
                 이번 주
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.dateRange === "upcoming" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("dateRange", "upcoming")}
@@ -640,7 +640,7 @@ const ConsultationManagement = () => {
                 예정된 상담
               </button>
               <button
-                className={`filter-option ${
+                className={`admin-filter-option ${
                   filterOptions.dateRange === "past" ? "active" : ""
                 }`}
                 onClick={() => handleFilterChange("dateRange", "past")}

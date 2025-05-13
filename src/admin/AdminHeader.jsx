@@ -142,7 +142,7 @@ const AdminHeader = ({
         <h1 className="admin-header-title">{getSectionTitle()}</h1>
       </div>
 
-      <div className="admin-header-search">
+      {/* <div className="admin-header-search">
         <div className="admin-search-container">
           <Search size={18} className="admin-search-icon" />
           <input
@@ -151,7 +151,7 @@ const AdminHeader = ({
             className="admin-search-input"
           />
         </div>
-      </div>
+      </div> */}
 
       <div className="admin-header-right">
         <div className="admin-header-item">

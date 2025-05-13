@@ -73,6 +73,7 @@
   background: none;
   border: none;
   border-bottom: 2px solid transparent;
+  border-radius: 0;
   cursor: pointer;
   transition: all 0.2s;
 }
@@ -160,7 +161,7 @@
   gap: 0.75rem;
 }
 
-.cancel-button,
+.patient-modal-cancel-button,
 .save-button,
 .delete-button {
   display: flex;
@@ -175,13 +176,13 @@
   transition: all 0.2s;
 }
 
-.cancel-button {
+.patient-modal-cancel-button {
   background-color: white;
   color: #4b5563;
   border: 1px solid #d1d5db;
 }
 
-.cancel-button:hover {
+.patient-modal-cancel-button:hover {
   background-color: #f3f4f6;
   border-color: #9ca3af;
 }
@@ -227,7 +228,7 @@
     width: 100%;
   }
 
-  .cancel-button,
+  .patient-modal-cancel-button,
   .save-button {
     flex: 1;
   }
