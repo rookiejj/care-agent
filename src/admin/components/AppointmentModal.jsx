@@ -344,9 +344,9 @@ const AppointmentModal = ({ appointment, onClose, onSave, doctors = [] }) => {
                       <option value="rescheduled">일정변경</option>
                       <option value="noshow">노쇼</option>
                     </select>
-                    <div className="status-badge-container">
+                    {/* <div className="status-badge-container">
                       {getStatusBadge(formData.status)}
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               )}
@@ -426,7 +426,11 @@ const AppointmentModal = ({ appointment, onClose, onSave, doctors = [] }) => {
               </button>
             )}
             <div className="action-buttons">
-              <button type="button" className="cancel-button" onClick={onClose}>
+              <button
+                type="button"
+                className="appointment-modal-cancel-button"
+                onClick={onClose}
+              >
                 취소
               </button>
               <button type="submit" className="save-button">
