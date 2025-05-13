@@ -1,0 +1,59 @@
+/* components/admin/ExportButton.css */
+
+.admin-export-dropdown {
+  position: relative;
+}
+
+.admin-button.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.admin-export-options {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  z-index: 20;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  width: 220px;
+  overflow: hidden;
+}
+
+.admin-export-option {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border: none;
+  background-color: transparent;
+  color: #4b5563;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.875rem;
+}
+
+.admin-export-option svg {
+  margin-right: 0.75rem;
+  color: #6b7280;
+}
+
+.admin-export-option:hover {
+  background-color: #f9fafb;
+  color: #111827;
+}
+
+.admin-export-option:not(:last-child) {
+  border-bottom: 1px solid #f3f4f6;
+}
+
+/* 미디어 쿼리 추가 - 모바일에서 드롭다운 위치 조정 */
+@media (max-width: 768px) {
+  .admin-export-options {
+    left: 0;
+    right: auto;
+  }
+}

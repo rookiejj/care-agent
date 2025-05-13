@@ -11,6 +11,8 @@ import {
 import "./PatientManagement.css";
 import PatientCard from "./components/PatientCard";
 import PatientModal from "./components/PatientModal";
+import ExportButton from "./components/ExportButton";
+import { formatPatientDataForExport } from "../utils/exportUtils";
 
 const PatientManagement = () => {
   const [patients, setPatients] = useState([]);
@@ -427,10 +429,11 @@ const PatientManagement = () => {
         </div>
 
         <div className="patient-action-buttons">
-          <button className="admin-button admin-button-secondary" type="button">
-            <Download size={16} />
-            내보내기
-          </button>
+          <ExportButton
+            data={formatPatientDataForExport(filteredPatients)}
+            filename="환자_목록"
+            sheetName="환자 목록"
+          />
           <button
             className="admin-button admin-button-primary"
             onClick={handleAddPatient}
