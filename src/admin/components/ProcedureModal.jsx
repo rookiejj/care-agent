@@ -11,6 +11,7 @@ import {
   Calendar,
   CheckCircle,
   XCircle,
+  Save,
 } from "lucide-react";
 import "./ProcedureModal.css";
 
@@ -169,13 +170,11 @@ const ProcedureModal = ({ procedure, onClose, onSave, categories }) => {
   };
 
   return (
-    <div className="procedure-modal-overlay">
-      <div className="procedure-modal">
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="procedure-modal" onClick={(e) => e.stopPropagation()}>
         <div className="procedure-modal-header">
-          <h2 className="procedure-modal-title">
-            {isEditing ? "시술 정보 수정" : "새 시술 등록"}
-          </h2>
-          <button className="procedure-modal-close-button" onClick={onClose}>
+          <h2>{isEditing ? "시술 정보 수정" : "새 시술 등록"}</h2>
+          <button className="modal-close-button" onClick={onClose}>
             <X size={20} />
           </button>
         </div>
@@ -280,6 +279,7 @@ const ProcedureModal = ({ procedure, onClose, onSave, categories }) => {
                   className={`form-textarea ${
                     errors.description ? "error" : ""
                   }`}
+                  style={{ boxSizing: "border-box" }}
                 ></textarea>
                 {errors.description && (
                   <div className="error-message">{errors.description}</div>
@@ -350,7 +350,12 @@ const ProcedureModal = ({ procedure, onClose, onSave, categories }) => {
                 </label>
 
                 {formData.isPromoted && (
-                  <div className="form-group nested-group">
+                  <div
+                    className="form-group nested-group"
+                    style={{
+                      paddingRight: "1.5rem",
+                    }}
+                  >
                     <label htmlFor="discountRate" className="form-label">
                       할인율 (%)
                     </label>
@@ -387,7 +392,12 @@ const ProcedureModal = ({ procedure, onClose, onSave, categories }) => {
                 </label>
 
                 {formData.hasBeforeAfterImages && (
-                  <div className="form-group nested-group">
+                  <div
+                    className="form-group nested-group"
+                    style={{
+                      paddingRight: "1.5rem",
+                    }}
+                  >
                     <label htmlFor="imagesCount" className="form-label">
                       이미지 개수
                     </label>
@@ -478,20 +488,24 @@ const ProcedureModal = ({ procedure, onClose, onSave, categories }) => {
                   {formData.isActive ? "활성" : "비활성"}
                 </span>
               </div>
+              <div className="preview-item"></div>
             </div>
           </div>
 
-          <div className="procedure-modal-footer">
-            <button
-              type="button"
-              className="procedure-modal-button secondary"
-              onClick={onClose}
-            >
-              취소
-            </button>
-            <button type="submit" className="procedure-modal-button primary">
-              {isEditing ? "수정 완료" : "등록 완료"}
-            </button>
+          <div className="procedure-modal-footer" style={{ marginTop: "1rem" }}>
+            <div className="action-buttons">
+              <button
+                type="button"
+                className="procedure-modal-cancel-button"
+                onClick={onClose}
+              >
+                취소
+              </button>
+              <button type="submit" className="save-button">
+                <Save size={16} />
+                {isEditing ? "수정 완료" : "등록 완료"}
+              </button>
+            </div>
           </div>
         </form>
       </div>
