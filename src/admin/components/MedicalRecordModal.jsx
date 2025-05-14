@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { X } from "lucide-react";
+import { X, Save } from "lucide-react";
 
 const MedicalRecordModal = ({
   record,
@@ -52,21 +52,19 @@ const MedicalRecordModal = ({
   };
 
   return (
-    <div className="medical-record-modal-backdrop" onClick={onClose}>
+    <div className="modal-overlay" onClick={onClose}>
       <div
         className="medical-record-modal"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="modal-header">
-          <h2 className="modal-title">
-            {record ? "진료 기록 수정" : "새로운 진료 기록"}
-          </h2>
+        <div className="medical-record-modal-header">
+          <h2>{record ? "진료 기록 수정" : "새로운 진료 기록"}</h2>
           <button className="modal-close-button" onClick={onClose}>
             <X size={20} />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="modal-form">
+        <form onSubmit={handleSubmit} className="medical-record-modal-form">
           <div className="form-group">
             <label htmlFor="patientId" className="form-label">
               환자 ID
@@ -151,6 +149,7 @@ const MedicalRecordModal = ({
               onChange={handleChange}
               required
               placeholder="환자가 호소하는 증상을 입력하세요"
+              style={{ boxSizing: "border-box" }}
             ></textarea>
           </div>
 
@@ -194,6 +193,7 @@ const MedicalRecordModal = ({
               value={formData.medication}
               onChange={handleChange}
               placeholder="처방한 약물을 입력하세요"
+              style={{ boxSizing: "border-box" }}
             ></textarea>
           </div>
 
@@ -208,6 +208,7 @@ const MedicalRecordModal = ({
               value={formData.notes}
               onChange={handleChange}
               placeholder="추가 메모 사항이나 특이사항을 입력하세요"
+              style={{ boxSizing: "border-box" }}
             ></textarea>
           </div>
 
@@ -231,17 +232,20 @@ const MedicalRecordModal = ({
             </div>
           </div>
 
-          <div className="form-actions">
-            <button
-              type="button"
-              className="form-button form-button-cancel"
-              onClick={onClose}
-            >
-              취소
-            </button>
-            <button type="submit" className="form-button form-button-save">
-              저장
-            </button>
+          <div className="medical-record-modal-footer">
+            <div className="action-buttons">
+              <button
+                type="button"
+                className="medical-record-modal-cancel-button"
+                onClick={onClose}
+              >
+                취소
+              </button>
+              <button type="submit" className="save-button">
+                <Save size={16} />
+                저장
+              </button>
+            </div>
           </div>
         </form>
       </div>
