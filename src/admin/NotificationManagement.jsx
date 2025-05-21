@@ -15,6 +15,7 @@ import {
   Check,
 } from "lucide-react";
 import "./NotificationManagement.css";
+import NotificationSettingsModal from "./components/NotificationSettingsModal";
 
 const NotificationManagement = () => {
   const [notifications, setNotifications] = useState([]);
@@ -28,6 +29,7 @@ const NotificationManagement = () => {
     read: "all",
     dateRange: "all",
   });
+  const [showSettingsModal, setShowSettingsModal] = useState(false);
 
   // 페이지네이션 설정
   const notificationsPerPage = 10;
@@ -231,6 +233,23 @@ const NotificationManagement = () => {
     setCurrentPage(page);
   };
 
+  const openSettingsModal = () => {
+    setShowSettingsModal(true);
+  };
+
+  const closeSettingsModal = () => {
+    setShowSettingsModal(false);
+  };
+
+  const handleSaveSettings = (newSettings) => {
+    // 실제 앱에서는 API를 통해 설정을 저장
+    console.log("새로운 알림 설정 저장:", newSettings);
+    closeSettingsModal();
+
+    // 성공 메시지 띄우기 - 실제 앱에서는 토스트 메시지 등으로 구현
+    alert("알림 설정이 저장되었습니다.");
+  };
+
   // 날짜 포맷 함수
   const formatDate = (date) => {
     const options = { year: "numeric", month: "2-digit", day: "2-digit" };
@@ -337,7 +356,7 @@ const NotificationManagement = () => {
           )}
           <button
             className="admin-button admin-button-secondary"
-            onClick={() => {}}
+            onClick={openSettingsModal}
           >
             <Settings size={16} />
             알림 설정
@@ -616,6 +635,14 @@ const NotificationManagement = () => {
           </>
         )}
       </div>
+
+      {/* 알림 설정 모달 */}
+      {showSettingsModal && (
+        <NotificationSettingsModal
+          onClose={closeSettingsModal}
+          onSave={handleSaveSettings}
+        />
+      )}
     </div>
   );
 };

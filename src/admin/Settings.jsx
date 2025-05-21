@@ -16,6 +16,7 @@ import {
   Plus,
 } from "lucide-react";
 import "./Settings.css";
+import RoleEditModal from "./components/RoleEditModal";
 
 const Settings = () => {
   const [activeTab, setActiveTab] = useState("general");
@@ -50,10 +51,30 @@ const Settings = () => {
     },
     permissions: {
       adminRoles: [
-        { id: 1, name: "시스템 관리자", level: "full" },
-        { id: 2, name: "병원 관리자", level: "hospital" },
-        { id: 3, name: "의사", level: "doctor" },
-        { id: 4, name: "접수 담당자", level: "receptionist" },
+        {
+          id: 1,
+          name: "시스템 관리자",
+          level: "full",
+          description: "모든 기능에 대한 전체 접근 권한을 가진 관리자",
+        },
+        {
+          id: 2,
+          name: "병원 관리자",
+          level: "hospital",
+          description: "병원 운영에 필요한 대부분의 기능에 접근 가능",
+        },
+        {
+          id: 3,
+          name: "의사",
+          level: "doctor",
+          description: "진료와 환자 관리에 필요한 기능에 접근 가능",
+        },
+        {
+          id: 4,
+          name: "접수 담당자",
+          level: "receptionist",
+          description: "환자 접수 및 예약 관리 기능에 접근 가능",
+        },
       ],
       modules: {
         patientManagement: {
@@ -83,6 +104,11 @@ const Settings = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [saveError, setSaveError] = useState(false);
+
+  // 역할 편집 모달 상태
+  const [showRoleModal, setShowRoleModal] = useState(false);
+  const [selectedRole, setSelectedRole] = useState(null);
+  const [isNewRole, setIsNewRole] = useState(false);
 
   useEffect(() => {
     // 실제 앱에서는 API 호출을 통해 설정 데이터를 가져옴
@@ -141,6 +167,124 @@ const Settings = () => {
         setSaveSuccess(false);
       }, 3000);
     }, 1500);
+  };
+
+  // 역할 편집 모달 열기
+  const openRoleModal = (role = null) => {
+    setSelectedRole(role);
+    setIsNewRole(role === null);
+    setShowRoleModal(true);
+  };
+
+  // 역할 편집 모달 닫기
+  const closeRoleModal = () => {
+    setShowRoleModal(false);
+    setSelectedRole(null);
+  };
+
+  // 권한 정보 업데이트
+  const updateModulePermissions = (roleData) => {
+    const updatedModules = { ...settings.permissions.modules };
+
+    // 해당 역할의 모듈별 권한 설정
+    Object.keys(roleData.permissions).forEach((moduleName) => {
+      if (updatedModules[moduleName]) {
+        // view 권한 처리
+        if (roleData.permissions[moduleName].view) {
+          if (!updatedModules[moduleName].view.includes(roleData.level)) {
+            updatedModules[moduleName].view.push(roleData.level);
+          }
+        } else {
+          updatedModules[moduleName].view = updatedModules[
+            moduleName
+          ].view.filter((level) => level !== roleData.level);
+        }
+
+        // edit 권한 처리
+        if (roleData.permissions[moduleName].edit) {
+          if (!updatedModules[moduleName].edit.includes(roleData.level)) {
+            updatedModules[moduleName].edit.push(roleData.level);
+          }
+        } else {
+          updatedModules[moduleName].edit = updatedModules[
+            moduleName
+          ].edit.filter((level) => level !== roleData.level);
+        }
+      }
+    });
+
+    // 모듈 권한 업데이트
+    setSettings((prevSettings) => ({
+      ...prevSettings,
+      permissions: {
+        ...prevSettings.permissions,
+        modules: updatedModules,
+      },
+    }));
+  };
+
+  // 역할 저장 처리
+  const handleSaveRole = (roleData) => {
+    if (isNewRole) {
+      // 새 역할 추가
+      const newRole = {
+        ...roleData,
+        id: Math.max(...settings.permissions.adminRoles.map((r) => r.id)) + 1,
+      };
+
+      setSettings((prevSettings) => ({
+        ...prevSettings,
+        permissions: {
+          ...prevSettings.permissions,
+          adminRoles: [...prevSettings.permissions.adminRoles, newRole],
+        },
+      }));
+
+      // 모듈별 권한도 업데이트
+      updateModulePermissions(roleData);
+    } else {
+      // 기존 역할 수정
+      setSettings((prevSettings) => ({
+        ...prevSettings,
+        permissions: {
+          ...prevSettings.permissions,
+          adminRoles: prevSettings.permissions.adminRoles.map((role) =>
+            role.id === roleData.id ? roleData : role
+          ),
+        },
+      }));
+
+      // 모듈별 권한도 업데이트
+      updateModulePermissions(roleData);
+    }
+
+    // 모달 닫기 및 성공 메시지 표시
+    closeRoleModal();
+    setSaveSuccess(true);
+    setTimeout(() => {
+      setSaveSuccess(false);
+    }, 3000);
+  };
+
+  // 역할 삭제 처리
+  const handleDeleteRole = (roleId) => {
+    // 해당 역할 삭제
+    setSettings((prevSettings) => ({
+      ...prevSettings,
+      permissions: {
+        ...prevSettings.permissions,
+        adminRoles: prevSettings.permissions.adminRoles.filter(
+          (role) => role.id !== roleId
+        ),
+      },
+    }));
+
+    // 모달 닫기 및 성공 메시지 표시
+    closeRoleModal();
+    setSaveSuccess(true);
+    setTimeout(() => {
+      setSaveSuccess(false);
+    }, 3000);
   };
 
   const renderGeneralSettings = () => (
@@ -596,6 +740,7 @@ const Settings = () => {
             <thead>
               <tr>
                 <th>역할</th>
+                <th>설명</th>
                 <th>권한 수준</th>
                 <th>사용자 수</th>
                 <th>작업</th>
@@ -605,6 +750,7 @@ const Settings = () => {
               {settings.permissions.adminRoles.map((role) => (
                 <tr key={role.id}>
                   <td>{role.name}</td>
+                  <td>{role.description || "-"}</td>
                   <td>
                     <span className={`role-level ${role.level}`}>
                       {role.level === "full" && "전체 관리자"}
@@ -616,9 +762,25 @@ const Settings = () => {
                   <td>{Math.floor(Math.random() * 10) + 1}명</td>
                   <td>
                     <div className="role-actions">
-                      <button className="role-action-button">편집</button>
+                      <button
+                        className="role-action-button"
+                        onClick={() => openRoleModal(role)}
+                      >
+                        편집
+                      </button>
                       {role.level !== "full" && (
-                        <button className="role-action-button delete">
+                        <button
+                          className="role-action-button delete"
+                          onClick={() => {
+                            if (
+                              window.confirm(
+                                "정말로 이 역할을 삭제하시겠습니까?"
+                              )
+                            ) {
+                              handleDeleteRole(role.id);
+                            }
+                          }}
+                        >
                           삭제
                         </button>
                       )}
@@ -630,7 +792,11 @@ const Settings = () => {
           </table>
         </div>
 
-        <button type="button" className="add-role-button">
+        <button
+          type="button"
+          className="add-role-button"
+          onClick={() => openRoleModal()}
+        >
           <Plus size={16} />
           역할 추가
         </button>
@@ -943,6 +1109,17 @@ const Settings = () => {
           </div>
         </div>
       </div>
+
+      {/* 역할 편집 모달 */}
+      {showRoleModal && (
+        <RoleEditModal
+          role={selectedRole}
+          isNew={isNewRole}
+          onClose={closeRoleModal}
+          onSave={handleSaveRole}
+          onDelete={handleDeleteRole}
+        />
+      )}
     </div>
   );
 };

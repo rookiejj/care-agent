@@ -14,6 +14,8 @@ import {
   ArrowLeft,
   ArrowRight,
   Star,
+  Save,
+  ImagePlus,
 } from "lucide-react";
 import "./BeforeAfterModal.css";
 
@@ -26,7 +28,7 @@ const BeforeAfterModal = ({ gallery, onClose, onSave, categories }) => {
     patientAge: "",
     patientGender: "여성",
     description: "",
-    imageCount: 2,
+    imageCount: 0,
     images: [],
     isPublic: true,
     tags: [],
@@ -49,7 +51,7 @@ const BeforeAfterModal = ({ gallery, onClose, onSave, categories }) => {
         patientAge: gallery.patientAge || "",
         patientGender: gallery.patientGender || "여성",
         description: gallery.description || "",
-        imageCount: gallery.imageCount || 2,
+        imageCount: gallery.imageCount || 0,
         images: gallery.images || [],
         isPublic: gallery.isPublic !== undefined ? gallery.isPublic : true,
         tags: gallery.tags || [],
@@ -204,19 +206,27 @@ const BeforeAfterModal = ({ gallery, onClose, onSave, categories }) => {
     }
   };
 
+  // 모달 클릭 이벤트 처리
+  const handleModalContentClick = (e) => {
+    e.stopPropagation(); // 이벤트 전파 중단
+  };
+
   return (
-    <div className="before-after-modal-overlay">
-      <div className="before-after-modal">
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="before-after-modal" onClick={handleModalContentClick}>
         <div className="before-after-modal-header">
           <h2 className="before-after-modal-title">
             {isEditing ? "전후사진 수정" : "새 전후사진 등록"}
           </h2>
-          <button className="before-after-modal-close-button" onClick={onClose}>
+          <button className="modal-close-button" onClick={onClose}>
             <X size={20} />
           </button>
         </div>
 
-        <div className="before-after-modal-content">
+        <div
+          className="before-after-modal-content"
+          style={{ overflowY: "auto" }}
+        >
           <div className="before-after-modal-image-panel">
             <div className="image-preview-container">
               {formData.images.length > 0 ? (
@@ -257,8 +267,11 @@ const BeforeAfterModal = ({ gallery, onClose, onSave, categories }) => {
                 </>
               ) : (
                 <div className="no-images">
-                  <FileImage size={64} />
-                  <p>업로드된 이미지가 없습니다</p>
+                  <ImagePlus size={64} color="#9ca3af" />
+                  <p>이미지를 업로드해주세요</p>
+                  <p className="no-images-hint">
+                    전/후 사진을 모두 업로드하세요
+                  </p>
                 </div>
               )}
             </div>
@@ -487,6 +500,7 @@ const BeforeAfterModal = ({ gallery, onClose, onSave, categories }) => {
                 className="form-textarea"
                 rows="3"
                 placeholder="시술에 대한 설명을 입력하세요"
+                style={{ boxSizing: "border-box" }}
               ></textarea>
             </div>
 
@@ -540,17 +554,23 @@ const BeforeAfterModal = ({ gallery, onClose, onSave, categories }) => {
               </label>
             </div>
 
-            <div className="form-actions">
-              <button
-                type="button"
-                className="form-button secondary"
-                onClick={onClose}
-              >
-                취소
-              </button>
-              <button type="submit" className="form-button primary">
-                {isEditing ? "수정 완료" : "등록 완료"}
-              </button>
+            <div
+              className="before-after-modal-footer"
+              style={{ marginTop: "1rem" }}
+            >
+              <div className="action-buttons">
+                <button
+                  type="button"
+                  className="before-after-modal-cancel-button"
+                  onClick={onClose}
+                >
+                  취소
+                </button>
+                <button type="submit" className="save-button">
+                  <Save size={16} />
+                  {isEditing ? "수정 완료" : "등록 완료"}
+                </button>
+              </div>
             </div>
           </form>
         </div>

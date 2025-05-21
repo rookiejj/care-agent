@@ -135,11 +135,11 @@
 }
 
 .patient-modal-footer {
+  padding: 1.25rem 0;
   display: flex;
   justify-content: space-between;
-  padding: 1.5rem;
+  gap: 0.75rem;
   border-top: 1px solid #e5e7eb;
-  background-color: #f9fafb;
 }
 
 .action-buttons {
@@ -196,18 +196,8 @@
 
 /* 반응형 조정 */
 @media (max-width: 640px) {
-  .patient-modal {
-    max-height: 100vh;
-    border-radius: 0;
-  }
-
   .form-row {
     flex-direction: column;
-  }
-
-  .patient-modal-footer {
-    flex-direction: column-reverse;
-    gap: 1rem;
   }
 
   .action-buttons {

@@ -186,7 +186,8 @@ const BeforeAfterManagement = () => {
           images: Array.from({ length: imageCount }, (_, i) => ({
             id: i + 1,
             type: i === 0 ? "before" : i === 1 ? "after" : "detail",
-            url: `/images/gallery/${i + 1}.jpg`, // 실제로는 이 경로에 이미지가 없음
+            // url: `/images/gallery/${i + 1}.jpg`, // 실제로는 이 경로에 이미지가 없음
+            url: `/images/beforeafter.jpg`, // 실제로는 이 경로에 이미지가 없음
           })),
           isPublic: isPublic,
           createdAt: createdDate,
@@ -550,7 +551,8 @@ const BeforeAfterManagement = () => {
               >
                 <div className="before-after-card-image">
                   <div className="image-placeholder">
-                    <FileImage size={32} />
+                    {/* <FileImage size={32} /> */}
+                    <img src={gallery.images[0]?.url} />
                   </div>
                   <div className="image-count">
                     <Camera size={14} />

@@ -15,6 +15,7 @@ import {
   AlertTriangle,
   Camera,
   Plus,
+  Save,
 } from "lucide-react";
 import "./ConsultationModal.css";
 
@@ -219,13 +220,13 @@ const ConsultationModal = ({ consultation, onClose, onSave }) => {
   const statusInfo = getStatusInfo(formData.status);
 
   return (
-    <div className="consultation-modal-overlay">
+    <div className="modal-overlay" onClick={onClose}>
       <div className="consultation-modal">
         <div className="consultation-modal-header">
           <h2 className="consultation-modal-title">
             {isEditing ? "상담 정보 수정" : "새 상담 등록"}
           </h2>
-          <button className="consultation-modal-close-button" onClick={onClose}>
+          <button className="modal-close-button" onClick={onClose}>
             <X size={20} />
           </button>
         </div>
@@ -574,17 +575,23 @@ const ConsultationModal = ({ consultation, onClose, onSave }) => {
             </div>
           </div>
 
-          <div className="consultation-modal-footer">
-            <button
-              type="button"
-              className="consultation-modal-button secondary"
-              onClick={onClose}
-            >
-              취소
-            </button>
-            <button type="submit" className="consultation-modal-button primary">
-              {isEditing ? "수정 완료" : "등록 완료"}
-            </button>
+          <div
+            className="consultation-modal-footer"
+            style={{ marginTop: "1rem" }}
+          >
+            <div className="action-buttons">
+              <button
+                type="button"
+                className="consultation-modal-cancel-button"
+                onClick={onClose}
+              >
+                취소
+              </button>
+              <button type="submit" className="save-button">
+                <Save size={16} />
+                {isEditing ? "수정 완료" : "등록 완료"}
+              </button>
+            </div>
           </div>
         </form>
       </div>

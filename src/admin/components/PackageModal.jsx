@@ -12,6 +12,7 @@ import {
   Calendar,
   Star,
   ShoppingBag,
+  Save,
 } from "lucide-react";
 import "./PackageModal.css";
 
@@ -288,13 +289,13 @@ const PackageModal = ({
   };
 
   return (
-    <div className="package-modal-overlay">
+    <div className="modal-overlay" onClick={onClose}>
       <div className="package-modal">
         <div className="package-modal-header">
           <h2 className="package-modal-title">
             {isEditing ? "패키지 정보 수정" : "새 패키지 생성"}
           </h2>
-          <button className="package-modal-close-button" onClick={onClose}>
+          <button className="modal-close-button" onClick={onClose}>
             <X size={20} />
           </button>
         </div>
@@ -571,6 +572,7 @@ const PackageModal = ({
                     errors.description ? "error" : ""
                   }`}
                   placeholder="패키지에 대한 설명을 입력하세요"
+                  style={{ boxSizing: "border-box" }}
                 ></textarea>
                 {errors.description && (
                   <div className="error-message">{errors.description}</div>
@@ -645,17 +647,20 @@ const PackageModal = ({
             </div>
           </div>
 
-          <div className="package-modal-footer">
-            <button
-              type="button"
-              className="package-modal-button secondary"
-              onClick={onClose}
-            >
-              취소
-            </button>
-            <button type="submit" className="package-modal-button primary">
-              {isEditing ? "수정 완료" : "등록 완료"}
-            </button>
+          <div className="package-modal-footer" style={{ marginTop: "1rem" }}>
+            <div className="action-buttons">
+              <button
+                type="button"
+                className="package-modal-cancel-button"
+                onClick={onClose}
+              >
+                취소
+              </button>
+              <button type="submit" className="save-button">
+                <Save size={16} />
+                {isEditing ? "수정 완료" : "등록 완료"}
+              </button>
+            </div>
           </div>
         </form>
       </div>

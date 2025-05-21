@@ -295,7 +295,37 @@
   align-items: center;
   justify-content: center;
   color: #9ca3af;
+  background-color: rgb(229, 229, 245);
+}
+
+/* 카드 내 이미지 컨테이너 높이 고정 */
+.before-after-card-image {
+  position: relative;
+  height: 100px; /* 고정 높이 설정 */
   background-color: #f3f4f6;
+  overflow: hidden; /* 넘치는 콘텐츠 숨김 */
+}
+
+/* 이미지 플레이스홀더가 컨테이너 전체를 채우도록 설정 */
+.image-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+  background-color: rgb(229, 229, 245);
+}
+
+/* 플레이스홀더 내 이미지 크기 제한 */
+.image-placeholder img {
+  position: absolute;
+  width: 100%;
+  /* height: 100%; */
+  object-fit: cover;
 }
 
 .image-count {
