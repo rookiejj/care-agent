@@ -48,6 +48,7 @@ const MyPage = ({ currentLocation, notificationCount }) => {
     "/notification-settings",
     "/profile-edit",
     "/admin",
+    "/super-admin",
   ];
 
   const handleMenuClick = (path) => {
@@ -152,6 +153,12 @@ const MyPage = ({ currentLocation, notificationCount }) => {
       id: "admin",
       icon: <KeyRound size={20} />,
       label: "관리자 페이지",
+      color: "#f59e0b",
+    },
+    {
+      id: "super-admin",
+      icon: <KeyRound size={20} />,
+      label: "슈퍼관리자 페이지",
       color: "#f59e0b",
     },
   ];

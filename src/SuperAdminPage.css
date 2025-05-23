@@ -1,0 +1,464 @@
+/* SuperAdminPage.css */
+.super-admin-page {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #f3f4f6;
+  z-index: 999;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+/* 슈퍼 관리자 페이지에서는 모바일 제약을 받지 않도록 수정 */
+body:has(.super-admin-page) #root {
+  max-width: none;
+}
+
+/* 만약 :has 선택자를 지원하지 않는 브라우저를 위한 대안 */
+.super-admin-page #root {
+  max-width: none;
+}
+
+.super-admin-main-content {
+  flex: 1;
+  transition: margin-left 0.3s ease;
+  overflow-x: hidden;
+}
+
+.super-admin-main-content.expanded {
+  margin-left: 0;
+}
+
+.super-admin-content-container {
+  padding: 0 1.5rem;
+  height: calc(100vh - 70px); /* 헤더 높이 빼고 */
+  overflow-y: auto;
+}
+
+.super-admin-loading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  background-color: #f3f4f6;
+}
+
+.super-admin-loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #e5e7eb;
+  border-radius: 50%;
+  border-top-color: #3b82f6;
+  animation: super-admin-spinner 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes super-admin-spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 슈퍼 관리자 페이지 전용 공통 스타일 */
+.super-admin-card {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.super-admin-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+}
+
+.super-admin-card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.super-admin-card-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.super-admin-section-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 1.5rem;
+}
+
+.super-admin-section-description {
+  color: #6b7280;
+  margin-bottom: 2rem;
+}
+
+.super-admin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.super-admin-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.875rem;
+}
+
+.super-admin-button-primary {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+}
+
+.super-admin-button-primary:hover {
+  background-color: #2563eb;
+}
+
+.super-admin-button-secondary {
+  background-color: white;
+  color: #4b5563;
+  border: 1px solid #d1d5db;
+}
+
+.super-admin-button-secondary:hover {
+  background-color: #f9fafb;
+}
+
+.super-admin-button-danger {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+}
+
+.super-admin-button-danger:hover {
+  background-color: #dc2626;
+}
+
+/* 테이블 스타일 */
+.super-admin-table-container {
+  overflow-x: auto;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.super-admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  background-color: white;
+}
+
+.super-admin-table th {
+  background-color: #f9fafb;
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #374151;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.super-admin-table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+  color: #4b5563;
+}
+
+.super-admin-table tr:last-child td {
+  border-bottom: none;
+}
+
+.super-admin-table tr:hover {
+  background-color: #f9fafb;
+}
+
+/* 상태 배지 스타일 */
+.super-admin-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.625rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.super-admin-badge-success {
+  background-color: #ecfdf5;
+  color: #059669;
+}
+
+.super-admin-badge-warning {
+  background-color: #fffbeb;
+  color: #d97706;
+}
+
+.super-admin-badge-danger {
+  background-color: #fef2f2;
+  color: #dc2626;
+}
+
+.super-admin-badge-info {
+  background-color: #eff6ff;
+  color: #3b82f6;
+}
+
+/* 폼 요소 스타일 */
+.super-admin-form-group {
+  margin-bottom: 1.5rem;
+}
+
+.super-admin-form-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.super-admin-form-input {
+  width: 100%;
+  padding: 0.625rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  transition: border-color 0.2s;
+}
+
+.super-admin-form-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+}
+
+.super-admin-form-help {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+}
+
+/* 페이지네이션 스타일 */
+.super-admin-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+
+.super-admin-pagination-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid #d1d5db;
+  background-color: white;
+  color: #4b5563;
+  border-radius: 0.375rem;
+  margin: 0 0.25rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  padding: 0;
+}
+
+.super-admin-pagination-button:hover {
+  background-color: #f9fafb;
+}
+
+.super-admin-pagination-button.active {
+  background-color: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+}
+
+.super-admin-pagination-button.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* 필터 섹션 스타일 */
+.super-admin-filters {
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem; /* 필터 그룹 사이의 간격 */
+}
+
+/* 필터 그룹 스타일 */
+.super-admin-filter-group {
+  /* flex: 1; */
+  min-width: 200px;
+  margin-bottom: 1rem;
+}
+
+.super-admin-filter-group:last-child {
+  margin-bottom: 0;
+}
+
+/* 필터 레이블 스타일 */
+.super-admin-filter-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+/* 필터 옵션 컨테이너 스타일 */
+.super-admin-filter-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* 필터 옵션 버튼 스타일 */
+.super-admin-filter-option {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  background-color: white;
+  font-size: 0.75rem;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.super-admin-filter-option:hover {
+  border-color: #d1d5db;
+  background-color: #f9fafb;
+}
+
+.super-admin-filter-option.active {
+  border-color: #3b82f6;
+  background-color: #eff6ff;
+  color: #3b82f6;
+  font-weight: 500;
+  box-shadow: 0 1px 2px rgba(59, 130, 246, 0.1);
+}
+
+/* 필터 액션 버튼 컨테이너 */
+.super-admin-filter-actions {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1rem;
+}
+
+.super-admin-filter-actions button {
+  max-width: 120px;
+  transition: all 0.2s ease;
+}
+
+.super-admin-filter-actions button:hover {
+  background-color: #f9fafb;
+  border-color: #3b82f6;
+  color: #3b82f6;
+}
+
+/* 대시보드 카드 스타일 */
+.super-admin-metric-card {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.super-admin-metric-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 0.5rem;
+  flex-shrink: 0;
+}
+
+.super-admin-metric-icon.blue {
+  background-color: #eff6ff;
+  color: #3b82f6;
+}
+
+.super-admin-metric-icon.green {
+  background-color: #ecfdf5;
+  color: #10b981;
+}
+
+.super-admin-metric-icon.amber {
+  background-color: #fffbeb;
+  color: #f59e0b;
+}
+
+.super-admin-metric-icon.purple {
+  background-color: #f5f3ff;
+  color: #8b5cf6;
+}
+
+.super-admin-metric-info {
+  flex: 1;
+}
+
+.super-admin-metric-label {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin: 0 0 0.25rem 0;
+}
+
+.super-admin-metric-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.super-admin-metric-trend {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  margin-top: 0.375rem;
+}
+
+.super-admin-metric-trend.up {
+  color: #10b981;
+}
+
+.super-admin-metric-trend.down {
+  color: #ef4444;
+}
+
+/* 반응형 조정 */
+@media (max-width: 768px) {
+  .super-admin-filter-group {
+    min-width: 100%;
+  }
+}

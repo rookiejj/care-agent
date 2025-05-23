@@ -1,0 +1,368 @@
+.super-admin-header {
+  height: 70px;
+  background-color: white;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.super-admin-header-left {
+  display: flex;
+  align-items: center;
+}
+
+.super-admin-header-menu-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #6b7280;
+  width: 40px;
+  height: 40px;
+  border-radius: 0.375rem;
+  transition: all 0.2s;
+  padding: 0;
+}
+
+.super-admin-header-menu-button:hover {
+  background-color: #f9fafb;
+  color: #111827;
+}
+
+.super-admin-header-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-left: 1rem;
+  color: #111827;
+}
+
+.super-admin-header-search {
+  flex: 1;
+  max-width: 600px;
+  margin: 0 2rem;
+}
+
+.super-admin-search-container {
+  position: relative;
+  width: 100%;
+}
+
+.super-admin-search-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+}
+
+.super-admin-search-input {
+  width: 100%;
+  padding: 0.625rem 0.75rem 0.625rem 2.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  background-color: #f9fafb;
+  transition: all 0.2s;
+  color: #111827;
+}
+
+.super-admin-search-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  background-color: white;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+}
+
+.super-admin-header-right {
+  display: flex;
+  align-items: center;
+}
+
+.super-admin-header-item {
+  margin-left: 1rem;
+  position: relative;
+}
+
+.super-admin-notification-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: #6b7280;
+  width: 40px;
+  height: 40px;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s;
+  padding: 0;
+}
+
+.super-admin-notification-button:hover {
+  background-color: #f9fafb;
+  color: #111827;
+}
+
+.super-admin-notification-badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 9999px;
+  background-color: #ef4444;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.super-admin-notification-dropdown {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  width: 320px;
+  max-height: 400px;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  z-index: 20;
+}
+
+.super-admin-notification-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.super-admin-notification-header h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+  color: #111827;
+}
+
+.super-admin-notification-read-all {
+  background: none;
+  border: none;
+  color: #3b82f6;
+  font-size: 0.875rem;
+  cursor: pointer;
+  padding: 0;
+}
+
+.super-admin-notification-list {
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.super-admin-notification-item {
+  padding: 1rem;
+  border-bottom: 1px solid #f3f4f6;
+  transition: all 0.2s;
+}
+
+.super-admin-notification-item:hover {
+  background-color: #f9fafb;
+}
+
+.super-admin-notification-item.unread {
+  background-color: #eff6ff;
+}
+
+.super-admin-notification-item.unread:hover {
+  background-color: #dbeafe;
+}
+
+.super-admin-notification-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.super-admin-notification-message {
+  font-size: 0.875rem;
+  margin: 0 0 0.25rem 0;
+  color: #4b5563;
+}
+
+.super-admin-notification-time {
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+.super-admin-notification-empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+
+.super-admin-notification-empty p {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.super-admin-user-menu-button {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  padding: 0.375rem;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.super-admin-user-menu-button:hover {
+  background-color: #f9fafb;
+}
+
+.super-admin-user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 0.75rem;
+}
+
+.super-admin-user-info {
+  text-align: left;
+  margin-right: 0.5rem;
+}
+
+.super-admin-user-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #111827;
+}
+
+.super-admin-user-dropdown {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  width: 260px;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  z-index: 20;
+}
+
+.super-admin-user-dropdown-header {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.super-admin-user-dropdown-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 0.75rem;
+}
+
+.super-admin-user-dropdown-name {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  margin: 0 0 0.125rem 0;
+  color: #111827;
+}
+
+.super-admin-user-dropdown-email {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.super-admin-user-dropdown-menu {
+  padding: 0.5rem 0;
+}
+
+.super-admin-user-dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 0.625rem 1rem;
+  color: #4b5563;
+  font-size: 0.875rem;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.super-admin-user-dropdown-item svg {
+  margin-right: 0.75rem;
+  color: #6b7280;
+}
+
+.super-admin-user-dropdown-item:hover {
+  background-color: #f9fafb;
+  color: #111827;
+}
+
+.super-admin-user-dropdown-footer {
+  padding: 0.5rem 0;
+  border-top: 1px solid #e5e7eb;
+}
+
+.super-admin-user-dropdown-footer .super-admin-user-dropdown-item {
+  color: #ef4444;
+}
+
+.super-admin-user-dropdown-footer .super-admin-user-dropdown-item svg {
+  color: #ef4444;
+}
+
+.super-admin-service-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: #6b7280;
+  height: 40px;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  padding: 0 12px;
+  gap: 8px;
+}
+
+.super-admin-service-button:hover {
+  background-color: #f9fafb;
+  color: #111827;
+}
+
+.super-admin-service-button span {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* 작은 화면에서는 텍스트 숨기기 */
+@media (max-width: 768px) {
+  .super-admin-service-button span {
+    display: none;
+  }
+
+  .super-admin-service-button {
+    width: 40px;
+    padding: 0;
+  }
+}

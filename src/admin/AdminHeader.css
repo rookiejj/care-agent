@@ -330,7 +330,7 @@
   color: #ef4444;
 }
 
-.admin-home-button {
+.admin-service-button {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -345,23 +345,22 @@
   gap: 8px;
 }
 
-.admin-home-button:hover {
+.admin-service-button:hover {
   background-color: #f9fafb;
   color: #111827;
 }
 
-.admin-home-button span {
+.admin-service-button span {
   font-size: 0.875rem;
   font-weight: 500;
 }
-
 /* 작은 화면에서는 텍스트 숨기기 */
 @media (max-width: 768px) {
-  .admin-home-button span {
+  .admin-service-button span {
     display: none;
   }
 
-  .admin-home-button {
+  .admin-service-button {
     width: 40px;
     padding: 0;
   }

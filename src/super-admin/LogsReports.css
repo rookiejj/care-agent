@@ -1,0 +1,710 @@
+/* LogsReports.css */
+.logs-reports {
+  padding-bottom: 2rem;
+}
+
+.logs-reports-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.logs-search-filter-container {
+  display: flex;
+  gap: 0.75rem;
+  flex: 1;
+  min-width: 300px;
+}
+
+.logs-admin-search-bar {
+  position: relative;
+  flex: 1;
+  max-width: 500px;
+}
+
+.logs-admin-search-input {
+  width: 100%;
+  padding: 0.625rem 0.75rem 0.625rem 2.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  background-color: #f9fafb;
+  transition: all 0.2s;
+  box-sizing: border-box;
+  color: #111827;
+}
+
+.logs-admin-search-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+}
+
+.logs-search-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+}
+
+.logs-action-buttons {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.logs-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.logs-list-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.logs-count {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.count-highlight {
+  font-weight: 600;
+  color: #3b82f6;
+}
+
+/* 보고서 섹션 */
+.reports-section {
+  margin-bottom: 3rem;
+}
+
+.reports-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.report-card {
+  background-color: white;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+
+.report-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-color: #d1d5db;
+}
+
+.report-card-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.report-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 0.5rem;
+  flex-shrink: 0;
+}
+
+.report-card-icon.blue {
+  background-color: #eff6ff;
+  color: #3b82f6;
+}
+
+.report-card-icon.green {
+  background-color: #ecfdf5;
+  color: #10b981;
+}
+
+.report-card-icon.amber {
+  background-color: #fffbeb;
+  color: #f59e0b;
+}
+
+.report-card-icon.purple {
+  background-color: #f5f3ff;
+  color: #8b5cf6;
+}
+
+.report-card-icon.red {
+  background-color: #fef2f2;
+  color: #ef4444;
+}
+
+.report-card-info {
+  flex: 1;
+}
+
+.report-card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 0.25rem 0;
+}
+
+.report-card-description {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.report-card-content {
+  padding: 1.5rem;
+}
+
+.report-card-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.report-stat {
+  text-align: center;
+}
+
+.report-stat-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 0.25rem 0;
+}
+
+.report-stat-label {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.report-card-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.report-action-button {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.5rem 0.75rem;
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  color: #4b5563;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex: 1;
+  justify-content: center;
+}
+
+.report-action-button:hover {
+  background-color: #f3f4f6;
+  border-color: #d1d5db;
+}
+
+.report-action-button.primary {
+  background-color: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+}
+
+.report-action-button.primary:hover {
+  background-color: #2563eb;
+}
+
+.report-status-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.report-status-badge.ready {
+  background-color: #ecfdf5;
+  color: #10b981;
+}
+
+.report-status-badge.generating {
+  background-color: #fffbeb;
+  color: #f59e0b;
+}
+
+.report-status-badge.scheduled {
+  background-color: #eff6ff;
+  color: #3b82f6;
+}
+
+/* 로그 레벨 배지 */
+.log-level-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  gap: 0.25rem;
+}
+
+.log-level-badge.info {
+  background-color: #eff6ff;
+  color: #3b82f6;
+}
+
+.log-level-badge.warning {
+  background-color: #fffbeb;
+  color: #f59e0b;
+}
+
+.log-level-badge.error {
+  background-color: #fef2f2;
+  color: #ef4444;
+}
+
+.log-level-badge.success {
+  background-color: #ecfdf5;
+  color: #10b981;
+}
+
+.log-level-badge.debug {
+  background-color: #f3f4f6;
+  color: #6b7280;
+}
+
+/* 로그 카테고리 배지 */
+.log-category-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.log-category-badge.system {
+  background-color: #f5f3ff;
+  color: #8b5cf6;
+}
+
+.log-category-badge.user {
+  background-color: #ecfdf5;
+  color: #10b981;
+}
+
+.log-category-badge.payment {
+  background-color: #fffbeb;
+  color: #f59e0b;
+}
+
+.log-category-badge.security {
+  background-color: #fef2f2;
+  color: #ef4444;
+}
+
+.log-category-badge.api {
+  background-color: #f0fdfa;
+  color: #0d9488;
+}
+
+/* 로그 엔트리 */
+.log-entry {
+  display: flex;
+  align-items: flex-start;
+  padding: 1rem;
+  border-bottom: 1px solid #f3f4f6;
+  transition: all 0.2s;
+}
+
+.log-entry:hover {
+  background-color: #f9fafb;
+}
+
+.log-entry:last-child {
+  border-bottom: none;
+}
+
+.log-entry-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-right: 1rem;
+  flex-shrink: 0;
+}
+
+.log-entry-icon.info {
+  background-color: #eff6ff;
+  color: #3b82f6;
+}
+
+.log-entry-icon.warning {
+  background-color: #fffbeb;
+  color: #f59e0b;
+}
+
+.log-entry-icon.error {
+  background-color: #fef2f2;
+  color: #ef4444;
+}
+
+.log-entry-icon.success {
+  background-color: #ecfdf5;
+  color: #10b981;
+}
+
+.log-entry-icon.debug {
+  background-color: #f3f4f6;
+  color: #6b7280;
+}
+
+.log-entry-content {
+  flex: 1;
+}
+
+.log-entry-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.log-entry-time {
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+.log-entry-message {
+  font-size: 0.875rem;
+  color: #111827;
+  margin: 0 0 0.5rem 0;
+  line-height: 1.5;
+}
+
+.log-entry-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.log-entry-detail {
+  font-size: 0.75rem;
+  color: #6b7280;
+  background-color: #f9fafb;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.log-entry-user {
+  font-size: 0.75rem;
+  color: #4b5563;
+  font-weight: 500;
+}
+
+.log-entry-ip {
+  font-size: 0.75rem;
+  color: #6b7280;
+  font-family: monospace;
+}
+
+/* 로그 상세 정보 */
+.log-detail-modal {
+  width: 100%;
+  max-width: 800px;
+  max-height: 90vh;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.log-detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.log-detail-header h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.log-detail-content {
+  padding: 1.5rem;
+  overflow-y: auto;
+  max-height: calc(90vh - 60px);
+}
+
+.log-detail-section {
+  margin-bottom: 1.5rem;
+}
+
+.log-detail-section:last-child {
+  margin-bottom: 0;
+}
+
+.log-detail-section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 0.75rem 0;
+}
+
+.log-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.log-detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.log-detail-label {
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.log-detail-value {
+  font-size: 0.9375rem;
+  color: #111827;
+  font-weight: 500;
+  word-break: break-word;
+}
+
+.log-detail-code {
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  padding: 1rem;
+  font-family: monospace;
+  font-size: 0.875rem;
+  color: #374151;
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+
+.log-detail-json {
+  background-color: #1f2937;
+  color: #f9fafb;
+  border-radius: 0.375rem;
+  padding: 1rem;
+  font-family: monospace;
+  font-size: 0.875rem;
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+
+/* 시스템 상태 카드 */
+.system-status-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.system-status-card {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.system-status-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 0.5rem;
+  flex-shrink: 0;
+}
+
+.system-status-icon.healthy {
+  background-color: #ecfdf5;
+  color: #10b981;
+}
+
+.system-status-icon.warning {
+  background-color: #fffbeb;
+  color: #f59e0b;
+}
+
+.system-status-icon.critical {
+  background-color: #fef2f2;
+  color: #ef4444;
+}
+
+.system-status-info {
+  flex: 1;
+}
+
+.system-status-label {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin: 0 0 0.25rem 0;
+}
+
+.system-status-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.system-status-detail {
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+}
+
+/* 빈 상태 */
+.super-admin-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.super-admin-empty-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: #f3f4f6;
+  color: #6b7280;
+  margin-bottom: 1.5rem;
+}
+
+.super-admin-empty-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 0.5rem 0;
+}
+
+.super-admin-empty-description {
+  color: #6b7280;
+  max-width: 400px;
+}
+
+/* 페이지네이션 */
+.pagination-ellipsis {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2rem;
+  margin: 0 0.25rem;
+  color: #6b7280;
+}
+
+/* 반응형 조정 */
+@media (max-width: 1024px) {
+  .reports-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+
+  .system-status-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  .log-detail-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .logs-reports-actions {
+    flex-direction: column;
+  }
+
+  .logs-search-filter-container {
+    width: 100%;
+  }
+
+  .logs-action-buttons {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .reports-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .system-status-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .log-entry {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .log-entry-icon {
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
+
+  .log-entry-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .report-card-stats {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .report-card-actions {
+    flex-direction: column;
+  }
+}

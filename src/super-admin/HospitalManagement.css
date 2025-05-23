@@ -1,0 +1,742 @@
+.hospital-management {
+  padding-bottom: 2rem;
+}
+
+.hospital-management-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.hospital-search-filter-container {
+  display: flex;
+  gap: 0.75rem;
+  flex: 1;
+  min-width: 300px;
+}
+
+.hospital-admin-search-bar {
+  position: relative;
+  flex: 1;
+  max-width: 500px;
+}
+
+.hospital-admin-search-input {
+  width: 100%;
+  padding: 0.625rem 0.75rem 0.625rem 2.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  background-color: #f9fafb;
+  transition: all 0.2s;
+  box-sizing: border-box;
+  color: #111827;
+}
+
+.hospital-admin-search-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+}
+
+.hospital-search-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+}
+
+.hospital-action-buttons {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.hospital-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.hospital-list-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.hospital-count {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.count-highlight {
+  font-weight: 600;
+  color: #3b82f6;
+}
+
+.hospital-management-hospital-name {
+  font-weight: 500;
+  color: #111827;
+}
+
+.hospital-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.category-tag {
+  padding: 0.25rem 0.5rem;
+  background-color: #f3f4f6;
+  color: #4b5563;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+.hospital-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.hospital-phone,
+.hospital-email {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.875rem;
+  color: #4b5563;
+}
+
+.hospital-phone svg,
+.hospital-email svg {
+  color: #6b7280;
+}
+
+.super-admin-status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  gap: 0.25rem;
+}
+
+.super-admin-status-badge.active {
+  background-color: #ecfdf5;
+  color: #10b981;
+}
+
+.super-admin-status-badge.pending {
+  background-color: #fffbeb;
+  color: #f59e0b;
+}
+
+.super-admin-status-badge.suspended {
+  background-color: #eff6ff;
+  color: #3b82f6;
+}
+
+.super-admin-status-badge.inactive {
+  background-color: #f3f4f6;
+  color: #6b7280;
+}
+
+.hospital-actions {
+  display: flex;
+  gap: 0.25rem;
+  justify-content: center;
+}
+
+.action-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.375rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  padding: 0;
+}
+
+.action-button.view {
+  color: #3b82f6;
+}
+
+.action-button.view:hover {
+  background-color: #eff6ff;
+}
+
+.action-button.edit {
+  color: #6b7280;
+}
+
+.action-button.edit:hover {
+  background-color: #f3f4f6;
+}
+
+.action-button.delete {
+  color: #ef4444;
+}
+
+.action-button.delete:hover {
+  background-color: #fef2f2;
+}
+
+.super-admin-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.super-admin-empty-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: #f3f4f6;
+  color: #6b7280;
+  margin-bottom: 1.5rem;
+}
+
+.super-admin-empty-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 0.5rem 0;
+}
+
+.super-admin-empty-description {
+  color: #6b7280;
+  max-width: 400px;
+}
+
+.pagination-ellipsis {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2rem;
+  margin: 0 0.25rem;
+  color: #6b7280;
+}
+
+/* 병원 상세 페이지 스타일 */
+.hospital-detail-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.hospital-detail-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.back-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.5rem;
+  background-color: #f3f4f6;
+  border: none;
+  cursor: pointer;
+  color: #4b5563;
+  transition: all 0.2s;
+}
+
+.back-button:hover {
+  background-color: #e5e7eb;
+  color: #111827;
+}
+
+.hospital-detail-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+  flex: 1;
+}
+
+.hospital-detail-content {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.hospital-detail-main {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.hospital-detail-sidebar {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.hospital-detail-card {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.hospital-detail-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.hospital-detail-card-header h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.edit-button,
+.add-button,
+.view-all-button {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  color: #4b5563;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.edit-button:hover,
+.add-button:hover,
+.view-all-button:hover {
+  background-color: #f3f4f6;
+  border-color: #d1d5db;
+}
+
+.hospital-detail-card-content {
+  padding: 1.5rem;
+}
+
+.hospital-detail-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.25rem;
+}
+
+.hospital-detail-info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.hospital-detail-info-label {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+.hospital-detail-info-value {
+  font-size: 0.9375rem;
+  color: #111827;
+}
+
+.hospital-detail-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.hospital-detail-category-tag {
+  display: inline-flex;
+  padding: 0.25rem 0.5rem;
+  background-color: #eff6ff;
+  color: #3b82f6;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+}
+
+.hospital-detail-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.hospital-detail-stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background-color: #f9fafb;
+  border-radius: 0.5rem;
+  text-align: center;
+}
+
+.hospital-detail-stat-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 0.25rem;
+}
+
+.hospital-detail-stat-label {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.hospital-detail-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.star-icon {
+  color: #f59e0b;
+}
+
+.admin-role-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.admin-role-badge.owner {
+  background-color: #eff6ff;
+  color: #3b82f6;
+}
+
+.admin-role-badge.manager {
+  background-color: #f0fdf4;
+  color: #10b981;
+}
+
+.admin-role-badge.staff {
+  background-color: #f3f4f6;
+  color: #6b7280;
+}
+
+.admin-actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.payment-status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.payment-status-badge.completed {
+  background-color: #ecfdf5;
+  color: #10b981;
+}
+
+.payment-status-badge.pending {
+  background-color: #fffbeb;
+  color: #f59e0b;
+}
+
+.payment-status-badge.failed {
+  background-color: #fef2f2;
+  color: #ef4444;
+}
+
+.account-management-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.account-action-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  color: #4b5563;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 100%;
+}
+
+.account-action-button:hover:not(:disabled) {
+  background-color: #f3f4f6;
+  border-color: #d1d5db;
+}
+
+.account-action-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.account-action-button.active {
+  background-color: #eff6ff;
+  border-color: #bfdbfe;
+  color: #3b82f6;
+}
+
+.account-action-button.danger {
+  color: #ef4444;
+  border-color: #fca5a5;
+}
+
+.account-action-button.danger:hover {
+  background-color: #fef2f2;
+}
+
+.operating-hours-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.operating-hours-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.operating-hours-item:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.operating-hours-day {
+  font-size: 0.875rem;
+  color: #4b5563;
+}
+
+.operating-hours-time {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #111827;
+}
+
+.subscription-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.subscription-plan {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.subscription-plan-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
+}
+
+.subscription-plan-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.subscription-plan-badge.active {
+  background-color: #ecfdf5;
+  color: #10b981;
+}
+
+.subscription-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background-color: #f9fafb;
+  border-radius: 0.375rem;
+}
+
+.subscription-detail-item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.subscription-detail-label {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.subscription-detail-value {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #111827;
+}
+
+.subscription-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.subscription-action-button {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  color: #4b5563;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.subscription-action-button:hover {
+  background-color: #f3f4f6;
+  border-color: #d1d5db;
+}
+
+.documents-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.document-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background-color: #f9fafb;
+  border-radius: 0.375rem;
+  transition: all 0.2s;
+}
+
+.document-item:hover {
+  background-color: #f3f4f6;
+}
+
+.document-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 0.25rem;
+  background-color: #eff6ff;
+  color: #3b82f6;
+}
+
+.document-info {
+  flex: 1;
+}
+
+.document-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #111827;
+  margin-bottom: 0.25rem;
+}
+
+.document-date {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.document-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 0.25rem;
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.document-action:hover {
+  background-color: #f3f4f6;
+  color: #4b5563;
+}
+
+@media (max-width: 1024px) {
+  .hospital-detail-content {
+    flex-direction: column-reverse;
+  }
+
+  .hospital-detail-main,
+  .hospital-detail-sidebar {
+    width: 100%;
+  }
+
+  .hospital-detail-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .hospital-management-actions {
+    flex-direction: column;
+  }
+
+  .hospital-search-filter-container {
+    width: 100%;
+  }
+
+  .hospital-action-buttons {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .hospital-detail-stats-grid {
+    grid-template-columns: 1fr;
+  }
+}

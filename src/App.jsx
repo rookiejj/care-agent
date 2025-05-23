@@ -63,6 +63,7 @@ import FAQPage from "./FAQPage";
 import CustomerService from "./CustomerService";
 import ProfileEdit from "./ProfileEdit";
 import AdminPage from "./AdminPage";
+import SuperAdminPage from "./SuperAdminPage";
 
 const getSuperhumanIcon = () => {
   return `/images/${"super_human_icon.png"}`;
@@ -365,6 +366,7 @@ const App = () => {
         <Routes>
           {/* 관리자 페이지를 별도 라우트로 분리 */}
           <Route path="/admin" element={<AdminPage />} />
+          <Route path="/super-admin" element={<SuperAdminPage />} />
 
           {/* 나머지 모든 앱 라우트는 AppContent로 감싸기 */}
           <Route

@@ -15,6 +15,7 @@ import {
   MessageSquare,
   Package,
   FilePlus,
+  LayoutGrid,
 } from "lucide-react";
 import { getProfileImage } from "../App";
 import "./AdminHeader.css";
@@ -55,7 +56,7 @@ const AdminHeader = ({
   ]);
   const [showNotifications, setShowNotifications] = useState(false);
 
-  const handleBackToMain = () => {
+  const handleServiceClick = () => {
     navigate("/");
   };
 
@@ -156,12 +157,12 @@ const AdminHeader = ({
       <div className="admin-header-right">
         <div className="admin-header-item">
           <button
-            className="admin-home-button"
-            onClick={handleBackToMain}
-            title="메인 페이지로 이동"
+            className="admin-service-button"
+            onClick={handleServiceClick}
+            title="서비스 페이지로 이동"
           >
-            <Home size={20} />
-            <span>홈으로</span>
+            <LayoutGrid size={20} />
+            <span>서비스</span>
           </button>
         </div>
 

@@ -1,0 +1,855 @@
+/* PaymentManagement.css */
+.payment-management {
+  padding-bottom: 2rem;
+}
+
+.payment-management-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.payment-search-filter-container {
+  display: flex;
+  gap: 0.75rem;
+  flex: 1;
+  min-width: 300px;
+}
+
+.payment-admin-search-bar {
+  position: relative;
+  flex: 1;
+  max-width: 500px;
+}
+
+.payment-admin-search-input {
+  width: 100%;
+  padding: 0.625rem 0.75rem 0.625rem 2.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  background-color: #f9fafb;
+  transition: all 0.2s;
+  box-sizing: border-box;
+  color: #111827;
+}
+
+.payment-admin-search-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.25);
+}
+
+.payment-search-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+}
+
+.payment-action-buttons {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.payment-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.payment-list-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.payment-count {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.count-highlight {
+  font-weight: 600;
+  color: #3b82f6;
+}
+
+/* 결제 상태 배지 */
+.payment-status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  gap: 0.25rem;
+}
+
+.payment-status-badge.completed {
+  background-color: #ecfdf5;
+  color: #10b981;
+}
+
+.payment-status-badge.pending {
+  background-color: #fffbeb;
+  color: #f59e0b;
+}
+
+.payment-status-badge.failed {
+  background-color: #fef2f2;
+  color: #ef4444;
+}
+
+.payment-status-badge.refunded {
+  background-color: #f0f9ff;
+  color: #0ea5e9;
+}
+
+.payment-status-badge.cancelled {
+  background-color: #f3f4f6;
+  color: #6b7280;
+}
+
+/* 결제 유형 배지 */
+.payment-type-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  gap: 0.25rem;
+}
+
+.payment-type-badge.subscription {
+  background-color: #eff6ff;
+  color: #3b82f6;
+}
+
+.payment-type-badge.commission {
+  background-color: #f0fdf4;
+  color: #16a34a;
+}
+
+.payment-type-badge.fee {
+  background-color: #fef3c7;
+  color: #d97706;
+}
+
+.payment-type-badge.penalty {
+  background-color: #fef2f2;
+  color: #dc2626;
+}
+
+.payment-type-badge.bonus {
+  background-color: #f0fdfa;
+  color: #0d9488;
+}
+
+/* 결제 방법 표시 */
+.payment-method-info {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.875rem;
+  color: #4b5563;
+}
+
+.payment-method-icon {
+  color: #6b7280;
+}
+
+/* 병원 정보 표시 */
+.payment-hospital-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.payment-hospital-name {
+  font-weight: 500;
+  color: #111827;
+  font-size: 0.875rem;
+}
+
+.payment-hospital-type {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+/* 금액 표시 */
+.payment-amount {
+  font-weight: 600;
+  color: #111827;
+}
+
+.payment-amount.positive {
+  color: #059669;
+}
+
+.payment-amount.negative {
+  color: #dc2626;
+}
+
+/* 날짜 표시 */
+.payment-date {
+  font-size: 0.875rem;
+  color: #4b5563;
+}
+
+/* 액션 버튼 */
+.payment-actions {
+  display: flex;
+  gap: 0.25rem;
+  justify-content: center;
+}
+
+.action-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.375rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  padding: 0;
+}
+
+.action-button.view {
+  color: #3b82f6;
+}
+
+.action-button.view:hover {
+  background-color: #eff6ff;
+}
+
+.action-button.download {
+  color: #059669;
+}
+
+.action-button.download:hover {
+  background-color: #ecfdf5;
+}
+
+.action-button.refund {
+  color: #dc2626;
+}
+
+.action-button.refund:hover {
+  background-color: #fef2f2;
+}
+
+/* 통계 카드 */
+.payment-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.payment-stat-card {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.payment-stat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 0.5rem;
+  flex-shrink: 0;
+}
+
+.payment-stat-icon.blue {
+  background-color: #eff6ff;
+  color: #3b82f6;
+}
+
+.payment-stat-icon.green {
+  background-color: #ecfdf5;
+  color: #10b981;
+}
+
+.payment-stat-icon.amber {
+  background-color: #fffbeb;
+  color: #f59e0b;
+}
+
+.payment-stat-icon.red {
+  background-color: #fef2f2;
+  color: #ef4444;
+}
+
+.payment-stat-info {
+  flex: 1;
+}
+
+.payment-stat-label {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin: 0 0 0.25rem 0;
+}
+
+.payment-stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.payment-stat-trend {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  margin-top: 0.375rem;
+}
+
+.payment-stat-trend.up {
+  color: #10b981;
+}
+
+.payment-stat-trend.down {
+  color: #ef4444;
+}
+
+/* 상세 보기 페이지 */
+.payment-detail-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.payment-detail-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: white;
+  padding: 1rem 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.back-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.5rem;
+  background-color: #f3f4f6;
+  border: none;
+  cursor: pointer;
+  color: #4b5563;
+  transition: all 0.2s;
+}
+
+.back-button:hover {
+  background-color: #e5e7eb;
+  color: #111827;
+}
+
+.payment-detail-title-section {
+  flex: 1;
+}
+
+.payment-detail-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 0.25rem 0;
+}
+
+.payment-detail-subtitle {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.payment-detail-status {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.payment-detail-content {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.payment-detail-main {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.payment-detail-sidebar {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.payment-detail-card {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.payment-detail-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.payment-detail-card-header h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.payment-detail-card-content {
+  padding: 1.5rem;
+}
+
+.payment-detail-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.25rem;
+}
+
+.payment-detail-info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.payment-detail-info-label {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: #6b7280;
+  font-size: 0.875rem;
+}
+
+.payment-detail-info-value {
+  font-size: 0.9375rem;
+  color: #111827;
+  font-weight: 500;
+}
+
+/* 거래 내역 */
+.transaction-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.transaction-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background-color: #f9fafb;
+  border-radius: 0.5rem;
+  border: 1px solid #f3f4f6;
+}
+
+.transaction-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 1rem;
+  flex-shrink: 0;
+}
+
+.transaction-icon.incoming {
+  background-color: #ecfdf5;
+  color: #10b981;
+}
+
+.transaction-icon.outgoing {
+  background-color: #fef2f2;
+  color: #ef4444;
+}
+
+.transaction-info {
+  flex: 1;
+}
+
+.transaction-title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #111827;
+  margin-bottom: 0.25rem;
+}
+
+.transaction-description {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.transaction-amount {
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: right;
+}
+
+.transaction-amount.positive {
+  color: #059669;
+}
+
+.transaction-amount.negative {
+  color: #dc2626;
+}
+
+.transaction-date {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  text-align: right;
+  margin-top: 0.25rem;
+}
+
+/* 정산 관리 버튼 */
+.settlement-management-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.settlement-action-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  color: #4b5563;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 100%;
+}
+
+.settlement-action-button:hover:not(:disabled) {
+  background-color: #f3f4f6;
+  border-color: #d1d5db;
+}
+
+.settlement-action-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.settlement-action-button.primary {
+  background-color: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+}
+
+.settlement-action-button.primary:hover {
+  background-color: #2563eb;
+}
+
+.settlement-action-button.danger {
+  color: #ef4444;
+  border-color: #fca5a5;
+}
+
+.settlement-action-button.danger:hover {
+  background-color: #fef2f2;
+}
+
+/* 결제 방법 정보 */
+.payment-method-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.payment-method-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background-color: #f9fafb;
+  border-radius: 0.375rem;
+}
+
+.payment-method-label {
+  font-size: 0.875rem;
+  color: #4b5563;
+  font-weight: 500;
+}
+
+.payment-method-value {
+  font-size: 0.875rem;
+  color: #111827;
+  font-weight: 500;
+}
+
+/* 수수료 설정 */
+.fee-settings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.fee-setting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #f9fafb;
+  border-radius: 0.5rem;
+  border: 1px solid #f3f4f6;
+}
+
+.fee-setting-info {
+  flex: 1;
+}
+
+.fee-setting-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #111827;
+  margin-bottom: 0.25rem;
+}
+
+.fee-setting-description {
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.fee-setting-value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #3b82f6;
+}
+
+.fee-setting-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-left: 1rem;
+}
+
+.edit-button,
+.view-all-button {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  color: #4b5563;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.edit-button:hover,
+.view-all-button:hover {
+  background-color: #f3f4f6;
+  border-color: #d1d5db;
+}
+
+/* 정산 스케줄 */
+.settlement-schedule-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.settlement-schedule-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0.75rem;
+  border: 1px solid #f3f4f6;
+  border-radius: 0.375rem;
+  background-color: #f9fafb;
+}
+
+.settlement-schedule-label {
+  font-size: 0.875rem;
+  color: #4b5563;
+  font-weight: 500;
+  flex-shrink: 0;
+  margin-right: 1rem;
+}
+
+.settlement-schedule-value {
+  font-size: 0.875rem;
+  color: #111827;
+  text-align: right;
+  flex: 1;
+  word-break: break-word;
+}
+
+.settlement-schedule-badge {
+  display: inline-flex;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.settlement-schedule-badge.active {
+  background-color: #ecfdf5;
+  color: #10b981;
+}
+
+.settlement-schedule-badge.inactive {
+  background-color: #f3f4f6;
+  color: #6b7280;
+}
+
+/* 결제 통계 차트 영역 */
+.payment-chart-container {
+  height: 300px;
+  background-color: #f9fafb;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  border: 1px solid #e5e7eb;
+}
+
+/* 빈 상태 */
+.super-admin-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.super-admin-empty-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: #f3f4f6;
+  color: #6b7280;
+  margin-bottom: 1.5rem;
+}
+
+.super-admin-empty-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0 0 0.5rem 0;
+}
+
+.super-admin-empty-description {
+  color: #6b7280;
+  max-width: 400px;
+}
+
+/* 페이지네이션 */
+.pagination-ellipsis {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2rem;
+  margin: 0 0.25rem;
+  color: #6b7280;
+}
+
+/* 반응형 조정 */
+@media (max-width: 1024px) {
+  .payment-detail-content {
+    flex-direction: column-reverse;
+  }
+
+  .payment-detail-main,
+  .payment-detail-sidebar {
+    width: 100%;
+  }
+
+  .payment-stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .payment-management-actions {
+    flex-direction: column;
+  }
+
+  .payment-search-filter-container {
+    width: 100%;
+  }
+
+  .payment-action-buttons {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .payment-detail-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .payment-stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fee-setting-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .fee-setting-actions {
+    margin-left: 0;
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .settlement-schedule-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .settlement-schedule-label {
+    margin-right: 0;
+  }
+
+  .settlement-schedule-value {
+    text-align: left;
+  }
+}

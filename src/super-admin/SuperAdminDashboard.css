@@ -1,0 +1,476 @@
+.super-admin-dashboard {
+  padding-bottom: 1.5rem;
+}
+
+.super-admin-dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.super-admin-dashboard-filters {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.super-admin-time-range {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.super-admin-time-range label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #4b5563;
+}
+
+.super-admin-time-range select {
+  padding: 0.375rem 0.75rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  color: #111827;
+  background-color: white;
+}
+
+.super-admin-refresh-button {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  color: #4b5563;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.super-admin-refresh-button:hover {
+  background-color: #f3f4f6;
+  border-color: #d1d5db;
+}
+
+.super-admin-metric-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.super-admin-charts {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.super-admin-chart-card {
+  background-color: white;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.super-admin-chart-header {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.super-admin-chart-header h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.super-admin-chart-content {
+  padding: 1rem;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.super-admin-chart-footer {
+  padding: 0.75rem 1.25rem;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.super-admin-view-details-button {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.375rem 0.75rem;
+  background-color: transparent;
+  border: none;
+  font-size: 0.875rem;
+  color: #3b82f6;
+  cursor: pointer;
+  border-radius: 0.375rem;
+  transition: all 0.2s;
+}
+
+.super-admin-view-details-button:hover {
+  background-color: #eff6ff;
+}
+
+.super-admin-secondary-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.super-admin-card {
+  background-color: white;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.super-admin-top-hospitals {
+  grid-column: span 2;
+}
+
+.super-admin-card-header {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.super-admin-card-header h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.super-admin-card-refresh {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s;
+  padding: 0;
+}
+
+.super-admin-card-refresh:hover {
+  background-color: #f3f4f6;
+  color: #4b5563;
+}
+
+.super-admin-card-content {
+  padding: 1rem 1.25rem;
+  flex: 1;
+}
+
+.super-admin-card-footer {
+  padding: 0.75rem 1.25rem;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.super-admin-status-item {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.super-admin-status-item:last-child {
+  margin-bottom: 0;
+}
+
+.super-admin-status-label {
+  width: 120px;
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.super-admin-status-value {
+  flex: 1;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #111827;
+}
+
+.super-admin-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.super-admin-status-badge.healthy {
+  background-color: #ecfdf5;
+  color: #10b981;
+}
+
+.super-admin-status-badge.warning {
+  background-color: #fffbeb;
+  color: #f59e0b;
+}
+
+.super-admin-status-badge.error {
+  background-color: #fef2f2;
+  color: #ef4444;
+}
+
+.super-admin-progress-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.super-admin-progress-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.super-admin-progress-item span {
+  font-size: 0.75rem;
+  color: #6b7280;
+  width: 50px;
+}
+
+.super-admin-progress-container {
+  flex: 1;
+  height: 8px;
+  background-color: #f3f4f6;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.super-admin-progress-bar {
+  height: 100%;
+  background-color: #3b82f6;
+  border-radius: 9999px;
+}
+
+.super-admin-activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.super-admin-activity-item {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.super-admin-activity-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.super-admin-activity-icon.hospital {
+  background-color: #eff6ff;
+  color: #3b82f6;
+}
+
+.super-admin-activity-icon.user {
+  background-color: #f5f3ff;
+  color: #8b5cf6;
+}
+
+.super-admin-activity-icon.appointment {
+  background-color: #fffbeb;
+  color: #f59e0b;
+}
+
+.super-admin-activity-icon.payment {
+  background-color: #ecfdf5;
+  color: #10b981;
+}
+
+.super-admin-activity-details {
+  flex: 1;
+}
+
+.super-admin-activity-message {
+  font-size: 0.875rem;
+  color: #4b5563;
+  margin-bottom: 0.25rem;
+}
+
+.super-admin-activity-time {
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+.super-admin-alerts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.super-admin-alert-item {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 0.375rem;
+}
+
+.super-admin-alert-item.warning {
+  background-color: #fffbeb;
+}
+
+.super-admin-alert-item.info {
+  background-color: #eff6ff;
+}
+
+.super-admin-alert-item.error {
+  background-color: #fef2f2;
+}
+
+.super-admin-alert-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.super-admin-alert-item.warning .super-admin-alert-icon {
+  color: #f59e0b;
+}
+
+.super-admin-alert-item.info .super-admin-alert-icon {
+  color: #3b82f6;
+}
+
+.super-admin-alert-item.error .super-admin-alert-icon {
+  color: #ef4444;
+}
+
+.super-admin-alert-details {
+  flex: 1;
+}
+
+.super-admin-alert-message {
+  font-size: 0.875rem;
+  color: #4b5563;
+  margin-bottom: 0.25rem;
+}
+
+.super-admin-alert-time {
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+.super-admin-rating {
+  position: relative;
+  display: inline-block;
+}
+
+.super-admin-rating::before {
+  content: "★★★★★";
+  color: #e5e7eb;
+}
+
+.super-admin-rating-stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #f59e0b;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.super-admin-rating-stars::before {
+  content: "★★★★★";
+}
+
+.super-admin-rating-value {
+  margin-left: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #111827;
+}
+
+.super-admin-dashboard-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+}
+
+.super-admin-dashboard-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+@media (max-width: 1280px) {
+  .super-admin-metric-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .super-admin-charts,
+  .super-admin-secondary-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .super-admin-top-hospitals {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .super-admin-metric-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .super-admin-dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .super-admin-dashboard-filters {
+    width: 100%;
+  }
+
+  .super-admin-export-button {
+    width: 100%;
+  }
+
+  .super-admin-export-button button {
+    width: 100%;
+  }
+
+  .super-admin-dashboard-actions {
+    width: 100%;
+    justify-content: center;
+  }
+}

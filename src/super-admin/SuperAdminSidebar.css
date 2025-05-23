@@ -1,0 +1,171 @@
+.super-admin-sidebar {
+  width: 260px;
+  background-color: #1e293b;
+  color: #e2e8f0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s ease;
+  overflow-x: hidden;
+}
+
+.super-admin-sidebar.collapsed {
+  width: 70px;
+}
+
+.super-admin-sidebar-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+}
+
+.super-admin-sidebar-title h1 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0;
+  white-space: nowrap;
+  color: white;
+}
+
+.super-admin-platform-info {
+  display: flex;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.super-admin-platform-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background-color: #334155;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.75rem;
+  color: #60a5fa;
+}
+
+.super-admin-platform-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.super-admin-platform-name {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: white;
+}
+
+.super-admin-platform-type {
+  font-size: 0.75rem;
+  margin: 0;
+  color: #94a3b8;
+}
+
+.super-admin-sidebar-menu {
+  flex: 1;
+  padding: 1.5rem 0;
+  overflow-y: auto;
+}
+
+.super-admin-sidebar-section {
+  margin-bottom: 1.5rem;
+}
+
+.super-admin-sidebar-section-title {
+  padding: 0 1.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #94a3b8;
+  margin: 0 0 0.75rem 0;
+}
+
+.super-admin-sidebar-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-left: 3px solid transparent;
+}
+
+.super-admin-sidebar-item:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.super-admin-sidebar-item.active {
+  background-color: rgba(59, 130, 246, 0.1);
+  border-left-color: #3b82f6;
+}
+
+.super-admin-sidebar-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  margin-right: 0.75rem;
+  color: #94a3b8;
+}
+
+.super-admin-sidebar-item.active .super-admin-sidebar-icon {
+  color: #3b82f6;
+}
+
+.super-admin-sidebar-label {
+  font-size: 0.9375rem;
+  white-space: nowrap;
+}
+
+.super-admin-sidebar-item.active .super-admin-sidebar-label {
+  font-weight: 500;
+  color: white;
+}
+
+.super-admin-sidebar-footer {
+  padding: 1rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.super-admin-sidebar-footer .super-admin-sidebar-item {
+  color: #94a3b8;
+}
+
+.super-admin-sidebar-footer .super-admin-sidebar-item:hover {
+  color: #ef4444;
+}
+
+.super-admin-sidebar-footer .super-admin-sidebar-icon {
+  color: #ef4444;
+}
+
+/* Collapsed 상태일 때의 스타일 */
+.super-admin-sidebar.collapsed .super-admin-sidebar-header {
+  justify-content: center;
+}
+
+.super-admin-sidebar.collapsed .super-admin-sidebar-title,
+.super-admin-sidebar.collapsed .super-admin-platform-info,
+.super-admin-sidebar.collapsed .super-admin-sidebar-section-title,
+.super-admin-sidebar.collapsed .super-admin-sidebar-label {
+  display: none;
+}
+
+.super-admin-sidebar.collapsed .super-admin-sidebar-item {
+  padding: 0.75rem;
+  justify-content: center;
+}
+
+.super-admin-sidebar.collapsed .super-admin-sidebar-icon {
+  margin-right: 0;
+}
