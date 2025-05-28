@@ -556,8 +556,9 @@ const ContentManagement = ({
         shares: Math.floor(Math.random() * 50),
         imageUrl:
           contentType === "banner"
-            ? `/images/banners/banner${(i % 5) + 1}.jpg`
-            : null,
+            ? "/images/medical_ads/advertise1.jpg"
+            : // ? `/images/banners/banner${(i % 5) + 1}.jpg`
+              null,
         url: contentType === "banner" ? `/content/${contentType}/${i}` : null,
         isActive: Math.random() > 0.2,
         isFeatured: Math.random() > 0.8,

@@ -606,7 +606,7 @@ const ContentModal = ({
                   />
                   <button
                     type="button"
-                    className="upload-button"
+                    className="content-modal-upload-button"
                     onClick={() => {
                       const fileInput =
                         document.querySelector('input[type="file"]');
