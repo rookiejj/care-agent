@@ -499,13 +499,17 @@ const UserModal = ({ user, onClose, onSave, regions = [] }) => {
           )}
 
           <div className="super-admin-user-modal-footer">
-            <div className="footer-actions">
-              <button type="button" className="cancel-button" onClick={onClose}>
+            <div className="action-buttons">
+              <button
+                type="button"
+                className="super-admin-user-modal-cancel-button"
+                onClick={onClose}
+              >
                 취소
               </button>
               <button type="submit" className="save-button">
                 <Save size={16} />
-                <span>{user ? "저장" : "등록"}</span>
+                <span>{user ? "저장" : "등록"}</span>{" "}
               </button>
             </div>
           </div>

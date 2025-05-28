@@ -612,13 +612,17 @@ const HospitalModal = ({
           )}
 
           <div className="hospital-modal-footer">
-            <div className="footer-actions">
-              <button type="button" className="cancel-button" onClick={onClose}>
+            <div className="action-buttons">
+              <button
+                type="button"
+                className="doctor-modal-cancel-button"
+                onClick={onClose}
+              >
                 취소
               </button>
               <button type="submit" className="save-button">
                 <Save size={16} />
-                <span>{hospital ? "저장" : "등록"}</span>
+                <span>{hospital ? "저장" : "등록"}</span>{" "}
               </button>
             </div>
           </div>

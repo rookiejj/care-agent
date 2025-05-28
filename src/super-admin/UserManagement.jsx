@@ -29,9 +29,398 @@ import {
   CreditCard,
   FileText,
   MoreHorizontal,
+  X,
+  Save,
 } from "lucide-react";
 import "./UserManagement.css";
 import UserModal from "./components/UserModal";
+
+// 추가 모달 컴포넌트들
+const AppointmentDetailModal = ({ appointments, onClose }) => {
+  const [filteredAppointments, setFilteredAppointments] =
+    useState(appointments);
+  const [filterStatus, setFilterStatus] = useState("all");
+
+  useEffect(() => {
+    if (filterStatus === "all") {
+      setFilteredAppointments(appointments);
+    } else {
+      setFilteredAppointments(
+        appointments.filter((a) => a.status === filterStatus)
+      );
+    }
+  }, [filterStatus, appointments]);
+
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString("ko-KR");
+  };
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="hospital-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="hospital-modal-header">
+          <h2>예약 내역 전체 보기</h2>
+          <button className="modal-close-button" onClick={onClose}>
+            <X size={20} />
+          </button>
+        </div>
+        <div className="hospital-modal-form">
+          <div className="form-group">
+            <label>상태 필터</label>
+            <select
+              value={filterStatus}
+              onChange={(e) => setFilterStatus(e.target.value)}
+              className="form-input"
+            >
+              <option value="all">전체</option>
+              <option value="completed">완료</option>
+              <option value="cancelled">취소</option>
+              <option value="no-show">노쇼</option>
+            </select>
+          </div>
+          <div className="super-admin-table-container">
+            <table className="super-admin-table">
+              <thead>
+                <tr>
+                  <th>병원명</th>
+                  <th>의사</th>
+                  <th>예약일</th>
+                  <th>유형</th>
+                  <th>상태</th>
+                  <th>금액</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredAppointments.map((appointment) => (
+                  <tr key={appointment.id}>
+                    <td>{appointment.hospitalName}</td>
+                    <td>{appointment.doctorName}</td>
+                    <td>{formatDate(appointment.date)}</td>
+                    <td>{appointment.type}</td>
+                    <td>
+                      <span
+                        className={`super-admin-appointment-status-badge ${appointment.status}`}
+                      >
+                        {appointment.status === "completed"
+                          ? "완료"
+                          : appointment.status === "cancelled"
+                          ? "취소"
+                          : "노쇼"}
+                      </span>
+                    </td>
+                    <td>{appointment.amount.toLocaleString()}원</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div className="hospital-management-modal-footer">
+          <div className="action-buttons">
+            <button className="hospital-modal-cancel-button" onClick={onClose}>
+              닫기
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const ReviewDetailModal = ({ reviews, onClose }) => {
+  const [filteredReviews, setFilteredReviews] = useState(reviews);
+  const [filterType, setFilterType] = useState("all");
+
+  useEffect(() => {
+    if (filterType === "all") {
+      setFilteredReviews(reviews);
+    } else if (filterType === "reported") {
+      setFilteredReviews(reviews.filter((r) => r.isReported));
+    } else {
+      setFilteredReviews(reviews.filter((r) => !r.isReported));
+    }
+  }, [filterType, reviews]);
+
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString("ko-KR");
+  };
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="hospital-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="hospital-modal-header">
+          <h2>작성 리뷰 전체 보기</h2>
+          <button className="modal-close-button" onClick={onClose}>
+            <X size={20} />
+          </button>
+        </div>
+        <div className="hospital-modal-form">
+          <div className="form-group">
+            <label>유형 필터</label>
+            <select
+              value={filterType}
+              onChange={(e) => setFilterType(e.target.value)}
+              className="form-input"
+            >
+              <option value="all">전체</option>
+              <option value="normal">일반</option>
+              <option value="reported">신고됨</option>
+            </select>
+          </div>
+          <div className="super-admin-user-detail-reviews-list">
+            {filteredReviews.map((review) => (
+              <div
+                key={review.id}
+                className="super-admin-user-detail-review-item"
+              >
+                <div className="super-admin-user-detail-review-header">
+                  <div className="super-admin-user-detail-review-hospital">
+                    {review.hospitalName}
+                  </div>
+                  <div className="super-admin-user-detail-review-meta">
+                    <div className="super-admin-user-detail-review-rating">
+                      <Star size={14} className="star-icon" />
+                      <span>{review.rating}</span>
+                    </div>
+                    <div className="super-admin-user-detail-review-date">
+                      {formatDate(review.date)}
+                    </div>
+                    {review.isReported && (
+                      <span className="super-admin-review-reported-badge">
+                        <AlertTriangle size={12} />
+                        신고됨
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <div className="super-admin-user-detail-review-content">
+                  {review.content}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="hospital-management-modal-footer">
+          <div className="action-buttons">
+            <button className="hospital-modal-cancel-button" onClick={onClose}>
+              닫기
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const ActivityLogModal = ({ activityLogs, onClose }) => {
+  const [filteredLogs, setFilteredLogs] = useState(activityLogs);
+  const [filterAction, setFilterAction] = useState("all");
+
+  useEffect(() => {
+    if (filterAction === "all") {
+      setFilteredLogs(activityLogs);
+    } else {
+      setFilteredLogs(
+        activityLogs.filter((log) => log.action === filterAction)
+      );
+    }
+  }, [filterAction, activityLogs]);
+
+  const formatDateTime = (dateString) => {
+    return new Date(dateString).toLocaleString("ko-KR");
+  };
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="hospital-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="hospital-modal-header">
+          <h2>활동 로그 전체 보기</h2>
+          <button className="modal-close-button" onClick={onClose}>
+            <X size={20} />
+          </button>
+        </div>
+        <div className="hospital-modal-form">
+          <div className="form-group">
+            <label>활동 필터</label>
+            <select
+              value={filterAction}
+              onChange={(e) => setFilterAction(e.target.value)}
+              className="form-input"
+            >
+              <option value="all">전체</option>
+              <option value="login">로그인</option>
+              <option value="search">검색</option>
+              <option value="booking">예약</option>
+              <option value="review">리뷰</option>
+              <option value="payment">결제</option>
+            </select>
+          </div>
+          <div
+            className="super-admin-user-detail-activity-list"
+            style={{ maxHeight: "400px" }}
+          >
+            {filteredLogs.map((log) => (
+              <div
+                key={log.id}
+                className="super-admin-user-detail-activity-item"
+              >
+                <div className="super-admin-user-detail-activity-info">
+                  <div className="super-admin-user-detail-activity-action">
+                    {log.description}
+                  </div>
+                  <div className="super-admin-user-detail-activity-meta">
+                    {formatDateTime(log.timestamp)} • {log.ipAddress} •{" "}
+                    {log.deviceInfo}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="hospital-management-modal-footer">
+          <div className="action-buttons">
+            <button className="hospital-modal-cancel-button" onClick={onClose}>
+              닫기
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const PaymentDetailModal = ({ payments, onClose }) => {
+  const [filteredPayments, setFilteredPayments] = useState(payments);
+  const [filterStatus, setFilterStatus] = useState("all");
+
+  useEffect(() => {
+    if (filterStatus === "all") {
+      setFilteredPayments(payments);
+    } else {
+      setFilteredPayments(payments.filter((p) => p.status === filterStatus));
+    }
+  }, [filterStatus, payments]);
+
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString("ko-KR");
+  };
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="hospital-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="hospital-modal-header">
+          <h2>결제 내역 전체 보기</h2>
+          <button className="modal-close-button" onClick={onClose}>
+            <X size={20} />
+          </button>
+        </div>
+        <div className="hospital-modal-form">
+          <div className="form-group">
+            <label>상태 필터</label>
+            <select
+              value={filterStatus}
+              onChange={(e) => setFilterStatus(e.target.value)}
+              className="form-input"
+            >
+              <option value="all">전체</option>
+              <option value="completed">완료</option>
+              <option value="failed">실패</option>
+              <option value="refunded">환불</option>
+            </select>
+          </div>
+          <div className="super-admin-table-container">
+            <table className="super-admin-table">
+              <thead>
+                <tr>
+                  <th>병원명</th>
+                  <th>금액</th>
+                  <th>결제방법</th>
+                  <th>날짜</th>
+                  <th>상태</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredPayments.map((payment) => (
+                  <tr key={payment.id}>
+                    <td>{payment.hospitalName}</td>
+                    <td>{payment.amount.toLocaleString()}원</td>
+                    <td>
+                      {payment.method === "card"
+                        ? "카드"
+                        : payment.method === "transfer"
+                        ? "계좌이체"
+                        : "모바일"}
+                    </td>
+                    <td>{formatDate(payment.date)}</td>
+                    <td>
+                      <span
+                        className={`super-admin-user-payment-status-badge ${payment.status}`}
+                      >
+                        {payment.status === "completed"
+                          ? "완료"
+                          : payment.status === "failed"
+                          ? "실패"
+                          : "환불"}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div className="hospital-management-modal-footer">
+          <div className="action-buttons">
+            <button className="hospital-modal-cancel-button" onClick={onClose}>
+              닫기
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const ConfirmModal = ({
+  title,
+  message,
+  onConfirm,
+  onCancel,
+  type = "default",
+}) => {
+  return (
+    <div className="modal-overlay" onClick={onCancel}>
+      <div
+        className="hospital-modal"
+        onClick={(e) => e.stopPropagation()}
+        style={{ maxWidth: "400px" }}
+      >
+        <div className="hospital-modal-header">
+          <h2>{title}</h2>
+          <button className="modal-close-button" onClick={onCancel}>
+            <X size={20} />
+          </button>
+        </div>
+        <div className="hospital-modal-form">
+          <p>{message}</p>
+        </div>
+        <div className="hospital-management-modal-footer">
+          <div className="action-buttons">
+            <button className="hospital-modal-cancel-button" onClick={onCancel}>
+              취소
+            </button>
+            <button
+              className={type === "danger" ? "delete-button" : "save-button"}
+              onClick={onConfirm}
+            >
+              확인
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const UserManagement = ({
   viewMode = "list",
@@ -59,6 +448,14 @@ const UserManagement = ({
 
   // 상세 보기 모드에서 사용할 사용자 정보
   const [userDetail, setUserDetail] = useState(null);
+
+  // 모달 상태들
+  const [showAppointmentModal, setShowAppointmentModal] = useState(false);
+  const [showReviewModal, setShowReviewModal] = useState(false);
+  const [showActivityLogModal, setShowActivityLogModal] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [confirmModalConfig, setConfirmModalConfig] = useState({});
 
   // 페이지네이션 설정
   const usersPerPage = 15;
@@ -179,6 +576,79 @@ const UserManagement = ({
     }
   }, [searchTerm, filterOptions, users, viewMode]);
 
+  // 상세 페이지 이벤트 핸들러들
+  const handleEditUser = () => {
+    setSelectedUser(userDetail);
+    setShowModal(true);
+  };
+
+  const handleViewAllAppointments = () => {
+    setShowAppointmentModal(true);
+  };
+
+  const handleViewAllReviews = () => {
+    setShowReviewModal(true);
+  };
+
+  const handleViewAllActivityLogs = () => {
+    setShowActivityLogModal(true);
+  };
+
+  const handleViewAllPayments = () => {
+    setShowPaymentModal(true);
+  };
+
+  const handleAccountAction = (action) => {
+    const actions = {
+      activate: {
+        title: "계정 활성화",
+        message: "이 사용자 계정을 활성화하시겠습니까?",
+        newStatus: "active",
+      },
+      suspend: {
+        title: "계정 정지",
+        message: "이 사용자 계정을 정지하시겠습니까?",
+        newStatus: "suspended",
+      },
+      block: {
+        title: "계정 차단",
+        message: "이 사용자 계정을 차단하시겠습니까?",
+        newStatus: "blocked",
+      },
+      delete: {
+        title: "계정 삭제",
+        message:
+          "정말로 이 사용자 계정을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.",
+        type: "danger",
+        newStatus: "deleted",
+      },
+    };
+
+    const actionConfig = actions[action];
+    setConfirmModalConfig({
+      ...actionConfig,
+      onConfirm: () => {
+        setUserDetail((prev) => ({
+          ...prev,
+          status: actionConfig.newStatus,
+        }));
+        setUsers((prevUsers) =>
+          prevUsers.map((user) =>
+            user.id === userDetail.id
+              ? { ...user, status: actionConfig.newStatus }
+              : user
+          )
+        );
+        setShowConfirmModal(false);
+        if (action === "delete") {
+          // 삭제의 경우 목록으로 돌아가기
+          handleGoBack();
+        }
+      },
+    });
+    setShowConfirmModal(true);
+  };
+
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
@@ -215,15 +685,21 @@ const UserManagement = ({
 
   const handleSaveUser = (userData) => {
     if (selectedUser) {
+      // 기존 사용자 정보 수정
+      const updatedUser = { ...selectedUser, ...userData };
       setUsers(
-        users.map((user) =>
-          user.id === selectedUser.id ? { ...user, ...userData } : user
-        )
+        users.map((user) => (user.id === selectedUser.id ? updatedUser : user))
       );
+      // 상세 페이지에서 편집한 경우 상세 정보도 업데이트
+      if (userDetail && userDetail.id === selectedUser.id) {
+        setUserDetail({ ...userDetail, ...userData });
+      }
     } else {
+      // 새 사용자 추가
       const newUser = {
         id: users.length + 1,
         ...userData,
+        userId: `user${String(users.length + 1).padStart(4, "0")}`,
         registrationDate: new Date().toISOString(),
         lastLoginDate: null,
         activityLevel: "new",
@@ -234,7 +710,16 @@ const UserManagement = ({
   };
 
   const handleDeleteUser = (id) => {
-    setUsers(users.filter((user) => user.id !== id));
+    setConfirmModalConfig({
+      title: "사용자 삭제",
+      message: "정말로 이 사용자를 삭제하시겠습니까?",
+      type: "danger",
+      onConfirm: () => {
+        setUsers(users.filter((user) => user.id !== id));
+        setShowConfirmModal(false);
+      },
+    });
+    setShowConfirmModal(true);
   };
 
   const handlePageChange = (page) => {
@@ -631,22 +1116,20 @@ const UserManagement = ({
     const activityLogs = [];
     const logCount = Math.floor(Math.random() * 50) + 20;
     for (let i = 1; i <= logCount; i++) {
+      const actions = ["login", "search", "booking", "review", "payment"];
+      const action = actions[Math.floor(Math.random() * actions.length)];
+      const descriptions = {
+        login: "로그인",
+        search: "병원 검색",
+        booking: "예약 생성",
+        review: "리뷰 작성",
+        payment: "결제 완료",
+      };
+
       activityLogs.push({
         id: i,
-        action: ["login", "search", "booking", "review", "payment"][
-          Math.floor(Math.random() * 5)
-        ],
-        description: {
-          login: "로그인",
-          search: "병원 검색",
-          booking: "예약 생성",
-          review: "리뷰 작성",
-          payment: "결제 완료",
-        }[
-          ["login", "search", "booking", "review", "payment"][
-            Math.floor(Math.random() * 5)
-          ]
-        ],
+        action: action,
+        description: descriptions[action],
         timestamp: new Date(
           new Date().getTime() -
             Math.floor(Math.random() * 90) * 24 * 60 * 60 * 1000
@@ -716,7 +1199,7 @@ const UserManagement = ({
             <div className="super-admin-user-detail-card">
               <div className="super-admin-user-detail-card-header">
                 <h3>기본 정보</h3>
-                <button className="edit-button">
+                <button className="edit-button" onClick={handleEditUser}>
                   <Edit size={16} />
                   <span>편집</span>
                 </button>
@@ -817,6 +1300,14 @@ const UserManagement = ({
                 <div className="super-admin-user-detail-stats-grid">
                   <div className="super-admin-user-detail-stat-card">
                     <div className="super-admin-user-detail-stat-value">
+                      {userDetail.totalAppointments.toLocaleString()}
+                    </div>
+                    <div className="super-admin-user-detail-stat-label">
+                      총 예약
+                    </div>
+                  </div>
+                  <div className="super-admin-user-detail-stat-card">
+                    <div className="super-admin-user-detail-stat-value">
                       {userDetail.totalReviews.toLocaleString()}
                     </div>
                     <div className="super-admin-user-detail-stat-label">
@@ -825,7 +1316,9 @@ const UserManagement = ({
                   </div>
                   <div className="super-admin-user-detail-stat-card">
                     <div className="super-admin-user-detail-stat-value">
-                      {userDetail.favoriteHospitals.toLocaleString()}
+                      {Array.isArray(userDetail.favoriteHospitals)
+                        ? userDetail.favoriteHospitals.length.toLocaleString()
+                        : userDetail.favoriteHospitals?.toLocaleString() || 0}
                     </div>
                     <div className="super-admin-user-detail-stat-label">
                       찜한 병원
@@ -846,7 +1339,10 @@ const UserManagement = ({
             <div className="super-admin-user-detail-card">
               <div className="super-admin-user-detail-card-header">
                 <h3>최근 예약 내역</h3>
-                <button className="view-all-button">
+                <button
+                  className="view-all-button"
+                  onClick={handleViewAllAppointments}
+                >
                   <span>전체 보기</span>
                   <ChevronRight size={16} />
                 </button>
@@ -896,7 +1392,10 @@ const UserManagement = ({
             <div className="super-admin-user-detail-card">
               <div className="super-admin-user-detail-card-header">
                 <h3>최근 작성 리뷰</h3>
-                <button className="view-all-button">
+                <button
+                  className="view-all-button"
+                  onClick={handleViewAllReviews}
+                >
                   <span>전체 보기</span>
                   <ChevronRight size={16} />
                 </button>
@@ -940,7 +1439,10 @@ const UserManagement = ({
             <div className="super-admin-user-detail-card">
               <div className="super-admin-user-detail-card-header">
                 <h3>최근 활동 로그</h3>
-                <button className="view-all-button">
+                <button
+                  className="view-all-button"
+                  onClick={handleViewAllActivityLogs}
+                >
                   <span>전체 보기</span>
                   <ChevronRight size={16} />
                 </button>
@@ -980,7 +1482,7 @@ const UserManagement = ({
                       userDetail.status === "active" ? "active" : ""
                     }`}
                     disabled={userDetail.status === "active"}
-                    onClick={() => handleStatusChange(userDetail.id, "active")}
+                    onClick={() => handleAccountAction("activate")}
                   >
                     <CheckCircle size={16} />
                     <span>계정 활성화</span>
@@ -990,9 +1492,7 @@ const UserManagement = ({
                       userDetail.status === "suspended" ? "active" : ""
                     }`}
                     disabled={userDetail.status === "suspended"}
-                    onClick={() =>
-                      handleStatusChange(userDetail.id, "suspended")
-                    }
+                    onClick={() => handleAccountAction("suspend")}
                   >
                     <Ban size={16} />
                     <span>계정 정지</span>
@@ -1002,12 +1502,15 @@ const UserManagement = ({
                       userDetail.status === "blocked" ? "active" : ""
                     }`}
                     disabled={userDetail.status === "blocked"}
-                    onClick={() => handleStatusChange(userDetail.id, "blocked")}
+                    onClick={() => handleAccountAction("block")}
                   >
                     <XCircle size={16} />
                     <span>계정 차단</span>
                   </button>
-                  <button className="super-admin-user-account-action-button danger">
+                  <button
+                    className="super-admin-user-account-action-button danger"
+                    onClick={() => handleAccountAction("delete")}
+                  >
                     <Trash2 size={16} />
                     <span>계정 삭제</span>
                   </button>
@@ -1052,6 +1555,13 @@ const UserManagement = ({
             <div className="super-admin-user-detail-card">
               <div className="super-admin-user-detail-card-header">
                 <h3>최근 결제 내역</h3>
+                <button
+                  className="view-all-button"
+                  onClick={handleViewAllPayments}
+                >
+                  <span>전체 보기</span>
+                  <ChevronRight size={16} />
+                </button>
               </div>
               <div className="super-admin-user-detail-card-content">
                 <div className="super-admin-user-payments-list">
@@ -1096,32 +1606,6 @@ const UserManagement = ({
                 <div className="super-admin-user-settings-list">
                   <div className="super-admin-user-settings-item">
                     <div className="super-admin-user-settings-label">
-                      마케팅 수신 동의
-                    </div>
-                    <div className="super-admin-user-settings-value">
-                      <span
-                        className={`super-admin-user-settings-badge ${
-                          userDetail.marketingConsent ? "enabled" : "disabled"
-                        }`}
-                      >
-                        {userDetail.marketingConsent ? "동의" : "거부"}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="super-admin-user-settings-item">
-                    <div className="super-admin-user-settings-label">
-                      주 사용 기기
-                    </div>
-                    <div className="super-admin-user-settings-value">
-                      {userDetail.deviceType === "mobile"
-                        ? "모바일"
-                        : userDetail.deviceType === "desktop"
-                        ? "데스크톱"
-                        : "태블릿"}
-                    </div>
-                  </div>
-                  <div className="super-admin-user-settings-item">
-                    <div className="super-admin-user-settings-label">
                       활동 수준
                     </div>
                     <div className="super-admin-user-settings-value">
@@ -1133,6 +1617,54 @@ const UserManagement = ({
             </div>
           </div>
         </div>
+
+        {/* 모달들 */}
+        {showModal && (
+          <UserModal
+            user={selectedUser}
+            onClose={handleCloseModal}
+            onSave={handleSaveUser}
+            regions={regions}
+          />
+        )}
+
+        {showAppointmentModal && (
+          <AppointmentDetailModal
+            appointments={userDetail.appointments}
+            onClose={() => setShowAppointmentModal(false)}
+          />
+        )}
+
+        {showReviewModal && (
+          <ReviewDetailModal
+            reviews={userDetail.reviews}
+            onClose={() => setShowReviewModal(false)}
+          />
+        )}
+
+        {showActivityLogModal && (
+          <ActivityLogModal
+            activityLogs={userDetail.activityLogs}
+            onClose={() => setShowActivityLogModal(false)}
+          />
+        )}
+
+        {showPaymentModal && (
+          <PaymentDetailModal
+            payments={userDetail.payments}
+            onClose={() => setShowPaymentModal(false)}
+          />
+        )}
+
+        {showConfirmModal && (
+          <ConfirmModal
+            title={confirmModalConfig.title}
+            message={confirmModalConfig.message}
+            type={confirmModalConfig.type}
+            onConfirm={confirmModalConfig.onConfirm}
+            onCancel={() => setShowConfirmModal(false)}
+          />
+        )}
       </div>
     );
   }
@@ -1658,6 +2190,7 @@ const UserManagement = ({
                 ) {
                   return (
                     <button
+                      key={pageNumber}
                       className={`super-admin-pagination-button ${
                         pageNumber === currentPage ? "active" : ""
                       }`}
@@ -1701,6 +2234,16 @@ const UserManagement = ({
           onClose={handleCloseModal}
           onSave={handleSaveUser}
           regions={regions}
+        />
+      )}
+
+      {showConfirmModal && (
+        <ConfirmModal
+          title={confirmModalConfig.title}
+          message={confirmModalConfig.message}
+          type={confirmModalConfig.type}
+          onConfirm={confirmModalConfig.onConfirm}
+          onCancel={() => setShowConfirmModal(false)}
         />
       )}
     </div>

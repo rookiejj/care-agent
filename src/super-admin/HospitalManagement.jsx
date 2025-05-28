@@ -21,10 +21,391 @@ import {
   FileText,
   ArrowLeft,
   Star,
-  Layers,
+  X,
+  Save,
 } from "lucide-react";
 import "./HospitalManagement.css";
 import HospitalModal from "./components/HospitalModal";
+
+// 추가 모달 컴포넌트들
+const AdminModal = ({ admin, onClose, onSave, onDelete, isNew = false }) => {
+  const [formData, setFormData] = useState({
+    name: admin?.name || "",
+    email: admin?.email || "",
+    role: admin?.role || "staff",
+    password: "",
+    confirmPassword: "",
+  });
+  const [errors, setErrors] = useState({});
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    if (errors[name]) {
+      setErrors((prev) => ({ ...prev, [name]: "" }));
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formData.name.trim()) newErrors.name = "이름을 입력해주세요";
+    if (!formData.email.trim()) newErrors.email = "이메일을 입력해주세요";
+    if (!/\S+@\S+\.\S+/.test(formData.email))
+      newErrors.email = "올바른 이메일 형식이 아닙니다";
+    if (isNew && !formData.password)
+      newErrors.password = "비밀번호를 입력해주세요";
+    if (isNew && formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = "비밀번호가 일치하지 않습니다";
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      onSave(formData);
+    }
+  };
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="hospital-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="hospital-modal-header">
+          <h2>{isNew ? "관리자 추가" : "관리자 수정"}</h2>
+          <button className="modal-close-button" onClick={onClose}>
+            <X size={20} />
+          </button>
+        </div>
+        <form onSubmit={handleSubmit} className="hospital-modal-form">
+          <div className="form-group">
+            <label>이름 *</label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              className={errors.name ? "form-input error" : "form-input"}
+            />
+            {errors.name && <div className="error-message">{errors.name}</div>}
+          </div>
+          <div className="form-group">
+            <label>이메일 *</label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              className={errors.email ? "form-input error" : "form-input"}
+            />
+            {errors.email && (
+              <div className="error-message">{errors.email}</div>
+            )}
+          </div>
+          <div className="form-group">
+            <label>역할</label>
+            <select
+              name="role"
+              value={formData.role}
+              onChange={handleChange}
+              className="form-input"
+            >
+              <option value="staff">직원</option>
+              <option value="manager">관리자</option>
+              <option value="owner">소유자</option>
+            </select>
+          </div>
+          {isNew && (
+            <>
+              <div className="form-group">
+                <label>비밀번호 *</label>
+                <input
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  className={
+                    errors.password ? "form-input error" : "form-input"
+                  }
+                />
+                {errors.password && (
+                  <div className="error-message">{errors.password}</div>
+                )}
+              </div>
+              <div className="form-group">
+                <label>비밀번호 확인 *</label>
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={handleChange}
+                  className={
+                    errors.confirmPassword ? "form-input error" : "form-input"
+                  }
+                />
+                {errors.confirmPassword && (
+                  <div className="error-message">{errors.confirmPassword}</div>
+                )}
+              </div>
+            </>
+          )}
+          <div className="hospital-modal-footer">
+            <div className="action-buttons">
+              <button
+                type="button"
+                className="hospital-modal-cancel-button"
+                onClick={onClose}
+              >
+                취소
+              </button>
+              {!isNew && (
+                <button
+                  type="button"
+                  className="delete-button"
+                  onClick={() => onDelete(admin.id)}
+                >
+                  <Trash2 size={16} />
+                  삭제
+                </button>
+              )}
+              <button type="submit" className="save-button">
+                <Save size={16} />
+                {isNew ? "추가" : "저장"}
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+const PaymentDetailModal = ({ payments, onClose }) => {
+  const [filteredPayments, setFilteredPayments] = useState(payments);
+  const [filterStatus, setFilterStatus] = useState("all");
+
+  useEffect(() => {
+    if (filterStatus === "all") {
+      setFilteredPayments(payments);
+    } else {
+      setFilteredPayments(payments.filter((p) => p.status === filterStatus));
+    }
+  }, [filterStatus, payments]);
+
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString("ko-KR");
+  };
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="hospital-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="hospital-modal-header">
+          <h2>결제 내역 전체 보기</h2>
+          <button className="modal-close-button" onClick={onClose}>
+            <X size={20} />
+          </button>
+        </div>
+        <div className="hospital-modal-form">
+          <div className="form-group">
+            <label>상태 필터</label>
+            <select
+              value={filterStatus}
+              onChange={(e) => setFilterStatus(e.target.value)}
+              className="form-input"
+            >
+              <option value="all">전체</option>
+              <option value="completed">완료</option>
+              <option value="pending">대기</option>
+              <option value="failed">실패</option>
+            </select>
+          </div>
+          <div className="super-admin-table-container">
+            <table className="super-admin-table">
+              <thead>
+                <tr>
+                  <th>결제 ID</th>
+                  <th>날짜</th>
+                  <th>금액</th>
+                  <th>유형</th>
+                  <th>상태</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredPayments.map((payment) => (
+                  <tr key={payment.id}>
+                    <td>#{payment.id}</td>
+                    <td>{formatDate(payment.date)}</td>
+                    <td>{payment.amount.toLocaleString()}원</td>
+                    <td>
+                      {payment.type === "subscription"
+                        ? "구독료"
+                        : payment.type === "commission"
+                        ? "수수료"
+                        : "이용료"}
+                    </td>
+                    <td>
+                      <span
+                        className={`payment-status-badge ${payment.status}`}
+                      >
+                        {payment.status === "completed"
+                          ? "완료"
+                          : payment.status === "pending"
+                          ? "대기"
+                          : "실패"}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div className="hospital-management-modal-footer">
+          <div className="action-buttons">
+            <button className="hospital-modal-cancel-button" onClick={onClose}>
+              닫기
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const SubscriptionModal = ({ subscription, onClose, onSave }) => {
+  const [plan, setPlan] = useState(subscription?.plan || "premium");
+  const [billing, setBilling] = useState(subscription?.billing || "monthly");
+
+  const plans = {
+    basic: { name: "베이직 플랜", price: { monthly: 100000, yearly: 1000000 } },
+    premium: {
+      name: "프리미엄 플랜",
+      price: { monthly: 300000, yearly: 3000000 },
+    },
+    enterprise: {
+      name: "엔터프라이즈 플랜",
+      price: { monthly: 500000, yearly: 5000000 },
+    },
+  };
+
+  const handleSave = () => {
+    onSave({ plan, billing });
+  };
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="hospital-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="hospital-modal-header">
+          <h2>플랜 변경</h2>
+          <button className="modal-close-button" onClick={onClose}>
+            <X size={20} />
+          </button>
+        </div>
+        <div className="hospital-modal-form">
+          <div className="form-group">
+            <label>플랜 선택</label>
+            <div className="category-options">
+              {Object.entries(plans).map(([key, value]) => (
+                <button
+                  key={key}
+                  type="button"
+                  className={`category-option ${
+                    plan === key ? "selected" : ""
+                  }`}
+                  onClick={() => setPlan(key)}
+                >
+                  {value.name}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="form-group">
+            <label>결제 주기</label>
+            <div className="category-options">
+              <button
+                type="button"
+                className={`category-option ${
+                  billing === "monthly" ? "selected" : ""
+                }`}
+                onClick={() => setBilling("monthly")}
+              >
+                매월
+              </button>
+              <button
+                type="button"
+                className={`category-option ${
+                  billing === "yearly" ? "selected" : ""
+                }`}
+                onClick={() => setBilling("yearly")}
+              >
+                매년
+              </button>
+            </div>
+          </div>
+          <div className="form-group">
+            <label>요금</label>
+            <div className="hospital-detail-info-value">
+              {plans[plan].price[billing].toLocaleString()}원
+              {billing === "monthly" ? "/월" : "/년"}
+            </div>
+          </div>
+        </div>
+        <div className="hospital-management-modal-footer">
+          <div className="action-buttons">
+            <button className="hospital-modal-cancel-button" onClick={onClose}>
+              취소
+            </button>
+            <button className="save-button" onClick={handleSave}>
+              <Save size={16} />
+              변경
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const ConfirmModal = ({
+  title,
+  message,
+  onConfirm,
+  onCancel,
+  type = "default",
+}) => {
+  return (
+    <div className="modal-overlay" onClick={onCancel}>
+      <div
+        className="hospital-modal"
+        onClick={(e) => e.stopPropagation()}
+        style={{ maxWidth: "400px" }}
+      >
+        <div className="hospital-modal-header">
+          <h2>{title}</h2>
+          <button className="modal-close-button" onClick={onCancel}>
+            <X size={20} />
+          </button>
+        </div>
+        <div className="hospital-modal-form">
+          <p>{message}</p>
+        </div>
+        <div className="hospital-management-modal-footer">
+          <div className="action-buttons">
+            <button className="hospital-modal-cancel-button" onClick={onCancel}>
+              취소
+            </button>
+            <button
+              className={type === "danger" ? "delete-button" : "save-button"}
+              onClick={onConfirm}
+            >
+              확인
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const HospitalManagement = ({
   viewMode = "list",
@@ -48,6 +429,14 @@ const HospitalManagement = ({
 
   // 상세 보기 모드에서 사용할 병원 정보
   const [hospitalDetail, setHospitalDetail] = useState(null);
+
+  // 모달 상태들
+  const [showAdminModal, setShowAdminModal] = useState(false);
+  const [selectedAdmin, setSelectedAdmin] = useState(null);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [showSubscriptionModal, setShowSubscriptionModal] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [confirmModalConfig, setConfirmModalConfig] = useState({});
 
   // 페이지네이션 설정
   const hospitalsPerPage = 10;
@@ -128,6 +517,122 @@ const HospitalManagement = ({
       setCurrentPage(1);
     }
   }, [searchTerm, filterOptions, hospitals, viewMode]);
+
+  const handleEditHospital = () => {
+    setSelectedHospital(hospitalDetail);
+    setShowModal(true);
+  };
+
+  const handleAddAdmin = () => {
+    setSelectedAdmin(null);
+    setShowAdminModal(true);
+  };
+
+  const handleEditAdmin = (admin) => {
+    setSelectedAdmin(admin);
+    setShowAdminModal(true);
+  };
+
+  const handleDeleteAdmin = (adminId) => {
+    setConfirmModalConfig({
+      title: "관리자 삭제",
+      message: "정말로 이 관리자를 삭제하시겠습니까?",
+      type: "danger",
+      onConfirm: () => {
+        setHospitalDetail((prev) => ({
+          ...prev,
+          admins: prev.admins.filter((admin) => admin.id !== adminId),
+        }));
+        setShowConfirmModal(false);
+        setShowAdminModal(false);
+      },
+    });
+    setShowConfirmModal(true);
+  };
+
+  const handleSaveAdmin = (adminData) => {
+    if (selectedAdmin) {
+      // 기존 관리자 수정
+      setHospitalDetail((prev) => ({
+        ...prev,
+        admins: prev.admins.map((admin) =>
+          admin.id === selectedAdmin.id
+            ? { ...admin, ...adminData, lastLogin: new Date().toISOString() }
+            : admin
+        ),
+      }));
+    } else {
+      // 새 관리자 추가
+      const newAdmin = {
+        id: hospitalDetail.admins.length + 1,
+        ...adminData,
+        lastLogin: new Date().toISOString(),
+      };
+      setHospitalDetail((prev) => ({
+        ...prev,
+        admins: [...prev.admins, newAdmin],
+      }));
+    }
+    setShowAdminModal(false);
+  };
+
+  const handleViewAllPayments = () => {
+    setShowPaymentModal(true);
+  };
+
+  const handleSubscriptionChange = () => {
+    setShowSubscriptionModal(true);
+  };
+
+  const handleSaveSubscription = (subscriptionData) => {
+    console.log("플랜 변경:", subscriptionData);
+    setShowSubscriptionModal(false);
+    // 실제로는 API 호출하여 플랜 변경
+  };
+
+  const handleAccountAction = (action) => {
+    const actions = {
+      activate: {
+        title: "계정 활성화",
+        message: "이 병원 계정을 활성화하시겠습니까?",
+        newStatus: "active",
+      },
+      suspend: {
+        title: "계정 일시 중지",
+        message: "이 병원 계정을 일시 중지하시겠습니까?",
+        newStatus: "suspended",
+      },
+      deactivate: {
+        title: "계정 비활성화",
+        message: "이 병원 계정을 비활성화하시겠습니까?",
+        newStatus: "inactive",
+      },
+      delete: {
+        title: "계정 삭제",
+        message:
+          "정말로 이 병원 계정을 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.",
+        type: "danger",
+        newStatus: "deleted",
+      },
+    };
+
+    const actionConfig = actions[action];
+    setConfirmModalConfig({
+      ...actionConfig,
+      onConfirm: () => {
+        setHospitalDetail((prev) => ({
+          ...prev,
+          status: actionConfig.newStatus,
+        }));
+        setShowConfirmModal(false);
+        if (action === "delete") {
+          // 삭제의 경우 목록으로 돌아가기
+          handleGoBack();
+        }
+      },
+    });
+    setShowConfirmModal(true);
+  };
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -570,7 +1075,7 @@ const HospitalManagement = ({
             <div className="hospital-detail-card">
               <div className="hospital-detail-card-header">
                 <h3>기본 정보</h3>
-                <button className="edit-button">
+                <button className="edit-button" onClick={handleEditHospital}>
                   <Edit size={16} />
                   <span>편집</span>
                 </button>
@@ -716,7 +1221,7 @@ const HospitalManagement = ({
             <div className="hospital-detail-card">
               <div className="hospital-detail-card-header">
                 <h3>관리자 계정</h3>
-                <button className="add-button">
+                <button className="add-button" onClick={handleAddAdmin}>
                   <Plus size={16} />
                   <span>추가</span>
                 </button>
@@ -769,7 +1274,10 @@ const HospitalManagement = ({
             <div className="hospital-detail-card">
               <div className="hospital-detail-card-header">
                 <h3>최근 결제 내역</h3>
-                <button className="view-all-button">
+                <button
+                  className="view-all-button"
+                  onClick={handleViewAllPayments}
+                >
                   <span>전체 보기</span>
                   <ChevronRight size={16} />
                 </button>
@@ -831,6 +1339,7 @@ const HospitalManagement = ({
                       hospitalDetail.status === "active" ? "active" : ""
                     }`}
                     disabled={hospitalDetail.status === "active"}
+                    onClick={() => handleAccountAction("activate")}
                   >
                     <CheckCircle size={16} />
                     <span>계정 활성화</span>
@@ -840,6 +1349,7 @@ const HospitalManagement = ({
                       hospitalDetail.status === "suspended" ? "active" : ""
                     }`}
                     disabled={hospitalDetail.status === "suspended"}
+                    onClick={() => handleAccountAction("suspend")}
                   >
                     <AlertTriangle size={16} />
                     <span>계정 일시 중지</span>
@@ -849,11 +1359,15 @@ const HospitalManagement = ({
                       hospitalDetail.status === "inactive" ? "active" : ""
                     }`}
                     disabled={hospitalDetail.status === "inactive"}
+                    onClick={() => handleAccountAction("deactivate")}
                   >
                     <XCircle size={16} />
                     <span>계정 비활성화</span>
                   </button>
-                  <button className="account-action-button danger">
+                  <button
+                    className="account-action-button danger"
+                    onClick={() => handleAccountAction("delete")}
+                  >
                     <Trash2 size={16} />
                     <span>계정 삭제</span>
                   </button>
@@ -948,7 +1462,10 @@ const HospitalManagement = ({
                     </div>
                   </div>
                   <div className="subscription-actions">
-                    <button className="subscription-action-button">
+                    <button
+                      className="subscription-action-button"
+                      onClick={handleSubscriptionChange}
+                    >
                       <Edit size={16} />
                       <span>플랜 변경</span>
                     </button>
@@ -1028,6 +1545,52 @@ const HospitalManagement = ({
             </div>
           </div>
         </div>
+
+        {/* 모달들 */}
+        {showModal && (
+          <HospitalModal
+            hospital={selectedHospital}
+            onClose={handleCloseModal}
+            onSave={handleSaveHospital}
+            hospitalTypes={hospitalTypes}
+            regions={regions}
+          />
+        )}
+
+        {showAdminModal && (
+          <AdminModal
+            admin={selectedAdmin}
+            onClose={() => setShowAdminModal(false)}
+            onSave={handleSaveAdmin}
+            onDelete={handleDeleteAdmin}
+            isNew={!selectedAdmin}
+          />
+        )}
+
+        {showPaymentModal && (
+          <PaymentDetailModal
+            payments={hospitalDetail.payments}
+            onClose={() => setShowPaymentModal(false)}
+          />
+        )}
+
+        {showSubscriptionModal && (
+          <SubscriptionModal
+            subscription={{ plan: "premium", billing: "monthly" }}
+            onClose={() => setShowSubscriptionModal(false)}
+            onSave={handleSaveSubscription}
+          />
+        )}
+
+        {showConfirmModal && (
+          <ConfirmModal
+            title={confirmModalConfig.title}
+            message={confirmModalConfig.message}
+            type={confirmModalConfig.type}
+            onConfirm={confirmModalConfig.onConfirm}
+            onCancel={() => setShowConfirmModal(false)}
+          />
+        )}
       </div>
     );
   }

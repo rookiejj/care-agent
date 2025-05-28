@@ -859,8 +859,12 @@ const ContentModal = ({
           )}
 
           <div className="super-admin-content-modal-footer">
-            <div className="footer-actions">
-              <button type="button" className="cancel-button" onClick={onClose}>
+            <div className="action-buttons">
+              <button
+                type="button"
+                className="super-admin-content-modal-cancel-button"
+                onClick={onClose}
+              >
                 취소
               </button>
               <button type="submit" className="save-button">
