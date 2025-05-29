@@ -18,7 +18,14 @@ import {
 } from "lucide-react";
 import "./PaymentModal.css";
 
-const PaymentModal = ({ payment, onClose, onRefund }) => {
+const PaymentModal = ({
+  payment,
+  onClose,
+  onRefund,
+  onApprove,
+  onCancel,
+  onDownloadReceipt,
+}) => {
   const [activeTab, setActiveTab] = useState("details");
   const [showRefundForm, setShowRefundForm] = useState(false);
   const [refundData, setRefundData] = useState({
@@ -47,13 +54,99 @@ const PaymentModal = ({ payment, onClose, onRefund }) => {
     return new Intl.NumberFormat("ko-KR").format(amount);
   };
 
+  // 결제 승인 처리
+  const handleApprove = () => {
+    if (onApprove) {
+      onApprove(payment.id);
+    }
+    onClose();
+  };
+
+  // 환불 폼 표시 및 스크롤
+  const handleShowRefundForm = () => {
+    setShowRefundForm(true);
+    // 환불 폼이 렌더링된 후 스크롤
+    setTimeout(() => {
+      const refundForm = document.querySelector(".refund-form");
+      if (refundForm) {
+        refundForm.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+          inline: "nearest",
+        });
+      }
+    }, 100);
+  };
+
+  // 거래 취소 처리
+  const handleCancel = () => {
+    if (window.confirm("정말로 이 거래를 취소하시겠습니까?")) {
+      if (onCancel) {
+        onCancel(payment.id);
+      }
+      onClose();
+    }
+  };
+
+  // 영수증 다운로드 처리
+  const handleDownloadReceipt = () => {
+    if (onDownloadReceipt) {
+      onDownloadReceipt(payment.id);
+    } else {
+      // 기본 다운로드 로직
+      const receiptData = {
+        transactionId: payment.transactionId,
+        hospitalName: payment.hospitalName,
+        amount: payment.amount,
+        date: payment.date,
+        method: payment.method,
+        status: payment.status,
+        type: payment.type,
+      };
+
+      try {
+        const dataStr = JSON.stringify(receiptData, null, 2);
+        const dataUri =
+          "data:application/json;charset=utf-8," + encodeURIComponent(dataStr);
+        const exportFileDefaultName = `receipt_${payment.transactionId}.json`;
+        const linkElement = document.createElement("a");
+        linkElement.setAttribute("href", dataUri);
+        linkElement.setAttribute("download", exportFileDefaultName);
+        linkElement.click();
+
+        // 다운로드 성공 시에만 알림 표시 (파일 저장 대화상자와 별개)
+        // 사용자가 실제로 저장했는지 확인하기 어려우므로 알림 제거
+      } catch (error) {
+        alert("영수증 다운로드 중 오류가 발생했습니다.");
+      }
+    }
+  };
+
   // 환불 처리
   const handleRefund = () => {
-    if (onRefund) {
-      onRefund(payment.id, refundData.amount);
+    if (!refundData.reason) {
+      alert("환불 사유를 선택해주세요.");
+      return;
     }
-    setShowRefundForm(false);
-    onClose();
+    if (refundData.amount <= 0 || refundData.amount > payment.amount) {
+      alert("올바른 환불 금액을 입력해주세요.");
+      return;
+    }
+
+    if (
+      window.confirm(`${formatAmount(refundData.amount)}원을 환불하시겠습니까?`)
+    ) {
+      if (onRefund) {
+        onRefund(
+          payment.id,
+          refundData.amount,
+          refundData.reason,
+          refundData.note
+        );
+      }
+      setShowRefundForm(false);
+      onClose();
+    }
   };
 
   // 환불 폼 데이터 변경
@@ -167,7 +260,7 @@ const PaymentModal = ({ payment, onClose, onRefund }) => {
 
         <div className="payment-modal-content">
           {activeTab === "details" && (
-            <>
+            <div className="payment-modal-details-content">
               <div className="payment-modal-section">
                 <h3 className="payment-section-title">
                   <Receipt size={20} />
@@ -262,6 +355,8 @@ const PaymentModal = ({ payment, onClose, onRefund }) => {
                         ? "신용카드"
                         : payment.method === "bank"
                         ? "계좌이체"
+                        : payment.method === "manual"
+                        ? "수동정산"
                         : "가상계좌"}
                     </div>
                   </div>
@@ -295,6 +390,14 @@ const PaymentModal = ({ payment, onClose, onRefund }) => {
                       </div>
                     </div>
                   )}
+                  {payment.method === "manual" && (
+                    <div className="payment-method-item">
+                      <div className="payment-method-label">처리 방식</div>
+                      <div className="payment-method-value">
+                        관리자 수동 정산
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -304,6 +407,7 @@ const PaymentModal = ({ payment, onClose, onRefund }) => {
                   <button
                     className="payment-action-button primary"
                     disabled={payment.status !== "pending"}
+                    onClick={handleApprove}
                   >
                     <CheckCircle size={16} />
                     결제 승인
@@ -311,12 +415,15 @@ const PaymentModal = ({ payment, onClose, onRefund }) => {
                   <button
                     className="payment-action-button danger"
                     disabled={payment.status !== "completed"}
-                    onClick={() => setShowRefundForm(true)}
+                    onClick={handleShowRefundForm}
                   >
                     <RefreshCw size={16} />
                     환불 처리
                   </button>
-                  <button className="payment-action-button">
+                  <button
+                    className="payment-action-button"
+                    onClick={handleDownloadReceipt}
+                  >
                     <FileDown size={16} />
                     영수증 다운로드
                   </button>
@@ -326,6 +433,7 @@ const PaymentModal = ({ payment, onClose, onRefund }) => {
                       payment.status === "cancelled" ||
                       payment.status === "refunded"
                     }
+                    onClick={handleCancel}
                   >
                     <XCircle size={16} />
                     거래 취소
@@ -347,7 +455,10 @@ const PaymentModal = ({ payment, onClose, onRefund }) => {
                         className="refund-form-input"
                         value={refundData.amount}
                         onChange={(e) =>
-                          handleRefundChange("amount", parseInt(e.target.value))
+                          handleRefundChange(
+                            "amount",
+                            parseInt(e.target.value) || 0
+                          )
                         }
                         max={payment.amount}
                         min={0}
@@ -402,7 +513,7 @@ const PaymentModal = ({ payment, onClose, onRefund }) => {
                   </div>
                 </div>
               )}
-            </>
+            </div>
           )}
 
           {activeTab === "breakdown" && (
@@ -439,7 +550,10 @@ const PaymentModal = ({ payment, onClose, onRefund }) => {
                 <div className="payment-breakdown-item">
                   <div className="payment-breakdown-label">실 정산 금액</div>
                   <div className="payment-breakdown-value">
-                    {formatAmount(payment.netAmount || payment.amount * 0.85)}원
+                    {formatAmount(
+                      payment.netAmount || Math.floor(payment.amount * 0.85)
+                    )}
+                    원
                   </div>
                 </div>
               </div>
@@ -473,7 +587,10 @@ const PaymentModal = ({ payment, onClose, onRefund }) => {
                 <div className="settlement-item">
                   <div className="settlement-label">정산 금액</div>
                   <div className="settlement-value">
-                    {formatAmount(payment.netAmount || payment.amount * 0.85)}원
+                    {formatAmount(
+                      payment.netAmount || Math.floor(payment.amount * 0.85)
+                    )}
+                    원
                   </div>
                 </div>
                 <div className="settlement-item">
