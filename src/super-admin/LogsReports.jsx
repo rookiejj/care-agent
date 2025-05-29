@@ -31,9 +31,23 @@ import {
   BarChart3,
   PieChart,
   LineChart,
+  Bell,
+  Settings,
+  RefreshCw,
+  FileDown,
+  FileText,
+  Code,
 } from "lucide-react";
 import "./LogsReports.css";
 import LogDetailModal from "./components/LogDetailModal";
+import {
+  ReportGenerationModal,
+  AlertRuleModal,
+  CustomReportModal,
+  ReportScheduleModal,
+  LogExportModal,
+  SystemMaintenanceModal,
+} from "./components/LogsReportsModals";
 
 const LogsReports = ({ viewMode = "list", itemId, onBack, onViewDetail }) => {
   const [logs, setLogs] = useState([]);
@@ -50,6 +64,16 @@ const LogsReports = ({ viewMode = "list", itemId, onBack, onViewDetail }) => {
     category: "all",
     dateRange: "all",
   });
+
+  // 모달 상태들
+  const [showReportGenerationModal, setShowReportGenerationModal] =
+    useState(false);
+  const [showAlertRuleModal, setShowAlertRuleModal] = useState(false);
+  const [showCustomReportModal, setShowCustomReportModal] = useState(false);
+  const [showReportScheduleModal, setShowReportScheduleModal] = useState(false);
+  const [showLogExportModal, setShowLogExportModal] = useState(false);
+  const [showSystemMaintenanceModal, setShowSystemMaintenanceModal] =
+    useState(false);
 
   // 시스템 상태 데이터
   const [systemStatus, setSystemStatus] = useState({
@@ -166,14 +190,305 @@ const LogsReports = ({ viewMode = "list", itemId, onBack, onViewDetail }) => {
     setCurrentPage(page);
   };
 
+  // 보고서 생성 처리
   const handleReportGenerate = (reportType) => {
-    // 보고서 생성 로직
     console.log("보고서 생성:", reportType);
+
+    // 상태 업데이트 시뮬레이션
+    setReports((prevReports) =>
+      prevReports.map((report) =>
+        report.type === reportType
+          ? {
+              ...report,
+              status: "generating",
+              lastGenerated: new Date().toISOString(),
+            }
+          : report
+      )
+    );
+
+    // 3초 후 완료 상태로 변경
+    setTimeout(() => {
+      setReports((prevReports) =>
+        prevReports.map((report) =>
+          report.type === reportType ? { ...report, status: "ready" } : report
+        )
+      );
+      alert(`${reportType} 보고서가 생성되었습니다.`);
+    }, 3000);
   };
 
+  // 보고서 다운로드 처리
   const handleReportDownload = (reportId) => {
-    // 보고서 다운로드 로직
-    console.log("보고서 다운로드:", reportId);
+    const report = reports.find((r) => r.id === reportId);
+    if (!report) return;
+
+    try {
+      // 보고서 데이터 생성
+      const reportData = {
+        title: report.title,
+        type: report.type,
+        generatedAt: new Date().toISOString(),
+        data: {
+          ...report.stats,
+          period: "지난 30일",
+          totalRecords: Math.floor(Math.random() * 10000) + 1000,
+        },
+      };
+
+      // JSON 파일로 다운로드
+      const dataStr = JSON.stringify(reportData, null, 2);
+      const dataUri =
+        "data:application/json;charset=utf-8," + encodeURIComponent(dataStr);
+      const exportFileDefaultName = `${report.type}_report_${
+        new Date().toISOString().split("T")[0]
+      }.json`;
+
+      const linkElement = document.createElement("a");
+      linkElement.setAttribute("href", dataUri);
+      linkElement.setAttribute("download", exportFileDefaultName);
+      linkElement.click();
+
+      console.log("보고서 다운로드:", reportId);
+    } catch (error) {
+      alert("보고서 다운로드 중 오류가 발생했습니다.");
+    }
+  };
+
+  // 로그 내보내기 처리
+  const handleLogExport = () => {
+    setShowLogExportModal(true);
+  };
+
+  // 실제 로그 내보내기 실행
+  const handleExecuteLogExport = (exportConfig) => {
+    try {
+      let exportLogs = [...filteredLogs];
+
+      // 날짜 범위 필터링
+      if (exportConfig.dateRange !== "all") {
+        const now = new Date();
+        const days = {
+          "1day": 1,
+          "7days": 7,
+          "30days": 30,
+          "90days": 90,
+        }[exportConfig.dateRange];
+
+        if (days) {
+          const cutoffDate = new Date(
+            now.getTime() - days * 24 * 60 * 60 * 1000
+          );
+          exportLogs = exportLogs.filter(
+            (log) => new Date(log.timestamp) >= cutoffDate
+          );
+        }
+      }
+
+      // 레벨 필터링
+      if (exportConfig.levels.length > 0) {
+        exportLogs = exportLogs.filter((log) =>
+          exportConfig.levels.includes(log.level)
+        );
+      }
+
+      // 카테고리 필터링
+      if (exportConfig.categories.length > 0) {
+        exportLogs = exportLogs.filter((log) =>
+          exportConfig.categories.includes(log.category)
+        );
+      }
+
+      // 필드 선택
+      const exportData = exportLogs.map((log) => {
+        const filtered = {};
+        exportConfig.fields.forEach((field) => {
+          if (log[field] !== undefined) {
+            filtered[field] = log[field];
+          }
+        });
+        return filtered;
+      });
+
+      // 파일 다운로드
+      let dataStr, mimeType, fileName;
+
+      if (exportConfig.format === "json") {
+        dataStr = JSON.stringify(exportData, null, 2);
+        mimeType = "application/json";
+        fileName = `logs_export_${new Date().toISOString().split("T")[0]}.json`;
+      } else if (exportConfig.format === "csv") {
+        // CSV 변환
+        if (exportData.length > 0) {
+          const headers = Object.keys(exportData[0]).join(",");
+          const rows = exportData.map((row) =>
+            Object.values(row)
+              .map((val) =>
+                typeof val === "string" && val.includes(",") ? `"${val}"` : val
+              )
+              .join(",")
+          );
+          dataStr = [headers, ...rows].join("\n");
+        } else {
+          dataStr = "";
+        }
+        mimeType = "text/csv";
+        fileName = `logs_export_${new Date().toISOString().split("T")[0]}.csv`;
+      }
+
+      const dataUri =
+        `data:${mimeType};charset=utf-8,` + encodeURIComponent(dataStr);
+      const linkElement = document.createElement("a");
+      linkElement.setAttribute("href", dataUri);
+      linkElement.setAttribute("download", fileName);
+      linkElement.click();
+
+      alert(`${exportData.length}건의 로그가 내보내기 되었습니다.`);
+    } catch (error) {
+      alert("로그 내보내기 중 오류가 발생했습니다.");
+    }
+  };
+
+  // 알림 설정 처리
+  const handleAlertSettings = () => {
+    setShowAlertRuleModal(true);
+  };
+
+  // 알림 규칙 저장
+  const handleSaveAlertRule = (alertRule) => {
+    console.log("알림 규칙 저장:", alertRule);
+    alert("알림 규칙이 저장되었습니다.");
+  };
+
+  // 커스텀 보고서 생성
+  const handleCreateCustomReport = () => {
+    setShowCustomReportModal(true);
+  };
+
+  // 커스텀 보고서 저장
+  const handleSaveCustomReport = (reportConfig) => {
+    const newReport = {
+      id: reports.length + 1,
+      title: reportConfig.name,
+      description: reportConfig.description,
+      type: "custom",
+      status: "ready",
+      icon: "blue",
+      stats: {
+        생성일: new Date().toLocaleDateString(),
+        조건: reportConfig.conditions.length + "개",
+        필드: reportConfig.fields.length + "개",
+      },
+      lastGenerated: new Date().toISOString(),
+      schedule: reportConfig.schedule || "수동 실행",
+    };
+
+    setReports((prevReports) => [...prevReports, newReport]);
+    alert("커스텀 보고서가 생성되었습니다.");
+  };
+
+  // 보고서 스케줄 설정
+  const handleReportSchedule = () => {
+    setShowReportScheduleModal(true);
+  };
+
+  // 스케줄 저장
+  const handleSaveReportSchedule = (schedules) => {
+    console.log("보고서 스케줄 저장:", schedules);
+    alert("보고서 스케줄이 저장되었습니다.");
+  };
+
+  // 시스템 상태 보고서 다운로드
+  const handleSystemStatusReport = () => {
+    try {
+      const statusReport = {
+        title: "시스템 상태 보고서",
+        generatedAt: new Date().toISOString(),
+        systemStatus: systemStatus,
+        summary: {
+          healthyServices: Object.values(systemStatus).filter(
+            (s) => s.status === "healthy"
+          ).length,
+          warningServices: Object.values(systemStatus).filter(
+            (s) => s.status === "warning"
+          ).length,
+          criticalServices: Object.values(systemStatus).filter(
+            (s) => s.status === "critical"
+          ).length,
+        },
+        recommendations: [
+          "API 서비스 성능 최적화 필요",
+          "정기적인 시스템 모니터링 유지",
+          "저장소 용량 확장 검토",
+        ],
+      };
+
+      const dataStr = JSON.stringify(statusReport, null, 2);
+      const dataUri =
+        "data:application/json;charset=utf-8," + encodeURIComponent(dataStr);
+      const fileName = `system_status_report_${
+        new Date().toISOString().split("T")[0]
+      }.json`;
+
+      const linkElement = document.createElement("a");
+      linkElement.setAttribute("href", dataUri);
+      linkElement.setAttribute("download", fileName);
+      linkElement.click();
+
+      console.log("시스템 상태 보고서 다운로드 완료");
+    } catch (error) {
+      alert("시스템 상태 보고서 다운로드 중 오류가 발생했습니다.");
+    }
+  };
+
+  // 시스템 유지보수
+  const handleSystemMaintenance = () => {
+    setShowSystemMaintenanceModal(true);
+  };
+
+  // 유지보수 실행
+  const handleExecuteMaintenance = (maintenanceConfig) => {
+    console.log("시스템 유지보수 실행:", maintenanceConfig);
+
+    // 유지보수 실행 시뮬레이션
+    alert(
+      `${maintenanceConfig.type} 유지보수가 예약되었습니다. 예정 시간: ${maintenanceConfig.scheduledTime}`
+    );
+  };
+
+  // 보고서 생성 모달 열기
+  const handleOpenReportModal = (reportType) => {
+    setShowReportGenerationModal({ isOpen: true, reportType });
+  };
+
+  // 보고서 생성 실행
+  const handleExecuteReportGeneration = (config) => {
+    console.log("보고서 생성 실행:", config);
+
+    // 해당 보고서 상태를 생성 중으로 변경
+    setReports((prevReports) =>
+      prevReports.map((report) =>
+        report.type === config.reportType
+          ? { ...report, status: "generating" }
+          : report
+      )
+    );
+
+    // 3초 후 완료 상태로 변경
+    setTimeout(() => {
+      setReports((prevReports) =>
+        prevReports.map((report) =>
+          report.type === config.reportType
+            ? {
+                ...report,
+                status: "ready",
+                lastGenerated: new Date().toISOString(),
+              }
+            : report
+        )
+      );
+      alert(`${config.reportType} 보고서가 생성되었습니다.`);
+    }, 3000);
   };
 
   // 페이지네이션 계산
@@ -556,11 +871,17 @@ const LogsReports = ({ viewMode = "list", itemId, onBack, onViewDetail }) => {
               <h3 className="logs-list-title">시스템 보고서</h3>
             </div>
             <div className="logs-action-buttons">
-              <button className="super-admin-button super-admin-button-secondary">
+              <button
+                className="super-admin-button super-admin-button-secondary"
+                onClick={handleReportSchedule}
+              >
                 <Calendar size={16} />
                 스케줄 설정
               </button>
-              <button className="super-admin-button super-admin-button-primary">
+              <button
+                className="super-admin-button super-admin-button-primary"
+                onClick={handleCreateCustomReport}
+              >
                 <Plus size={16} />
                 커스텀 보고서
               </button>
@@ -585,6 +906,7 @@ const LogsReports = ({ viewMode = "list", itemId, onBack, onViewDetail }) => {
                     {report.type === "security" && <Shield size={24} />}
                     {report.type === "performance" && <Activity size={24} />}
                     {report.type === "analytics" && <PieChart size={24} />}
+                    {report.type === "custom" && <FileText size={24} />}
                   </div>
                   <div className="report-card-info">
                     <h4 className="report-card-title">{report.title}</h4>
@@ -594,7 +916,10 @@ const LogsReports = ({ viewMode = "list", itemId, onBack, onViewDetail }) => {
                   </div>
                 </div>
                 <div className="report-card-content">
-                  <div className="report-card-stats">
+                  <div
+                    className="report-card-stats"
+                    data-count={Object.keys(report.stats).length}
+                  >
                     {Object.entries(report.stats).map(([key, value]) => (
                       <div key={key} className="report-stat">
                         <h5 className="report-stat-value">{value}</h5>
@@ -602,16 +927,11 @@ const LogsReports = ({ viewMode = "list", itemId, onBack, onViewDetail }) => {
                       </div>
                     ))}
                   </div>
-                  <div
-                    style={{
-                      fontSize: "0.75rem",
-                      color: "#6b7280",
-                      marginBottom: "1rem",
-                    }}
-                  >
-                    마지막 생성: {formatRelativeTime(report.lastGenerated)}
+                  <div className="report-meta-info">
+                    <strong>마지막 생성:</strong>{" "}
+                    {formatRelativeTime(report.lastGenerated)}
                     <br />
-                    스케줄: {report.schedule}
+                    <strong>스케줄:</strong> {report.schedule}
                   </div>
                   <div className="report-card-actions">
                     <button
@@ -624,7 +944,8 @@ const LogsReports = ({ viewMode = "list", itemId, onBack, onViewDetail }) => {
                     </button>
                     <button
                       className="report-action-button primary"
-                      onClick={() => handleReportGenerate(report.type)}
+                      onClick={() => handleOpenReportModal(report.type)}
+                      disabled={report.status === "generating"}
                     >
                       <FileBarChart size={16} />
                       새로 생성
@@ -642,10 +963,22 @@ const LogsReports = ({ viewMode = "list", itemId, onBack, onViewDetail }) => {
         <div>
           <div className="logs-list-header">
             <h3 className="logs-list-title">시스템 상태 모니터링</h3>
-            <button className="super-admin-button super-admin-button-secondary">
-              <Download size={16} />
-              상태 보고서
-            </button>
+            <div style={{ display: "flex", gap: "0.75rem" }}>
+              <button
+                className="super-admin-button super-admin-button-secondary"
+                onClick={handleSystemMaintenance}
+              >
+                <Settings size={16} />
+                시스템 유지보수
+              </button>
+              <button
+                className="super-admin-button super-admin-button-secondary"
+                onClick={handleSystemStatusReport}
+              >
+                <Download size={16} />
+                상태 보고서
+              </button>
+            </div>
           </div>
 
           <div className="system-status-grid">
@@ -741,11 +1074,17 @@ const LogsReports = ({ viewMode = "list", itemId, onBack, onViewDetail }) => {
             </div>
 
             <div className="logs-action-buttons">
-              <button className="super-admin-button super-admin-button-secondary">
+              <button
+                className="super-admin-button super-admin-button-secondary"
+                onClick={handleLogExport}
+              >
                 <Download size={16} />
                 로그 내보내기
               </button>
-              <button className="super-admin-button super-admin-button-secondary">
+              <button
+                className="super-admin-button super-admin-button-secondary"
+                onClick={handleAlertSettings}
+              >
                 <AlertTriangle size={16} />
                 알림 설정
               </button>
@@ -1058,8 +1397,52 @@ const LogsReports = ({ viewMode = "list", itemId, onBack, onViewDetail }) => {
         </div>
       )}
 
+      {/* 모든 모달들 */}
       {showLogModal && selectedLog && (
         <LogDetailModal log={selectedLog} onClose={handleCloseLogModal} />
+      )}
+
+      {showReportGenerationModal && showReportGenerationModal.isOpen && (
+        <ReportGenerationModal
+          reportType={showReportGenerationModal.reportType}
+          onClose={() => setShowReportGenerationModal(false)}
+          onGenerate={handleExecuteReportGeneration}
+        />
+      )}
+
+      {showAlertRuleModal && (
+        <AlertRuleModal
+          onClose={() => setShowAlertRuleModal(false)}
+          onSave={handleSaveAlertRule}
+        />
+      )}
+
+      {showCustomReportModal && (
+        <CustomReportModal
+          onClose={() => setShowCustomReportModal(false)}
+          onSave={handleSaveCustomReport}
+        />
+      )}
+
+      {showReportScheduleModal && (
+        <ReportScheduleModal
+          onClose={() => setShowReportScheduleModal(false)}
+          onSave={handleSaveReportSchedule}
+        />
+      )}
+
+      {showLogExportModal && (
+        <LogExportModal
+          onClose={() => setShowLogExportModal(false)}
+          onExport={handleExecuteLogExport}
+        />
+      )}
+
+      {showSystemMaintenanceModal && (
+        <SystemMaintenanceModal
+          onClose={() => setShowSystemMaintenanceModal(false)}
+          onExecute={handleExecuteMaintenance}
+        />
       )}
     </div>
   );
