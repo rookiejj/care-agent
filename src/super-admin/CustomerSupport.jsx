@@ -42,9 +42,700 @@ import {
   Stethoscope,
   Heart,
   AlertCircle,
+  X,
+  Save,
 } from "lucide-react";
 import "./CustomerSupport.css";
 import SupportModal from "./components/SupportModal";
+
+// 새 문의 추가 모달 컴포넌트
+const AddInquiryModal = ({ onClose, onSave, assignees }) => {
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    priority: "보통",
+    category: "일반문의",
+    userType: "환자",
+    customerName: "",
+    customerEmail: "",
+    customerPhone: "",
+    hospitalName: "",
+    assignedTo: "",
+  });
+
+  const [errors, setErrors] = useState({});
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+
+    // 입력 값이 변경되면 해당 필드의 오류 메시지 제거
+    if (errors[name]) {
+      setErrors({
+        ...errors,
+        [name]: "",
+      });
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!formData.title.trim()) {
+      newErrors.title = "문의 제목을 입력해주세요";
+    }
+
+    if (!formData.description.trim()) {
+      newErrors.description = "문의 내용을 입력해주세요";
+    }
+
+    if (!formData.customerName.trim()) {
+      newErrors.customerName = "문의자명을 입력해주세요";
+    }
+
+    if (!formData.customerEmail.trim()) {
+      newErrors.customerEmail = "이메일을 입력해주세요";
+    } else if (!/\S+@\S+\.\S+/.test(formData.customerEmail)) {
+      newErrors.customerEmail = "올바른 이메일 형식이 아닙니다";
+    }
+
+    if (!formData.customerPhone.trim()) {
+      newErrors.customerPhone = "전화번호를 입력해주세요";
+    } else if (!/^\d{3}-\d{3,4}-\d{4}$/.test(formData.customerPhone)) {
+      newErrors.customerPhone =
+        "올바른 전화번호 형식이 아닙니다 (예: 010-1234-5678)";
+    }
+
+    if (formData.userType !== "환자" && !formData.hospitalName.trim()) {
+      newErrors.hospitalName = "병원명을 입력해주세요";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      onSave(formData);
+    }
+  };
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="support-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="support-modal-header">
+          <div className="support-modal-header-left">
+            <div className="support-modal-title-section">
+              <h2 className="support-modal-title">새 문의 등록</h2>
+              <div className="support-modal-subtitle">
+                고객 문의를 직접 등록합니다
+              </div>
+            </div>
+          </div>
+          <div className="support-modal-header-right">
+            <button className="modal-close-button" onClick={onClose}>
+              <X size={20} />
+            </button>
+          </div>
+        </div>
+
+        <form onSubmit={handleSubmit} className="support-modal-content">
+          <div
+            style={{
+              padding: "1.5rem",
+              display: "flex",
+              flexDirection: "column",
+              gap: "1rem",
+            }}
+          >
+            <div className="form-row" style={{ display: "flex", gap: "1rem" }}>
+              <div className="form-group" style={{ flex: 1 }}>
+                <label htmlFor="title">
+                  문의 제목 <span style={{ color: "#ef4444" }}>*</span>
+                </label>
+                <input
+                  type="text"
+                  id="title"
+                  name="title"
+                  value={formData.title}
+                  onChange={handleChange}
+                  className={errors.title ? "form-input error" : "form-input"}
+                  placeholder="문의 제목을 입력하세요"
+                  style={{
+                    padding: "0.625rem 0.75rem",
+                    border: "1px solid #e5e7eb",
+                    borderRadius: "0.375rem",
+                    fontSize: "0.875rem",
+                    transition: "all 0.2s",
+                    borderColor: errors.title ? "#ef4444" : "#e5e7eb",
+                  }}
+                />
+                {errors.title && (
+                  <div
+                    style={{
+                      fontSize: "0.75rem",
+                      color: "#ef4444",
+                      marginTop: "0.25rem",
+                    }}
+                  >
+                    {errors.title}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="description">
+                문의 내용 <span style={{ color: "#ef4444" }}>*</span>
+              </label>
+              <textarea
+                id="description"
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                className={
+                  errors.description ? "form-input error" : "form-input"
+                }
+                placeholder="문의 내용을 상세히 입력하세요"
+                rows={4}
+                style={{
+                  width: "100%",
+                  padding: "0.625rem 0.75rem",
+                  border: "1px solid #e5e7eb",
+                  borderRadius: "0.375rem",
+                  fontSize: "0.875rem",
+                  resize: "vertical",
+                  fontFamily: "inherit",
+                  transition: "all 0.2s",
+                  borderColor: errors.description ? "#ef4444" : "#e5e7eb",
+                }}
+              />
+              {errors.description && (
+                <div
+                  style={{
+                    fontSize: "0.75rem",
+                    color: "#ef4444",
+                    marginTop: "0.25rem",
+                  }}
+                >
+                  {errors.description}
+                </div>
+              )}
+            </div>
+
+            <div className="form-row" style={{ display: "flex", gap: "1rem" }}>
+              <div className="form-group" style={{ flex: 1 }}>
+                <label htmlFor="priority">우선순위</label>
+                <select
+                  id="priority"
+                  name="priority"
+                  value={formData.priority}
+                  onChange={handleChange}
+                  className="form-input"
+                  style={{
+                    padding: "0.625rem 0.75rem",
+                    border: "1px solid #e5e7eb",
+                    borderRadius: "0.375rem",
+                    fontSize: "0.875rem",
+                    backgroundColor: "white",
+                  }}
+                >
+                  <option value="낮음">낮음</option>
+                  <option value="보통">보통</option>
+                  <option value="높음">높음</option>
+                  <option value="긴급">긴급</option>
+                </select>
+              </div>
+
+              <div className="form-group" style={{ flex: 1 }}>
+                <label htmlFor="category">카테고리</label>
+                <select
+                  id="category"
+                  name="category"
+                  value={formData.category}
+                  onChange={handleChange}
+                  className="form-input"
+                  style={{
+                    padding: "0.625rem 0.75rem",
+                    border: "1px solid #e5e7eb",
+                    borderRadius: "0.375rem",
+                    fontSize: "0.875rem",
+                    backgroundColor: "white",
+                  }}
+                >
+                  <option value="기술지원">기술지원</option>
+                  <option value="결제/정산">결제/정산</option>
+                  <option value="계정관리">계정관리</option>
+                  <option value="버그신고">버그신고</option>
+                  <option value="기능요청">기능요청</option>
+                  <option value="일반문의">일반문의</option>
+                </select>
+              </div>
+
+              <div className="form-group" style={{ flex: 1 }}>
+                <label htmlFor="userType">사용자 유형</label>
+                <select
+                  id="userType"
+                  name="userType"
+                  value={formData.userType}
+                  onChange={handleChange}
+                  className="form-input"
+                  style={{
+                    padding: "0.625rem 0.75rem",
+                    border: "1px solid #e5e7eb",
+                    borderRadius: "0.375rem",
+                    fontSize: "0.875rem",
+                    backgroundColor: "white",
+                  }}
+                >
+                  <option value="환자">환자</option>
+                  <option value="병원관리자">병원관리자</option>
+                  <option value="의사">의사</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="form-row" style={{ display: "flex", gap: "1rem" }}>
+              <div className="form-group" style={{ flex: 1 }}>
+                <label htmlFor="customerName">
+                  문의자명 <span style={{ color: "#ef4444" }}>*</span>
+                </label>
+                <input
+                  type="text"
+                  id="customerName"
+                  name="customerName"
+                  value={formData.customerName}
+                  onChange={handleChange}
+                  className={
+                    errors.customerName ? "form-input error" : "form-input"
+                  }
+                  placeholder="문의자 이름"
+                  style={{
+                    padding: "0.625rem 0.75rem",
+                    border: "1px solid #e5e7eb",
+                    borderRadius: "0.375rem",
+                    fontSize: "0.875rem",
+                    transition: "all 0.2s",
+                    borderColor: errors.customerName ? "#ef4444" : "#e5e7eb",
+                  }}
+                />
+                {errors.customerName && (
+                  <div
+                    style={{
+                      fontSize: "0.75rem",
+                      color: "#ef4444",
+                      marginTop: "0.25rem",
+                    }}
+                  >
+                    {errors.customerName}
+                  </div>
+                )}
+              </div>
+
+              <div className="form-group" style={{ flex: 1 }}>
+                <label htmlFor="customerEmail">
+                  이메일 <span style={{ color: "#ef4444" }}>*</span>
+                </label>
+                <input
+                  type="email"
+                  id="customerEmail"
+                  name="customerEmail"
+                  value={formData.customerEmail}
+                  onChange={handleChange}
+                  className={
+                    errors.customerEmail ? "form-input error" : "form-input"
+                  }
+                  placeholder="example@email.com"
+                  style={{
+                    padding: "0.625rem 0.75rem",
+                    border: "1px solid #e5e7eb",
+                    borderRadius: "0.375rem",
+                    fontSize: "0.875rem",
+                    transition: "all 0.2s",
+                    borderColor: errors.customerEmail ? "#ef4444" : "#e5e7eb",
+                  }}
+                />
+                {errors.customerEmail && (
+                  <div
+                    style={{
+                      fontSize: "0.75rem",
+                      color: "#ef4444",
+                      marginTop: "0.25rem",
+                    }}
+                  >
+                    {errors.customerEmail}
+                  </div>
+                )}
+              </div>
+
+              <div className="form-group" style={{ flex: 1 }}>
+                <label htmlFor="customerPhone">
+                  전화번호 <span style={{ color: "#ef4444" }}>*</span>
+                </label>
+                <input
+                  type="text"
+                  id="customerPhone"
+                  name="customerPhone"
+                  value={formData.customerPhone}
+                  onChange={handleChange}
+                  className={
+                    errors.customerPhone ? "form-input error" : "form-input"
+                  }
+                  placeholder="010-1234-5678"
+                  style={{
+                    padding: "0.625rem 0.75rem",
+                    border: "1px solid #e5e7eb",
+                    borderRadius: "0.375rem",
+                    fontSize: "0.875rem",
+                    transition: "all 0.2s",
+                    borderColor: errors.customerPhone ? "#ef4444" : "#e5e7eb",
+                  }}
+                />
+                {errors.customerPhone && (
+                  <div
+                    style={{
+                      fontSize: "0.75rem",
+                      color: "#ef4444",
+                      marginTop: "0.25rem",
+                    }}
+                  >
+                    {errors.customerPhone}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {formData.userType !== "환자" && (
+              <div className="form-group">
+                <label htmlFor="hospitalName">
+                  병원명 <span style={{ color: "#ef4444" }}>*</span>
+                </label>
+                <input
+                  type="text"
+                  id="hospitalName"
+                  name="hospitalName"
+                  value={formData.hospitalName}
+                  onChange={handleChange}
+                  className={
+                    errors.hospitalName ? "form-input error" : "form-input"
+                  }
+                  placeholder="소속 병원명을 입력하세요"
+                  style={{
+                    padding: "0.625rem 0.75rem",
+                    border: "1px solid #e5e7eb",
+                    borderRadius: "0.375rem",
+                    fontSize: "0.875rem",
+                    transition: "all 0.2s",
+                    borderColor: errors.hospitalName ? "#ef4444" : "#e5e7eb",
+                  }}
+                />
+                {errors.hospitalName && (
+                  <div
+                    style={{
+                      fontSize: "0.75rem",
+                      color: "#ef4444",
+                      marginTop: "0.25rem",
+                    }}
+                  >
+                    {errors.hospitalName}
+                  </div>
+                )}
+              </div>
+            )}
+
+            <div className="form-group">
+              <label htmlFor="assignedTo">담당자 배정</label>
+              <select
+                id="assignedTo"
+                name="assignedTo"
+                value={formData.assignedTo}
+                onChange={handleChange}
+                className="form-input"
+                style={{
+                  padding: "0.625rem 0.75rem",
+                  border: "1px solid #e5e7eb",
+                  borderRadius: "0.375rem",
+                  fontSize: "0.875rem",
+                  backgroundColor: "white",
+                }}
+              >
+                <option value="">미배정</option>
+                {assignees.map((assignee) => (
+                  <option key={assignee} value={assignee}>
+                    {assignee}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+        </form>
+
+        <div className="support-modal-footer">
+          <div className="support-modal-footer-actions">
+            <button
+              type="button"
+              className="support-modal-footer-button secondary"
+              onClick={onClose}
+            >
+              취소
+            </button>
+            <button
+              type="submit"
+              className="support-modal-footer-button primary"
+              onClick={handleSubmit}
+            >
+              <Save size={16} />
+              문의 등록
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// 내보내기 모달 컴포넌트
+const ExportModal = ({ onClose, onExport, inquiriesCount }) => {
+  const [exportOptions, setExportOptions] = useState({
+    format: "excel",
+    dateRange: "all",
+    status: "all",
+    includeMessages: false,
+    includeAttachments: false,
+  });
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setExportOptions({
+      ...exportOptions,
+      [name]: type === "checkbox" ? checked : value,
+    });
+  };
+
+  const handleExport = () => {
+    onExport(exportOptions);
+  };
+
+  const getFilteredCount = () => {
+    // 실제로는 필터링된 개수를 계산해야 하지만, 여기서는 간단히 전체 개수 사용
+    return inquiriesCount;
+  };
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div
+        className="support-modal"
+        onClick={(e) => e.stopPropagation()}
+        style={{ maxWidth: "500px" }}
+      >
+        <div className="support-modal-header">
+          <div className="support-modal-header-left">
+            <div className="support-modal-title-section">
+              <h2 className="support-modal-title">문의 데이터 내보내기</h2>
+              <div className="support-modal-subtitle">
+                고객 문의 데이터를 파일로 내보냅니다
+              </div>
+            </div>
+          </div>
+          <div className="support-modal-header-right">
+            <button className="modal-close-button" onClick={onClose}>
+              <X size={20} />
+            </button>
+          </div>
+        </div>
+
+        <div className="support-modal-content">
+          <div
+            style={{
+              padding: "1.5rem",
+              display: "flex",
+              flexDirection: "column",
+              gap: "1.5rem",
+            }}
+          >
+            <div className="form-group">
+              <label htmlFor="format">파일 형식</label>
+              <select
+                id="format"
+                name="format"
+                value={exportOptions.format}
+                onChange={handleChange}
+                className="form-input"
+                style={{
+                  padding: "0.625rem 0.75rem",
+                  border: "1px solid #e5e7eb",
+                  borderRadius: "0.375rem",
+                  fontSize: "0.875rem",
+                  backgroundColor: "white",
+                }}
+              >
+                <option value="excel">Excel (.xlsx)</option>
+                <option value="csv">CSV (.csv)</option>
+                <option value="pdf">PDF (.pdf)</option>
+              </select>
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="dateRange">기간</label>
+              <select
+                id="dateRange"
+                name="dateRange"
+                value={exportOptions.dateRange}
+                onChange={handleChange}
+                className="form-input"
+                style={{
+                  padding: "0.625rem 0.75rem",
+                  border: "1px solid #e5e7eb",
+                  borderRadius: "0.375rem",
+                  fontSize: "0.875rem",
+                  backgroundColor: "white",
+                }}
+              >
+                <option value="all">전체 기간</option>
+                <option value="today">오늘</option>
+                <option value="week">최근 1주일</option>
+                <option value="month">최근 1개월</option>
+                <option value="quarter">최근 3개월</option>
+                <option value="year">최근 1년</option>
+              </select>
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="status">상태</label>
+              <select
+                id="status"
+                name="status"
+                value={exportOptions.status}
+                onChange={handleChange}
+                className="form-input"
+                style={{
+                  padding: "0.625rem 0.75rem",
+                  border: "1px solid #e5e7eb",
+                  borderRadius: "0.375rem",
+                  fontSize: "0.875rem",
+                  backgroundColor: "white",
+                }}
+              >
+                <option value="all">모든 상태</option>
+                <option value="접수">접수</option>
+                <option value="처리중">처리중</option>
+                <option value="해결">해결</option>
+                <option value="종료">종료</option>
+                <option value="에스컬레이션">에스컬레이션</option>
+              </select>
+            </div>
+
+            <div className="form-group">
+              <label>추가 옵션</label>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.75rem",
+                  marginTop: "0.5rem",
+                }}
+              >
+                <label
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                    cursor: "pointer",
+                  }}
+                >
+                  <input
+                    type="checkbox"
+                    name="includeMessages"
+                    checked={exportOptions.includeMessages}
+                    onChange={handleChange}
+                    style={{ width: "1rem", height: "1rem" }}
+                  />
+                  <span style={{ fontSize: "0.875rem", color: "#4b5563" }}>
+                    대화 내역 포함
+                  </span>
+                </label>
+                <label
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                    cursor: "pointer",
+                  }}
+                >
+                  <input
+                    type="checkbox"
+                    name="includeAttachments"
+                    checked={exportOptions.includeAttachments}
+                    onChange={handleChange}
+                    style={{ width: "1rem", height: "1rem" }}
+                  />
+                  <span style={{ fontSize: "0.875rem", color: "#4b5563" }}>
+                    첨부파일 정보 포함
+                  </span>
+                </label>
+              </div>
+            </div>
+
+            <div
+              style={{
+                padding: "1rem",
+                backgroundColor: "#f9fafb",
+                border: "1px solid #e5e7eb",
+                borderRadius: "0.375rem",
+              }}
+            >
+              <div
+                style={{
+                  fontSize: "0.875rem",
+                  color: "#4b5563",
+                  marginBottom: "0.5rem",
+                }}
+              >
+                내보내기 요약
+              </div>
+              <div style={{ fontSize: "0.75rem", color: "#6b7280" }}>
+                • 형식: {exportOptions.format.toUpperCase()}
+              </div>
+              <div style={{ fontSize: "0.75rem", color: "#6b7280" }}>
+                • 예상 건수: {getFilteredCount()}건
+              </div>
+              <div style={{ fontSize: "0.75rem", color: "#6b7280" }}>
+                • 대화 내역: {exportOptions.includeMessages ? "포함" : "제외"}
+              </div>
+              <div style={{ fontSize: "0.75rem", color: "#6b7280" }}>
+                • 첨부파일: {exportOptions.includeAttachments ? "포함" : "제외"}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="support-modal-footer">
+          <div className="support-modal-footer-actions">
+            <button
+              type="button"
+              className="support-modal-footer-button secondary"
+              onClick={onClose}
+            >
+              취소
+            </button>
+            <button
+              type="button"
+              className="support-modal-footer-button primary"
+              onClick={handleExport}
+            >
+              <Download size={16} />
+              내보내기
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const CustomerSupport = () => {
   const [inquiries, setInquiries] = useState([]);
@@ -55,6 +746,8 @@ const CustomerSupport = () => {
   const [showFilters, setShowFilters] = useState(false);
   const [selectedInquiry, setSelectedInquiry] = useState(null);
   const [showSupportModal, setShowSupportModal] = useState(false);
+  const [showAddInquiryModal, setShowAddInquiryModal] = useState(false);
+  const [showExportModal, setShowExportModal] = useState(false);
   const [filterOptions, setFilterOptions] = useState({
     status: "all",
     priority: "all",
@@ -183,6 +876,492 @@ const CustomerSupport = () => {
     setFilteredInquiries(results);
     setCurrentPage(1);
   }, [searchTerm, filterOptions, inquiries]);
+
+  // 새 문의 추가 핸들러
+  const handleAddInquiry = (formData) => {
+    const newInquiry = {
+      id: inquiries.length + 1,
+      inquiryId: `INQ${String(inquiries.length + 1).padStart(6, "0")}`,
+      title: formData.title,
+      description: formData.description,
+      status: "접수",
+      priority: formData.priority,
+      category: formData.category,
+      userType: formData.userType,
+      userRole:
+        formData.userType === "환자"
+          ? "환자"
+          : formData.userType === "병원관리자"
+          ? "병원 관리자"
+          : "의사",
+      customerName: formData.customerName,
+      customerEmail: formData.customerEmail,
+      customerPhone: formData.customerPhone,
+      hospitalName: formData.userType === "환자" ? null : formData.hospitalName,
+      assignedTo: formData.assignedTo || null,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      responseTime: null,
+      satisfactionRating: null,
+      messages: [
+        {
+          id: 1,
+          sender: "customer",
+          content: formData.description,
+          timestamp: new Date().toISOString(),
+          attachments: [],
+          isInternal: false,
+        },
+      ],
+      attachments: [],
+      avatar: generateAvatar(formData.customerName),
+    };
+
+    setInquiries([newInquiry, ...inquiries]);
+
+    // 통계 업데이트
+    const updatedInquiries = [newInquiry, ...inquiries];
+    const updatedStats = calculateStats(updatedInquiries);
+    setSupportStats(updatedStats);
+
+    setShowAddInquiryModal(false);
+
+    // 성공 메시지 표시 (선택사항)
+    alert("새 문의가 성공적으로 등록되었습니다.");
+  };
+
+  // 내보내기 핸들러
+  const handleExport = async (exportOptions) => {
+    try {
+      let dataToExport = [...filteredInquiries];
+
+      // 날짜 범위 필터링
+      if (exportOptions.dateRange !== "all") {
+        const now = new Date();
+        const dateRangeMap = {
+          today: 1,
+          week: 7,
+          month: 30,
+          quarter: 90,
+          year: 365,
+        };
+        const days = dateRangeMap[exportOptions.dateRange];
+        if (days) {
+          const cutoffDate = new Date(
+            now.getTime() - days * 24 * 60 * 60 * 1000
+          );
+          dataToExport = dataToExport.filter(
+            (inquiry) => new Date(inquiry.createdAt) >= cutoffDate
+          );
+        }
+      }
+
+      // 상태 필터링
+      if (exportOptions.status !== "all") {
+        dataToExport = dataToExport.filter(
+          (inquiry) => inquiry.status === exportOptions.status
+        );
+      }
+
+      // 내보낼 데이터 구성
+      const exportData = dataToExport.map((inquiry) => {
+        const baseData = {
+          "문의 ID": inquiry.inquiryId,
+          제목: inquiry.title,
+          내용: inquiry.description,
+          상태: inquiry.status,
+          우선순위: inquiry.priority,
+          카테고리: inquiry.category,
+          "사용자 유형": inquiry.userType,
+          문의자명: inquiry.customerName,
+          이메일: inquiry.customerEmail,
+          전화번호: inquiry.customerPhone,
+          병원명: inquiry.hospitalName || "-",
+          담당자: inquiry.assignedTo || "미배정",
+          접수일: formatDate(inquiry.createdAt),
+          "최근 업데이트": formatDate(inquiry.updatedAt),
+          "응답 시간(시간)": inquiry.responseTime || "-",
+          만족도: inquiry.satisfactionRating || "-",
+          "첨부파일 수": inquiry.attachments.length,
+        };
+
+        // 대화 내역 포함 옵션
+        if (exportOptions.includeMessages) {
+          baseData["대화 수"] = inquiry.messages.length;
+          baseData["최근 메시지"] =
+            inquiry.messages[inquiry.messages.length - 1]?.content || "-";
+        }
+
+        // 첨부파일 정보 포함 옵션
+        if (
+          exportOptions.includeAttachments &&
+          inquiry.attachments.length > 0
+        ) {
+          baseData["첨부파일 목록"] = inquiry.attachments
+            .map((att) => att.name)
+            .join(", ");
+        }
+
+        return baseData;
+      });
+
+      // 모달을 먼저 닫기
+      setShowExportModal(false);
+
+      // 짧은 지연 후 파일 다운로드 시작
+      setTimeout(async () => {
+        try {
+          // 실제 파일 다운로드 처리 (Promise로 완료 대기)
+          if (exportOptions.format === "csv") {
+            await downloadCSV(exportData, "customer_inquiries");
+          } else if (exportOptions.format === "excel") {
+            await downloadExcel(exportData, "customer_inquiries");
+          } else if (exportOptions.format === "pdf") {
+            await downloadPDF(exportData, "customer_inquiries");
+          }
+
+          // 다운로드가 완전히 완료된 후 성공 메시지 표시
+          alert(
+            `${
+              dataToExport.length
+            }건의 문의 데이터가 ${exportOptions.format.toUpperCase()} 형식으로 내보내졌습니다.`
+          );
+        } catch (downloadError) {
+          console.error("다운로드 중 오류 발생:", downloadError);
+          // 취소된 경우가 아닌 실제 오류인 경우만 에러 메시지 표시
+          if (!downloadError.message.includes("취소")) {
+            alert("파일 다운로드 중 오류가 발생했습니다. 다시 시도해주세요.");
+          }
+          // 취소된 경우는 조용히 무시 (메시지 표시하지 않음)
+        }
+      }, 300);
+    } catch (error) {
+      console.error("내보내기 중 오류 발생:", error);
+      setShowExportModal(false);
+      alert("파일 내보내기 중 오류가 발생했습니다. 다시 시도해주세요.");
+    }
+  };
+
+  // CSV 다운로드 함수
+  const downloadCSV = (data, filename) => {
+    return new Promise((resolve, reject) => {
+      try {
+        if (data.length === 0) {
+          reject(new Error("내보낼 데이터가 없습니다."));
+          return;
+        }
+
+        const headers = Object.keys(data[0]);
+        const csvContent = [
+          headers.join(","),
+          ...data.map((row) =>
+            headers
+              .map((header) => {
+                const value = row[header];
+                // CSV에서 특수문자 처리
+                if (
+                  typeof value === "string" &&
+                  (value.includes(",") ||
+                    value.includes("\n") ||
+                    value.includes('"'))
+                ) {
+                  return `"${value.replace(/"/g, '""')}"`;
+                }
+                return value;
+              })
+              .join(",")
+          ),
+        ].join("\n");
+
+        // BOM 추가로 한글 인코딩 문제 해결
+        const BOM = "\uFEFF";
+        const blob = new Blob([BOM + csvContent], {
+          type: "text/csv;charset=utf-8;",
+        });
+        const link = document.createElement("a");
+
+        if (link.download !== undefined) {
+          const url = URL.createObjectURL(blob);
+          link.setAttribute("href", url);
+          link.setAttribute(
+            "download",
+            `${filename}_${new Date().toISOString().split("T")[0]}.csv`
+          );
+          link.style.visibility = "hidden";
+          document.body.appendChild(link);
+
+          let isDownloadStarted = false;
+          let focusTimeout;
+
+          const cleanup = (success = false) => {
+            if (focusTimeout) {
+              clearTimeout(focusTimeout);
+            }
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            if (success) {
+              resolve();
+            } else {
+              reject(new Error("다운로드가 취소되었습니다."));
+            }
+          };
+
+          // 다운로드 시작을 감지하기 위한 이벤트들
+          const handleDownloadStart = () => {
+            isDownloadStarted = true;
+          };
+
+          // 포커스 이벤트로 다이얼로그 완료 감지
+          const handleFocus = () => {
+            window.removeEventListener("focus", handleFocus);
+
+            // 다운로드가 시작되었다면 성공으로 간주
+            if (isDownloadStarted) {
+              focusTimeout = setTimeout(() => {
+                cleanup(true);
+              }, 1000);
+            } else {
+              // 다운로드가 시작되지 않았다면 취소로 간주
+              cleanup(false);
+            }
+          };
+
+          // beforeunload 이벤트로 다운로드 시작 감지
+          const handleBeforeUnload = () => {
+            isDownloadStarted = true;
+            window.removeEventListener("beforeunload", handleBeforeUnload);
+          };
+
+          window.addEventListener("focus", handleFocus);
+          window.addEventListener("beforeunload", handleBeforeUnload);
+
+          // 백업으로 10초 후 자동 완료 (취소로 간주)
+          setTimeout(() => {
+            window.removeEventListener("focus", handleFocus);
+            window.removeEventListener("beforeunload", handleBeforeUnload);
+            if (document.body.contains(link)) {
+              cleanup(false);
+            }
+          }, 10000);
+
+          link.click();
+        } else {
+          reject(new Error("브라우저에서 파일 다운로드를 지원하지 않습니다."));
+        }
+      } catch (error) {
+        reject(error);
+      }
+    });
+  };
+
+  // Excel 다운로드 함수 (간단한 구현)
+  const downloadExcel = (data, filename) => {
+    return new Promise((resolve, reject) => {
+      try {
+        if (data.length === 0) {
+          reject(new Error("내보낼 데이터가 없습니다."));
+          return;
+        }
+
+        const headers = Object.keys(data[0]);
+        const csvContent = [
+          headers.join(","),
+          ...data.map((row) =>
+            headers
+              .map((header) => {
+                const value = row[header];
+                if (
+                  typeof value === "string" &&
+                  (value.includes(",") ||
+                    value.includes("\n") ||
+                    value.includes('"'))
+                ) {
+                  return `"${value.replace(/"/g, '""')}"`;
+                }
+                return value;
+              })
+              .join(",")
+          ),
+        ].join("\n");
+
+        const BOM = "\uFEFF";
+        const blob = new Blob([BOM + csvContent], {
+          type: "application/vnd.ms-excel;charset=utf-8;",
+        });
+        const link = document.createElement("a");
+
+        if (link.download !== undefined) {
+          const url = URL.createObjectURL(blob);
+          link.setAttribute("href", url);
+          link.setAttribute(
+            "download",
+            `${filename}_${new Date().toISOString().split("T")[0]}.xlsx`
+          );
+          link.style.visibility = "hidden";
+          document.body.appendChild(link);
+
+          let isDownloadStarted = false;
+          let focusTimeout;
+
+          const cleanup = (success = false) => {
+            if (focusTimeout) {
+              clearTimeout(focusTimeout);
+            }
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            if (success) {
+              resolve();
+            } else {
+              reject(new Error("다운로드가 취소되었습니다."));
+            }
+          };
+
+          const handleDownloadStart = () => {
+            isDownloadStarted = true;
+          };
+
+          const handleFocus = () => {
+            window.removeEventListener("focus", handleFocus);
+
+            if (isDownloadStarted) {
+              focusTimeout = setTimeout(() => {
+                cleanup(true);
+              }, 1000);
+            } else {
+              cleanup(false);
+            }
+          };
+
+          const handleBeforeUnload = () => {
+            isDownloadStarted = true;
+            window.removeEventListener("beforeunload", handleBeforeUnload);
+          };
+
+          window.addEventListener("focus", handleFocus);
+          window.addEventListener("beforeunload", handleBeforeUnload);
+
+          setTimeout(() => {
+            window.removeEventListener("focus", handleFocus);
+            window.removeEventListener("beforeunload", handleBeforeUnload);
+            if (document.body.contains(link)) {
+              cleanup(false);
+            }
+          }, 10000);
+
+          link.click();
+        } else {
+          reject(new Error("브라우저에서 파일 다운로드를 지원하지 않습니다."));
+        }
+      } catch (error) {
+        reject(error);
+      }
+    });
+  };
+
+  // PDF 다운로드 함수 (간단한 구현)
+  const downloadPDF = (data, filename) => {
+    return new Promise((resolve, reject) => {
+      try {
+        if (data.length === 0) {
+          reject(new Error("내보낼 데이터가 없습니다."));
+          return;
+        }
+
+        const content = [
+          "고객 문의 데이터 내보내기",
+          `생성일: ${new Date().toLocaleString("ko-KR")}`,
+          `총 ${data.length}건의 문의`,
+          "=" * 50,
+          "",
+          ...data.map((row, index) =>
+            [
+              `${index + 1}. ${row["제목"]}`,
+              `   - 문의 ID: ${row["문의 ID"]}`,
+              `   - 상태: ${row["상태"]}`,
+              `   - 우선순위: ${row["우선순위"]}`,
+              `   - 카테고리: ${row["카테고리"]}`,
+              `   - 문의자: ${row["문의자명"]} (${row["사용자 유형"]})`,
+              `   - 이메일: ${row["이메일"]}`,
+              `   - 전화번호: ${row["전화번호"]}`,
+              `   - 병원명: ${row["병원명"]}`,
+              `   - 담당자: ${row["담당자"]}`,
+              `   - 접수일: ${row["접수일"]}`,
+              `   - 내용: ${row["내용"]}`,
+              "",
+            ].join("\n")
+          ),
+        ].join("\n");
+
+        const blob = new Blob([content], { type: "text/plain;charset=utf-8;" });
+        const link = document.createElement("a");
+
+        if (link.download !== undefined) {
+          const url = URL.createObjectURL(blob);
+          link.setAttribute("href", url);
+          link.setAttribute(
+            "download",
+            `${filename}_${new Date().toISOString().split("T")[0]}.txt`
+          );
+          link.style.visibility = "hidden";
+          document.body.appendChild(link);
+
+          let isDownloadStarted = false;
+          let focusTimeout;
+
+          const cleanup = (success = false) => {
+            if (focusTimeout) {
+              clearTimeout(focusTimeout);
+            }
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            if (success) {
+              resolve();
+            } else {
+              reject(new Error("다운로드가 취소되었습니다."));
+            }
+          };
+
+          const handleDownloadStart = () => {
+            isDownloadStarted = true;
+          };
+
+          const handleFocus = () => {
+            window.removeEventListener("focus", handleFocus);
+
+            if (isDownloadStarted) {
+              focusTimeout = setTimeout(() => {
+                cleanup(true);
+              }, 1000);
+            } else {
+              cleanup(false);
+            }
+          };
+
+          const handleBeforeUnload = () => {
+            isDownloadStarted = true;
+            window.removeEventListener("beforeunload", handleBeforeUnload);
+          };
+
+          window.addEventListener("focus", handleFocus);
+          window.addEventListener("beforeunload", handleBeforeUnload);
+
+          setTimeout(() => {
+            window.removeEventListener("focus", handleFocus);
+            window.removeEventListener("beforeunload", handleBeforeUnload);
+            if (document.body.contains(link)) {
+              cleanup(false);
+            }
+          }, 10000);
+
+          link.click();
+        } else {
+          reject(new Error("브라우저에서 파일 다운로드를 지원하지 않습니다."));
+        }
+      } catch (error) {
+        reject(error);
+      }
+    });
+  };
 
   // 목업 문의 데이터 생성
   function generateMockInquiries() {
@@ -661,10 +1840,10 @@ const CustomerSupport = () => {
   // 우선순위 배지 렌더링
   const renderPriorityBadge = (priority) => {
     const priorityConfig = {
-      낮음: { label: "낮음", class: "low" },
-      보통: { label: "보통", class: "medium" },
-      높음: { label: "높음", class: "high" },
-      긴급: { label: "긴급", class: "urgent" },
+      낮음: { label: "낮음", class: "낮음" },
+      보통: { label: "보통", class: "보통" },
+      높음: { label: "높음", class: "높음" },
+      긴급: { label: "긴급", class: "긴급" },
     };
 
     const config = priorityConfig[priority] || priorityConfig.보통;
@@ -679,12 +1858,12 @@ const CustomerSupport = () => {
   // 카테고리 배지 렌더링
   const renderCategoryBadge = (category) => {
     const categoryConfig = {
-      기술지원: { label: "기술지원", class: "technical" },
+      기술지원: { label: "기술지원", class: "기술지원" },
       "결제/정산": { label: "결제/정산", class: "billing" },
-      계정관리: { label: "계정관리", class: "account" },
-      기능요청: { label: "기능요청", class: "feature" },
-      버그신고: { label: "버그신고", class: "bug" },
-      일반문의: { label: "일반문의", class: "general" },
+      계정관리: { label: "계정관리", class: "계정관리" },
+      기능요청: { label: "기능요청", class: "기능요청" },
+      버그신고: { label: "버그신고", class: "버그신고" },
+      일반문의: { label: "일반문의", class: "일반문의" },
     };
 
     const config = categoryConfig[category] || categoryConfig.일반문의;
@@ -826,11 +2005,17 @@ const CustomerSupport = () => {
           </button>
         </div>
         <div className="support-action-buttons">
-          <button className="super-admin-button super-admin-button-secondary">
+          <button
+            className="super-admin-button super-admin-button-secondary"
+            onClick={() => setShowExportModal(true)}
+          >
             <Download size={16} />
             내보내기
           </button>
-          <button className="super-admin-button super-admin-button-primary">
+          <button
+            className="super-admin-button super-admin-button-primary"
+            onClick={() => setShowAddInquiryModal(true)}
+          >
             <Plus size={16} />새 문의
           </button>
         </div>
@@ -1202,6 +2387,24 @@ const CustomerSupport = () => {
             </div>
           )}
         </>
+      )}
+
+      {/* 새 문의 추가 모달 */}
+      {showAddInquiryModal && (
+        <AddInquiryModal
+          onClose={() => setShowAddInquiryModal(false)}
+          onSave={handleAddInquiry}
+          assignees={assignees}
+        />
+      )}
+
+      {/* 내보내기 모달 */}
+      {showExportModal && (
+        <ExportModal
+          onClose={() => setShowExportModal(false)}
+          onExport={handleExport}
+          inquiriesCount={filteredInquiries.length}
+        />
       )}
 
       {/* 문의 상세 모달 */}
