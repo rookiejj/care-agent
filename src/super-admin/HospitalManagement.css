@@ -281,7 +281,7 @@
   flex: 1;
 }
 
-.hospital-detail-content {
+.hospital-management-detail-content {
   display: flex;
   gap: 1.5rem;
 }
@@ -965,7 +965,7 @@
 }
 
 @media (max-width: 1024px) {
-  .hospital-detail-content {
+  .hospital-management-detail-content {
     flex-direction: column-reverse;
   }
 

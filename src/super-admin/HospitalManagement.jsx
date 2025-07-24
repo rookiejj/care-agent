@@ -1070,7 +1070,7 @@ const HospitalManagement = ({
           </div>
         </div>
 
-        <div className="hospital-detail-content">
+        <div className="hospital-management-detail-content">
           <div className="hospital-detail-main">
             <div className="hospital-detail-card">
               <div className="hospital-detail-card-header">
