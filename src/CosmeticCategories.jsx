@@ -118,7 +118,7 @@ const CosmeticCategories = ({ currentLocation, onExpandChange }) => {
             className="cosmetic-category-name"
             style={{ color: "#c5587d", fontWeight: "bold" }}
           >
-            {expanded ? "닫기" : "부위 더보기"}
+            {expanded ? "닫기" : "시술 더보기"}
           </span>
         </div>
       </div>

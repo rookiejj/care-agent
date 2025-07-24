@@ -140,7 +140,7 @@ export default {
         popularDoctors: "인기 의사", // Changed from popularTrainers
         popularPosts: "인기 게시글",
       },
-      treatmentArea: "부위",
+      treatmentArea: "시술",
       specialists: {
         acial: "안면성형 전문의",
         eye: "눈성형 전문의",
