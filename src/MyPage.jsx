@@ -149,18 +149,18 @@ const MyPage = ({ currentLocation, notificationCount }) => {
       label: t("mypage.medical.menu.customerService"),
       color: "#f59e0b",
     },
-    {
-      id: "admin",
-      icon: <KeyRound size={20} />,
-      label: "관리자 페이지",
-      color: "#f59e0b",
-    },
-    {
-      id: "super-admin",
-      icon: <KeyRound size={20} />,
-      label: "슈퍼관리자 페이지",
-      color: "#f59e0b",
-    },
+    // {
+    //   id: "admin",
+    //   icon: <KeyRound size={20} />,
+    //   label: "관리자 페이지",
+    //   color: "#f59e0b",
+    // },
+    // {
+    //   id: "super-admin",
+    //   icon: <KeyRound size={20} />,
+    //   label: "슈퍼관리자 페이지",
+    //   color: "#f59e0b",
+    // },
   ];
 
   return (
